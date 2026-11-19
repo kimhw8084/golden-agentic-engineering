@@ -1,0 +1,19 @@
+{
+  "name": "python-example",
+  "profile": "python",
+  "criticality": "simple",
+  "golden_version": "0.1.0-dev",
+  "capabilities": {
+    "ui": false,
+    "api": false,
+    "database": false,
+    "jobs": false,
+    "observability": false,
+    "mcp": false,
+    "ai": false,
+    "manufacturing_data": false
+  },
+  "commands": {
+    "python_tests": ["${PYTHON}", "-m", "unittest", "discover", "-s", "tests", "-v"]
+  }
+}

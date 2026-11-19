@@ -1,0 +1,21 @@
+{
+  "name": "REPLACE_WITH_REAL_APP_NAME",
+  "golden_version": "0.1.0-dev",
+  "profile": "nicegui",
+  "criticality": "simple",
+  "capabilities": {
+    "ui": true,
+    "api": false,
+    "database": false,
+    "jobs": false,
+    "observability": false,
+    "mcp": false,
+    "ai": false,
+    "manufacturing_data": false
+  },
+  "commands": {
+    "python_tests": ["${PYTHON}", "-m", "pytest", "-q"],
+    "python_lint": ["ruff", "check", "."],
+    "browser_tests": ["${PYTHON}", "-m", "pytest", "-q", "tests/browser"]
+  }
+}

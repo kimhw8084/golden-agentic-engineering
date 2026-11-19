@@ -1,0 +1,18 @@
+version: '3'
+# Convenience only. Python scripts function without Task.
+tasks:
+  test:
+    cmds:
+      - python -m unittest discover -s tests -v
+  doctor:
+    cmds:
+      - python scripts/golden.py doctor --project examples/python-app
+  fast:
+    cmds:
+      - python scripts/golden.py check --fast --project examples/python-app
+  full:
+    cmds:
+      - python scripts/golden.py check --full --project examples/python-app --out out/evidence.json
+  sources-preview:
+    cmds:
+      - python scripts/fetch_sources.py --tier pilot --limit 3

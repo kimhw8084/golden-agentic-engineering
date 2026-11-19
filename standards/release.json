@@ -1,0 +1,7 @@
+{
+  "version": "0.1.0-dev",
+  "status": "PILOT_UNQUALIFIED",
+  "license": "MIT-for-original-bootstrap-code-only",
+  "rules_schema": "golden-rules/v0.1",
+  "minimum_python": "3.10"
+}

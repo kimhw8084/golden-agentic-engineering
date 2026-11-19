@@ -1,0 +1,22 @@
+{
+  "name": "REPLACE_WITH_REAL_APP_NAME",
+  "golden_version": "0.1.0-dev",
+  "profile": "react",
+  "criticality": "workflow",
+  "capabilities": {
+    "ui": true,
+    "api": false,
+    "database": false,
+    "jobs": false,
+    "observability": false,
+    "mcp": false,
+    "ai": false,
+    "manufacturing_data": false
+  },
+  "commands": {
+    "ts_typecheck": ["npm", "run", "typecheck"],
+    "web_tests": ["npm", "run", "test:ci"],
+    "ui_contracts": ["npm", "run", "test:ui"],
+    "browser_tests": ["npm", "run", "test:e2e"]
+  }
+}

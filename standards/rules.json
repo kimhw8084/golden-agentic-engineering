@@ -1,0 +1,229 @@
+{
+  "schema": "golden-rules/v0.1",
+  "version": "0.1.0-dev",
+  "rules": [
+    {
+      "id": "GOLD-001",
+      "title": "Project manifest and Golden release pin",
+      "kind": "builtin",
+      "stage": "fast",
+      "mandatory": true,
+      "handler": "manifest"
+    },
+    {
+      "id": "GOLD-002",
+      "title": "Project instructions and usage README",
+      "kind": "builtin",
+      "stage": "full",
+      "mandatory": true,
+      "handler": "readme"
+    },
+    {
+      "id": "GOLD-003",
+      "title": "Version-controlled project worktree",
+      "kind": "builtin",
+      "stage": "full",
+      "mandatory": true,
+      "handler": "git"
+    },
+    {
+      "id": "PY-001",
+      "title": "Python syntax validation (AST)",
+      "kind": "builtin",
+      "stage": "fast",
+      "mandatory": true,
+      "handler": "py_syntax",
+      "profiles": [
+        "python",
+        "nicegui"
+      ]
+    },
+    {
+      "id": "PY-002",
+      "title": "Python tests (real command)",
+      "kind": "command",
+      "stage": "full",
+      "mandatory": true,
+      "command_key": "python_tests",
+      "profiles": [
+        "python",
+        "nicegui"
+      ],
+      "timeout_seconds": 90
+    },
+    {
+      "id": "PY-003",
+      "title": "Python lint (approved Ruff)",
+      "kind": "command",
+      "stage": "full",
+      "mandatory": true,
+      "command_key": "python_lint",
+      "profiles": [
+        "python",
+        "nicegui"
+      ],
+      "timeout_seconds": 90
+    },
+    {
+      "id": "WEB-001",
+      "title": "TypeScript static validation",
+      "kind": "command",
+      "stage": "full",
+      "mandatory": true,
+      "command_key": "ts_typecheck",
+      "profiles": [
+        "react"
+      ],
+      "timeout_seconds": 90
+    },
+    {
+      "id": "WEB-002",
+      "title": "TypeScript/component tests",
+      "kind": "command",
+      "stage": "full",
+      "mandatory": true,
+      "command_key": "web_tests",
+      "profiles": [
+        "react"
+      ],
+      "timeout_seconds": 90
+    },
+    {
+      "id": "UI-001",
+      "title": "UI contract and interaction tests",
+      "kind": "command",
+      "stage": "full",
+      "mandatory": true,
+      "command_key": "ui_contracts",
+      "profiles": [
+        "react",
+        "nicegui"
+      ],
+      "capabilities": [
+        "ui"
+      ],
+      "timeout_seconds": 90
+    },
+    {
+      "id": "UI-002",
+      "title": "Real-browser UX and accessibility evaluation",
+      "kind": "command",
+      "stage": "full",
+      "mandatory": true,
+      "command_key": "browser_tests",
+      "profiles": [
+        "react",
+        "nicegui"
+      ],
+      "capabilities": [
+        "ui"
+      ],
+      "timeout_seconds": 90
+    },
+    {
+      "id": "API-001",
+      "title": "API contracts and error behavior",
+      "kind": "command",
+      "stage": "full",
+      "mandatory": true,
+      "command_key": "api_contracts",
+      "capabilities": [
+        "api"
+      ],
+      "timeout_seconds": 90
+    },
+    {
+      "id": "DB-001",
+      "title": "Database integrity and migration tests",
+      "kind": "command",
+      "stage": "full",
+      "mandatory": true,
+      "command_key": "db_tests",
+      "capabilities": [
+        "database"
+      ],
+      "timeout_seconds": 90
+    },
+    {
+      "id": "SEC-001",
+      "title": "Secrets and security audit",
+      "kind": "command",
+      "stage": "full",
+      "mandatory": true,
+      "command_key": "security_scan",
+      "timeout_seconds": 90
+    },
+    {
+      "id": "OPS-001",
+      "title": "Telemetry/logging/alerting validation",
+      "kind": "command",
+      "stage": "full",
+      "mandatory": true,
+      "command_key": "observability_tests",
+      "capabilities": [
+        "observability"
+      ],
+      "timeout_seconds": 90
+    },
+    {
+      "id": "JOBS-001",
+      "title": "Queue and job/idempotency evaluation",
+      "kind": "command",
+      "stage": "full",
+      "mandatory": true,
+      "command_key": "job_tests",
+      "capabilities": [
+        "jobs"
+      ],
+      "timeout_seconds": 90
+    },
+    {
+      "id": "MCP-001",
+      "title": "MCP permission and protocol checks",
+      "kind": "command",
+      "stage": "full",
+      "mandatory": true,
+      "command_key": "mcp_tests",
+      "capabilities": [
+        "mcp"
+      ],
+      "timeout_seconds": 90
+    },
+    {
+      "id": "AI-001",
+      "title": "Agentic/tool-use evaluation",
+      "kind": "command",
+      "stage": "full",
+      "mandatory": true,
+      "command_key": "ai_tests",
+      "capabilities": [
+        "ai"
+      ],
+      "timeout_seconds": 90
+    },
+    {
+      "id": "DATA-001",
+      "title": "Scientific/analytics correctness tests",
+      "kind": "command",
+      "stage": "full",
+      "mandatory": true,
+      "command_key": "data_tests",
+      "capabilities": [
+        "manufacturing_data"
+      ],
+      "timeout_seconds": 90
+    },
+    {
+      "id": "REL-001",
+      "title": "Production criticality recovery drill",
+      "kind": "command",
+      "stage": "full",
+      "mandatory": true,
+      "command_key": "recovery_tests",
+      "criticality": [
+        "production-critical"
+      ],
+      "timeout_seconds": 90
+    }
+  ]
+}
