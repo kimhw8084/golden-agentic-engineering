@@ -1,0 +1,28 @@
+{
+  "notice": "All entities and values are synthetic fixtures; no fab or company data.",
+  "as_of": "2026-11-20T00:00:00Z",
+  "events": [
+    {"event_id":"EV-001","lot_id":"LOT-A","operation":"MET-01","route_revision":"R1","visit_id":"V1","wafer_count":20,"sample_every_wafers":10,"state":"READY","scheduled_at":"2026-11-21T08:00:00Z","observed_at":"2026-11-19T23:00:00Z"},
+    {"event_id":"EV-001","lot_id":"LOT-A","operation":"MET-01","route_revision":"R1","visit_id":"V1","wafer_count":20,"sample_every_wafers":10,"state":"READY","scheduled_at":"2026-11-21T08:00:00Z","observed_at":"2026-11-19T23:00:00Z"},
+    {"event_id":"EV-002","lot_id":"LOT-B","operation":"MET-01","route_revision":"R1","visit_id":"V1","wafer_count":25,"sample_every_wafers":10,"state":"QUEUED","scheduled_at":"2026-11-27T00:00:00Z","observed_at":"2026-11-19T20:00:00Z"},
+    {"event_id":"EV-003","lot_id":"LOT-A","operation":"MET-01","route_revision":"R1","visit_id":"V2-REWORK","wafer_count":20,"sample_every_wafers":10,"state":"REWORK","scheduled_at":"2026-11-24T10:00:00Z","observed_at":"2026-11-19T21:00:00Z"},
+    {"event_id":"EV-004","lot_id":"LOT-A1","operation":"MET-01","route_revision":"R1","visit_id":"V1","wafer_count":10,"sample_every_wafers":10,"state":"READY","scheduled_at":"2026-11-26T12:00:00Z","observed_at":"2026-11-19T19:00:00Z"},
+    {"event_id":"EV-005","lot_id":"LOT-C","operation":"MET-01","route_revision":"R1","visit_id":"V1","wafer_count":30,"sample_every_wafers":10,"state":"HOLD","scheduled_at":"2026-11-22T12:00:00Z","observed_at":"2026-11-19T19:00:00Z"},
+    {"event_id":"EV-006","lot_id":"LOT-D","operation":"MET-01","route_revision":"R1","visit_id":"V1","wafer_count":30,"sample_every_wafers":10,"state":"SCRAPPED","scheduled_at":"2026-11-23T12:00:00Z","observed_at":"2026-11-19T19:00:00Z"},
+    {"event_id":"EV-007","lot_id":"LOT-E","operation":"MET-02","route_revision":"R2","visit_id":"V1","wafer_count":10,"sample_every_wafers":10,"state":"READY","scheduled_at":"2026-11-23T12:00:00Z","observed_at":"2026-11-21T12:00:00Z"},
+    {"event_id":"EV-008","lot_id":"LOT-F","operation":"MET-02","route_revision":"R2","visit_id":"V1","wafer_count":10,"sample_every_wafers":10,"state":"READY","scheduled_at":"2026-11-28T12:00:00Z","observed_at":"2026-11-19T19:00:00Z"},
+    {"event_id":"EV-009","lot_id":"LOT-G","operation":"MET-02","route_revision":"R2","visit_id":"V1","wafer_count":15,"sample_every_wafers":5,"state":"READY","scheduled_at":"2027-01-05T12:00:00Z","observed_at":"2026-11-19T19:00:00Z"},
+    {"event_id":"EV-010","lot_id":"LOT-H","operation":"MET-02","route_revision":"R2","visit_id":"V1","wafer_count":20,"sample_every_wafers":10,"state":"IN_PROCESS","scheduled_at":"2026-11-30T12:00:00Z","observed_at":"2026-11-19T18:00:00Z"},
+    {"event_id":"EV-011","lot_id":"LOT-I","operation":"MET-02","route_revision":"R3","visit_id":"V1","wafer_count":15,"sample_every_wafers":5,"state":"QUEUED","scheduled_at":"2026-12-15T12:00:00Z","observed_at":"2026-11-19T18:00:00Z"}
+  ],
+  "daily_history": [
+    {"sample_date":"2026-11-13","sample_count":2,"observed_at":"2026-11-13T23:00:00Z"},
+    {"sample_date":"2026-11-14","sample_count":4,"observed_at":"2026-11-14T23:00:00Z"},
+    {"sample_date":"2026-11-15","sample_count":3,"observed_at":"2026-11-15T23:00:00Z"},
+    {"sample_date":"2026-11-16","sample_count":5,"observed_at":"2026-11-16T23:00:00Z"},
+    {"sample_date":"2026-11-17","sample_count":4,"observed_at":"2026-11-17T23:00:00Z"},
+    {"sample_date":"2026-11-18","sample_count":6,"observed_at":"2026-11-18T23:00:00Z"},
+    {"sample_date":"2026-11-19","sample_count":4,"observed_at":"2026-11-19T23:00:00Z"},
+    {"sample_date":"2026-11-20","sample_count":99,"observed_at":"2026-11-21T01:00:00Z"}
+  ]
+}

@@ -1,12 +1,54 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "golden-task-routing/v1",
+  "$id": "golden-task-routing/v2",
   "type": "object",
   "required": ["schema", "default", "workflows"],
   "properties": {
-    "schema": {"const": "golden-task-routing/v1"},
-    "default": {"type": "object", "required": ["agent", "pattern_policy"]},
-    "workflows": {"type": "array", "minItems": 12, "items": {"type": "object", "required": ["id", "entry", "complexity", "primary_agent", "skill", "pattern", "context", "mcp", "deterministic_tools", "trust", "no_ai", "outputs", "acceptance"]}}
+    "schema": {"const": "golden-task-routing/v2"},
+    "default": {
+      "type": "object",
+      "required": ["agent", "specialists", "skill_loading", "selection_registry", "agentic_first_policy", "patterns", "pattern_policy", "mcp_policy"],
+      "properties": {
+        "agent": {"const": "primary"},
+        "specialists": {"type": "string", "minLength": 8},
+        "skill_loading": {"type": "string", "minLength": 8},
+        "selection_registry": {"type": "string", "minLength": 8},
+        "agentic_first_policy": {"type": "string", "minLength": 20},
+        "patterns": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 3}},
+        "pattern_policy": {"type": "string", "minLength": 20},
+        "mcp_policy": {"type": "string", "minLength": 20}
+      },
+      "additionalProperties": false
+    },
+    "workflows": {
+      "type": "array",
+      "minItems": 12,
+      "maxItems": 12,
+      "items": {
+        "type": "object",
+        "required": ["id", "entry", "complexity", "primary_agent", "skills", "specialists", "pattern", "context", "mcp", "mcp_candidates", "mcp_policy", "deterministic_tools", "trust", "no_ai", "outputs", "acceptance"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^[a-z0-9-]+$"},
+          "entry": {"type": "string", "minLength": 8},
+          "complexity": {"enum": ["small", "small-to-medium", "small-to-medium/high-risk", "medium", "medium-to-large", "high-risk"]},
+          "primary_agent": {"type": "string", "minLength": 1},
+          "skills": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "pattern": "^[a-z0-9-]+$"}},
+          "specialists": {"type": "array", "items": {"type": "object", "required": ["agent", "when"], "properties": {"agent": {"type": "string", "pattern": "^[a-z0-9-]+$"}, "when": {"type": "string", "minLength": 8}}, "additionalProperties": false}},
+          "pattern": {"type": "string", "minLength": 4},
+          "context": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 2}},
+          "mcp": {"type": "array", "items": {"type": "string"}},
+          "mcp_candidates": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 3}},
+          "mcp_policy": {"type": "string", "minLength": 20},
+          "deterministic_tools": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 2}},
+          "trust": {"type": "string", "minLength": 8},
+          "no_ai": {"type": "string", "minLength": 8},
+          "outputs": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 2}},
+          "acceptance": {"type": "string", "minLength": 8},
+          "capability_candidates": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 2}}
+        },
+        "additionalProperties": false
+      }
+    }
   },
-  "additionalProperties": true
+  "additionalProperties": false
 }

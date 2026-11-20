@@ -1,0 +1,186 @@
+{
+  "schema": "golden-evidence/v0.1",
+  "generated_at_utc": "2026-11-20T22:41:28.300179+00:00",
+  "golden_version": "0.1.0-dev",
+  "rules_sha256": "ce47462f54550bc60b9d30989bd56825257bd21f6b8721d1b28855dd58e61449",
+  "project_manifest_sha256": "fa86ac5bb9058ce4b741abd68f1771e441d7692bee0a3da563852e1252495d1c",
+  "project": "local-project",
+  "mode": "FAST",
+  "qualifies_release": false,
+  "blocking_rule_ids": [],
+  "rules_count": 19,
+  "results": [
+    {
+      "rule_id": "GOLD-001",
+      "title": "Project manifest and Golden release pin",
+      "status": "PASS",
+      "mandatory": true,
+      "stage": "fast",
+      "evidence": "Manifest schema and release pin validated.",
+      "duration_ms": 0.0
+    },
+    {
+      "rule_id": "GOLD-002",
+      "title": "Project instructions and usage README",
+      "status": "DEFERRED",
+      "mandatory": true,
+      "stage": "full",
+      "evidence": "Full-only check deferred; fast result is not release qualification.",
+      "duration_ms": 0.0
+    },
+    {
+      "rule_id": "GOLD-003",
+      "title": "Version-controlled project worktree",
+      "status": "DEFERRED",
+      "mandatory": true,
+      "stage": "full",
+      "evidence": "Full-only check deferred; fast result is not release qualification.",
+      "duration_ms": 0.0
+    },
+    {
+      "rule_id": "PY-001",
+      "title": "Python syntax validation (AST)",
+      "status": "PASS",
+      "mandatory": true,
+      "stage": "fast",
+      "evidence": "AST-parsed 2 Python source files.",
+      "duration_ms": 0.47
+    },
+    {
+      "rule_id": "PY-002",
+      "title": "Python tests (real command)",
+      "status": "DEFERRED",
+      "mandatory": true,
+      "stage": "full",
+      "evidence": "Full-only check deferred; fast result is not release qualification.",
+      "duration_ms": 0.0
+    },
+    {
+      "rule_id": "PY-003",
+      "title": "Python lint (approved Ruff)",
+      "status": "DEFERRED",
+      "mandatory": true,
+      "stage": "full",
+      "evidence": "Full-only check deferred; fast result is not release qualification.",
+      "duration_ms": 0.0
+    },
+    {
+      "rule_id": "WEB-001",
+      "title": "TypeScript static validation",
+      "status": "NOT_APPLICABLE",
+      "mandatory": true,
+      "stage": "full",
+      "evidence": "Profile 'python' not in ['react']; based on the project profile manifest.",
+      "duration_ms": 0.0
+    },
+    {
+      "rule_id": "WEB-002",
+      "title": "TypeScript/component tests",
+      "status": "NOT_APPLICABLE",
+      "mandatory": true,
+      "stage": "full",
+      "evidence": "Profile 'python' not in ['react']; based on the project profile manifest.",
+      "duration_ms": 0.0
+    },
+    {
+      "rule_id": "UI-001",
+      "title": "UI contract and interaction tests",
+      "status": "NOT_APPLICABLE",
+      "mandatory": true,
+      "stage": "full",
+      "evidence": "Profile 'python' not in ['react', 'nicegui']; based on the project profile manifest.",
+      "duration_ms": 0.0
+    },
+    {
+      "rule_id": "UI-002",
+      "title": "Real-browser UX and accessibility evaluation",
+      "status": "NOT_APPLICABLE",
+      "mandatory": true,
+      "stage": "full",
+      "evidence": "Profile 'python' not in ['react', 'nicegui']; based on the project profile manifest.",
+      "duration_ms": 0.0
+    },
+    {
+      "rule_id": "API-001",
+      "title": "API contracts and error behavior",
+      "status": "NOT_RUN",
+      "mandatory": true,
+      "stage": "full",
+      "evidence": "Applicability evidence missing for capabilities ['api']; false declarations alone do not prove non-applicability.",
+      "duration_ms": 0.0
+    },
+    {
+      "rule_id": "DB-001",
+      "title": "Database integrity and migration tests",
+      "status": "NOT_RUN",
+      "mandatory": true,
+      "stage": "full",
+      "evidence": "Applicability evidence missing for capabilities ['database']; false declarations alone do not prove non-applicability.",
+      "duration_ms": 0.0
+    },
+    {
+      "rule_id": "SEC-001",
+      "title": "Secrets and security audit",
+      "status": "DEFERRED",
+      "mandatory": true,
+      "stage": "full",
+      "evidence": "Full-only check deferred; fast result is not release qualification.",
+      "duration_ms": 0.0
+    },
+    {
+      "rule_id": "OPS-001",
+      "title": "Telemetry/logging/alerting validation",
+      "status": "NOT_RUN",
+      "mandatory": true,
+      "stage": "full",
+      "evidence": "Applicability evidence missing for capabilities ['observability']; false declarations alone do not prove non-applicability.",
+      "duration_ms": 0.0
+    },
+    {
+      "rule_id": "JOBS-001",
+      "title": "Queue and job/idempotency evaluation",
+      "status": "NOT_RUN",
+      "mandatory": true,
+      "stage": "full",
+      "evidence": "Applicability evidence missing for capabilities ['jobs']; false declarations alone do not prove non-applicability.",
+      "duration_ms": 0.0
+    },
+    {
+      "rule_id": "MCP-001",
+      "title": "MCP permission and protocol checks",
+      "status": "NOT_RUN",
+      "mandatory": true,
+      "stage": "full",
+      "evidence": "Applicability evidence missing for capabilities ['mcp']; false declarations alone do not prove non-applicability.",
+      "duration_ms": 0.0
+    },
+    {
+      "rule_id": "AI-001",
+      "title": "Agentic/tool-use evaluation",
+      "status": "NOT_RUN",
+      "mandatory": true,
+      "stage": "full",
+      "evidence": "Applicability evidence missing for capabilities ['ai']; false declarations alone do not prove non-applicability.",
+      "duration_ms": 0.0
+    },
+    {
+      "rule_id": "DATA-001",
+      "title": "Scientific/analytics correctness tests",
+      "status": "NOT_RUN",
+      "mandatory": true,
+      "stage": "full",
+      "evidence": "Applicability evidence missing for capabilities ['manufacturing_data']; false declarations alone do not prove non-applicability.",
+      "duration_ms": 0.0
+    },
+    {
+      "rule_id": "REL-001",
+      "title": "Production criticality recovery drill",
+      "status": "NOT_RUN",
+      "mandatory": true,
+      "stage": "full",
+      "evidence": "Criticality is below this rule scope; independent owner applicability evidence is missing.",
+      "duration_ms": 0.0
+    }
+  ],
+  "disclaimer": "Local deterministic evidence only. No human/company sign-off implied."
+}

@@ -269,7 +269,8 @@ class ControlHandler(BaseHTTPRequestHandler):
 
         asset = {'/': 'index.html', '/index.html': 'index.html',
                  '/styles.css': 'styles.css', '/app.js': 'app.js',
-                 '/workflows/task-routing.json': '../workflows/task-routing.json'}.get(path)
+                 '/workflows/task-routing.json': '../workflows/task-routing.json',
+                 '/research/capability-selection.json': '../research/capability-selection.json'}.get(path)
         if asset:
             content_path = (CONTROL / asset).resolve()
             self._send_file(content_path, 'application/json' if asset.endswith('.json') else 'text/html' if asset.endswith('.html') else

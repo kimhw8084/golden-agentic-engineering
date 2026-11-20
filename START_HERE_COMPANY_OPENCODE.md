@@ -37,7 +37,7 @@ python -m unittest discover -s tests -v
 python scripts/golden.py list
 python scripts/golden.py check --fast --project examples/python-app
 python scripts/golden.py check --full --project examples/python-app --out out/demo.evidence.json
-python scripts/golden.py report --input out/demo.evidence.json --out out/demo.report.html
+python scripts/golden.py report --input out/demo.evidence.json --project <APP_ROOT> --out out/demo.report.html
 python scripts/golden_control.py --evidence-dir out
 ```
 

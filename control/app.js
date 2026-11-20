@@ -154,9 +154,18 @@ function populateWorkflows(rows) {
     card.className = 'workflow-card';
     const heading = document.createElement('h3'); heading.textContent = display(item.id).replaceAll('-', ' ');
     const summary = document.createElement('p'); summary.textContent = display(item.entry);
-    const route = document.createElement('p'); route.className = 'workflow-route'; route.textContent = `${display(item.primary_agent)} · ${display(item.skill)} · ${display(item.pattern)}`;
+    const skills = Array.isArray(item.skills) ? item.skills.join(' / ') : 'skill unavailable';
+    const route = document.createElement('p'); route.className = 'workflow-route'; route.textContent = `${display(item.primary_agent)} · ${skills} · ${display(item.pattern)}`;
+    const mcp = document.createElement('p'); mcp.className = 'workflow-route';
+    const candidates = Array.isArray(item.mcp_candidates) ? item.mcp_candidates : [];
+    mcp.textContent = candidates.length ? `MCP evaluation candidates only: ${candidates.join(', ')}; no connection is enabled by this route.` : 'No MCP candidate selected for this route.';
+    const capability = document.createElement('p'); capability.className = 'workflow-route';
+    const capabilityCandidates = Array.isArray(item.capability_candidates) ? item.capability_candidates : [];
+    capability.textContent = capabilityCandidates.length
+      ? `Capability candidates require separate review: ${capabilityCandidates.join(', ')}.`
+      : 'No additional capability candidate listed.';
     const accept = document.createElement('p'); accept.className = 'workflow-acceptance'; accept.textContent = `Done when: ${display(item.acceptance)}`;
-    card.append(heading, summary, route, accept);
+    card.append(heading, summary, route, mcp, capability, accept);
     workflowRouteElement.append(card);
   });
 }

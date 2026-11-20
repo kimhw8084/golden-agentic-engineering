@@ -13,7 +13,7 @@ The actual company's internal OpenCode version, provider and model must be inspe
 
 ## Offline-first qualification exercise
 
-1. Run [`COMPANY_START_HERE.md`](../COMPANY_START_HERE.md) Step A and verify the offline doctor output. Obtain Python/Node/OpenCode versions from approved local inventory; the doctor never executes version flags. Mark unknown versions UNKNOWN.
+1. Run [`COMPANY_START_HERE.md`](../COMPANY_START_HERE.md) Step A and verify the offline doctor output. Python is read from the running interpreter; Node/OpenCode versions are read only from local package metadata or managed-install paths. The doctor never launches those binaries. Unknown versions remain `UNKNOWN`; use an approved company inventory or a supported packaged runtime before applying.
 2. Before starting OpenCode, the company security/network owner must verify a default-deny public-egress policy and attempt monitoring for OpenCode and all children. Golden's Python audit-hook probe is not proof of OS-level enforcement.
 3. Only after the zero-public-attempt gate is established, use the company's approved method to inspect the OpenCode build, agent/subagent inventory, skill discovery, connected MCP servers/tools, permissions, and handoff features. Avoid credentials and preserve config. If any invocation causes a public endpoint attempt, stop and report it; do not proceed to a task trial.
 4. Verify this repository's AGENTS.md, one relevant SKILL.md, `/golden-design`, a specialist agent, and an already-approved task-relevant MCP tool where applicable. Never enable the local synthetic fixture in the company config as part of this check.

@@ -4,25 +4,25 @@
 
 ## Step A — offline doctor / dry run
 
-Run this with Python 3.10+ from the extracted Golden folder. It reads platform/runtime presence, the current OpenCode config key names, file permissions, and the source bundle manifest. It does **not** run `opencode`, `node`, `git`, package managers, or any network request. Supply the OpenCode version from the company's local software inventory; if not supplied or the executable is not discoverable, the result stays `UNKNOWN` and Step B is blocked.
+Run this with Python 3.10+ from the extracted Golden folder. It reads platform/runtime presence, the current OpenCode config key names, file permissions, and the source bundle manifest. It does **not** run `opencode`, `node`, `git`, package managers, or any network request. It reads OpenCode/Node versions only from matching local package metadata or a managed-install version path; if it cannot identify a version, the result stays `UNKNOWN` and Step B is blocked.
 
 ### Windows PowerShell
 
 ```powershell
-py -3 scripts\company_bootstrap.py doctor --opencode-version 2.4.0 --node-version 20.0.0 --out "$env:TEMP\golden-doctor.json" --config "$env:APPDATA\opencode\opencode.json"
+py -3 scripts\company_bootstrap.py doctor --out "$env:TEMP\golden-doctor.json" --config "$env:APPDATA\opencode\opencode.json"
 py -3 scripts\package_offline.py verify "D:\approved-transfer\golden.tar.gz"
 ```
 
 ### Linux shell
 
 ```sh
-python3 scripts/company_bootstrap.py doctor --opencode-version 2.4.0 --node-version 20.0.0 --out /tmp/golden-doctor.json --config "$HOME/.config/opencode/opencode.json"
+python3 scripts/company_bootstrap.py doctor --out /tmp/golden-doctor.json --config "$HOME/.config/opencode/opencode.json"
 python3 scripts/package_offline.py verify /approved-transfer/golden.tar.gz
 ```
 
-Replace example versions and paths with values from your approved local inventory. Do not execute OpenCode just to fill in its version. Do not start OpenCode until its package/update behavior and all child tools have been checked for zero public-network attempts; the company network owner must provide default-deny egress and an attempt monitor first.
+Replace example paths with your approved transfer/config paths. Do not execute OpenCode just to fill in its version. Do not start OpenCode until its package/update behavior and all child tools have been checked for zero public-network attempts; the company network owner must provide default-deny egress and an attempt monitor first.
 
-Example dry-run summary (illustrative only):
+Example dry-run summary (from a unit-tested synthetic runtime fixture; it does not qualify a company host):
 
 ```text
 UNKNOWN: OS=Windows Python=3.12.x Node=None OpenCode=None
@@ -30,11 +30,11 @@ No settings changed. Missing offline assets: 6
 Review diff: {"would_copy": ["agents/", "skills/", "commands/"], "would_not_change": ["provider", "model", "authentication", "MCP configuration", "Git state"]}
 ```
 
-The JSON result contains no provider values, tokens, or raw command output. Review its machine/config states, `offline_assets_missing`, and `review_diff`. `READY_TO_INTEGRATE` means the staged files and hashes passed this local preflight; it is not company approval or qualification.
+The JSON result contains no provider values, tokens, or raw command output. Review its machine/config states, `offline_assets_missing`, and `review_diff`. `READY_TO_INTEGRATE` means local runtime metadata matched a public V2 candidate and staged file hashes passed this preflight; this is not an internal OpenCode compatibility test, company approval, or qualification. The company OpenCode owner must verify behavior before rollout.
 
 ## Step B — reviewed apply
 
-Only after a person has reviewed Step A and the archive checksum/content, and the installed OpenCode version is a supported V2 candidate, run the add-only apply command below. This applies `.opencode/agents`, `.opencode/skills`, and `.opencode/commands`; it never copies `.opencode/opencode.json`, provider/model/auth settings, or MCP config. Existing changed files are conflicts; no file is overwritten. The transaction record allows rollback of only the unchanged files created by this transaction.
+Only after a person has reviewed Step A and the archive checksum/content, and the company OpenCode owner confirms the installed build is compatible, run the add-only apply command below. The doctor reads local package metadata or managed-install paths and does not execute OpenCode or Node. If it cannot identify a version, it returns `UNKNOWN`; use an approved company inventory or compatible packaged runtime before applying. This applies `.opencode/agents`, `.opencode/skills`, and `.opencode/commands`; it never copies `.opencode/opencode.json`, provider/model/auth settings, or MCP config. Existing changed files are conflicts; no file is overwritten. The transaction record allows rollback of only the unchanged files created by this transaction.
 
 ### Windows PowerShell
 

@@ -1,10 +1,10 @@
 # Company task comparison protocol
 
-The local fixtures and comparable acceptance commands are listed in [`cases.json`](cases.json). Copy [`record-template.json`](record-template.json) for each actual run. This directory records a **protocol only**; it contains no fabricated performance data and no composite score.
+The local fixtures and comparable acceptance commands are listed in [`cases.json`](cases.json). Run `python benchmarks/run_local_fixtures.py --out verification/local-fixtures.json` for an offline deterministic test harness. Copy [`record-template.json`](record-template.json) for each actual internal-runtime trial. There are no fabricated performance data or composite scores.
 
 ## Current evidence
 
-Python fixtures cover a small fix, NiceGUI sample logic, API/SQLite contract, incident timeline, and synthetic MCP protocol cases. The React fixture is authored but its dependency lock/store and browsers are absent. No company OpenCode runtime or trusted invocation-event source is attached. Therefore every agentic-vs-CLI, plain-vs-Golden, token/request, elapsed-time, and quality-uplift comparison is `BLOCKED_COMPANY_RUNTIME`.
+The local harness runs Python fixture tests for a small fix, NiceGUI sample logic, API/SQLite, incident timeline, synthetic fab sampling, MCP protocol cases, and Golden Proof/routing. It records only test counts, process durations, and output hashes; it does not compare agents or claim task productivity. The React fixture is authored but its dependency lock/store is absent, and browser journey tests are blocked on staged Playwright binaries. No company OpenCode runtime or trusted invocation-event source is attached. Therefore every agentic-vs-CLI, plain-vs-Golden, token/request, end-to-end task time, and quality-uplift comparison is `BLOCKED_COMPANY_RUNTIME`.
 
 ## Trial method
 

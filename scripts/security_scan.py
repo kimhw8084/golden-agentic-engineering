@@ -6,8 +6,6 @@ import argparse
 import re
 import sys
 from pathlib import Path
-from update_checksums import source_files
-
 ROOT = Path(__file__).resolve().parent.parent
 PATTERNS = [
     ('private_key', re.compile(r'-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----')),
@@ -39,9 +37,13 @@ def main() -> int:
     parser.add_argument('--repo', type=Path, default=ROOT)
     args = parser.parse_args()
     findings = []
-    files = source_files() if args.repo.resolve() == ROOT else [p for p in args.repo.resolve().rglob('*') if p.is_file() and not p.is_symlink() and not any(part in {'.git', '__pycache__', 'node_modules', '.venv', 'venv'} for part in p.relative_to(args.repo.resolve()).parts)]
+    repo = args.repo.resolve()
+    excluded = {'.git', '__pycache__', 'node_modules', '.venv', 'venv', 'dist', 'build', '.next', 'coverage'}
+    files = [path for path in repo.rglob('*') if path.is_file() and not path.is_symlink()
+             and not any(part in excluded for part in path.relative_to(repo).parts)]
     for path in files:
-        findings.extend(scan_file(path, path.relative_to(args.repo.resolve()).as_posix()))
+        if path.is_file() and not path.is_symlink():
+            findings.extend(scan_file(path, path.relative_to(repo).as_posix()))
     if findings:
         for item in findings:
             print(f"FINDING {item['file']}:{item['line']} {item['kind']}")

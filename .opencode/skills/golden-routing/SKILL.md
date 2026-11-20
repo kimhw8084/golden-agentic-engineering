@@ -5,7 +5,22 @@ description: Route tasks through the primary agent and relevant skills; evaluate
 
 # Agentic-first capability selection
 
-Machine-readable task routes live in [`workflows/task-routing.json`](../../../workflows/task-routing.json). Use the matching row as a compact lookup; do not load the full registry into routine prompts.
+Machine-readable task routes live in [`workflows/task-routing.json`](../../../workflows/task-routing.json). When the Golden checkout is available, `scripts/golden_route.py` validates route references against local skills, agents, MCP configuration, and the public capability registry, then emits only the requested route. When this skill is installed globally and the checkout is not present, use the task table below. Do not load the full registry into routine prompts.
+
+| Workflow | Load skill(s) | Conditional capability |
+|---|---|---|
+| `small-fix` | `golden-routing` | Direct primary agent by default. |
+| `react-app-feature` | `golden-react` | `golden-engineer` for a complex or disjoint UI slice. |
+| `nicegui-python-app` | `golden-nicegui` | `golden-engineer` for multi-module or concurrency work. |
+| `api-database-integration` | `golden-api-db` | `golden-architect` for service boundaries; `golden-verifier` for independent contract review. |
+| `manufacturing-analytics` | `golden-manufacturing-data` | `golden-investigator` for provenance or statistical review. |
+| `architecture-security-audit` | `golden-code-audit` | `golden-architect` or `golden-verifier` for independent review. |
+| `incident-log-rca` | `golden-observability` | `golden-investigator` for large or non-obvious patterns; approved Grafana MCP remains a candidate. |
+| `performance-investigation` | `golden-code-audit` | `golden-investigator` to profile; `golden-verifier` for independent remeasurement. |
+| `browser-ui-verification` | `golden-react` or `golden-nicegui` | `golden-verifier` for independent acceptance; Playwright MCP remains a candidate. |
+| `technical-docs-sop-diagrams` | `golden-docs` | `cathrynlavery/diagram-design` is an evaluation candidate; Mermaid/SVG is the local fallback. |
+| `release-qualification` | `golden-release` | `golden-verifier` for independent evidence review. |
+| `golden-upstream-improvement` | `golden-offline-toolchain` | `golden-engineer` only for a bounded, independent implementation slice. |
 
 Choose tools by evidence, not by a CLI-first default, while keeping selection overhead proportional to the task.
 
@@ -26,7 +41,7 @@ The primary agentic layer is the default; additional capability discovery and me
 
 **Sequential chain** for requirements → implementation → tests → documentation when later steps genuinely depend on completed earlier outputs. Pass only artifacts/paths and acceptance criteria, not entire conversation histories.
 
-**Router** when a request clearly matches React, NiceGUI, Python/API, data analytics, documentation or incident categories. Load the matching skill and use its agent/MCP capabilities when relevant; do not preload all rules.
+**Router** when a request clearly matches one of the 12 workflow categories. Select one row from the route table, load only its relevant skill, and use the repository resolver when that checkout is available. For `browser-ui-verification`, choose `golden-react` or `golden-nicegui` based on the project. A route's MCP candidates are research leads; use MCP only if the live company runtime shows an already-connected, explicitly approved server. Do not preload all rules.
 
 **Parallel independent exploration** when multiple genuinely separable alternatives need investigation and the cost is justified. No parallel edits to the same file.
 

@@ -1,0 +1,174 @@
+{
+  "schema": "golden-local-fixture-run/v1",
+  "generated_at_utc": "2026-11-20T22:41:07.421911+00:00",
+  "environment": {
+    "os": "Darwin",
+    "architecture": "arm64",
+    "python": "3.14.5"
+  },
+  "network_policy": "No package manager or network-capable application is launched by this harness; all test processes use offline-related environment flags.",
+  "cases": [
+    {
+      "id": "python-small-fix",
+      "status": "PASS",
+      "tests_run": 1,
+      "elapsed_seconds": 0.035693,
+      "command": [
+        "python",
+        "-S",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "examples/python-app/tests",
+        "-p",
+        "test_*.py",
+        "-q"
+      ],
+      "output_sha256": "5914a00b30739818e764337ed45d346bbea6db8c2e5824349ed85f584021afb8"
+    },
+    {
+      "id": "nicegui-logic",
+      "status": "PASS",
+      "tests_run": 3,
+      "elapsed_seconds": 0.035092,
+      "command": [
+        "python",
+        "-S",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "examples/nicegui-app/tests",
+        "-p",
+        "test_*.py",
+        "-q"
+      ],
+      "output_sha256": "90a8bba1571645e03c3eb597142a9d08de8c7cce7046ad936f2952487cdb2010"
+    },
+    {
+      "id": "api-sqlite-contract",
+      "status": "PASS",
+      "tests_run": 2,
+      "elapsed_seconds": 0.03559,
+      "command": [
+        "python",
+        "-S",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "examples/scenarios/api_db",
+        "-p",
+        "test_*.py",
+        "-q"
+      ],
+      "output_sha256": "376bd4637ce939c00f9c93c3a1042c1c2ee33f11c4de836525e01c86a6e2c22b"
+    },
+    {
+      "id": "incident-timeline",
+      "status": "PASS",
+      "tests_run": 1,
+      "elapsed_seconds": 0.036446,
+      "command": [
+        "python",
+        "-S",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "examples/scenarios/incident",
+        "-p",
+        "test_*.py",
+        "-q"
+      ],
+      "output_sha256": "5914a00b30739818e764337ed45d346bbea6db8c2e5824349ed85f584021afb8"
+    },
+    {
+      "id": "manufacturing-sampling",
+      "status": "PASS",
+      "tests_run": 6,
+      "elapsed_seconds": 0.038496,
+      "command": [
+        "python",
+        "-S",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "examples/scenarios/manufacturing",
+        "-p",
+        "test_*.py",
+        "-q"
+      ],
+      "output_sha256": "6d71ec04f29f67e742c2574330ca6f61a22817a8b0a38a23a45ea96bcc25cb32"
+    },
+    {
+      "id": "mcp-synthetic-contract",
+      "status": "PASS",
+      "tests_run": 4,
+      "elapsed_seconds": 0.060834,
+      "command": [
+        "python",
+        "-S",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_mcp_fixture.py",
+        "-q"
+      ],
+      "output_sha256": "95be710d3d8b3163320f791b2e547f2c2fa1925e76dba11417dbe4f9f981a7c1"
+    },
+    {
+      "id": "golden-proof",
+      "status": "PASS",
+      "tests_run": 24,
+      "elapsed_seconds": 0.609388,
+      "command": [
+        "python",
+        "-S",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_golden.py",
+        "-q"
+      ],
+      "output_sha256": "e33e08999400c062558201f082e6b748732a39603cb7a5d07d900a6466fdc017"
+    },
+    {
+      "id": "golden-routing",
+      "status": "PASS",
+      "tests_run": 6,
+      "elapsed_seconds": 0.057938,
+      "command": [
+        "python",
+        "-S",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_routing.py",
+        "-q"
+      ],
+      "output_sha256": "344e5cbbdf8ac6c195e03136c5ca8eaf8baabd52bb1cfd537a9b0502b9d170c6"
+    }
+  ],
+  "react": {
+    "status": "BLOCKED_MISSING_LOCKFILE_AND_OFFLINE_STORE",
+    "required_action": "Stage an approved dependency lock and npm offline store before running React scripts."
+  },
+  "browser": {
+    "status": "BLOCKED_MISSING_BROWSER_ASSETS",
+    "required_action": "Stage approved Playwright browser binaries before UI journey/accessibility tests."
+  },
+  "scope": "Local deterministic fixture tests only; not an agent comparison, company OpenCode run, or productivity benchmark.",
+  "status": "PASS"
+}

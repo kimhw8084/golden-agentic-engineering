@@ -22,10 +22,11 @@ python scripts/golden.py list
 python scripts/golden.py doctor --project examples/python-app
 python scripts/golden.py check --fast --project examples/python-app
 python scripts/golden.py check --full --project examples/python-app --out out/evidence.json
-python scripts/golden.py report --input out/evidence.json --out out/evidence.html
+python scripts/golden.py report --input out/evidence.json --project . --out out/evidence.html
 python scripts/validate_manifests.py
 python scripts/security_scan.py
 python scripts/network_attempt_monitor.py
+python benchmarks/run_local_fixtures.py --out verification/local-fixtures.json
 python scripts/package_offline.py create --out /approved/transfer/golden.tar.gz
 python scripts/package_offline.py verify /approved/transfer/golden.tar.gz
 python scripts/golden_control.py --target "<EXISTING_CONFIG_DIR>" --evidence-dir out
@@ -63,7 +64,7 @@ Golden Control is the team-facing operating cockpit for Golden installation, app
 |---|---|
 | `.opencode/agents/` | Primary builder and scoped architecture, verification, docs, investigation roles |
 | `.opencode/skills/` | 12 selectively loaded Golden workflows |
-| `.opencode/commands/` | `/golden-build`, `/golden-audit`, `/golden-design`, `/golden-docs`, `/golden-triage`, `/golden-release` |
+| `.opencode/commands/` | `/golden-build`, `/golden-audit`, `/golden-design`, `/golden-docs`, `/golden-triage`, `/golden-release`, `/golden-route` |
 | `scripts/golden.py` | Working offline pilot rule evaluator, doctor, explanation and HTML evidence report |
 | `scripts/golden_control.py` and `control/` | Local read-only operator dashboard for asset comparison, integrity, Golden evidence summaries, design, and onboarding |
 | `standards/` | Version pin, 19 initial executable rule definitions (not the entire 151-requirement standard) |
@@ -74,6 +75,7 @@ Golden Control is the team-facing operating cockpit for Golden installation, app
 | `scripts/bootstrap_project.py` | Non-overwriting application manifest scaffold |
 | `scripts/install_opencode.py` | Non-overwriting install of agent/skill/command files into chosen OpenCode config folder |
 | `scripts/company_bootstrap.py` | Offline Step A doctor, reviewed add-only apply and hash-checked rollback |
+| `scripts/golden_route.py` | Offline route resolver that checks references to installed Golden skills, agents, and configured MCP servers |
 | `scripts/package_offline.py` | Clean-commit source-only archive with hidden assets, file hashes and external checksum |
 | `workflows/task-routing.json` | 12 task routes with pattern, context, relevant skill/MCP, trust, fallback and acceptance |
 | `research/capability-selection.json` | Candidate commits, observed license evidence, per-task decisions, and explicit unknowns |
@@ -98,7 +100,7 @@ Begin each task with its matching route. Load the named skill, use the primary a
 
 ## Current engineering truth
 
-`v0.1.0-dev` is a **PRE_QUALIFICATION** pilot, not completed Golden. The local Golden Control prototype is read-only and does not connect to company installations, approved release feeds, or agent/MCP usage data. The 19 executable rule descriptors do not implement all 151 proposed requirements. The checker now refuses false capability declarations as non-applicability, allowlists a small set of deterministic test commands, omits raw command output, and validates report consistency; imported JSON is not signed and does not prove execution authenticity. The company doctor never executes OpenCode and needs an externally verified version value before apply. The transfer package contains only source, not locked dependencies, browsers, or approved model/runtime assets. Windows, company OpenCode, internal CI and task benchmarks remain **NOT_RUN**. See [`docs/QUALIFICATION_MATRIX.md`](docs/QUALIFICATION_MATRIX.md).
+`v0.1.0-dev` is a **PRE_QUALIFICATION** pilot, not completed Golden. The local Golden Control prototype is read-only and does not connect to company installations, approved release feeds, or agent/MCP usage data. The 19 executable rule descriptors do not implement all 151 proposed requirements. The checker now refuses false capability declarations as non-applicability, allowlists a small set of deterministic test commands, omits raw command output, and replays project checks before rendering; imported JSON is not signed and does not prove execution authenticity. The company doctor never executes OpenCode; version metadata may be unavailable, and a public V2 candidate is not proof of internal compatibility. The transfer package contains only source, not locked dependencies, browsers, or approved model/runtime assets. Windows, company OpenCode, internal CI and task benchmarks remain **NOT_RUN**. See [`docs/QUALIFICATION_MATRIX.md`](docs/QUALIFICATION_MATRIX.md).
 
 ## Documentation
 

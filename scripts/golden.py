@@ -12,6 +12,7 @@ import datetime as dt
 import hashlib
 import html
 import json
+import math
 import os
 import shutil
 import subprocess
@@ -47,14 +48,14 @@ def manifest_check(data: object, version: str):
     if data['criticality'] not in ('simple', 'workflow', 'production-critical'):
         return 'Invalid criticality.'
     if data['golden_version'] != version:
-        return f"golden_version mismatch: expected pinned {version!r}, found {data['golden_version']!r}."
+        return 'golden_version does not match the pinned Golden release.'
     if not isinstance(data['capabilities'], dict) or any(not isinstance(v, bool) for v in data['capabilities'].values()):
         return 'capabilities must be an object of booleans.'
     if not isinstance(data['commands'], dict):
         return 'commands must be an object.'
     for key, command in data['commands'].items():
         if not isinstance(key, str) or not isinstance(command, list) or not command or not all(isinstance(v, str) and v for v in command):
-            return f'commands.{key} must be a nonempty array of strings.'
+            return 'A project command declaration is not a nonempty array of strings.'
     return None
 
 
@@ -64,7 +65,9 @@ def approved_command(key: str, command: list[str]) -> tuple[bool, str]:
         return False, 'Command must be a nonempty string array.'
     executable = command[0].lower()
     args = command[1:]
-    py = executable in ('${python}', 'python', 'python3', 'py')
+    # Resolve Python through this already-running interpreter. PATH aliases can
+    # point to user-controlled wrappers and are not valid provenance.
+    py = executable == '${python}'
     npm = executable in ('npm', 'pnpm')
     if key == 'python_tests' and py:
         if args in (['-m', 'unittest', 'discover', '-s', 'tests', '-v'], ['-m', 'pytest', '-q']):
@@ -101,7 +104,7 @@ def applicable(rule: dict, project: dict) -> tuple[str, str]:
         return 'NOT_RUN', f'Applicability evidence missing for capabilities {missing!r}; false declarations alone do not prove non-applicability.'
     levels = rule.get('criticality', ['*'])
     if '*' not in levels and project['criticality'] not in levels:
-        return 'NOT_APPLICABLE', f"Criticality {project['criticality']!r} not in {levels!r}; based on the project manifest."
+        return 'NOT_RUN', 'Criticality is below this rule scope; independent owner applicability evidence is missing.'
     return 'APPLICABLE', f"Profile={profile}; criticality={project['criticality']}; manifest fields matched rule requirements."
 
 
@@ -131,7 +134,11 @@ def builtin(handler: str, root: Path, manifest: dict) -> tuple[str, str]:
             try:
                 ast.parse(p.read_text(encoding='utf-8-sig'), filename=str(p))
             except (SyntaxError, UnicodeError, OSError) as exc:
-                errors.append(f'{p.relative_to(root)}: {exc}')
+                file_id = hashlib.sha256(p.relative_to(root).as_posix().encode()).hexdigest()[:12]
+                if isinstance(exc, SyntaxError):
+                    errors.append(f'file_id={file_id}: syntax error at line {exc.lineno or 0}')
+                else:
+                    errors.append(f'file_id={file_id}: source unreadable or invalid UTF-8')
         return ('FAIL', '; '.join(errors[:8])) if errors else ('PASS', f'AST-parsed {len(files)} Python source files.')
     if handler == 'git':
         try:
@@ -150,18 +157,35 @@ def external(key: str, root: Path, project: dict, timeout: int) -> tuple[str, st
     if not allowed:
         return 'NOT_RUN', basis
     command_hash = hashlib.sha256(json.dumps(cmd, separators=(',', ':')).encode()).hexdigest()
-    program = cmd[0]
-    if program == '${PYTHON}':
-        cmd = [sys.executable] + cmd[1:]
-        program = cmd[0]
-    if not shutil.which(program):
+    program = sys.executable if cmd[0] == '${PYTHON}' else cmd[0]
+    resolved_program = shutil.which(program)
+    if not resolved_program:
         return 'NOT_RUN', f'Executable unavailable: {program}.'
     try:
-        p = subprocess.run(cmd, cwd=root, capture_output=True, text=True, timeout=min(max(timeout, 1), 600), shell=False, check=False)
+        executable_path = Path(resolved_program).resolve()
+        if not executable_path.is_file() or executable_path.is_symlink():
+            return 'NOT_RUN', 'Resolved command is not a regular executable file.'
+        executable_sha256 = hashlib.sha256(executable_path.read_bytes()).hexdigest()
+        safe_env = {}
+        for name in ('PATH', 'SYSTEMROOT', 'WINDIR', 'PATHEXT', 'HOME', 'USERPROFILE', 'TMP', 'TEMP', 'TMPDIR', 'LANG', 'LC_ALL'):
+            if name in os.environ:
+                safe_env[name] = os.environ[name]
+        safe_env.update({
+            'PYTHONNOUSERSITE': '1', 'PYTHONDONTWRITEBYTECODE': '1',
+            'PIP_NO_INDEX': '1', 'PIP_DISABLE_PIP_VERSION_CHECK': '1', 'UV_OFFLINE': '1',
+            'npm_config_offline': 'true', 'npm_config_audit': 'false', 'npm_config_fund': 'false',
+            'npm_config_update_notifier': 'false', 'PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD': '1',
+            'NEXT_TELEMETRY_DISABLED': '1', 'DO_NOT_TRACK': '1', 'OTEL_SDK_DISABLED': 'true',
+            'HF_HUB_OFFLINE': '1', 'TRANSFORMERS_OFFLINE': '1',
+            'NO_PROXY': '*', 'no_proxy': '*',
+        })
+        safe_cmd = [str(executable_path), *cmd[1:]]
+        p = subprocess.run(safe_cmd, cwd=root, env=safe_env, capture_output=True, text=True,
+                           timeout=min(max(timeout, 1), 600), shell=False, check=False)
         output = ((p.stdout or '') + '\n' + (p.stderr or '')).strip()
         output_hash = hashlib.sha256(output.encode('utf-8', errors='replace')).hexdigest()
         # Never persist raw command output; it may contain credentials, source or internal paths.
-        return ('PASS' if p.returncode == 0 else 'FAIL'), f'Exit={p.returncode}; {basis}; argv_sha256={command_hash}; output_bytes={len(output.encode("utf-8", errors="replace"))}; output_sha256={output_hash}'
+        return ('PASS' if p.returncode == 0 else 'FAIL'), f'Exit={p.returncode}; {basis}; argv_sha256={command_hash}; executable_sha256={executable_sha256}; output_bytes={len(output.encode("utf-8", errors="replace"))}; output_sha256={output_hash}'
     except subprocess.TimeoutExpired:
         return 'NOT_RUN', f'Command timed out after {timeout}s; not counted as PASS.'
     except OSError as exc:
@@ -203,7 +227,8 @@ def run_check(root: Path, full: bool):
         'schema': 'golden-evidence/v0.1', 'generated_at_utc': dt.datetime.now(dt.timezone.utc).isoformat(),
         'golden_version': release['version'], 'rules_sha256': digest(RULES),
         'project_manifest_sha256': digest(root / 'golden.project.json') if (root / 'golden.project.json').is_file() else None,
-        'project': project.get('name') or root.name,
+        # Project names and checkout paths can contain customer or company details.
+        'project': 'local-project',
         'mode': 'FULL' if full else 'FAST', 'qualifies_release': bool(full and not blocked),
         'blocking_rule_ids': blocked, 'rules_count': len(results), 'results': results,
         'disclaimer': 'Local deterministic evidence only. No human/company sign-off implied.'
@@ -211,8 +236,10 @@ def run_check(root: Path, full: bool):
     return evidence
 
 
-def render_report(data: dict) -> str:
-    validate_evidence(data)
+def render_report(data: dict, project_root: Path) -> str:
+    # Imported JSON is never the authority for PASS or release qualification.
+    # Replay against the explicitly supplied local project and render the fresh result.
+    data = validate_evidence(data, project_root)
     rows = []
     for r in data['results']:
         cells = [r['rule_id'], r['status'], r['title'], r['evidence'], f"{r['duration_ms']} ms"]
@@ -221,7 +248,7 @@ def render_report(data: dict) -> str:
     return '''<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Golden evidence</title><style>
     body{font:14px/1.5 system-ui,Arial;background:#fff;color:#111;margin:0 auto;padding:24px;max-width:1400px}
     h1{font-size:25px} .meta{color:#555}table{border-collapse:collapse;width:100%}td,th{border-bottom:1px solid #ccc;text-align:left;padding:9px;vertical-align:top}td{overflow-wrap:anywhere} th{background:#eee} .status{font-weight:700} .warn{border:2px solid #333;padding:12px} @media(max-width:700px){body{padding:12px;font-size:12px}td,th{padding:5px}}
-    </style><h1>Golden Proof — ''' + title + '''</h1><p class="meta">Mode: ''' + html.escape(data['mode']) + ''' · Golden: ''' + html.escape(str(data['golden_version'])) + ''' · Evidence UTC: ''' + html.escape(data['generated_at_utc']) + '''</p><p class="warn">''' + ('Candidate local checks complete; still needs owner/company approval.' if data['qualifies_release'] else 'NOT RELEASE-QUALIFIED — failed, unrun or deferred checks may exist.') + '''</p><p class="meta">Imported JSON and this HTML are not signed. The renderer checks structure and consistency, not execution authenticity. Re-run checks locally before relying on results.</p><table><thead><tr><th>ID</th><th>Status</th><th>Rule</th><th>Evidence</th><th>Duration</th></tr></thead><tbody>''' + '\n'.join(rows) + '''</tbody></table><p class="meta">Standalone report. No external assets, no server.</p></html>'''
+    </style><h1>Golden Proof — ''' + title + '''</h1><p class="meta">Mode: ''' + html.escape(data['mode']) + ''' · Golden: ''' + html.escape(str(data['golden_version'])) + ''' · Evidence UTC: ''' + html.escape(data['generated_at_utc']) + '''</p><p class="warn">''' + ('Current local checks were replayed; company owner approval is still separate.' if data['qualifies_release'] else 'NOT RELEASE-QUALIFIED — failed, unrun or deferred checks may exist.') + '''</p><p class="meta">This report was generated from a fresh local replay. It does not imply company qualification or human approval.</p><table><thead><tr><th>ID</th><th>Status</th><th>Rule</th><th>Evidence</th><th>Duration</th></tr></thead><tbody>''' + '\n'.join(rows) + '''</tbody></table><p class="meta">Standalone report. No external assets, no server.</p></html>'''
 
 
 def main():
@@ -236,7 +263,7 @@ def main():
             mode.add_argument('--full', action='store_true')
             p.add_argument('--out', type=Path, help='Optional local JSON evidence path')
     p = sub.add_parser('explain'); p.add_argument('rule_id')
-    p = sub.add_parser('report'); p.add_argument('--input', type=Path, required=True); p.add_argument('--out', type=Path, required=True)
+    p = sub.add_parser('report'); p.add_argument('--input', type=Path, required=True); p.add_argument('--project', type=Path, required=True, help='Project to re-run; imported evidence is never trusted as execution proof'); p.add_argument('--out', type=Path, required=True)
     sub.add_parser('list')
     args = parser.parse_args()
     if args.command == 'list':
@@ -252,7 +279,7 @@ def main():
         root = args.project.resolve(); data, error = load_manifest(root)
         release = read_json(VERSION)
         reason = error or manifest_check(data, release['version'])
-        print('Golden version:', release['version']); print('Python:', sys.version.split()[0]); print('Project:', root.name)
+        print('Golden version:', release['version']); print('Python:', sys.version.split()[0]); print('Project: local project')
         print('Manifest:', 'FAIL: ' + reason if reason else 'PASS')
         print('Git:', shutil.which('git') or 'NOT_INSTALLED')
         if not reason:
@@ -274,9 +301,8 @@ def main():
     if args.command == 'report':
         try:
             data = read_json(args.input)
-            validate_evidence(data)
             args.out.parent.mkdir(parents=True, exist_ok=True)
-            args.out.write_text(render_report(data), encoding='utf-8')
+            args.out.write_text(render_report(data, args.project), encoding='utf-8')
             print('HTML report:', args.out)
             return 0
         except (OSError, ValueError, KeyError) as exc:
@@ -284,10 +310,17 @@ def main():
     return 2
 
 
-def validate_evidence(data: object) -> None:
-    """Reject malformed or internally contradictory imported evidence; this is not a signature check."""
+def validate_evidence(data: object, project_root: Path | None = None) -> dict:
+    """Require a current local replay before accepting any imported PASS or qualification claim."""
     if not isinstance(data, dict) or data.get('schema') != 'golden-evidence/v0.1':
         raise ValueError('Unsupported Golden evidence schema.')
+    expected_fields = {
+        'schema', 'generated_at_utc', 'golden_version', 'rules_sha256',
+        'project_manifest_sha256', 'project', 'mode', 'qualifies_release',
+        'blocking_rule_ids', 'rules_count', 'results', 'disclaimer',
+    }
+    if set(data) != expected_fields:
+        raise ValueError('Evidence fields are incomplete or contain an unsupported exception/provenance claim.')
     if data.get('mode') not in ('FAST', 'FULL') or not isinstance(data.get('results'), list):
         raise ValueError('Evidence mode/results are invalid.')
     release = read_json(VERSION)
@@ -297,16 +330,26 @@ def validate_evidence(data: object) -> None:
         raise ValueError('Evidence release/rule catalog pin is stale or invalid.')
     valid = {'PASS', 'FAIL', 'NOT_RUN', 'NOT_APPLICABLE', 'DEFERRED'}
     seen = set()
+    if data.get('rules_count') != len(catalog) or not isinstance(data.get('project'), str) or data.get('project') != 'local-project':
+        raise ValueError('Evidence project label or rule count is invalid.')
     for row in data['results']:
         if not isinstance(row, dict) or row.get('status') not in valid or not isinstance(row.get('rule_id'), str):
             raise ValueError('Evidence contains an invalid result row or status.')
+        if set(row) != {'rule_id', 'title', 'status', 'mandatory', 'stage', 'evidence', 'duration_ms'}:
+            raise ValueError('Evidence row contains unsupported fields.')
         if row['rule_id'] in seen:
             raise ValueError('Evidence contains duplicate rule IDs.')
         seen.add(row['rule_id'])
         if not isinstance(row.get('mandatory'), bool) or not isinstance(row.get('evidence'), str):
             raise ValueError('Evidence row is missing mandatory status/evidence fields.')
-        if row['rule_id'] not in expected_rules or row['mandatory'] != expected_rules[row['rule_id']]:
+        rule = next((item for item in catalog if item['id'] == row['rule_id']), None)
+        if rule is None or row['mandatory'] != expected_rules[row['rule_id']] or row.get('title') != rule['title'] or row.get('stage') != rule['stage']:
             raise ValueError('Evidence rule identity/mandatory status does not match the release catalog.')
+        if (not isinstance(row.get('duration_ms'), (int, float)) or not math.isfinite(row['duration_ms'])
+                or row['duration_ms'] < 0 or row['duration_ms'] > 3_600_000):
+            raise ValueError('Evidence duration is invalid.')
+        if len(row['evidence']) > 4096:
+            raise ValueError('Evidence text exceeds the safe report limit.')
     if seen != set(expected_rules):
         raise ValueError('Evidence does not preserve every rule in the release catalog.')
     blocked = sorted(row['rule_id'] for row in data['results'] if data['mode'] == 'FULL' and row['mandatory'] and row['status'] in ('FAIL', 'NOT_RUN', 'DEFERRED'))
@@ -315,6 +358,20 @@ def validate_evidence(data: object) -> None:
     expected = data['mode'] == 'FULL' and not blocked
     if data.get('qualifies_release') is not expected:
         raise ValueError('Evidence release claim contradicts recorded statuses.')
+    if project_root is None:
+        raise ValueError('Imported evidence cannot be accepted without replaying checks against --project.')
+    root = Path(project_root).resolve()
+    fresh = run_check(root, full=data['mode'] == 'FULL')
+    if data.get('project_manifest_sha256') != fresh.get('project_manifest_sha256'):
+        raise ValueError('Project manifest has changed since evidence was generated; use the fresh local run.')
+    saved_rows = {row['rule_id']: row for row in data['results']}
+    for row in fresh['results']:
+        old = saved_rows[row['rule_id']]
+        if any(old[key] != row[key] for key in ('title', 'status', 'mandatory', 'stage')):
+            raise ValueError(f"Imported status for {row['rule_id']} does not match a fresh local replay.")
+    if data.get('blocking_rule_ids') != fresh['blocking_rule_ids'] or data.get('qualifies_release') != fresh['qualifies_release']:
+        raise ValueError('Imported release claim does not match a fresh local replay.')
+    return fresh
 
 
 if __name__ == '__main__':

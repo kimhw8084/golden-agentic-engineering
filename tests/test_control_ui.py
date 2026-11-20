@@ -41,13 +41,26 @@ class GoldenControlUITests(unittest.TestCase):
         self.assertEqual(page.response, 200)
         self.assertIn('TASK ROUTING', page.wfile.getvalue().decode('utf-8'))
         self.assertIn('COMPANY_START_HERE.md', page.wfile.getvalue().decode('utf-8'))
+        app = (ROOT / 'control' / 'app.js').read_text(encoding='utf-8')
+        self.assertIn('Capability candidates require separate review', app)
+        self.assertIn('capability-selection.json', page.wfile.getvalue().decode('utf-8'))
 
         workflows = Request('/api/workflows')
         control.ControlHandler.do_GET(workflows)
         self.assertEqual(workflows.response, 200)
         payload = json.loads(workflows.wfile.getvalue())
-        self.assertEqual(payload['schema'], 'golden-task-routing/v1')
+        self.assertEqual(payload['schema'], 'golden-task-routing/v2')
         self.assertEqual(len(payload['workflows']), 12)
+        docs_route = next(row for row in payload['workflows'] if row['id'] == 'technical-docs-sop-diagrams')
+        self.assertEqual(docs_route['capability_candidates'], [
+            'cathrynlavery-diagram-design', 'existing-markdown-svg-mermaid'])
+
+        capabilities = Request('/research/capability-selection.json')
+        control.ControlHandler.do_GET(capabilities)
+        self.assertEqual(capabilities.response, 200)
+        registry = json.loads(capabilities.wfile.getvalue())
+        diagram = next(row for row in registry['candidates'] if row['id'] == 'cathrynlavery-diagram-design')
+        self.assertEqual(diagram['decision'], 'EVALUATION_ONLY_NOT_APPROVED')
 
 
 if __name__ == '__main__':

@@ -4,7 +4,7 @@ Do not create a new CI service, GitHub Actions auto-deployment or automatic sour
 
 **Fast developer/commit check:** `python <GOLDEN_HOME>/scripts/golden.py check --fast --project <APP_ROOT> --out <LOCAL_EVIDENCE_JSON>`.
 
-**Full pre-release (or app-owner-approved standards-update) check:** `python <GOLDEN_HOME>/scripts/golden.py check --full --project <APP_ROOT> --out <LOCAL_EVIDENCE_JSON>`; render report with `python <GOLDEN_HOME>/scripts/golden.py report --input <LOCAL_EVIDENCE_JSON> --out <LOCAL_REPORT_HTML>`.
+**Full pre-release (or app-owner-approved standards-update) check:** `python <GOLDEN_HOME>/scripts/golden.py check --full --project <APP_ROOT> --out <LOCAL_EVIDENCE_JSON>`; render report by replaying against the same project with `python <GOLDEN_HOME>/scripts/golden.py report --input <LOCAL_EVIDENCE_JSON> --project <APP_ROOT> --out <LOCAL_REPORT_HTML>`. Imported JSON alone can never qualify a release.
 
 The CI runner must use the **same pinned Golden release** verified by company artifact checksum and same registered rule set. Preserve nonzero exit status. Store reports in existing CI artifact store with appropriate authorization, scrubbing and retention. Route non-applicability and company-exception claims through independent company policy. A passing fast check is **never** a full release qualification.
 

@@ -74,6 +74,21 @@ class GoldenProofTests(unittest.TestCase):
         data = golden.run_check(EXAMPLE, full=False)
         data['qualifies_release'] = True
         with self.assertRaises(ValueError):
+            golden.validate_evidence(data, EXAMPLE)
+
+    def test_report_rejects_fabricated_full_not_applicable_release(self):
+        data = golden.run_check(EXAMPLE, full=True)
+        for row in data['results']:
+            row['status'] = 'NOT_APPLICABLE'
+            row['evidence'] = 'Approved exception by a fabricated authority.'
+        data['blocking_rule_ids'] = []
+        data['qualifies_release'] = True
+        with self.assertRaisesRegex(ValueError, 'fresh local replay'):
+            golden.validate_evidence(data, EXAMPLE)
+
+    def test_report_requires_project_for_imported_evidence(self):
+        data = golden.run_check(EXAMPLE, full=False)
+        with self.assertRaisesRegex(ValueError, 'without replaying'):
             golden.validate_evidence(data)
 
     def test_missing_manifest_never_fabricates_nonapplicable(self):
@@ -87,19 +102,37 @@ class GoldenProofTests(unittest.TestCase):
         manifest = json.loads((EXAMPLE / 'golden.project.json').read_text())
         manifest['golden_version'] = 'unknown'
         err = golden.manifest_check(manifest, '0.1.0-dev')
-        self.assertIn('mismatch', err)
+        self.assertIn('does not match', err)
 
     def test_manifest_rejects_ill_typed_command(self):
         manifest = json.loads((EXAMPLE / 'golden.project.json').read_text())
         manifest['commands']['security_scan'] = 'curl http://bad.example/'
         self.assertIn('array', golden.manifest_check(manifest, '0.1.0-dev'))
 
+    def test_path_python_alias_is_not_an_approved_command(self):
+        status, reason = golden.external(
+            'python_tests', EXAMPLE,
+            {'commands': {'python_tests': ['python3', '-m', 'unittest', 'discover', '-s', 'tests', '-v']}},
+            5,
+        )
+        self.assertEqual(status, 'NOT_RUN')
+        self.assertIn('allowlist', reason)
+
+    def test_unverified_low_criticality_does_not_make_recovery_na(self):
+        manifest = json.loads((EXAMPLE / 'golden.project.json').read_text())
+        rule = next(r for r in golden.read_json(golden.RULES)['rules'] if r['id'] == 'REL-001')
+        status, reason = golden.applicable(rule, manifest)
+        self.assertEqual(status, 'NOT_RUN')
+        self.assertIn('owner applicability evidence', reason)
+
     def test_html_escaping(self):
         data = golden.run_check(EXAMPLE, full=False)
         data['project'] = '<script>alert(1)</script>'
-        output = golden.render_report(data)
+        with self.assertRaisesRegex(ValueError, 'project label'):
+            golden.render_report(data, EXAMPLE)
+        data['project'] = 'local-project'
+        output = golden.render_report(data, EXAMPLE)
         self.assertNotIn('<script>', output)
-        self.assertIn('&lt;script&gt;', output)
         self.assertIn('<!doctype html>', output)
 
     def test_own_sample_python_source_is_syntactically_valid(self):

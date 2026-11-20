@@ -1,0 +1,79 @@
+import importlib.util
+import json
+import shutil
+import tempfile
+import unittest
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+SPEC = importlib.util.spec_from_file_location('golden_route', ROOT / 'scripts' / 'golden_route.py')
+golden_route = importlib.util.module_from_spec(SPEC)
+SPEC.loader.exec_module(golden_route)
+
+
+class TaskRoutingTests(unittest.TestCase):
+    def test_runtime_resolves_only_selected_route_and_existing_skill(self):
+        route = golden_route.route_for('browser-ui-verification')
+        self.assertEqual(route['id'], 'browser-ui-verification')
+        self.assertEqual({item['id'] for item in route['skills']}, {'golden-react', 'golden-nicegui'})
+        self.assertEqual(route['mcp']['configured_for_route'], [])
+        self.assertTrue(all((ROOT / item['path']).is_file() for item in route['skills']))
+        self.assertEqual(route['mcp']['evaluation_candidates_only'], ['microsoft-playwright-mcp'])
+
+    def test_documentation_route_surfaces_diagram_design_as_unapproved_candidate(self):
+        route = golden_route.route_for('technical-docs-sop-diagrams')
+        diagram = next(item for item in route['capability_candidates'] if item['id'] == 'cathrynlavery-diagram-design')
+        self.assertEqual(diagram['owner_repo'], 'cathrynlavery/diagram-design')
+        self.assertEqual(diagram['decision'], 'EVALUATION_ONLY_NOT_APPROVED')
+        self.assertEqual(diagram['measured_evidence'], 'UNTESTED')
+
+    def test_every_route_reference_resolves_and_keeps_candidate_mcp_unapproved(self):
+        self.assertEqual(golden_route.validation_errors(), [])
+        rows = json.loads((ROOT / 'workflows' / 'task-routing.json').read_text())['workflows']
+        self.assertEqual(len(rows), 12)
+        self.assertTrue(all(row['mcp'] == [] for row in rows))
+
+    def test_missing_skill_reference_fails_manifest_validation(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            for relative in ('workflows/task-routing.json', 'research/capability-selection.json', 'opencode.json'):
+                destination = root / relative
+                destination.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copyfile(ROOT / relative, destination)
+            shutil.copytree(ROOT / '.opencode', root / '.opencode')
+            path = root / 'workflows' / 'task-routing.json'
+            data = json.loads(path.read_text())
+            data['workflows'][0]['skills'] = ['missing-skill']
+            path.write_text(json.dumps(data))
+            errors = golden_route.validation_errors(root)
+            self.assertTrue(any('skill reference is missing locally' in error for error in errors))
+
+    def test_unknown_route_fields_and_candidates_fail_closed(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            for relative in ('workflows/task-routing.json', 'research/capability-selection.json', 'opencode.json'):
+                destination = root / relative
+                destination.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copyfile(ROOT / relative, destination)
+            shutil.copytree(ROOT / '.opencode', root / '.opencode')
+            path = root / 'workflows' / 'task-routing.json'
+            data = json.loads(path.read_text())
+            data['workflows'][0]['unreviewed_power'] = True
+            data['workflows'][0]['capability_candidates'] = ['unregistered-tool']
+            path.write_text(json.dumps(data))
+            errors = golden_route.validation_errors(root)
+            self.assertTrue(any('required route fields missing' in error for error in errors))
+            self.assertTrue(any('capability_candidates' in error for error in errors))
+
+    def test_non_object_manifest_roots_fail_closed(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            for relative in ('workflows/task-routing.json', 'research/capability-selection.json', 'opencode.json'):
+                destination = root / relative
+                destination.parent.mkdir(parents=True, exist_ok=True)
+                destination.write_text('[]')
+            self.assertTrue(any('roots must be JSON objects' in error for error in golden_route.validation_errors(root)))
+
+
+if __name__ == '__main__':
+    unittest.main()

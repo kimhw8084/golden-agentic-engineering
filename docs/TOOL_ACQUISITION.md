@@ -6,6 +6,8 @@
 
 [`cathrynlavery/diagram-design`](https://github.com/cathrynlavery/diagram-design) is a diagram-making agent skill, not a CLI. The upstream README documents copying or symlinking `skills/diagram-design/` into `.opencode/skills/diagram-design`; OpenCode has no marketplace package for it, so copied installs need manual updates. Its output is self-contained HTML/SVG, which suits diagrams for publication but does not provide an editable text source for pull-request diffs. It requests Google Fonts by default; system-font mode avoids that network request. Evaluate its actual skill behavior, output quality, privacy, assets, dependencies, and offline use in the target company OpenCode before recommending adoption. Mermaid/D2 remain candidates for diagrams that need source-level editing and diffs.
 
+The documentation route now lists `cathrynlavery-diagram-design` by its machine-readable registry ID and reports its exact source, review decision, and unmeasured status. The router does not install or invoke the skill. Its candidate status preserves the prior diagram-design choice for company evaluation while keeping Mermaid/SVG available as the offline fallback.
+
 ## On a personal/approved public staging computer only
 
 ```bash
