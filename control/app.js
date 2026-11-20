@@ -122,6 +122,7 @@ function populateInstall(installation, assets) {
 
 function populateEvidence(activity) {
   const usage = activity.golden_evidence;
+  const trace = activity.invocation_trace || {};
   const connected = usage.status === "CONNECTED";
   $("reportCount").textContent = connected ? display(usage.reports,0) : "Not connected";
   $("fastCount").textContent = connected ? display(usage.fast,0) : "Unknown";
@@ -138,6 +139,10 @@ function populateEvidence(activity) {
   $("activityValue").textContent = connected ? `${usage.reports} local reports` : "No evidence source";
   $("activityDetail").textContent = connected ? "Summary counts only; report content stays local." : "Golden check reports are optional local inputs.";
   mark($("activityMark"),connected ? "good" : "unknown");
+  $("traceProvenance").textContent = display(trace.status,"NOT_INSTRUMENTED").replaceAll("_"," ");
+  $("traceDetail").textContent = trace.source === "NONE"
+    ? "No trusted OpenCode runtime event source is connected. Model/operator self-reports are not verified traces."
+    : "Invocation source and provenance require validation before counts are shown.";
 }
 
 function render(data) {
@@ -176,7 +181,7 @@ function render(data) {
     $("nextDescription").textContent = "Some installed files differ from this checkout. Preserve company provider settings and reconcile each changed file deliberately.";
   } else if (installation.state === "IN_SYNC_WITH_CHECKOUT") {
     $("nextHeading").textContent = "Prove the installed runtime works";
-    $("nextDescription").textContent = "Matching files are only a starting point. Verify agent and skill discovery, exercise approved MCP tools where relevant, and compare CLI options on a real task.";
+    $("nextDescription").textContent = "Matching files are only a starting point. Verify relevant agent/skill discovery and use approved MCP tools when the task needs them. Compare a CLI only when it is a plausible alternative for that operation.";
   }
 }
 

@@ -12,11 +12,11 @@
 | 5 | Implement missing rule coverage from 151 proposal requirements | Rule owners + verifier | Each mandatory rule maps to actual deterministic test or explicit NOT_RUN |
 | 6 | Documentation/diagram/benchmark workflows + no-AI drills | Domain owners | Editable docs + executed outputs, offline/runtimes tested |
 | 7 | Golden lead-approved v1 release, two-engineer pilot | Team lead and two pilot engineers | Real new/existing app, independently graded tests, measurable speed and quality |
-| 8 | Team-wide Golden Control using the existing company platform | Existing platform owner + Golden lead | Approved identity, read-only installation/release adapters, privacy-reviewed usage measures, rollback evidence; no parallel app registry or observability store |
+| 8 | Team-wide Golden Control using the existing company platform | Existing platform owner + Golden lead | Approved identity, read-only installation/release adapters, optional aggregate usage view from the existing platform, rollback evidence; no Golden-side collector, app registry or observability store |
 
 ## Tool selection discipline
 
-First inventory approved OpenCode agents, skills, connected MCP servers/tools, and relevant orchestration features. Exercise the best-fit agentic workflow on a representative task before comparing CLI candidates against the same acceptance criteria. Qualify **one winner per capability**, then compose the strongest agentic, MCP, and CLI parts into a hybrid where useful. A CLI is preferred for an operation only when evidence shows it wins that operation. The 63-source catalog is not a mandate to install 63 tools and does not describe the full agentic capability set. Candidate examples by function:
+For the initial pilot, inventory approved OpenCode agents, skills, connected MCP servers/tools, and relevant orchestration features once for the verified runtime/config/permission baseline. Reuse that baseline for routine work until one of those inputs changes; do not repeat the full inventory per task. Exercise the best-fit agentic workflow on a representative task before comparing a CLI that is a plausible alternative for the same operation. Qualify **one winner per evaluated capability**, then compose the strongest agentic, MCP, and CLI parts into a hybrid where useful. A CLI is preferred for an operation only when evidence shows it wins that operation. The 63-source catalog is not a mandate to install 63 tools and does not describe the full agentic capability set. Candidate examples by function:
 
 - Repository inspection: ripgrep, scc, ast-grep; one chosen structural approach.
 - Python: Ruff, real app's existing pytest/unittest; optionally uv if approved.
@@ -40,7 +40,7 @@ No overall weighted score. A faster unsafe change is not a successful release; e
 
 ## Self-service learning
 
-Beginner uses `/golden-build` (guided skill/agent/MCP discovery). Expert invokes relevant agents, skills, and approved MCP tools directly, then uses CLI for operations where it provides the best evidence or outcome. Both use the same pinned standards. Independence is graded by independently completed real apps and reproducible acceptance, not watching tutorials.
+Beginner uses `/golden-build` (primary-agent routing with only relevant skills and known integrations). Expert invokes relevant agents, skills, and approved MCP tools directly, then uses CLI for operations where it provides the best evidence or outcome. Both use the same pinned standards and skip repeated inventories/benchmarks on routine work. Independence is graded by independently completed real apps and reproducible acceptance, not watching tutorials.
 
 ## Stop conditions
 

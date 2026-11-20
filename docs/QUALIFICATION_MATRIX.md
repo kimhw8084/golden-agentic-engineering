@@ -15,9 +15,10 @@
 | Company risk-exception workflow | NOT DONE | Integrate with existing company authority, preserve original result |
 | Actual Windows + Linux end-to-end | NOT TESTED | Linux container Python pilot executed; Windows must be tested |
 | Actual company OpenCode + internal model | NOT TESTED | Inspect internal version/config; prove relevant agent/skill/MCP use and compare CLI workflows on the same task |
-| Agentic-first tool selection | NOT TESTED | Run representative task-level comparisons; record actual agent, skill, MCP and CLI invocations, results, latency and rework |
+| Low-ceremony agentic-first routing | DESIGN UPDATED, NOT TESTED | Primary agent default; trigger live inventory/comparison only for uncertainty, a changed baseline, explicit selection request, or pilot/release qualification |
+| Tool invocation trace provenance | NOT IMPLEMENTED | No trusted internal OpenCode event source is connected; self-reported calls do not count as verified usage or benchmark proof |
 | Company CI integration | DESIGN ONLY | Existing CI owner builds trigger and evidence storage |
-| Golden Control local UI | PROTOTYPE INCLUDED | Read-only asset comparison and local Golden evidence summaries; no company-wide install inventory, approved release feed, authentication, or agent/MCP usage adapter |
+| Golden Control local UI | PROTOTYPE INCLUDED | Read-only asset comparison and local Golden evidence summaries; no company-wide install inventory, approved release feed, authentication, or trusted invocation trace source; no usage collector is in scope |
 | Bundled MCP example server | INTENTIONALLY DISABLED | Example remains off pending server/SDK/permission/offline qualification; inspect and exercise approved MCP servers already connected to company OpenCode |
 | Monitoring single-pane React UI | OUT OF SCOPE | Owned by separate team platform |
 | Lead-approved Golden release | NOT APPROVED | Tests + documented evidence + team lead sign-off |

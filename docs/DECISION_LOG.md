@@ -15,5 +15,8 @@ Recorded from 107 explicit survey/reconciliation responses (all remain provision
 11. Every deliverable uses strict black/white/gray, including alarms and scientific data visualizations. Use redundant visual distinctions.
 12. App usage feedback: minimal aggregated signals and optional explicit feedback in the existing team platform; only approved standards-relevant summaries reach Golden stewardship.
 13. Qualification: new and existing real apps, two pilot engineers, Windows/Linux, model-off, speed, maintainability, users, defects and reproducible results.
+14. Low-ceremony routing: primary OpenCode agent is the default; discovery, specialist/MCP calls, comparisons, and evidence records scale with uncertainty and decision value. Do not repeat full inventories or create invocation ledgers for every routine task.
+15. Tool-call provenance: only a trusted runtime event source can support a machine-verified invocation trace. Model/operator self-report, repository configuration, and hashes of self-authored logs do not prove execution. The starter has no verified OpenCode trace source.
+16. Golden Control scope fence: own Golden package/configuration/release/qualification status and onboarding. Consume only read-only aggregates from existing approved systems; do not create an event collector, productivity analytics, app registry, or new observability store.
 
 Open company decisions remain: exact FastAPI publishing limit, permitted package sources, real CI approval implementation, OSS clearance, metrics thresholds, authoritative waiver roles and detailed team feedback privacy rules.

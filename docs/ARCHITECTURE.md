@@ -36,11 +36,13 @@
                    v
              [Team lead Golden standards improvement process]
 
-Golden Control = the team-facing operating cockpit for Golden installation, releases,
-usage/evidence, design, qualification progress, and onboarding. It must surface source
-and freshness for every status and show UNKNOWN when data is absent. It must not own
-the app registry, app compliance dashboard, application hosting, production actions,
-or raw application feedback/observability storage. See `docs/GOLDEN_CONTROL_SPEC.md`.
+Golden Control = the bounded operating cockpit for Golden's own installation, releases,
+qualification evidence, design and onboarding. It can display minimal aggregate usage
+evidence from the existing platform as a read-only view. It must surface source and
+freshness for every status and show UNKNOWN when data is absent. It must not own an event
+collector, productivity analytics, app registry, app compliance dashboard, application
+hosting, production actions, or raw application feedback/observability storage. See
+`docs/GOLDEN_CONTROL_SPEC.md`.
 ```
 
 ### Internal boundaries
@@ -51,13 +53,15 @@ or raw application feedback/observability storage. See `docs/GOLDEN_CONTROL_SPEC
 | Golden Release | existing artifact repository | Hash-qualified immutable package | Local approved last-known-good copy |
 | OpenCode | existing company's internal model/runtime | Agent edits code and selectively calls skills/CLI/MCP | Manual engineer + local deterministic tools |
 | Golden Proof | standalone local Python CLI and qualified OSS CLIs | Explicit rule applicability + evidence; no LLM | `NOT_RUN`, not fake PASS |
-| Golden Control | local read-only view, later approved company adapters | Installation, update, usage/evidence, design and next-action status | Explicit unknown/stale states; no fabricated data |
+| Golden Control | local read-only view, later approved company adapters | Golden installation, update, qualification, design and next-action status; optional aggregate evidence view | Explicit unknown/stale states; no collector or fabricated data |
 | Application CI | existing app CI and Git history | Full pre-release and owner-approved standards update scans | Blocks release or uses company-authorized evidence-backed exception |
 | Team Platform | existing separately managed app platform | App hosting + observability single pane + raw feedback | Independent of Golden Control |
 
 ## 2. Agentic-first capability and orchestration choice
 
-**Required order:** inspect the actual approved agent, skill, and MCP capabilities first; exercise the best-fit agentic workflow on the task; then compare relevant CLI candidates on the same acceptance criteria. Select by evidence for each capability. A CLI is preferred for a specific operation only when it performs better on the requirements that matter. Combine agents/skills/MCP with deterministic CLIs when that produces the strongest end-to-end result. Do not call irrelevant tools or force extra agents.
+**Default:** use the primary OpenCode agent for reasoning and routing. Keep discovery proportional: load only a relevant skill, reuse a recent runtime baseline, and use known approved MCP capabilities when the task needs them. Do not inventory every agent/MCP, benchmark alternatives, or keep a tool-call ledger for routine work. Add a specialist or MCP call when its expected benefit exceeds latency/coordination cost.
+
+**Triggered evaluation:** inspect live capabilities when a non-obvious integration is central, the runtime/config/permissions changed, the user requests tool selection or performance measurement, or a pilot/release needs qualification. Exercise the strongest suitable agentic workflow before comparing a CLI that is a plausible alternative for that operation. Compare matched acceptance criteria and choose per capability. See `docs/AGENTIC_FIRST_EVALUATION.md`.
 
 | Pattern | Trigger | Tools/actors | Why |
 |---|---|---|---|
@@ -77,9 +81,9 @@ Avoid always-on swarms, open-ended loops and irrelevant MCP calls. Agent descrip
 - `standards/rules.json`: machine-checkable rule IDs, applicability and command mapping.
 - `golden.project.json`: pinned version, explicit app profile/capability declarations and local commands.
 - Source code / tests / existing docs: retrieve only relevant files via read/grep; do not put them into persistent prompt.
-- MCP: typed access to authorized internal systems; discover and exercise relevant connected tools during capability selection. Compare a CLI for the same operation when useful.
+- MCP: typed access to authorized internal systems; inspect live connections when the task requires a non-obvious integration or a selection evaluation. Compare a CLI for the same operation only when it is a plausible alternative.
 - CLI: implementation, build, test, lint, or service operations when the candidate is approved and evidence shows it is the best fit for that operation.
-- CI/evidence JSON: authoritative check outputs, linked to real files/versions. AI can explain but never author fabricated verification status.
+- CI/evidence JSON: authoritative deterministic check outputs, linked to real files/versions. OpenCode tool-use claims need a separate trusted runtime event source; self-report or a hash of an agent-authored log does not prove invocation. AI can explain but never author fabricated verification status.
 
 ## 4. Contract between project, checker, and CI
 
@@ -140,7 +144,7 @@ The current Golden Control UI is a localhost-only process with read-only file/ev
 1. **Golden Standard:** documents/rules/profiles in Git.
 2. **Golden Workbench:** OpenCode agents/skills/commands and qualified CLI packages.
 3. **Golden Proof:** local deterministic runner and existing CI, with evidence.
-4. **Golden Control:** first-class team cockpit for Golden installation, approved releases, minimized usage/evidence, design rationale, progress, and onboarding.
+4. **Golden Control:** bounded team cockpit for Golden installation, approved releases, qualification evidence, design rationale, progress, and onboarding; optional aggregate evidence is read-only from the existing platform. No new collector, productivity dashboard, or event store.
 5. **Golden Academy:** static guides, worked examples, objective real-app qualification exercises.
 
 The starter now includes two dependency-free local programs: deterministic proof (`scripts/golden.py`) and a read-only control UI (`scripts/golden_control.py`). Company-wide status sources, authentication, and deployment must integrate with existing approved systems rather than become new standalone services.

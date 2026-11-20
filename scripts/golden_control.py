@@ -187,6 +187,8 @@ def snapshot(target: Path | None, evidence_dir: Path | None) -> dict:
         'activity': {
             'golden_evidence': activity,
             'agent_skill_mcp_usage': 'NOT_INSTRUMENTED',
+            'invocation_trace': {'status': 'NOT_INSTRUMENTED', 'source': 'NONE',
+                                 'provenance': 'UNAVAILABLE'},
             'telemetry_upload': 'OFF',
         },
         'runtime': {

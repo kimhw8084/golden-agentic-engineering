@@ -4,7 +4,7 @@
 
 A lightweight **OpenCode-first agentic engineering standards toolkit** for a 10-person team. This repository contains functioning Python-standard-library verification scaffolding, OpenCode agents/skills/commands, a real candidate OSS manifest, opt-in public-source staging, and company deployment instructions. It deliberately does **not** host company engineering applications or replace the existing CI, Git, artifact registry, Prometheus, Grafana or Splunk.
 
-Tool selection is agentic-first: inspect and exercise relevant agents, skills, and already-approved MCP capabilities before comparing CLI candidates. Choose by representative task evidence; a CLI becomes preferred for an operation only when it outperforms the agentic option on the stated acceptance criteria. See [`docs/AGENTIC_FIRST_EVALUATION.md`](docs/AGENTIC_FIRST_EVALUATION.md). This is a selection order, not a requirement to call every agent or MCP server.
+The primary OpenCode agent is the default reasoning/routing layer. For routine tasks, use only clearly relevant skills and already-known authorized integrations; broad inventories, benchmarks, and invocation ledgers are not required per task. Inspect live capabilities and compare agentic, MCP, CLI, or hybrid options when a selection decision, material uncertainty, changed runtime baseline, or qualification requires it. A CLI must demonstrate value for that operation. See [`docs/AGENTIC_FIRST_EVALUATION.md`](docs/AGENTIC_FIRST_EVALUATION.md).
 
 > **You can push this repository to GitHub now.** You cannot claim it or its OSS candidates are company-cleared or offline-runnable before internal qualification. No external dependencies are shipped by default.
 
@@ -73,7 +73,7 @@ Golden Control is the team-facing operating cockpit for Golden installation, app
 
 ## Tool selection
 
-Start with the actual company's available agent, skill, and connected/approved MCP capabilities. Exercise the best-fit agentic workflow on a representative task, then compare relevant CLI tools against the same acceptance criteria. Select agentic, CLI, or hybrid capabilities by evidence, per operation; do not assume a CLI should replace agentic tools or that an agentic feature automatically wins. The candidate source catalog is not a capability ranking. The procedure and evidence template are in [`docs/AGENTIC_FIRST_EVALUATION.md`](docs/AGENTIC_FIRST_EVALUATION.md).
+For the initial company pilot, establish and reuse a baseline of actual available agents, skills, and approved MCP capabilities. On routine tasks, let the primary agent route to only relevant capabilities; run a comparison only when a CLI is a plausible alternative, the user asks for one, or qualification requires it. Select agentic, CLI, or hybrid capabilities by evidence, per operation. The candidate source catalog is not a capability ranking. See [`docs/AGENTIC_FIRST_EVALUATION.md`](docs/AGENTIC_FIRST_EVALUATION.md).
 
 ## Non-negotiable product behavior
 

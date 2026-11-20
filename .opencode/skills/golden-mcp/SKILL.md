@@ -5,7 +5,7 @@ description: Choose minimal local MCP connectivity and verify exact company Open
 
 # Agentic MCP discovery and integration
 
-During tool discovery, inspect the MCP servers and tools already connected to this OpenCode environment alongside its agents and skills. MCP provides structured service capabilities for an agent to use; it is not automatically better or worse than a CLI. When a connected, authorized MCP tool fits the task, exercise it as part of the agentic workflow and record the actual tool/result. Compare a CLI for the same service operation when appropriate, then choose per acceptance criteria, reliability, permissions, latency and offline needs.
+Inspect connected MCP servers when the task needs a service capability or the runtime baseline is unfamiliar; routine tasks do not require a full MCP inventory. MCP provides structured service capabilities for an agent to use; it is not automatically better or worse than a CLI. When a connected, authorized MCP tool fits the task, exercise it as part of the agentic workflow. Compare a CLI for the same service operation only when it is a plausible alternative or the user requests a comparison. Record actual invocation evidence for explicit evaluations, and distinguish runtime-sourced events from model/operator self-report.
 
 Use only company-approved internal Git/DB/monitoring endpoints, narrow permissions, no hard-coded secrets, and read-only diagnostics unless separately authorized. Do not install, enable, or call an unapproved MCP server. If no relevant approved MCP exists, record the gap and use the best available fallback.
 
