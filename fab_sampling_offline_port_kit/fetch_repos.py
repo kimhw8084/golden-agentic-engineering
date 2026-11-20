@@ -20,18 +20,24 @@ def main():
     p.add_argument('--output', default=str(HOME / 'sources'))
     args = p.parse_args()
     target = Path(args.output).resolve()
+    try:
+        target.relative_to(HOME.resolve())
+    except ValueError:
+        p.error('--output must remain inside the kit so its lock can be verified without recording host paths')
     target.mkdir(parents=True, exist_ok=True)
     selected = [r for r in CANDIDATES if args.stage == 'all' or (args.stage == 'core' and r['stage'] == 'core') or (args.stage == 'fab' and r['stage'].startswith('fab')) or (args.stage == 'extended' and r['stage'].startswith('extended'))]
     output = []
     for r in selected:
         dest = target / r['repo'].replace('/','__')
-        state = {'repo':r['repo'],'stage':r['stage'],'expected_license':r['license_expected'],'path':str(dest.relative_to(HOME)) if dest.is_relative_to(HOME) else str(dest),'url':r['url']}
+        state = {'repo':r['repo'],'stage':r['stage'],'expected_license':r['license_expected'],'path':dest.relative_to(HOME).as_posix(),'url':r['url']}
         print(f"[{r['rank']:02}] {r['repo']} ...", flush=True)
+        if dest.is_symlink():
+            state.update(status='INVALID_EXISTING_DIR');output.append(state);print('FAILED');continue
         if not dest.exists():
             result = git('clone','--depth','1','--single-branch','--no-tags','--',r['url'],str(dest))
             if result.returncode != 0:
                 state.update(status='CLONE_FAILED',error=result.stderr[-1800:]);output.append(state); print('FAILED');continue
-        if not (dest / '.git').exists():
+        if not (dest / '.git').is_dir() or (dest / '.git').is_symlink():
             state.update(status='INVALID_EXISTING_DIR');output.append(state);print('FAILED');continue
         sha = git('-C',str(dest),'rev-parse','HEAD')
         origin = git('-C',str(dest),'remote','get-url','origin')

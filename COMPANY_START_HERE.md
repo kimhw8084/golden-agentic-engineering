@@ -4,19 +4,21 @@
 
 ## Step A — offline doctor / dry run
 
-Run this with Python 3.10+ from the extracted Golden folder. It reads platform/runtime presence, the current OpenCode config key names, file permissions, and the source bundle manifest. It does **not** run `opencode`, `node`, `git`, package managers, or any network request. It reads OpenCode/Node versions only from matching local package metadata or a managed-install version path; if it cannot identify a version, the result stays `UNKNOWN` and Step B is blocked.
+Run this with Python 3.10+ from the extracted Golden folder. It reads platform/runtime presence, the current OpenCode config format and safe structure counts, file permissions, and the source bundle manifest. It accepts JSON and JSONC (comments and trailing commas) and flags simultaneous `opencode.json` and `opencode.jsonc` files for review. It does **not** run `opencode`, `node`, `git`, package managers, or any network request. It reads OpenCode/Node versions only from matching local package metadata or a managed-install version path; if it cannot identify a version, the result stays `UNKNOWN` and Step B is blocked.
+
+The default user config lookup follows [OpenCode's documented global config location](https://opencode.ai/docs/config/): `~/.config/opencode/opencode.json` or `.jsonc`, with `XDG_CONFIG_HOME` honored when set.
 
 ### Windows PowerShell
 
 ```powershell
-py -3 scripts\company_bootstrap.py doctor --out "$env:TEMP\golden-doctor.json" --config "$env:APPDATA\opencode\opencode.json"
+py -3 scripts\company_bootstrap.py doctor --out "$env:TEMP\golden-doctor.json"
 py -3 scripts\package_offline.py verify "D:\approved-transfer\golden.tar.gz"
 ```
 
 ### Linux shell
 
 ```sh
-python3 scripts/company_bootstrap.py doctor --out /tmp/golden-doctor.json --config "$HOME/.config/opencode/opencode.json"
+python3 scripts/company_bootstrap.py doctor --out /tmp/golden-doctor.json
 python3 scripts/package_offline.py verify /approved-transfer/golden.tar.gz
 ```
 
@@ -39,13 +41,14 @@ Only after a person has reviewed Step A and the archive checksum/content, and th
 ### Windows PowerShell
 
 ```powershell
-py -3 scripts\company_bootstrap.py apply --doctor-result "$env:TEMP\golden-doctor.json" --bundle "D:\approved-transfer\golden.tar.gz" --target "$env:APPDATA\opencode" --transaction "$env:TEMP\golden-transaction.json" --authorize-reviewed-apply
+$configHome = if ($env:XDG_CONFIG_HOME) { $env:XDG_CONFIG_HOME } else { Join-Path $env:USERPROFILE ".config" }
+py -3 scripts\company_bootstrap.py apply --doctor-result "$env:TEMP\golden-doctor.json" --bundle "D:\approved-transfer\golden.tar.gz" --target (Join-Path $configHome "opencode") --transaction "$env:TEMP\golden-transaction.json" --authorize-reviewed-apply
 ```
 
 ### Linux shell
 
 ```sh
-python3 scripts/company_bootstrap.py apply --doctor-result /tmp/golden-doctor.json --bundle /approved-transfer/golden.tar.gz --target "$HOME/.config/opencode" --transaction /tmp/golden-transaction.json --authorize-reviewed-apply
+python3 scripts/company_bootstrap.py apply --doctor-result /tmp/golden-doctor.json --bundle /approved-transfer/golden.tar.gz --target "${XDG_CONFIG_HOME:-$HOME/.config}/opencode" --transaction /tmp/golden-transaction.json --authorize-reviewed-apply
 ```
 
 The `--authorize-reviewed-apply` flag is the explicit Step B action. Run `rollback` only if you want to remove files added by that transaction. Rollback refuses files that changed after apply. The apply path smoke-tests a synthetic manifest in a temporary directory; it does not start OpenCode or deploy an application.

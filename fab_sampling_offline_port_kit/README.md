@@ -14,13 +14,15 @@ python download_wheels.py --requirements core
 python pack_transfer.py
 ```
 
+`fetch_repos.py --output` accepts a staging directory only when it remains inside this kit; the lock records a kit-relative path so it contains no staging-PC absolute path and the verifier checks that exact location. The verifier also checks each Git origin against the manifest. `pack_transfer.py --output PATH` can choose an archive destination outside the kit. It refuses to overwrite an archive/checksum and refuses to package symlinks.
+
 `fetch_repos.py` downloads all 38 repository source trees with shallow Git history and writes `repos.lock.json` containing exact commit SHAs. It does not clone submodules, fetch Git LFS objects, or download SMT2020 (or any other external data). **Check for missing submodules/LFS/datasets before declaring any repo testable.** A failed clone is never silently marked complete.
 
 `download_wheels.py` downloads, but does **not install**, Python binary wheels and their dependencies for the selected requirement set. Ensure matched OS/architecture/Python ABI. Some source-only, GPU, Rust, C++, Oracle and SQL Server dependencies need separate approved artifacts. You can test source code with preinstalled work PC packages before making a wheelhouse.
 
 `verify_wheelhouse.py` can verify the staged wheel hashes after transport.
 
-`pack_transfer.py` packages sources, commit lock, the instructions and any downloaded wheelhouse as `fab_sampling_source_transfer.zip` next to this directory, with a `.sha256` hash. Scan and approve both archive and dependencies in accordance with work-PC policy.
+`pack_transfer.py` packages sources, commit lock, the instructions and any downloaded wheelhouse as `fab_sampling_source_transfer.zip` next to this directory, with a `.sha256` hash. The default is a full 38-repository verification; `--allow-incomplete` explicitly permits a partial evaluation archive. Scan and approve both archive and dependencies in accordance with work-PC policy.
 
 ## On the OFFLINE work PC
 

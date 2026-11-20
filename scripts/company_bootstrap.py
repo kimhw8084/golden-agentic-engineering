@@ -119,37 +119,140 @@ def local_executable(program: str) -> dict:
 
 
 def config_path() -> Path:
-    if os.name == 'nt':
-        base = Path(os.environ.get('APPDATA', Path.home() / 'AppData' / 'Roaming'))
-    else:
-        base = Path(os.environ.get('XDG_CONFIG_HOME', Path.home() / '.config'))
-    return base / 'opencode' / 'opencode.json'
+    base = Path(os.environ.get('XDG_CONFIG_HOME', Path.home() / '.config'))
+    directory = base / 'opencode'
+    json_path = directory / 'opencode.json'
+    jsonc_path = directory / 'opencode.jsonc'
+    if jsonc_path.is_file() and not json_path.exists():
+        return jsonc_path
+    return json_path
+
+
+def parse_jsonc(source: str) -> object:
+    """Parse OpenCode JSONC (comments and trailing commas) without dependencies."""
+    without_comments: list[str] = []
+    index = 0
+    in_string = False
+    escaped = False
+    while index < len(source):
+        char = source[index]
+        next_char = source[index + 1] if index + 1 < len(source) else ''
+        if in_string:
+            without_comments.append(char)
+            if escaped:
+                escaped = False
+            elif char == '\\':
+                escaped = True
+            elif char == '"':
+                in_string = False
+            index += 1
+            continue
+        if char == '"':
+            in_string = True
+            without_comments.append(char)
+            index += 1
+            continue
+        if char == '/' and next_char == '/':
+            without_comments.extend('  ')
+            index += 2
+            while index < len(source) and source[index] not in '\r\n':
+                without_comments.append(' ')
+                index += 1
+            continue
+        if char == '/' and next_char == '*':
+            without_comments.extend('  ')
+            index += 2
+            closed = False
+            while index < len(source):
+                if source[index] == '*' and index + 1 < len(source) and source[index + 1] == '/':
+                    without_comments.extend('  ')
+                    index += 2
+                    closed = True
+                    break
+                without_comments.append('\n' if source[index] == '\n' else ' ')
+                index += 1
+            if not closed:
+                raise ValueError('unterminated JSONC comment')
+            continue
+        without_comments.append(char)
+        index += 1
+
+    no_trailing_commas: list[str] = []
+    in_string = False
+    escaped = False
+    for index, char in enumerate(without_comments):
+        if in_string:
+            no_trailing_commas.append(char)
+            if escaped:
+                escaped = False
+            elif char == '\\':
+                escaped = True
+            elif char == '"':
+                in_string = False
+            continue
+        if char == '"':
+            in_string = True
+            no_trailing_commas.append(char)
+        elif char == ',':
+            next_index = index + 1
+            while next_index < len(without_comments) and without_comments[next_index].isspace():
+                next_index += 1
+            if next_index >= len(without_comments) or without_comments[next_index] not in '}]':
+                no_trailing_commas.append(char)
+        else:
+            no_trailing_commas.append(char)
+    return json.loads(''.join(no_trailing_commas))
 
 
 def inspect_config(path: Path) -> dict:
     if not path.exists():
-        return {'state': 'MISSING', 'provider_count': 0, 'model_key_present': False, 'mcp_server_count': 0}
+        return {'state': 'MISSING', 'format': path.suffix.lstrip('.') or 'json', 'provider_count': 0,
+                'model_key_present': False, 'mcp_server_count': 0, 'agent_count': 0,
+                'skill_entry_count': 0, 'command_count': 0, 'plugin_count': 0}
     if path.is_symlink() or not path.is_file():
-        return {'state': 'UNSAFE_PATH', 'provider_count': 0, 'model_key_present': False, 'mcp_server_count': 0}
+        return {'state': 'UNSAFE_PATH', 'format': path.suffix.lstrip('.') or 'json', 'provider_count': 0,
+                'model_key_present': False, 'mcp_server_count': 0, 'agent_count': 0,
+                'skill_entry_count': 0, 'command_count': 0, 'plugin_count': 0}
+    sibling = path.with_suffix('.jsonc' if path.suffix != '.jsonc' else '.json')
+    if sibling.is_file():
+        return {'state': 'AMBIGUOUS_MULTIPLE_CONFIG_FILES', 'format': 'multiple', 'provider_count': 0,
+                'model_key_present': False, 'mcp_server_count': 0, 'agent_count': 0,
+                'skill_entry_count': 0, 'command_count': 0, 'plugin_count': 0}
     try:
-        data = json.loads(path.read_text(encoding='utf-8'))
+        data = parse_jsonc(path.read_text(encoding='utf-8'))
     except (OSError, ValueError):
-        return {'state': 'UNREADABLE_OR_INVALID', 'provider_count': 0, 'model_key_present': False, 'mcp_server_count': 0}
+        return {'state': 'UNREADABLE_OR_INVALID', 'format': path.suffix.lstrip('.') or 'json', 'provider_count': 0,
+                'model_key_present': False, 'mcp_server_count': 0, 'agent_count': 0,
+                'skill_entry_count': 0, 'command_count': 0, 'plugin_count': 0}
     if not isinstance(data, dict):
-        return {'state': 'INVALID_SHAPE', 'provider_count': 0, 'model_key_present': False, 'mcp_server_count': 0}
-    providers = data.get('provider') if isinstance(data.get('provider'), dict) else {}
+        return {'state': 'INVALID_SHAPE', 'format': path.suffix.lstrip('.') or 'json', 'provider_count': 0,
+                'model_key_present': False, 'mcp_server_count': 0, 'agent_count': 0,
+                'skill_entry_count': 0, 'command_count': 0, 'plugin_count': 0}
+    providers = data.get('providers', data.get('provider'))
+    providers = providers if isinstance(providers, dict) else {}
     mcp = data.get('mcp') if isinstance(data.get('mcp'), dict) else {}
     servers = mcp.get('servers') if isinstance(mcp.get('servers'), dict) else {}
+    agents = data.get('agents') if isinstance(data.get('agents'), dict) else {}
+    skills = data.get('skills') if isinstance(data.get('skills'), list) else []
+    commands = data.get('commands') if isinstance(data.get('commands'), dict) else {}
+    plugins = data.get('plugins') if isinstance(data.get('plugins'), list) else []
     return {
         'state': 'READABLE',
+        'format': path.suffix.lstrip('.') or 'json',
         'provider_count': len(providers),
         'model_key_present': 'model' in data,
         'mcp_server_count': len(servers),
+        'agent_count': len(agents),
+        'skill_entry_count': len(skills),
+        'command_count': len(commands),
+        'plugin_count': len(plugins),
     }
 
 
 def config_path_label(path: Path) -> tuple[str, str]:
-    resolved = path.expanduser().absolute()
+    # Normalize filesystem aliases (for example macOS /var -> /private/var)
+    # so Step A and Step B identify the same config after safe target resolution.
+    resolved = path.expanduser().resolve(strict=False)
     identity = hash_bytes(str(resolved).encode('utf-8', errors='replace'))
     try:
         label = '~/' + resolved.relative_to(Path.home().resolve()).as_posix()
@@ -266,7 +369,7 @@ def doctor(repo: Path = ROOT, config: Path | None = None, assets_manifest: Path 
         'UNKNOWN' if compatibility == 'UNKNOWN' or not node or any(asset['status'] == 'UNKNOWN' for asset in missing) else
         'NEEDS_APPROVED_ASSETS' if missing else 'READY_TO_INTEGRATE')
     config_report = inspect_config(config)
-    if config_report['state'] in ('UNSAFE_PATH', 'UNREADABLE_OR_INVALID', 'INVALID_SHAPE'):
+    if config_report['state'] in ('UNSAFE_PATH', 'UNREADABLE_OR_INVALID', 'INVALID_SHAPE', 'AMBIGUOUS_MULTIPLE_CONFIG_FILES'):
         status = 'INCOMPATIBLE'
     report = {
         'schema': 'golden-company-doctor/v1',
@@ -343,7 +446,11 @@ def apply_bundle(archive: Path, target: Path, report: dict, transaction_path: Pa
     transaction_path = transaction_path.parent.resolve(strict=True) / transaction_path.name
     if transaction_path.is_symlink() or transaction_path.exists():
         raise ValueError('Transaction path already exists; choose a new path.')
-    current = doctor(config=target / 'opencode.json')
+    current_config = target / 'opencode.json'
+    jsonc_config = target / 'opencode.jsonc'
+    if jsonc_config.is_file() and not current_config.exists():
+        current_config = jsonc_config
+    current = doctor(config=current_config)
     verify_doctor(report, current)
     if current['machine']['opencode_compatibility'] != 'PUBLIC_V2_CANDIDATE':
         raise ValueError('Installed OpenCode compatibility is unknown or unsupported; do not apply.')

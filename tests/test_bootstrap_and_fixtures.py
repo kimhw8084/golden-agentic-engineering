@@ -1,4 +1,6 @@
 import importlib.util
+import contextlib
+import io
 import json
 import subprocess
 import sys
@@ -56,6 +58,47 @@ class CompanyBootstrapTests(unittest.TestCase):
             self.assertEqual(report['machine']['opencode_compatibility'], 'PUBLIC_V2_CANDIDATE')
             self.assertTrue(report['review_diff']['files']['additions'])
 
+    def test_doctor_parses_jsonc_and_reports_only_safe_shape_counts(self):
+        with tempfile.TemporaryDirectory() as d:
+            config = Path(d) / 'opencode.jsonc'
+            config.write_text('''{
+              // Keep this internal value private.
+              "model": "internal/model",
+              "providers": {"internal": {"settings": {"apiKey": "fixture-secret"},}},
+              "agents": {"router": {"system": "private prompt"}},
+              "skills": ["./team-skills"],
+              "commands": {"review": {"template": "private command"}},
+              "plugins": ["local-plugin"],
+              "mcp": {"servers": {"fixture": {"command": ["local"]}}},
+              "url": "https://internal.invalid/a//b",
+            }''')
+            before = config.read_bytes()
+            report = bootstrap.inspect_config(config)
+            self.assertEqual(report, {
+                'state': 'READABLE', 'format': 'jsonc', 'provider_count': 1,
+                'model_key_present': True, 'mcp_server_count': 1, 'agent_count': 1,
+                'skill_entry_count': 1, 'command_count': 1, 'plugin_count': 1,
+            })
+            self.assertNotIn('fixture-secret', json.dumps(report))
+            self.assertNotIn('private prompt', json.dumps(report))
+            self.assertEqual(config.read_bytes(), before)
+
+    def test_doctor_detects_ambiguous_json_and_jsonc_pair(self):
+        with tempfile.TemporaryDirectory() as d:
+            config = Path(d) / 'opencode.json'
+            config.write_text('{}')
+            config.with_suffix('.jsonc').write_text('{}')
+            self.assertEqual(bootstrap.inspect_config(config)['state'], 'AMBIGUOUS_MULTIPLE_CONFIG_FILES')
+
+    def test_config_path_uses_xdg_global_location_and_existing_jsonc(self):
+        with tempfile.TemporaryDirectory() as d:
+            config_dir = Path(d) / 'config' / 'opencode'
+            config_dir.mkdir(parents=True)
+            jsonc = config_dir / 'opencode.jsonc'
+            jsonc.write_text('{}')
+            with patch.dict('os.environ', {'XDG_CONFIG_HOME': str(config_dir.parent), 'APPDATA': str(Path(d) / 'roaming')}):
+                self.assertEqual(bootstrap.config_path(), jsonc)
+
     def test_doctor_marks_opaque_runtime_unknown_without_guessing(self):
         with tempfile.TemporaryDirectory() as d:
             with patch.object(bootstrap, 'local_executable', return_value={
@@ -75,6 +118,20 @@ class CompanyBootstrapTests(unittest.TestCase):
             self.assertEqual(bootstrap.version_from_local_metadata('opencode', binary), ('2.7.1', 'local-package-metadata'))
             (package / 'package.json').write_text(json.dumps({'name': 'unrelated-package', 'version': '99.0.0'}))
             self.assertEqual(bootstrap.version_from_local_metadata('opencode', binary)[0], None)
+
+    def test_config_identity_normalizes_directory_aliases(self):
+        with tempfile.TemporaryDirectory() as d:
+            folder = Path(d)
+            target = folder / 'real-config'
+            target.mkdir()
+            (target / 'opencode.json').write_text('{}')
+            intermediate = folder / 'path-alias'
+            intermediate.mkdir()
+            alias = intermediate / '..' / 'real-config'
+            self.assertEqual(
+                bootstrap.config_path_label(target / 'opencode.json'),
+                bootstrap.config_path_label(alias / 'opencode.json'),
+            )
 
     def test_apply_requires_reviewed_doctor_and_preserves_config_then_rolls_back(self):
         with tempfile.TemporaryDirectory() as d:
@@ -97,6 +154,69 @@ class CompanyBootstrapTests(unittest.TestCase):
             self.assertEqual(config.read_bytes(), before)
             self.assertEqual(bootstrap.rollback(transaction), 1)
             self.assertFalse(installed.exists())
+
+    def test_cli_doctor_apply_repeat_apply_and_rollback_end_to_end(self):
+        with tempfile.TemporaryDirectory() as d:
+            folder = Path(d)
+            target = folder / 'opencode'
+            target.mkdir()
+            config = target / 'opencode.jsonc'
+            original_config = b'''{
+              // Keep the user's existing provider configuration intact.
+              "provider": {"internal": {"options": {"apiKey": "keep-local-only"}}},
+              "model": "internal/model",
+            }'''
+            config.write_bytes(original_config)
+            bundle = self._make_bundle(folder)
+            report_path = folder / 'doctor.json'
+            first_transaction = folder / 'transaction-first.json'
+            second_transaction = folder / 'transaction-second.json'
+            installed = target / 'agents' / 'golden-example.md'
+            runtime = self._runtime()
+
+            def run_main(*argv: str) -> tuple[int, str, str]:
+                stdout, stderr = io.StringIO(), io.StringIO()
+                with patch.object(sys, 'argv', ['company_bootstrap.py', *argv]):
+                    with contextlib.redirect_stdout(stdout), contextlib.redirect_stderr(stderr):
+                        code = bootstrap.main()
+                return code, stdout.getvalue(), stderr.getvalue()
+
+            with patch.object(bootstrap, 'local_executable', side_effect=lambda name: runtime[name]):
+                code, output, _ = run_main('doctor', '--out', str(report_path), '--config', str(config))
+                self.assertEqual(code, 0, output)
+                self.assertEqual(json.loads(report_path.read_text())['status'], 'NEEDS_APPROVED_ASSETS')
+
+                code, _, stderr = run_main(
+                    'apply', '--doctor-result', str(report_path), '--bundle', str(bundle),
+                    '--target', str(target), '--transaction', str(first_transaction),
+                )
+                self.assertEqual(code, 2)
+                self.assertIn('--authorize-reviewed-apply', stderr)
+                self.assertFalse(installed.exists())
+
+                code, output, stderr = run_main(
+                    'apply', '--doctor-result', str(report_path), '--bundle', str(bundle),
+                    '--target', str(target), '--transaction', str(first_transaction),
+                    '--authorize-reviewed-apply',
+                )
+                self.assertEqual(code, 0, stderr)
+                self.assertIn('"added": 1', output)
+                self.assertTrue(installed.is_file())
+                self.assertEqual(config.read_bytes(), original_config)
+
+                # Applying again requires a fresh reviewed doctor snapshot after installation.
+                code, output, _ = run_main('doctor', '--out', str(report_path), '--config', str(config))
+                self.assertEqual(code, 0, output)
+                code, output, stderr = run_main(
+                    'apply', '--doctor-result', str(report_path), '--bundle', str(bundle),
+                    '--target', str(target), '--transaction', str(second_transaction),
+                    '--authorize-reviewed-apply',
+                )
+                self.assertEqual(code, 0, stderr)
+                self.assertIn('"added": 0', output)
+                self.assertEqual(config.read_bytes(), original_config)
+                self.assertEqual(bootstrap.rollback(first_transaction), 1)
+                self.assertFalse(installed.exists())
 
     def test_apply_refuses_changed_file_conflict_before_writing(self):
         with tempfile.TemporaryDirectory() as d:
