@@ -1,6 +1,6 @@
 # Offline Fab Sampling Prediction — OpenCode Repo Transfer Kit
 
-**As of 2026-11-20.** 38 open-source repositories, exact owner/repo names, with full offline-first transfer procedures and a one-shot evaluation task for OpenCode/Grok. No fab data, code, models, wheels or Git repositories have been downloaded into this starter kit. It is a *staging kit*, not a completed offline install.
+**As of 2026-11-20.** 38 open-source repositories, exact owner/repo names, with full offline-first transfer procedures and a one-shot evaluation task for a local OpenCode environment. No fab data, application code, models, wheels or Git repositories have been downloaded into this starter kit. It is a *staging kit*, not a completed offline install.
 
 ## On the INTERNET-CONNECTED PC (NOT the fab work PC)
 

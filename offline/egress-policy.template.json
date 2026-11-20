@@ -1,0 +1,8 @@
+{
+  "schema": "golden-egress-policy/v1",
+  "enforcement": "DEFAULT_DENY",
+  "allowed_destinations": [],
+  "applies_to": ["opencode", "python", "node", "browser_processes", "subprocesses"],
+  "status": "TEMPLATE_ONLY_NOT_APPLIED",
+  "company_action_required": "Security/network owner must supply the exact approved intranet/model/package endpoints and deploy an OS/network firewall allowlist."
+}

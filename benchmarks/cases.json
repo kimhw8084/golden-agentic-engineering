@@ -1,0 +1,13 @@
+{
+  "schema": "golden-benchmark-cases/v1",
+  "status": "FIXTURE_PROTOCOL_READY_COMPANY_RUNTIME_BLOCKED",
+  "tasks": [
+    {"id":"small-fix","fixture":"examples/python-app","acceptance":"Unit tests and Golden fast checks pass without unrelated changes.","local_command":["python","-m","unittest","discover","-s","examples/python-app/tests","-v"]},
+    {"id":"react-feature","fixture":"examples/react-app","acceptance":"Typecheck, component tests, accessible error/state behavior and production build pass.","local_commands":[["npm","run","typecheck"],["npm","run","test"],["npm","run","build"]],"status":"BLOCKED_MISSING_LOCK_STORE"},
+    {"id":"nicegui-api-db","fixture":"examples/nicegui-app plus examples/scenarios/api_db","acceptance":"Measurement state/errors, API error contract and SQLite integrity tests pass.","local_command":["python","-m","unittest","discover","-s","examples/nicegui-app/tests","-v"],"additional_command":["python","-m","unittest","discover","-s","examples/scenarios/api_db","-p","test_*.py","-v"]},
+    {"id":"browser-verification","fixture":"examples/nicegui-app or examples/react-app on loopback","acceptance":"Target journey, keyboard navigation, errors and accessibility checks pass in a staged browser.","local_command":[],"status":"BLOCKED_BROWSER_ASSETS"},
+    {"id":"mcp-integration","fixture":"integrations/mcp/synthetic_fixture.py","acceptance":"Authentic OpenCode discovery/call trace; read-only scope and injected payload remain inert.","local_command":["python","-m","unittest","discover","-s","tests","-p","test_mcp_fixture.py","-v"],"status":"FIXTURE_TESTED_COMPANY_TRACE_BLOCKED"},
+    {"id":"incident-data","fixture":"examples/scenarios/incident and NiceGUI sample logic","acceptance":"Timeline ordering, units, boundaries and independent expected values pass.","local_command":["python","-m","unittest","discover","-s","examples/scenarios/incident","-p","test_*.py","-v"],"additional_command":["python","-m","unittest","discover","-s","examples/nicegui-app/tests","-v"]}
+  ],
+  "strategies_to_compare_when_company_runtime_is_available":["plain-opencode-primary","original-golden-checkout","refined-golden","best-fit-agentic-skill-mcp","cli-only-when-plausible","hybrid-when-evidence-supports-it"]
+}

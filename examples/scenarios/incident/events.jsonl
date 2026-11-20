@@ -1,0 +1,4 @@
+{"timestamp":"2026-11-20T09:01:00Z","service":"sample-api","event":"healthy","request_id":"synthetic-001"}
+{"timestamp":"2026-11-20T09:02:00Z","service":"sample-api","event":"timeout","request_id":"synthetic-002"}
+{"timestamp":"2026-11-20T09:02:08Z","service":"sample-db","event":"pool_wait_high","request_id":"synthetic-002"}
+{"timestamp":"2026-11-20T09:03:00Z","service":"sample-api","event":"healthy","request_id":"synthetic-003"}

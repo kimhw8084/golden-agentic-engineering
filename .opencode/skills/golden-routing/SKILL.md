@@ -5,6 +5,8 @@ description: Route tasks through the primary agent and relevant skills; evaluate
 
 # Agentic-first capability selection
 
+Machine-readable task routes live in [`workflows/task-routing.json`](../../../workflows/task-routing.json). Use the matching row as a compact lookup; do not load the full registry into routine prompts.
+
 Choose tools by evidence, not by a CLI-first default, while keeping selection overhead proportional to the task.
 
 ## Routine delivery (default)

@@ -4,6 +4,34 @@ tasks:
   test:
     cmds:
       - python -m unittest discover -s tests -v
+      - task: nicegui-test
+      - task: api-db-test
+      - task: incident-test
+      - task: mcp-test
+  nicegui-test:
+    dir: examples/nicegui-app
+    cmds:
+      - python -m unittest discover -s tests -v
+  api-db-test:
+    dir: examples/scenarios/api_db
+    cmds:
+      - python -m unittest discover -s . -p 'test_*.py' -v
+  incident-test:
+    dir: examples/scenarios/incident
+    cmds:
+      - python -m unittest discover -s . -p 'test_*.py' -v
+  mcp-test:
+    cmds:
+      - python -m unittest discover -s tests -p test_mcp_fixture.py -v
+  validate:
+    cmds:
+      - python scripts/validate_manifests.py
+  security:
+    cmds:
+      - python scripts/security_scan.py
+  network-attempt-probe:
+    cmds:
+      - python scripts/network_attempt_monitor.py
   doctor:
     cmds:
       - python scripts/golden.py doctor --project examples/python-app

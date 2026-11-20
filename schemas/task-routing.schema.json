@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "golden-task-routing/v1",
+  "type": "object",
+  "required": ["schema", "default", "workflows"],
+  "properties": {
+    "schema": {"const": "golden-task-routing/v1"},
+    "default": {"type": "object", "required": ["agent", "pattern_policy"]},
+    "workflows": {"type": "array", "minItems": 12, "items": {"type": "object", "required": ["id", "entry", "complexity", "primary_agent", "skill", "pattern", "context", "mcp", "deterministic_tools", "trust", "no_ai", "outputs", "acceptance"]}}
+  },
+  "additionalProperties": true
+}

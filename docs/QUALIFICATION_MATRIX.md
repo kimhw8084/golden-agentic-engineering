@@ -1,33 +1,40 @@
-# Qualification and truth-in-status matrix — starter v0.1.0-dev
+# Qualification and truth-in-status matrix — v0.1.0-dev
+
+**Overall state: PRE_QUALIFICATION.** This repository is public. It contains no company secrets by design; company data, credentials and proprietary implementations belong only in approved internal systems.
 
 | Claim | Current state | Evidence / next requirement |
 |---|---|---|
-| Original Golden Python pilot checker exists | IMPLEMENTED | `scripts/golden.py` |
-| 19 executable rule descriptors and applicability | IMPLEMENTED (pilot) | `standards/rules.json`; profiles derived from declarations only |
-| Fast checker and full per-rule enumeration | IMPLEMENTED (pilot) | Python tests and sample run; full blocks without tooling |
-| Evidence JSON + standalone HTML report | IMPLEMENTED (pilot) | Python tests |
-| OpenCode agent/skill/command files written | FILES PRESENT | Actual internal OpenCode V2 compatibility **NOT TESTED** |
-| 64 GitHub source candidates indexed, including one explicitly typed agent skill | FILES PRESENT | Evolving lead list, not a complete capability inventory; licensing, source snapshots and dependency review **NOT DONE** |
-| Source clone/pin/hash script | IMPLEMENTED, dry-run tested | Real public Git downloads **NOT TESTED IN THIS ENV** |
-| Qualified offline tool binaries/wheels/browsers | NOT PROVIDED | Stage separately after company approval |
-| Complete 151 proposed requirements enforceable | NOT DONE | 19 rule descriptors are a starter, not 151 verified contracts |
-| Independent profile/capability discovery | NOT DONE | Current manifest declarations may be inaccurate; verify before release |
-| Company risk-exception workflow | NOT DONE | Integrate with existing company authority, preserve original result |
-| Actual Windows + Linux end-to-end | NOT TESTED | Linux container Python pilot executed; Windows must be tested |
-| Actual company OpenCode + internal model | NOT TESTED | Inspect internal version/config; prove relevant agent/skill/MCP use and compare CLI workflows on the same task |
-| Low-ceremony agentic-first routing | DESIGN UPDATED, NOT TESTED | Primary agent default; trigger live inventory/comparison only for uncertainty, a changed baseline, explicit selection request, or pilot/release qualification |
-| Tool invocation trace provenance | NOT IMPLEMENTED | No trusted internal OpenCode event source is connected; self-reported calls do not count as verified usage or benchmark proof |
-| Company CI integration | DESIGN ONLY | Existing CI owner builds trigger and evidence storage |
-| Golden Control local UI | PROTOTYPE INCLUDED | Read-only asset comparison and local Golden evidence summaries; no company-wide install inventory, approved release feed, authentication, or trusted invocation trace source; no usage collector is in scope |
-| Bundled MCP example server | INTENTIONALLY DISABLED | Example remains off pending server/SDK/permission/offline qualification; inspect and exercise approved MCP servers already connected to company OpenCode |
-| Monitoring single-pane React UI | OUT OF SCOPE | Owned by separate team platform |
-| Lead-approved Golden release | NOT APPROVED | Tests + documented evidence + team lead sign-off |
-| Team adoption and independent proficiency | NOT TESTED | New + existing app pilot, two engineers, independent checks |
+| Original Golden Python pilot checker | IMPLEMENTED | `scripts/golden.py`; Python standard-library path remains available. |
+| Baseline rule catalog | 19 PILOT DESCRIPTORS | `standards/rules.json`; preserves 107 provisional decisions and 151 proposed requirements as concepts, not 151 executable checks. |
+| Capability false declarations as N/A proof | FIXED | Missing/false capability declarations produce `NOT_RUN`; profile/criticality scoping still uses the project manifest and is not independently certified. |
+| External command allowlist | PILOT IMPLEMENTED | Small per-key command allowlist; no shell; command output is hashed and never persisted raw. Allowlisted project test code remains trusted local code and is not sandboxed. |
+| Evidence integrity and reports | STRUCTURAL VALIDATION IMPLEMENTED | Rejects invalid statuses, missing/duplicate rule IDs, inconsistent blockers and contradictory release claims. No digital signature; imported JSON authenticity remains unverified. |
+| 12 task routes | IMPLEMENTED AS MACHINE-READABLE STARTER | `workflows/task-routing.json`; includes entry, complexity, context, relevant skill/MCP, trust, fallback, output and acceptance. Needs company runtime trials. |
+| OpenCode native agents/skills/commands | FILES PRESENT | 5 agents, 12 skills, 6 commands; lazy routing remains primary. Internal OpenCode V2 discovery, permissions, and model compatibility NOT TESTED. |
+| Diagram-design research | EVALUATION CANDIDATE | `research/capability-selection.json` records commit and MIT license evidence. Skill/assets/scripts/privacy review and task comparison NOT DONE; not vendored. |
+| Public capability research | TARGETED FIRST PASS, NOT EXHAUSTIVE | Machine-readable registry contains pinned source commits and explicit unknowns. Transitive dependency closure, source security, Windows/Linux and performance evidence remain NOT DONE. |
+| 64 original GitHub candidate baseline | PRESERVED | `tools/candidates.json`; lead index, not a complete capability list or license approval. |
+| Source-only transfer packaging | IMPLEMENTED | `scripts/package_offline.py`; clean tracked worktree only, hidden `.opencode` included, archive path/hash checks, external SHA file, per-file manifest. Does not include runnable third-party assets. |
+| Offline executable package | NOT PROVIDED | See `offline/assets-manifest.json`: platform wheels, React lock/store, browser binaries, MCP SDK and internal runtime evidence are NOT_STAGED. |
+| Company Step A doctor | PILOT IMPLEMENTED | No version commands or network; reads config key names only, emits diff/status; version comes from approved inventory. Windows/Linux not yet executed. |
+| Company Step B apply/rollback | PILOT IMPLEMENTED | Adds missing agent/skill/command files; refuses collisions; excludes `opencode.json`; verifies archive, smoke-tests temporary manifest, writes hash-bound add-only rollback record. Needs OS-specific tests. |
+| React synthetic fixture | SOURCE PRESENT, NOT EXECUTABLE HERE | UI state, errors, accessibility semantics, TypeScript and tests included. No transitive lock, npm store, dependency-license inventory, or browser binary; tests NOT_RUN. |
+| NiceGUI synthetic fixture | LOGIC TESTED | `examples/nicegui-app`; standard-library acceptance tests pass. NiceGUI app/UI browser accessibility test NOT_RUN. |
+| API/database and incident examples | SYNTHETIC TESTED | `examples/scenarios/`; in-memory SQLite contract and synthetic incident timeline tests. No internal services/data. |
+| MCP fixture | SYNTHETIC CONTRACT CASES TESTED; NOT AN SDK SERVER | Stdio JSON-RPC fixture is disabled in `.opencode/opencode.json`; discovery/call/scope/error/prompt-injection payload cases tested. SDK-backed protocol conformance and internal OpenCode call NOT_RUN. Cancellation/timeout cases are direct-handler tests; the stdio loop is not concurrent. |
+| Golden Control UI | LOCAL READ-ONLY PROTOTYPE | Shows installation, update-feed, local evidence, design, progress, and next steps. Usage/provenance stays unknown without trusted internal events; no company adapter or collector. Task workflow list is local static data. |
+| OS no-public-egress enforcement | NOT IMPLEMENTED BY GOLDEN | `offline/egress-policy.template.json` is fail-closed design only. Company security must provide policy for OpenCode and child processes. |
+| Network-attempt monitoring | PYTHON AUDIT-HOOK TEST ONLY | Detects and blocks a simulated reserved-IP Python socket attempt before OS connect. Does not monitor OS firewall, Node, browsers, OpenCode or child processes. |
+| Actual Windows + Linux end-to-end | NOT TESTED | Run suite and bootstrap abuse cases on managed Windows and Linux test hosts. |
+| Actual company OpenCode/internal model | NOT TESTED | `BLOCKED_COMPANY_RUNTIME`; need approved build, network controls, discovery/call traces, representative tasks and human review. Codex is not company runtime evidence. |
+| Benchmark vs plain OpenCode / original Golden | BLOCKED | No authenticated internal runtime or trusted event source; no uplift, latency or token claim is made. See `benchmarks/README.md`. |
+| Company CI/artifact/SSO integrations | DESIGN / INTERNAL OWNER REQUIRED | Reuse existing systems; do not create parallel hosting, artifact, telemetry or approval platform. |
+| Lead-approved Golden release | NOT APPROVED | Human lead must review actual test artifacts, exceptions and platform qualification. |
 
-## Full pilot evaluator limitations
+## Limitations
 
-- Local Python checker trusts app's `capabilities` declarations for applicability. **Not enough to establish real non-applicability.**
-- External test commands are set by a repository manifest and are **trusted local code** executed under current user's permissions; they are not sandboxed, signed or validated against an allowlist. Internal release qualification must address provenance/permissions.
-- Timeouts, captured test excerpts, line-level links and exception authorities are initial placeholders. Avoid storing secrets in evidence.
-- Version pin compares text to the installed Golden release but is not a signed artifact integrity check. Do not mistake this for production-grade tamper resistance.
-- Demo isn't a real React/NiceGUI manufacturing app, and does not qualify existing application pipelines.
+- Project profile and criticality still come from `golden.project.json`; a dishonest or inaccurate profile can misclassify some rules. `capabilities: false` no longer establishes non-applicability. Full release checks block mandatory `FAIL`, `NOT_RUN`, and `DEFERRED` results.
+- The command allowlist controls the invoked executable/arguments, not behavior inside project test code. Project test code is local executable code under current user permissions; no sandbox or egress firewall is bundled.
+- HTML report import validation detects malformed or contradictory evidence but cannot authenticate who ran a check. Evidence is not signed; no exception mechanism is implemented.
+- The source-only bundle requires a clean tracked worktree and does not claim offline readiness. The source manifest is not an SBOM for assets that were never staged.
+- Local fixture tests do not qualify application pipelines or company OpenCode. No Windows test, browser automation, internal model, license clearance, production deployment, company security approval, or team adoption is claimed.

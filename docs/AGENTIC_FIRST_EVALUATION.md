@@ -10,11 +10,13 @@ The primary OpenCode agent is the default reasoning and routing layer. Tool sele
 4. Use deterministic checks for reproducible proof. Add a specialist agent only when expected quality or time savings justify coordination.
 5. Skip tool benchmarking, broad capability inventories, and per-task invocation ledgers. State any material limitation briefly.
 
-This is agentic-first because the primary agent handles reasoning and routing by default. It does not require additional agent, MCP, or CLI calls just to demonstrate activity.
+This is agentic-first because the primary agent handles reasoning and routing by default. For each routed job, select its relevant local skill and any approved specialist/MCP that materially improves the result before choosing deterministic tools. The repo-wide candidate comparison is in `research/capability-selection.json`; consult it for explicit selection work or when a task touches one of its capabilities, then inspect only the relevant live connection and candidate. This does not require extra calls just to demonstrate activity.
 
 ## Named skill candidate: diagram design
 
 For polished diagrams, evaluate the [`diagram-design` agent skill](https://github.com/cathrynlavery/diagram-design) before reaching for a CLI renderer. Its upstream README documents a manual copy or symlink into OpenCode's `.opencode/skills/diagram-design` directory; the skill is not installed or verified in the target company environment by this repository. It generates HTML/SVG without a text-diffable source, so keep Mermaid or D2 for diagrams that need routine Git diffs. Default Google Fonts can be disabled with system-font mode for offline use. Treat it as an unqualified candidate until the target OpenCode compatibility, policy, privacy, dependency, and offline checks pass.
+
+For React visual design, `nextlevelbuilder/ui-ux-pro-max-skill` is the first external skill candidate in the selection registry because its inspected source commit contains an MIT license and a searchable design workflow. The complete skill, helper scripts, dependency closure, prompt-injection surface, and network behavior still need review; Golden does not vendor it. `vercel-labs/agent-skills` remains held pending license evidence, and the inspected Anthropic skill terms do not permit Golden redistribution under the current evidence. For live Grafana investigation, evaluate the official `grafana/mcp-grafana` server with a read-only allowlist against the existing command/API path on a matched task. It exposes write-capable operations and can return large context payloads, so it stays disabled until the company endpoint, credentials, tool permissions, dependency closure, and offline policy are reviewed. These are evaluation orderings, not measured performance winners.
 
 ## Trigger a capability evaluation when
 
@@ -23,7 +25,7 @@ For polished diagrams, evaluate the [`diagram-design` agent skill](https://githu
 - The OpenCode version, configuration, available tools, or permissions changed since the last verified baseline.
 - A pilot or release qualification requires evidence for the chosen capability.
 
-For that evaluation, scope discovery to the operation under consideration. Define a representative authorized task and acceptance criteria first. Exercise the strongest suitable agentic workflow (primary agent plus relevant skill; specialist or approved MCP when useful). Compare a CLI only if it is a plausible alternative for that operation. Use matched inputs and criteria. Choose per operation based on accepted outcome, correctness, rework, intervention, elapsed time, reliability, permissions, offline needs, and maintenance cost. A hybrid may win.
+For that evaluation, scope runtime discovery to the operation under consideration. Define a representative authorized task and acceptance criteria first. Exercise the strongest suitable agentic workflow (primary agent plus relevant skill; specialist or approved MCP when useful). Compare a CLI only if it is a plausible alternative for that operation. Use matched inputs and criteria. Choose per operation based on accepted outcome, correctness, rework, intervention, elapsed time, reliability, permissions, offline needs, and maintenance cost. A hybrid may win. The repository review is a targeted, pinned-source evaluation of the leading plausible candidates found for its workflows; it does not claim to enumerate every public GitHub project.
 
 If a capability is unavailable, incompatible, unauthorized, or unqualified, record that exact gap and use the best safe fallback. A candidate catalog is not proof of availability, quality, or approval. Do not enable an unapproved service for comparison.
 

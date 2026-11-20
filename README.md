@@ -2,18 +2,17 @@
 
 **GitHub-ready starter · v0.1.0-dev · NOT company qualified · NOT a standards release**
 
-A lightweight **OpenCode-first agentic engineering standards toolkit** for a 10-person team. This repository contains functioning Python-standard-library verification scaffolding, OpenCode agents/skills/commands, a real candidate OSS manifest, opt-in public-source staging, and company deployment instructions. It deliberately does **not** host company engineering applications or replace the existing CI, Git, artifact registry, Prometheus, Grafana or Splunk.
+A lightweight **OpenCode-first agentic engineering standards toolkit** for engineering teams. This repository contains functioning Python-standard-library verification scaffolding, OpenCode agents/skills/commands, a real candidate OSS manifest, opt-in public-source staging, and generic deployment guidance. It deliberately does **not** host engineering applications or replace existing CI, Git, artifact registry, monitoring, or logging systems.
 
-The primary OpenCode agent is the default reasoning/routing layer. For routine tasks, use only clearly relevant skills and already-known authorized integrations; broad inventories, benchmarks, and invocation ledgers are not required per task. Inspect live capabilities and compare agentic, MCP, CLI, or hybrid options when a selection decision, material uncertainty, changed runtime baseline, or qualification requires it. A CLI must demonstrate value for that operation. See [`docs/AGENTIC_FIRST_EVALUATION.md`](docs/AGENTIC_FIRST_EVALUATION.md).
+The primary OpenCode agent is the default reasoning/routing layer. For each request, match a route in [`workflows/task-routing.json`](workflows/task-routing.json), load its relevant Golden skill, and use a relevant authorized specialist agent or MCP when it materially helps. Do not skip an applicable skill, agent, or MCP in favor of a CLI by habit. Keep small tasks lean; use deterministic tools for reproducible proof and compare CLI, agentic, MCP, or hybrid paths only when they could perform the same operation. See [`research/capability-selection.json`](research/capability-selection.json) for pinned candidate evidence and [`docs/AGENTIC_FIRST_EVALUATION.md`](docs/AGENTIC_FIRST_EVALUATION.md) for the selection method. No performance winner is claimed without matched runtime evidence.
 
 > **You can push this repository to GitHub now.** You cannot claim it or its OSS candidates are company-cleared or offline-runnable before internal qualification. No external dependencies are shipped by default.
 
 ## Fastest start from a phone
 
-1. Download the repository ZIP from ChatGPT and upload it to Codex.
-2. Give Codex the exact prompt in [`CODEX_PUBLISH_PROMPT.md`](CODEX_PUBLISH_PROMPT.md). Choose a new **private** GitHub repository unless the information owner approves public publication. This starter includes project-specific requirements and internal workflow assumptions.
-3. Review the created repository, then transfer only company-approved content through your approved import process.
-4. On the work PC, open [`START_HERE_COMPANY_OPENCODE.md`](START_HERE_COMPANY_OPENCODE.md), paste the included prompt into the internal OpenCode, and let it inspect the local environment before making changes.
+1. This repository is public. Do not add company data, credentials, internal hostnames, or proprietary implementation details.
+2. Review [`COMPANY_START_HERE.md`](COMPANY_START_HERE.md) and transfer only approved source through the company import process.
+3. On the work PC, run the doctor step before reviewing any apply diff. The doctor never executes OpenCode or contacts a network.
 
 ## What works without external packages today
 
@@ -24,6 +23,11 @@ python scripts/golden.py doctor --project examples/python-app
 python scripts/golden.py check --fast --project examples/python-app
 python scripts/golden.py check --full --project examples/python-app --out out/evidence.json
 python scripts/golden.py report --input out/evidence.json --out out/evidence.html
+python scripts/validate_manifests.py
+python scripts/security_scan.py
+python scripts/network_attempt_monitor.py
+python scripts/package_offline.py create --out /approved/transfer/golden.tar.gz
+python scripts/package_offline.py verify /approved/transfer/golden.tar.gz
 python scripts/golden_control.py --target "<EXISTING_CONFIG_DIR>" --evidence-dir out
 python scripts/fetch_sources.py --tier pilot --limit 3   # dry run only, no download
 ```
@@ -63,18 +67,25 @@ Golden Control is the team-facing operating cockpit for Golden installation, app
 | `scripts/golden.py` | Working offline pilot rule evaluator, doctor, explanation and HTML evidence report |
 | `scripts/golden_control.py` and `control/` | Local read-only operator dashboard for asset comparison, integrity, Golden evidence summaries, design, and onboarding |
 | `standards/` | Version pin, 19 initial executable rule definitions (not the entire 151-requirement standard) |
-| `tools/candidates.json` | 64 public GitHub source leads, including one explicitly typed agent skill; not a complete capability inventory |
+| `tools/candidates.json` | Preserved 64 public GitHub source leads; not license approval |
+| `research/capability-selection.json` | Pinned public capability candidates, observed license evidence, per-task rankings, and known gaps |
 | [`fab_sampling_offline_port_kit/README.md`](fab_sampling_offline_port_kit/README.md) | Offline source-transfer guide and scripts; no fab data or downloaded source repositories bundled |
 | `scripts/fetch_sources.py` | Public-network opt-in snapshot downloader/pinner; **source only** |
 | `scripts/bootstrap_project.py` | Non-overwriting application manifest scaffold |
 | `scripts/install_opencode.py` | Non-overwriting install of agent/skill/command files into chosen OpenCode config folder |
+| `scripts/company_bootstrap.py` | Offline Step A doctor, reviewed add-only apply and hash-checked rollback |
+| `scripts/package_offline.py` | Clean-commit source-only archive with hidden assets, file hashes and external checksum |
+| `workflows/task-routing.json` | 12 task routes with pattern, context, relevant skill/MCP, trust, fallback and acceptance |
+| `research/capability-selection.json` | Candidate commits, observed license evidence, per-task decisions, and explicit unknowns |
+| `offline/` | Fail-closed policy template, Python attempt-monitor test scope, and missing staged assets |
+| `examples/react-app/`, `examples/nicegui-app/` | Synthetic UI fixtures; React dependencies/browser binaries are not staged |
 | `docs/` | Architecture, phased company build plan, qualification criteria and draft requirements |
 | `integrations/` | Vendor-neutral existing-CI and optional MCP configuration guidance |
 | `tests/` and `examples/` | Real unit tests and minimal working sample |
 
 ## Tool selection
 
-For the initial company pilot, establish and reuse a baseline of actual available agents, skills, and approved MCP capabilities. On routine tasks, let the primary agent route to only relevant capabilities; run a comparison only when a CLI is a plausible alternative, the user asks for one, or qualification requires it. Select agentic, CLI, or hybrid capabilities by evidence, per operation. The candidate source catalog is not a capability ranking. See [`docs/AGENTIC_FIRST_EVALUATION.md`](docs/AGENTIC_FIRST_EVALUATION.md).
+Begin each task with its matching route. Load the named skill, use the primary agent, and add a listed specialist or approved MCP when it improves the task enough to justify its cost. The research registry ranks leading plausible candidates by task and separates public repositories from Golden-native/company capabilities. It is an evaluation baseline, not an installation list or performance result. Deterministic commands remain the proof layer; they do not replace an applicable agentic capability.
 
 ## Non-negotiable product behavior
 
@@ -87,19 +98,22 @@ For the initial company pilot, establish and reuse a baseline of actual availabl
 
 ## Current engineering truth
 
-`v0.1.0-dev` is a functional **pilot foundation**, not completed Golden. The local Golden Control prototype is read-only and does not connect to company installations, approved release feeds, or agent/MCP usage data. The 19 rule descriptors are only initial enforcement scaffolding. Most full checks require configuration of approved external tools; no external executables are bundled. License hints are not verified. OpenCode files target public OpenCode V2 documentation (Nov 2026), not proven internal compatibility. Windows and internal CI tests have **NOT_RUN** status. See [`docs/QUALIFICATION_MATRIX.md`](docs/QUALIFICATION_MATRIX.md).
+`v0.1.0-dev` is a **PRE_QUALIFICATION** pilot, not completed Golden. The local Golden Control prototype is read-only and does not connect to company installations, approved release feeds, or agent/MCP usage data. The 19 executable rule descriptors do not implement all 151 proposed requirements. The checker now refuses false capability declarations as non-applicability, allowlists a small set of deterministic test commands, omits raw command output, and validates report consistency; imported JSON is not signed and does not prove execution authenticity. The company doctor never executes OpenCode and needs an externally verified version value before apply. The transfer package contains only source, not locked dependencies, browsers, or approved model/runtime assets. Windows, company OpenCode, internal CI and task benchmarks remain **NOT_RUN**. See [`docs/QUALIFICATION_MATRIX.md`](docs/QUALIFICATION_MATRIX.md).
 
 ## Documentation
 
 - [`docs/ARCHITECTURE_VIEW.html`](docs/ARCHITECTURE_VIEW.html) — self-contained visual system diagram (desktop/phone)
 - [`docs/TOOL_BROWSER.html`](docs/TOOL_BROWSER.html) — offline searchable 64-source catalog
-- [`START_HERE_COMPANY_OPENCODE.md`](START_HERE_COMPANY_OPENCODE.md) — what to do at work
+- [`COMPANY_START_HERE.md`](COMPANY_START_HERE.md) — exact offline doctor/apply steps for Windows and Linux
+- [`START_HERE_COMPANY_OPENCODE.md`](START_HERE_COMPANY_OPENCODE.md) — historical runtime pilot prompt; follow the no-egress gate first
 - [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) — exact responsibilities and interfaces
 - [`docs/FASTEST_IMPLEMENTATION.md`](docs/FASTEST_IMPLEMENTATION.md) — staged team adoption and acceptance
 - [`docs/TOOL_ACQUISITION.md`](docs/TOOL_ACQUISITION.md) — license and offline source staging
 - [`docs/AGENTIC_FIRST_EVALUATION.md`](docs/AGENTIC_FIRST_EVALUATION.md) — compare agent/skill/MCP workflows with CLI candidates
 - [`docs/GOLDEN_CONTROL_SPEC.md`](docs/GOLDEN_CONTROL_SPEC.md) — team UI, data boundaries, integration phases, and acceptance criteria
 - [`docs/QUALIFICATION_MATRIX.md`](docs/QUALIFICATION_MATRIX.md) — real status vs intended features
+- [`BUILD_VERIFICATION.md`](BUILD_VERIFICATION.md) — commands actually run and test artifacts
+- [`docs/RELEASE_NOTES.md`](docs/RELEASE_NOTES.md) — this pre-qualification implementation and its limits
 - [`docs/OPEN_CODE_COMPATIBILITY.md`](docs/OPEN_CODE_COMPATIBILITY.md) — V2 syntax and internal-version migration check
 - [`docs/reference/README.md`](docs/reference/README.md) — private requirements deliberately excluded from GitHub package
 

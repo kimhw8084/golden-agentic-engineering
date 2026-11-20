@@ -1,0 +1,8 @@
+{
+  "name": "synthetic-nicegui-measurement-review",
+  "profile": "nicegui",
+  "criticality": "simple",
+  "golden_version": "0.1.0-dev",
+  "capabilities": {"ui": true, "manufacturing_data": true},
+  "commands": {"python_tests": ["${PYTHON}", "-m", "unittest", "discover", "-s", "tests", "-v"]}
+}

@@ -1,0 +1,8 @@
+{
+  "name":"synthetic-react-measurement-review",
+  "profile":"react",
+  "criticality":"simple",
+  "golden_version":"0.1.0-dev",
+  "capabilities":{"ui":true,"manufacturing_data":true},
+  "commands":{"ts_typecheck":["npm","run","typecheck"],"web_tests":["npm","run","test"],"ui_contracts":["npm","run","test"]}
+}

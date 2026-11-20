@@ -1,8 +1,10 @@
-# MCP capability discovery; example remains DISABLED by default
+# MCP capability discovery; synthetic fixture remains DISABLED by default
 
 MCP belongs in the initial capability inventory alongside OpenCode agents and skills. Use a connected, approved MCP tool when it provides relevant structured access to an internal system (for example, Git queries, database schemas, or authorized Prometheus/Grafana/Splunk queries). A local CLI may be better for a particular operation; make that choice after comparing the same task and acceptance criteria. Agentic reasoning, skills, MCP service calls, and deterministic CLI execution can be composed in one workflow.
 
-This example stays disabled by default because the server, SDK, permissions, internal compatibility, and offline behavior are not qualified here. Discover and test already-approved integrations; do not install or enable this example until it has passed qualification. Neither a generic internet MCP gateway nor a mandatory background server is part of Golden Core.
+`synthetic_fixture.py` provides one fixed, read-only synthetic sample over local JSON-RPC stdio, and the unit tests exercise discovery, call scope, errors, cancellation/timeout cases and prompt-injection-shaped fixture data. It is a test fixture, not a general MCP implementation or a qualified server. Cancellation and timeout are contract cases in the direct handler; the stdio loop does not cancel a running request. The MCP Python SDK is not staged in this repository, and this fixture has not been connected to company OpenCode. Discover and test already-approved integrations; do not enable it in a company configuration until the approved staged SDK and actual internal client pass qualification.
+
+The repo-local OpenCode V2 example entry is present in root `opencode.json` and `.opencode/opencode.json` with `disabled: true` and legacy protocol pinned. Neither config file is copied into a company config by bootstrap. Runtime public internet is not allowed. OpenCode's public V2 docs define local servers as stdio commands and use `disabled: true`; verify against the internal build before adopting that shape: https://opencode.ai/docs/mcp-servers/.
 
 Public OpenCode V2 example shape, **not tested against your internal build**:
 

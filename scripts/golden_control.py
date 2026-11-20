@@ -16,7 +16,10 @@ from urllib.parse import urlsplit
 ROOT = Path(__file__).resolve().parent.parent
 CONTROL = ROOT / 'control'
 GROUPS = ('agents', 'skills', 'commands')
+CHECKSUM_SKIP_DIRS = {'.git', '__pycache__', 'node_modules', '.venv', 'venv', 'dist', 'build', '.next', 'coverage'}
 DOCS = {
+    '/docs/COMPANY_START_HERE.md': 'COMPANY_START_HERE.md',
+    '/docs/OPEN_ITEMS_FOR_COMPANY.md': 'OPEN_ITEMS_FOR_COMPANY.md',
     '/docs/START_HERE_COMPANY_OPENCODE.md': 'START_HERE_COMPANY_OPENCODE.md',
     '/docs/ARCHITECTURE.md': 'docs/ARCHITECTURE.md',
     '/docs/AGENTIC_FIRST_EVALUATION.md': 'docs/AGENTIC_FIRST_EVALUATION.md',
@@ -24,7 +27,10 @@ DOCS = {
     '/docs/QUALIFICATION_MATRIX.md': 'docs/QUALIFICATION_MATRIX.md',
     '/docs/TOOL_ACQUISITION.md': 'docs/TOOL_ACQUISITION.md',
     '/docs/OPEN_CODE_COMPATIBILITY.md': 'docs/OPEN_CODE_COMPATIBILITY.md',
+    '/docs/RESEARCH.md': 'research/README.md',
+    '/docs/OFFLINE.md': 'offline/README.md',
 }
+WORKFLOWS = ROOT / 'workflows' / 'task-routing.json'
 
 
 def digest(path: Path) -> str:
@@ -80,12 +86,14 @@ def compare_installation(target: Path | None) -> dict:
 def checksum_status() -> dict:
     manifest = ROOT / 'SHA256SUMS.txt'
     checked = missing = altered = 0
+    listed = set()
     if not manifest.is_file():
-        return {'state': 'MISSING_MANIFEST', 'checked': 0, 'missing': 0, 'altered': 0}
+        return {'state': 'MISSING_MANIFEST', 'checked': 0, 'missing': 0, 'altered': 0, 'unlisted': 0}
     for line in manifest.read_text(encoding='utf-8').splitlines():
         if not line.strip() or line.startswith('#'):
             continue
         expected, name = line.split('  ', 1)
+        listed.add(name)
         path = ROOT / name
         if not path.is_file():
             missing += 1
@@ -93,8 +101,16 @@ def checksum_status() -> dict:
         checked += 1
         if digest(path) != expected:
             altered += 1
-    state = 'VERIFIED' if not missing and not altered else 'MISMATCH'
-    return {'state': state, 'checked': checked, 'missing': missing, 'altered': altered}
+    actual = set()
+    for path in ROOT.rglob('*'):
+        relative = path.relative_to(ROOT)
+        if any(part in CHECKSUM_SKIP_DIRS for part in relative.parts):
+            continue
+        if path.is_file() and not path.is_symlink() and relative.as_posix() not in {'SHA256SUMS.txt', 'scripts/update_checksums.py'}:
+            actual.add(relative.as_posix())
+    unlisted = len(actual - listed)
+    state = 'VERIFIED' if not missing and not altered and not unlisted else 'MISMATCH'
+    return {'state': state, 'checked': checked, 'missing': missing, 'altered': altered, 'unlisted': unlisted}
 
 
 def evidence_activity(directory: Path | None) -> dict:
@@ -237,11 +253,26 @@ class ControlHandler(BaseHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(payload)
             return
+        if path == '/api/workflows':
+            try:
+                payload = WORKFLOWS.read_bytes()
+            except OSError:
+                self.send_error(503)
+                return
+            self.send_response(200)
+            self.send_header('Content-Type', 'application/json; charset=utf-8')
+            self.send_header('Cache-Control', 'no-store')
+            self.send_header('Content-Length', str(len(payload)))
+            self.end_headers()
+            self.wfile.write(payload)
+            return
 
         asset = {'/': 'index.html', '/index.html': 'index.html',
-                 '/styles.css': 'styles.css', '/app.js': 'app.js'}.get(path)
+                 '/styles.css': 'styles.css', '/app.js': 'app.js',
+                 '/workflows/task-routing.json': '../workflows/task-routing.json'}.get(path)
         if asset:
-            self._send_file(CONTROL / asset, 'text/html' if asset.endswith('.html') else
+            content_path = (CONTROL / asset).resolve()
+            self._send_file(content_path, 'application/json' if asset.endswith('.json') else 'text/html' if asset.endswith('.html') else
                             'text/css' if asset.endswith('.css') else 'text/javascript')
             return
         if path in DOCS:

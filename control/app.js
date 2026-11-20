@@ -26,6 +26,7 @@ document.querySelector(".brand").addEventListener("click", (event) => {
   showPage("overview");
 });
 $("refreshButton").addEventListener("click", loadState);
+const workflowRouteElement = $("workflowRoutes");
 
 function mark(element, kind) {
   if (!element) return;
@@ -145,6 +146,33 @@ function populateEvidence(activity) {
     : "Invocation source and provenance require validation before counts are shown.";
 }
 
+function populateWorkflows(rows) {
+  if (!workflowRouteElement) return;
+  workflowRouteElement.replaceChildren();
+  rows.forEach((item) => {
+    const card = document.createElement('article');
+    card.className = 'workflow-card';
+    const heading = document.createElement('h3'); heading.textContent = display(item.id).replaceAll('-', ' ');
+    const summary = document.createElement('p'); summary.textContent = display(item.entry);
+    const route = document.createElement('p'); route.className = 'workflow-route'; route.textContent = `${display(item.primary_agent)} · ${display(item.skill)} · ${display(item.pattern)}`;
+    const accept = document.createElement('p'); accept.className = 'workflow-acceptance'; accept.textContent = `Done when: ${display(item.acceptance)}`;
+    card.append(heading, summary, route, accept);
+    workflowRouteElement.append(card);
+  });
+}
+
+async function loadWorkflows() {
+  if (!workflowRouteElement) return;
+  try {
+    const response = await fetch('/api/workflows', {cache: 'no-store'});
+    if (!response.ok) throw new Error('Local route source unavailable');
+    const payload = await response.json();
+    populateWorkflows(payload.workflows);
+  } catch (_error) {
+    workflowRouteElement.textContent = 'Local task routing is unavailable.';
+  }
+}
+
 function render(data) {
   const {product,repository,assets,installation,updates,integrity,activity,runtime,progress} = data;
   $("releaseVersion").textContent = product.version;
@@ -167,7 +195,7 @@ function render(data) {
   $("runtimeValue").textContent = runtime.company_agent_skill_mcp_inventory === "NOT_RUN" ? "Not inspected" : runtime.company_agent_skill_mcp_inventory;
   $("runtimeDetail").textContent = runtime.opencode_binary_detected ? "OpenCode executable detected; agent, skill, and MCP discovery still needs a company-machine run." : "OpenCode executable not found on this process PATH; company runtime is unverified.";
   $("integrityHeading").textContent = integrity.state === "VERIFIED" ? "Source checksums match" : "Source checksum mismatch";
-  $("integrityDetail").textContent = `${integrity.checked} file(s) checked · ${integrity.missing} missing · ${integrity.altered} altered.`;
+  $("integrityDetail").textContent = `${integrity.checked} file(s) checked · ${integrity.missing} missing · ${integrity.altered} altered · ${integrity.unlisted || 0} unlisted.`;
   $("repoMeta").textContent = repository.status === "AVAILABLE"
     ? `Local branch ${repository.branch} · commit ${repository.commit} · ${repository.clean ? "clean worktree" : "uncommitted changes"}${repository.ahead === null ? "" : ` · ${repository.ahead} ahead / ${repository.behind} behind`}`
     : "Local Git state not available";
@@ -201,3 +229,4 @@ async function loadState() {
 const initial = location.hash.slice(1);
 showPage(labels[initial] ? initial : "overview");
 loadState();
+loadWorkflows();

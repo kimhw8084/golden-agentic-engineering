@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
-"""Offline SHA256 verification for the original starter ZIP contents."""
+"""Offline SHA256 verification for the complete source tree."""
 import hashlib
 import sys
 from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT / 'scripts'))
+from update_checksums import source_files
 
 
 def main():
@@ -12,11 +14,14 @@ def main():
         print('SHA256SUMS.txt not found'); return 2
     missing = []
     bad = []
+    unexpected = []
     checked = 0
+    listed = set()
     for line in manifest.read_text(encoding='utf-8').splitlines():
         if not line.strip() or line.startswith('#'):
             continue
         expected, name = line.split('  ', 1)
+        listed.add(name)
         path = ROOT / name
         if not path.is_file():
             missing.append(name); continue
@@ -24,10 +29,13 @@ def main():
         checked += 1
         if actual != expected:
             bad.append(name)
-    print(f'Checked={checked}; missing={len(missing)}; altered={len(bad)}')
+    actual = {path.relative_to(ROOT).as_posix() for path in source_files()}
+    unexpected = sorted(actual - listed)
+    print(f'Checked={checked}; missing={len(missing)}; altered={len(bad)}; unlisted={len(unexpected)}')
     for name in missing: print('MISSING:', name)
     for name in bad: print('ALTERED:', name)
-    return 2 if missing or bad else 0
+    for name in unexpected: print('UNLISTED:', name)
+    return 2 if missing or bad or unexpected else 0
 
 if __name__ == '__main__':
     raise SystemExit(main())

@@ -1,0 +1,13 @@
+{
+  "mcp": {
+    "servers": {
+      "golden-synthetic-readonly": {
+        "type": "local",
+        "command": ["python", "integrations/mcp/synthetic_fixture.py"],
+        "disabled": true,
+        "protocol": "legacy",
+        "timeout": 5
+      }
+    }
+  }
+}

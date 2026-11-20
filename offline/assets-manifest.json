@@ -1,0 +1,12 @@
+{
+  "schema": "golden-offline-assets/v1",
+  "qualification": "SOURCE_ONLY_NOT_OFFLINE_EXECUTABLE",
+  "assets": [
+    {"name":"Python wheelhouse and dependency locks","status":"NOT_STAGED","platforms":["Windows","Linux"],"owner":"Company OSS/package owner","required_action":"Stage approved wheels for each target Python ABI/OS/architecture with hashes, SBOM, and complete licenses/NOTICE."},
+    {"name":"React npm lock and offline store","status":"NOT_STAGED","platforms":["Windows","Linux"],"owner":"Company OSS/package owner","required_action":"Generate and review a complete package lock and offline npm store through the approved internal registry; include transitive licenses/NOTICE."},
+    {"name":"Playwright browser binaries","status":"NOT_STAGED","platforms":["Windows","Linux"],"owner":"Company browser/tooling owner","required_action":"Stage matching browser binaries per OS and verify hash, license, and local/intranet-only browser policy."},
+    {"name":"MCP Python SDK and transitive dependencies","status":"NOT_STAGED","platforms":["Windows","Linux"],"owner":"Company OSS/package owner","required_action":"Resolve a pinned official SDK release, review transitive licenses, and stage the Python 3.11+ wheelhouse before protocol conformance tests."},
+    {"name":"Company OpenCode and internal model evidence","status":"NOT_STAGED","platforms":["Windows","Linux"],"owner":"Company OpenCode owner","required_action":"Provide installed version from local software inventory and run the compatibility/task trial only after default-deny public egress is enforced."},
+    {"name":"OS-enforced no-public-egress policy and attempt monitor","status":"NOT_STAGED","platforms":["Windows","Linux"],"owner":"Company security/network owner","required_action":"Apply host/network default-deny egress for OpenCode and child processes, allow only approved intranet/model/package endpoints, and return monitored attempt evidence."}
+  ]
+}

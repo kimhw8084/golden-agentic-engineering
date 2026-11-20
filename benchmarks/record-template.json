@@ -1,0 +1,19 @@
+{
+  "schema":"golden-benchmark-record/v1",
+  "status":"BLOCKED_COMPANY_RUNTIME",
+  "task_id":null,
+  "strategy":null,
+  "runtime_build":null,
+  "independent_acceptance":"NOT_RECORDED",
+  "elapsed_seconds":null,
+  "human_interventions":null,
+  "rework_count":null,
+  "latency_p50_ms":null,
+  "latency_p95_ms":null,
+  "tokens":null,
+  "requests":null,
+  "runtime_event_source":"NONE",
+  "runtime_event_sha256":null,
+  "acceptance_evidence_path":null,
+  "notes":"Do not fill from model self-report. Record only observations from the actual company runtime and independent acceptance checks."
+}

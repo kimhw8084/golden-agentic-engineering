@@ -1,0 +1,1 @@
+"""Synthetic NiceGUI logic tests."""

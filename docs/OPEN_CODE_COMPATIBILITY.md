@@ -11,13 +11,14 @@ This starter authors files using the currently published **OpenCode V2** convent
 
 The actual company's internal OpenCode version, provider and model must be inspected. **Do not replace company opencode.json**, do not assume V1 permission keys are supported, and do not enable an MCP or an internet provider based on a public example.
 
-## Qualification exercise
+## Offline-first qualification exercise
 
-1. Record `opencode --version`, documented `opencode --help`, agent/subagent inventory, skill discovery, connected MCP servers and tool lists, and available permissions/handoffs if supported. Avoid printing credentials. Record unavailable commands as NOT_AVAILABLE instead of assuming the feature is absent.
-2. Open this repository and verify that its `AGENTS.md`, relevant `SKILL.md`, `/golden-design`, a specialist agent, and a task-relevant authorized MCP tool (if one is already connected) actually appear and function. Record exact capabilities that cannot be exercised and why.
-3. Select a representative authorized fixture task. Run it through the best-fit agentic workflow first (agent + skill, adding a specialist or MCP tool when relevant). Compare an appropriate CLI-only or CLI-assisted workflow against the same acceptance criteria; preserve actual invocations, tool results, human interventions, elapsed time and rework. Choose tools per operation based on that evidence.
-4. Confirm no public network call, unexpected downloads, extra approval prompts or discarded work. Verify model-unavailable fallback still executes `golden.py` and note which parts of the workflow need the model.
-5. If company OpenCode format differs, translate only the adapter layer; preserve Golden semantics and deterministic gates. Store actual compatibility proof and adapter version.
+1. Run [`COMPANY_START_HERE.md`](../COMPANY_START_HERE.md) Step A and verify the offline doctor output. Obtain Python/Node/OpenCode versions from approved local inventory; the doctor never executes version flags. Mark unknown versions UNKNOWN.
+2. Before starting OpenCode, the company security/network owner must verify a default-deny public-egress policy and attempt monitoring for OpenCode and all children. Golden's Python audit-hook probe is not proof of OS-level enforcement.
+3. Only after the zero-public-attempt gate is established, use the company's approved method to inspect the OpenCode build, agent/subagent inventory, skill discovery, connected MCP servers/tools, permissions, and handoff features. Avoid credentials and preserve config. If any invocation causes a public endpoint attempt, stop and report it; do not proceed to a task trial.
+4. Verify this repository's AGENTS.md, one relevant SKILL.md, `/golden-design`, a specialist agent, and an already-approved task-relevant MCP tool where applicable. Never enable the local synthetic fixture in the company config as part of this check.
+5. Select a representative authorized synthetic task. Run best-fit primary agent + relevant skill first, add a specialist/MCP only if useful, and compare a CLI only when plausible for the same operation. Preserve real results, human interventions, elapsed time, rework, and trusted token/request events where available.
+6. Confirm no network attempt, unexpected download, extra approval prompt, or discarded work. Verify deterministic/model-off behavior. If the company format differs, adapt only the config adapter and preserve provider/model/auth settings.
 
 ## Avoid common agentic anti-patterns
 

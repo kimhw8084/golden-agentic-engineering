@@ -1,4 +1,10 @@
-# On your work PC — start here
+# Historical internal OpenCode pilot prompt
+
+**Use [`COMPANY_START_HERE.md`](COMPANY_START_HERE.md) first.** It contains the exact Windows/Linux doctor and reviewed apply commands and is the current supported entry point.
+
+Before starting any OpenCode process, the company security/network owner must verify zero public/external network attempts for OpenCode and its child processes. The doctor deliberately does not execute OpenCode or Node version commands. Obtain versions from approved local software inventory. Do not proceed if the environment can attempt public update, package, model, browser, telemetry or fallback connections.
+
+The longer prompt below is preserved for the later company runtime qualification after that no-egress condition is proven. Its runtime instructions are not permission to bypass the network gate.
 
 **Status: unqualified bootstrap.** Transfer only through company-approved channels, with appropriate source-code and OSS/security review. This repo is development guidance; it does not grant company permissions.
 
