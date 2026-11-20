@@ -1,10 +1,10 @@
 # Company task comparison protocol
 
-The local fixtures and comparable acceptance commands are listed in [`cases.json`](cases.json). Run `python benchmarks/run_local_fixtures.py --out verification/local-fixtures.json` for an offline deterministic test harness. Copy [`record-template.json`](record-template.json) for each actual internal-runtime trial. There are no fabricated performance data or composite scores.
+The local fixtures and comparable acceptance commands are listed in [`cases.json`](cases.json). Run `python benchmarks/run_local_fixtures.py --out verification/local-fixtures.json` for Python-only offline checks. Add `--include-react` to install the exact lockfile from the local npm cache with offline mode and lifecycle scripts disabled, then run typecheck, component tests and build. Copy [`record-template.json`](record-template.json) for each actual internal-runtime trial. There are no fabricated performance data or composite scores.
 
 ## Current evidence
 
-The local harness runs Python fixture tests for a small fix, NiceGUI sample logic, API/SQLite, incident timeline, synthetic fab sampling, MCP protocol cases, and Golden Proof/routing. It records only test counts, process durations, and output hashes; it does not compare agents or claim task productivity. The React fixture is authored but its dependency lock/store is absent, and browser journey tests are blocked on staged Playwright binaries. No company OpenCode runtime or trusted invocation-event source is attached. Therefore every agentic-vs-CLI, plain-vs-Golden, token/request, end-to-end task time, and quality-uplift comparison is `BLOCKED_COMPANY_RUNTIME`.
+The harness runs Python fixture tests for a small fix, NiceGUI sample logic, API/SQLite, incident timeline, synthetic fab sampling, MCP protocol cases, and Golden Proof/routing. Its optional React path uses npm's local cache in offline mode. It records test counts, process durations and output hashes; it does not compare agents or claim task productivity. A local browser smoke test has verified keyboard submission and an empty-number validation error, but automated Playwright journeys and accessibility audits remain unrun because browser binaries are not staged. No company OpenCode runtime or trusted invocation-event source is attached. Therefore every agentic-vs-CLI, plain-vs-Golden, token/request, end-to-end task time, and quality-uplift comparison is `BLOCKED_COMPANY_RUNTIME`.
 
 ## Trial method
 

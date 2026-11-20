@@ -275,6 +275,31 @@ class CompanyBootstrapTests(unittest.TestCase):
             self.assertEqual(verified, [])
             self.assertEqual(missing[0]['status'], 'UNKNOWN')
 
+    def test_doctor_reports_verified_partial_asset_evidence_without_calling_it_staged(self):
+        with tempfile.TemporaryDirectory() as d:
+            folder = Path(d); repo = folder / 'repo'; repo.mkdir()
+            assets_root = folder / 'offline'; assets_root.mkdir()
+            evidence = repo / 'examples' / 'react-app' / 'package-lock.json'
+            evidence.parent.mkdir(parents=True)
+            evidence.write_text('{"lockfileVersion":3}')
+            manifest = assets_root / 'assets-manifest.json'
+            rows = [{'name': name, 'status': 'NOT_STAGED'} for name in sorted(bootstrap.REQUIRED_ASSET_NAMES)]
+            react = next(row for row in rows if row['name'] == 'React npm lock and offline store')
+            react.update({
+                'partial_progress': 'LOCKED_AND_MACOS_ARM64_TESTED_NOT_CROSS_PLATFORM_OFFLINE_READY',
+                'partial_evidence': [{'path': 'examples/react-app/package-lock.json', 'sha256': bootstrap.hash_file(evidence)}],
+            })
+            manifest.write_text(json.dumps({'schema': 'golden-offline-assets/v1', 'assets': rows}))
+            _, missing = bootstrap.inspect_assets(repo, manifest, assets_root)
+            react_missing = next(row for row in missing if row['name'] == 'React npm lock and offline store')
+            self.assertEqual(react_missing['status'], 'NOT_STAGED')
+            self.assertEqual(react_missing['partial_evidence'][0]['status'], 'PARTIAL_EVIDENCE_VERIFIED')
+            evidence.write_text('changed')
+            _, missing = bootstrap.inspect_assets(repo, manifest, assets_root)
+            react_missing = next(row for row in missing if row['name'] == 'React npm lock and offline store')
+            self.assertEqual(react_missing['status'], 'NOT_STAGED')
+            self.assertEqual(react_missing['partial_evidence'][0]['status'], 'INVALID')
+
     def test_doctor_marks_symlinked_install_paths_as_conflicts(self):
         with tempfile.TemporaryDirectory() as d:
             folder = Path(d); target = folder / 'opencode'; external = folder / 'external'; external.mkdir()

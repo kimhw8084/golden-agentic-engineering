@@ -1,49 +1,52 @@
 # Build verification — 2026-11-20
 
-**Repository state:** `PRE_QUALIFICATION`; no company approval is asserted.
+**Repository state:** `PRE_QUALIFICATION`; no company approval or qualification is asserted.
 
-**Environment:** macOS 25.6.0, arm64, Python 3.14.5. The local doctor identified Git, Python, Node, and OpenCode executable paths, but could not read Node or OpenCode versions from local package metadata. Compatibility is `UNKNOWN`. All six required offline assets remain unstaged.
+**Environment:** macOS 25.6.0 arm64, Python 3.14.5, Node 26.13.0, npm 11.20.0. The local OpenCode path/version metadata is incomplete, so compatibility is `UNKNOWN`. Six required company/offline assets remain unstaged.
 
-**Runtime boundary:** These results cover this checkout and synthetic fixtures only. They are not Windows, company OpenCode, internal model, firewall, hosted CI, or company network evidence.
+**Runtime boundary:** Results cover this checkout and synthetic fixtures only. They are not Windows, managed Linux, company OpenCode, internal model, firewall, hosted CI, or company network evidence.
 
 ## Tests and checks run
 
 | Check | Result |
 |---|---|
-| `python3 -m unittest discover -s tests -v` | PASS — 60 repository tests, including a real synthetic CLI doctor → reviewed apply → fresh-doctor repeat apply → rollback flow with provider/model config preservation; JSONC config parsing and shape-only reporting; transfer-kit path, Git-origin, symlink, and overwrite checks; Golden Proof, routing, MCP fixture, security scan, network-attempt monitor, and synthetic examples. |
-| `python3 benchmarks/run_local_fixtures.py --out verification/2026-11-20/local-fixtures.json` | PASS — 47 tests across Python, NiceGUI logic, API/SQLite, incident, manufacturing, MCP, Golden Proof, and routing. This is fixture verification, not a model or productivity benchmark. |
-| `python3 scripts/validate_manifests.py` | PASS — 19 rule descriptors, 64 preserved public-source leads, 12 workflows, 5 agents, 12 skills, 7 commands, 27 capability candidates, and 17 task decisions. |
-| `python3 scripts/security_scan.py` | PASS — scanned 147 source files, including hidden and untracked files; no high-confidence credential patterns found and no values emitted. This pattern scan is not a complete secret audit. |
-| `python3 scripts/network_attempt_monitor.py` | PASS — one synthetic reserved-documentation-IP Python socket attempt was observed and blocked before OS connect. This does not test OS firewall, Node, browser, OpenCode, or child-process egress. |
+| `python3 -m unittest discover -s tests -v` | PASS — 66 repository tests. Covers bootstrap doctor/apply/repeat/rollback and path abuse cases, staged asset evidence, npm audit safeguards, benchmark offline-mode policy, transfer-kit path/origin/symlink/overwrite checks, Golden Proof, routing, MCP fixture, security scanner, network monitor, and synthetic scenarios. |
+| `python3 benchmarks/run_local_fixtures.py --include-react --out verification/2026-11-20/local-fixtures.json` | PASS — 47 Python fixture tests plus six React logic/component tests; React `npm ci` ran with `--offline --ignore-scripts --no-audit --no-fund`, then typecheck, Vitest, and Vite build. Browser automation remains unrun. This is not an agent or productivity comparison. |
+| React `npm ci --offline --ignore-scripts --no-audit --no-fund` | PASS — 82 packages installed from the local npm cache on macOS arm64; no lifecycle scripts. |
+| React `npm run typecheck`, `npm run test`, `npm run build` | PASS — TypeScript clean; six tests across two files; Vite transformed 30 modules. |
+| `python3 scripts/npm_dependency_audit.py --report research/react-macos-arm64-dependency-audit.json --sbom research/react-macos-arm64.cdx.json` | PASS — lock has 132 entries; 82 installed and included in CycloneDX; 50 platform variants are not staged. License metadata: zero missing and zero unknown/non-OSI IDs in the installed set; four installed packages have no bundled license text. Company clearance is pending. |
+| Local browser smoke on `http://127.0.0.1:5173/` | PASS — in-app browser rendered labeled controls, keyboard Tab/Enter submission produced an ACCEPT result, and clearing the numeric field showed “Measured value is required.” The app served on loopback. This is manual UI evidence, not Playwright automation or an accessibility audit. |
+| Bootstrap transaction tests (included above) | PASS — synthetic CLI doctor → reviewed apply → repeat apply → rollback preserved provider/model settings; JSONC shape-only reading and symlink/path rejection passed. |
+| `python3 scripts/validate_manifests.py` | PASS — 19 rule descriptors, 64 preserved public-source leads, 12 workflows, 5 agents, 12 skills, 7 commands, 27 capability candidates and 17 task decisions. Hash-checked partial React evidence does not upgrade its asset status from `NOT_STAGED`. |
+| `python3 scripts/security_scan.py` | PASS — pattern scan found no high-confidence credential patterns and emitted no values. This is not a complete secret or proprietary-code review. |
+| `python3 scripts/network_attempt_monitor.py` | PASS — one synthetic reserved-documentation-IP Python socket attempt was observed and blocked before OS connect. It does not monitor Node, browsers, OpenCode, child processes, or OS firewall behavior. |
 | `node --check control/app.js` | PASS — JavaScript syntax. |
-| `python3 scripts/golden_route.py --task-id technical-docs-sop-diagrams` | PASS — resolves the docs skill, presents `cathrynlavery/diagram-design` as evaluation-only, and names local Markdown/SVG/Mermaid as fallback. No third-party tool was installed or invoked. |
-| `python3 scripts/golden.py check --fast --project examples/python-app --out verification/2026-11-20/golden-fast-final.json` | PASS for executed fast checks; release qualification is false and missing applicability evidence stays `NOT_RUN`. |
-| `python3 scripts/golden.py doctor --project examples/python-app` | PASS — manifest valid and local Python test command configured. |
-| `python3 scripts/golden.py check --fast --project examples/python-app` | PASS for executed fast checks; applicability remains `NOT_RUN` where owner evidence is missing, so release qualification is false. |
-| `python3 scripts/golden.py check --full --project examples/python-app --out verification/2026-11-20/golden-full-final.json` | Completed, non-qualified — ten blockers: `AI-001`, `API-001`, `DATA-001`, `DB-001`, `JOBS-001`, `MCP-001`, `OPS-001`, `PY-003`, `REL-001`, and `SEC-001`. No missing evidence was converted into a pass or exception. |
-| `python3 scripts/golden.py report --input verification/2026-11-20/golden-full-final.json --project examples/python-app --out verification/2026-11-20/golden-full-final.html` | PASS — generated by replaying checks against the project. |
-| `python3 scripts/company_bootstrap.py doctor --out /private/tmp/golden-doctor-current.json` | `UNKNOWN: OS=Darwin Python=3.14.5 Node=None OpenCode=None`; six required assets missing; no settings changed. The output lists only install paths/config shape, not config values. This is not a company computer result. |
-| React `npm run typecheck`, `npm run test`, `npm run build` | NOT_RUN — dependencies, lockfile, and offline npm store are absent. No package install or external network attempt was made. |
-| Browser/UI tests | NOT_RUN — approved Playwright browser binaries are absent. |
+| `python3 scripts/golden_route.py --task-id technical-docs-sop-diagrams` | PASS — resolves the docs skill, lists `cathrynlavery/diagram-design` as evaluation-only, and names local Markdown/SVG/Mermaid fallback. No third-party tool was installed or invoked. |
+| `python3 scripts/golden.py doctor --project examples/python-app` | PASS — project manifest valid and local Python test command configured. |
+| `python3 scripts/golden.py check --fast --project examples/python-app` | Executed checks pass; release qualification is false. Missing applicability evidence stays `NOT_RUN`. |
+| `python3 scripts/golden.py check --full --project examples/python-app` | Completed, non-qualified (exit 2) — ten blockers: `AI-001`, `API-001`, `DATA-001`, `DB-001`, `JOBS-001`, `MCP-001`, `OPS-001`, `PY-003`, `REL-001`, `SEC-001`. No missing evidence was changed to PASS or an exception. |
+| `python3 scripts/golden.py report --input verification/2026-11-20/golden-full-current.json --project examples/python-app --out verification/2026-11-20/golden-full-current.html` | PASS — report generated by replaying checks against the project. |
+| `python3 scripts/company_bootstrap.py doctor --out /private/tmp/golden-doctor-current.json` | Local inspection only; company assets and runtime compatibility remain unknown. No settings changed. |
 
-The synthetic stdio MCP fixture is disabled in OpenCode configuration. Tests cover discovery/call shapes, scope, errors, injection-like input as inert data, direct-handler timeout/cancellation cases, and JSON-lines framing. It is not an SDK-backed protocol conformance run and does not provide an authentic OpenCode invocation trace. Golden Control's route test calls its handler in memory; it does not qualify a browser UI.
+The synthetic stdio MCP fixture remains disabled in OpenCode configuration. It tests discovery/call shapes, scope, errors, injection-like input as inert data, direct-handler timeout/cancellation, and JSON-lines framing. It is not SDK-backed protocol conformance and provides no authentic OpenCode invocation trace. Golden Control's route test calls its handler in memory.
 
 ## Recorded evidence
 
-- [`verification/2026-11-20/golden-fast-final.json`](verification/2026-11-20/golden-fast-final.json) — local FAST result; not release-qualified.
-- [`verification/2026-11-20/golden-full-final.json`](verification/2026-11-20/golden-full-final.json) and [`verification/2026-11-20/golden-full-final.html`](verification/2026-11-20/golden-full-final.html) — replayed FULL result with ten mandatory evidence blockers.
-- [`verification/2026-11-20/local-fixtures.json`](verification/2026-11-20/local-fixtures.json) — test counts, elapsed times, and output hashes for the local fixture run.
+- [Local fixture run](verification/2026-11-20/local-fixtures.json) — Python/React checks, durations and output hashes.
+- [FAST Golden result](verification/2026-11-20/golden-fast-current.json) — not release-qualified.
+- [FULL Golden result](verification/2026-11-20/golden-full-current.json) and [HTML report](verification/2026-11-20/golden-full-current.html) — ten mandatory evidence blockers.
+- [React dependency inventory](research/react-macos-arm64-dependency-audit.json) and [CycloneDX SBOM](research/react-macos-arm64.cdx.json) — macOS arm64 installed subset only.
 
-These are local synthetic-project results. The JSON evidence is not digitally signed and cannot authenticate who produced it or prove that an OpenCode agent, skill, MCP, or CLI was invoked.
+JSON evidence is unsigned and cannot authenticate who ran a check or prove that an OpenCode agent, skill, MCP, or CLI was invoked.
 
 ## Not tested / remaining limits
 
-- Windows and a separate managed Linux host, including bootstrap/apply/rollback abuse cases.
-- React dependency installation, TypeScript, component tests, build, or browser accessibility checks; NiceGUI runtime/UI behavior in a browser.
+- Windows and a separate managed Linux host, including bootstrap/apply/rollback abuse cases and their npm caches.
+- Playwright browser automation, NiceGUI browser/UI checks, and a formal accessibility audit.
 - Company OpenCode discovery, agent/skill use, internal model, connected MCPs, or invocation-event provenance.
 - OS-enforced no-public-egress policy and attempt monitoring across OpenCode and all child processes.
-- Complete third-party source/prompt-injection review, dependency license closure, SBOM, company OSS clearance, and staged Windows/Linux executable assets.
+- Full dependency/source license closure, the four missing npm license texts, company OSS clearance, and staged Windows/Linux executable assets.
 - Paired agentic-vs-CLI or plain-OpenCode-vs-Golden measurements. No uplift, latency, token, request, or productivity claims are made.
-- Hosted GitHub CI or any company CI/artifact/SSO integration.
+- Hosted GitHub CI or company CI/artifact/SSO integration.
 
-See [`docs/QUALIFICATION_MATRIX.md`](docs/QUALIFICATION_MATRIX.md), [`offline/assets-manifest.json`](offline/assets-manifest.json), and [`OPEN_ITEMS_FOR_COMPANY.md`](OPEN_ITEMS_FOR_COMPANY.md) for qualification gaps and company owners.
+See [the qualification matrix](docs/QUALIFICATION_MATRIX.md), [offline asset manifest](offline/assets-manifest.json), and [company open items](OPEN_ITEMS_FOR_COMPANY.md) for current gaps and owners.

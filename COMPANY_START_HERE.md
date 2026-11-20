@@ -68,7 +68,7 @@ python3 scripts/company_bootstrap.py rollback --transaction /tmp/golden-transact
 ## What is still needed
 
 - Approved Windows and Linux dependency/browser bundles with hashes, license/NOTICE, and SBOM.
-- A reviewed React lockfile/offline npm store and Playwright browsers; neither is present.
+- The React fixture has a transitive lock and a tested macOS arm64 setup. It does not include an offline npm cache in the transfer bundle; Windows/Linux variants, four missing license text files, company license clearance, and Playwright browsers still need review/staging.
 - A pinned, reviewed MCP Python SDK wheelhouse. The local MCP fixture is disabled and is not the SDK.
 - Company default-deny egress policy and endpoint attempt-monitoring evidence.
 - Internal OpenCode version/config compatibility test and authentic agent/skill/MCP call evidence after the egress gate is proven.

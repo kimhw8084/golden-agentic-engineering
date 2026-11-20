@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import hashlib
 import sys
 from pathlib import Path
 
@@ -132,6 +133,38 @@ def validate() -> list[str]:
                     or not isinstance(item.get('owner'), str) or not item['owner']
                     or not isinstance(item.get('required_action'), str) or not item['required_action']):
                 errors.append(f"offline asset {item.get('name')}: invalid staging fields")
+            partial_evidence = item.get('partial_evidence', [])
+            if not isinstance(partial_evidence, list):
+                errors.append(f"offline asset {item.get('name')}: partial_evidence must be a list")
+                continue
+            if partial_evidence and (item.get('status') != 'NOT_STAGED' or not isinstance(item.get('partial_progress'), str)):
+                errors.append(f"offline asset {item.get('name')}: partial evidence must stay explicitly unqualified")
+            for evidence in partial_evidence:
+                if not isinstance(evidence, dict):
+                    errors.append(f"offline asset {item.get('name')}: invalid partial evidence record")
+                    continue
+                relative = evidence.get('path')
+                digest = evidence.get('sha256')
+                if (not isinstance(relative, str) or not relative or '\\' in relative or ':' in relative
+                        or Path(relative).is_absolute() or '..' in Path(relative).parts
+                        or not isinstance(digest, str) or len(digest) != 64
+                        or any(char not in '0123456789abcdef' for char in digest.lower())):
+                    errors.append(f"offline asset {item.get('name')}: unsafe partial evidence path or digest")
+                    continue
+                artifact = ROOT / relative
+                cursor = ROOT
+                symlinked = False
+                for part in Path(relative).parts:
+                    cursor = cursor / part
+                    if cursor.is_symlink():
+                        symlinked = True
+                        break
+                try:
+                    actual = hashlib.sha256(artifact.read_bytes()).hexdigest() if artifact.is_file() and not symlinked else None
+                except OSError:
+                    actual = None
+                if actual != digest.lower():
+                    errors.append(f"offline asset {item.get('name')}: partial evidence missing or hash mismatch")
             if item.get('status') == 'STAGED':
                 digest = item.get('sha256')
                 asset_path = item.get('path')

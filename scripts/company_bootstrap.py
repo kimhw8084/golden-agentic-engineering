@@ -292,7 +292,38 @@ def inspect_assets(repo: Path, manifest_path: Path | None, assets_root: Path | N
             continue
         name = str(item.get('name', 'unnamed asset'))
         if item.get('status') != 'STAGED':
-            missing.append({'name': name, 'status': 'NOT_STAGED', 'reason': 'manifest-status'})
+            missing_item = {'name': name, 'status': 'NOT_STAGED', 'reason': 'manifest-status'}
+            if isinstance(item.get('partial_progress'), str):
+                missing_item['partial_progress'] = item['partial_progress']
+            partial_evidence = []
+            for evidence in item.get('partial_evidence', []):
+                if not isinstance(evidence, dict):
+                    partial_evidence.append({'status': 'INVALID', 'reason': 'invalid-record'})
+                    continue
+                raw_path = evidence.get('path')
+                rel_evidence = PurePosixPath(raw_path) if isinstance(raw_path, str) else PurePosixPath('/')
+                if (not rel_evidence.parts or rel_evidence.is_absolute() or '..' in rel_evidence.parts
+                        or '\\' in raw_path or ':' in raw_path or '\x00' in raw_path):
+                    partial_evidence.append({'status': 'INVALID', 'reason': 'unsafe-path'})
+                    continue
+                evidence_path = repo.joinpath(*rel_evidence.parts)
+                cursor = repo
+                has_symlink = False
+                for part in rel_evidence.parts:
+                    cursor = cursor / part
+                    if cursor.is_symlink():
+                        has_symlink = True
+                        break
+                expected_hash = evidence.get('sha256')
+                if (has_symlink or not evidence_path.is_file() or not isinstance(expected_hash, str)
+                        or not re.fullmatch(r'[0-9a-fA-F]{64}', expected_hash)
+                        or hash_file(evidence_path) != expected_hash.lower()):
+                    partial_evidence.append({'status': 'INVALID', 'reason': 'missing-or-hash-mismatch'})
+                    continue
+                partial_evidence.append({'path': rel_evidence.as_posix(), 'status': 'PARTIAL_EVIDENCE_VERIFIED', 'sha256': expected_hash.lower()})
+            if partial_evidence:
+                missing_item['partial_evidence'] = partial_evidence
+            missing.append(missing_item)
             continue
         rel = PurePosixPath(str(item.get('path', '')))
         if not rel.parts or rel.is_absolute() or '..' in rel.parts:

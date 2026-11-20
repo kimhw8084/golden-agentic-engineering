@@ -3,6 +3,12 @@ import { evaluate } from './logic';
 
 type Result = { id: string; value: number; label: string };
 
+function numericField(fields: FormData, name: string, label: string): number {
+  const raw = fields.get(name);
+  if (typeof raw !== 'string' || raw.trim() === '') throw new Error(`${label} is required.`);
+  return Number(raw);
+}
+
 export function App() {
   const [results, setResults] = useState<Result[]>([]);
   const [error, setError] = useState('');
@@ -12,9 +18,9 @@ export function App() {
     const fields = new FormData(event.currentTarget);
     try {
       const id = String(fields.get('sampleId') ?? '');
-      const value = Number(fields.get('value'));
-      const lower = Number(fields.get('lower'));
-      const upper = Number(fields.get('upper'));
+      const value = numericField(fields, 'value', 'Measured value');
+      const lower = numericField(fields, 'lower', 'Lower limit');
+      const upper = numericField(fields, 'upper', 'Upper limit');
       const outcome = evaluate({ id, value, lower, upper });
       const row = { id: id.trim(), value, label: outcome.message };
       setResults((current) => [...current, row]);
@@ -27,7 +33,7 @@ export function App() {
   return <main>
     <h1>Synthetic measurement review</h1>
     <p>Local example values only. No production data is used.</p>
-    <form onSubmit={submit}>
+    <form noValidate onSubmit={submit}>
       <label>Sample ID <input name="sampleId" required /></label>
       <label>Measured value <input name="value" type="number" step="any" required /></label>
       <label>Lower limit <input name="lower" type="number" step="any" defaultValue="0" required /></label>
