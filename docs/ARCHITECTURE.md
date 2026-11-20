@@ -36,9 +36,11 @@
                    v
              [Team lead Golden standards improvement process]
 
-Golden Control = optional *read-only/useful editor* over standards/tool catalog.
-It must not own the app registry, app compliance dashboard, application hosting,
-observability data store, production actions or feedback raw-event storage.
+Golden Control = the team-facing operating cockpit for Golden installation, releases,
+usage/evidence, design, qualification progress, and onboarding. It must surface source
+and freshness for every status and show UNKNOWN when data is absent. It must not own
+the app registry, app compliance dashboard, application hosting, production actions,
+or raw application feedback/observability storage. See `docs/GOLDEN_CONTROL_SPEC.md`.
 ```
 
 ### Internal boundaries
@@ -49,6 +51,7 @@ observability data store, production actions or feedback raw-event storage.
 | Golden Release | existing artifact repository | Hash-qualified immutable package | Local approved last-known-good copy |
 | OpenCode | existing company's internal model/runtime | Agent edits code and selectively calls skills/CLI/MCP | Manual engineer + local deterministic tools |
 | Golden Proof | standalone local Python CLI and qualified OSS CLIs | Explicit rule applicability + evidence; no LLM | `NOT_RUN`, not fake PASS |
+| Golden Control | local read-only view, later approved company adapters | Installation, update, usage/evidence, design and next-action status | Explicit unknown/stale states; no fabricated data |
 | Application CI | existing app CI and Git history | Full pre-release and owner-approved standards update scans | Blocks release or uses company-authorized evidence-backed exception |
 | Team Platform | existing separately managed app platform | App hosting + observability single pane + raw feedback | Independent of Golden Control |
 
@@ -120,7 +123,7 @@ Public GitHub repo URLs are catalog entries, not runtime dependencies. Separate 
 4. Internal Git + existing artifact repository: publish immutable version with hashes, qualification results and rollback instructions.
 5. Locally pin installed Golden version per project; engineers may use it offline even when central source is unavailable.
 
-No new background daemon is necessary. Golden Control UI is a later convenience layer.
+The current Golden Control UI is a localhost-only process with read-only file/evidence inputs. A team-wide deployment must use the existing company platform and approved adapters; it must not introduce a parallel app registry, telemetry backend, or public update service.
 
 ## 6. Real production boundaries
 
@@ -137,7 +140,7 @@ No new background daemon is necessary. Golden Control UI is a later convenience 
 1. **Golden Standard:** documents/rules/profiles in Git.
 2. **Golden Workbench:** OpenCode agents/skills/commands and qualified CLI packages.
 3. **Golden Proof:** local deterministic runner and existing CI, with evidence.
-4. **Golden Control:** future optional thin editor/search over standards/tools only.
+4. **Golden Control:** first-class team cockpit for Golden installation, approved releases, minimized usage/evidence, design rationale, progress, and onboarding.
 5. **Golden Academy:** static guides, worked examples, objective real-app qualification exercises.
 
-**Only one new runnable program is necessary for initial integration:** `scripts/golden.py` (plus existing approved CLI binaries). Do not build five independent services.
+The starter now includes two dependency-free local programs: deterministic proof (`scripts/golden.py`) and a read-only control UI (`scripts/golden_control.py`). Company-wide status sources, authentication, and deployment must integrate with existing approved systems rather than become new standalone services.

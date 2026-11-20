@@ -5,14 +5,14 @@
 | Stage | Deliverable | Work done by | Gate to advance |
 |---|---|---|---|
 | 0 | Actual company OpenCode agent/skill/MCP capabilities, OS, Git/CI and OSS inventory | Internal OpenCode + owner | Evidence of version syntax, capability availability/permissions, approved runtime, no guessing |
-| 1 | Golden pilot repo imported with versions and tests | Internal OpenCode | Python stdlib tests PASS; exact Golden root/version documented |
+| 1 | Golden pilot repo plus local Golden Control overview | Internal OpenCode | Python stdlib tests PASS; UI shows source-of-truth and honest unknown states; exact Golden root/version documented |
 | 2 | One real React app + one NiceGUI/existing app adopt pinned Golden rules | App owners + OpenCode | Agentic-first workflow exercised and compared with relevant CLI options; fast checks measured; no per-edit approvals |
 | 3 | Qualify minimal actual OSS tool winners | Company software clearance + owners | License/deps/binaries/security and offline runs proven per Windows/Linux |
 | 4 | Wire company CI to same Golden rule catalog | Existing CI engineer | Full per-rule evidence, status distinction, existing company exception procedure |
 | 5 | Implement missing rule coverage from 151 proposal requirements | Rule owners + verifier | Each mandatory rule maps to actual deterministic test or explicit NOT_RUN |
 | 6 | Documentation/diagram/benchmark workflows + no-AI drills | Domain owners | Editable docs + executed outputs, offline/runtimes tested |
 | 7 | Golden lead-approved v1 release, two-engineer pilot | Team lead and two pilot engineers | Real new/existing app, independently graded tests, measurable speed and quality |
-| 8 | Optional Golden Control lightweight standards UI | Only if measured need | Zero app hosting/registry/compliance ownership, no new runtime dependency |
+| 8 | Team-wide Golden Control using the existing company platform | Existing platform owner + Golden lead | Approved identity, read-only installation/release adapters, privacy-reviewed usage measures, rollback evidence; no parallel app registry or observability store |
 
 ## Tool selection discipline
 

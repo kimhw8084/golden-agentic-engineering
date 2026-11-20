@@ -4,13 +4,15 @@
 
 ## Phase 0 — inspection first (copy into INTERNAL OpenCode)
 
-> You are the implementation lead for our Golden Agentic Engineering System pilot. This is a standards/skills/tools verification toolkit, NOT the team's application-hosting platform. Read `AGENTS.md`, `README.md`, `docs/ARCHITECTURE.md`, `docs/FASTEST_IMPLEMENTATION.md`, `docs/QUALIFICATION_MATRIX.md`, `docs/AGENTIC_FIRST_EVALUATION.md`, `docs/reference/README.md`, `standards/rules.json`, `.opencode/` and the candidate OSS manifest. Do not blindly fetch public GitHub URLs from the intranet or change our existing OpenCode provider/model settings.
+> You are the implementation lead for our Golden Agentic Engineering System pilot. This is a standards/skills/tools verification toolkit with a first-class Golden Control UI; it is not the team's application-hosting platform. Read `AGENTS.md`, `README.md`, `docs/ARCHITECTURE.md`, `docs/FASTEST_IMPLEMENTATION.md`, `docs/QUALIFICATION_MATRIX.md`, `docs/AGENTIC_FIRST_EVALUATION.md`, `docs/GOLDEN_CONTROL_SPEC.md`, `docs/reference/README.md`, `standards/rules.json`, `.opencode/`, `control/`, `scripts/golden_control.py`, and the candidate OSS manifest. Do not blindly fetch public GitHub URLs from the intranet or change our existing OpenCode provider/model settings.
 >
 > First inspect the ACTUAL installed OpenCode version and inventory its primary/specialist agents, skills, connected MCP servers/tools, permissions, and orchestration/handoff features. Also inspect Python/Node/portable executable environment, Windows/Linux qualification targets, internal Git/CI/artifact arrangements, approved OSS availability, FastAPI deployment limits, and existing project conventions. Do not assume a capability exists because a file or catalog lists it.
 >
 > Before recommending tools, define a representative authorized fixture task with observable acceptance criteria. Exercise the best-fit agentic workflow first: primary agent plus relevant skill, adding a specialist agent or already-approved MCP tool when relevant. Record the actual calls and results. Then compare relevant CLI workflows against the same task and criteria. Choose the best-performing capability per operation; a CLI must demonstrate that it outperforms the agentic option for that operation. A hybrid may be strongest. Do not answer with a CLI-only recommendation without first checking and exercising relevant agentic capabilities. If a capability cannot be used, record whether it is unavailable, incompatible, unauthorized, or unqualified and why. Do not enable/install unapproved services or force irrelevant MCP calls or agent swarms. Follow [`docs/AGENTIC_FIRST_EVALUATION.md`](docs/AGENTIC_FIRST_EVALUATION.md) and capture task quality, rework, human interventions, and elapsed time.
 >
 > Produce a verified/unverified/blocked matrix and list the minimal pilot changes. Follow speed-first policy: no approval gates for routine developer edits, tests or authorized commits. Preserve production approval boundaries. After inspection, implement the smallest working pilot on one React and one NiceGUI/Python example, with independent no-AI checks and measured development speed. Do not claim tests you haven't executed, and obtain the company authorization required for software import or production operations.
+>
+> Golden Control is a required part of the team-ready design. Audit the existing dashboard before proposing changes; preserve and extend it. The team UI must explain where the project is, why it exists, which design decisions it follows, how agents/skills/approved MCP/CLI were selected, what is actually installed, which approved update is available, what usage evidence exists, what remains unknown, and exactly where a new team member should start. Never fake machine-wide installation, release, or AI/MCP usage data. First make the local read-only UI clear and useful; then connect only to inspected, company-approved identity, release, installation, and usage sources. Follow `docs/GOLDEN_CONTROL_SPEC.md` and keep application hosting/feedback in the existing team platform.
 
 ### Required agentic-first evaluation for the first pilot
 
@@ -28,6 +30,7 @@ python scripts/golden.py list
 python scripts/golden.py check --fast --project examples/python-app
 python scripts/golden.py check --full --project examples/python-app --out out/demo.evidence.json
 python scripts/golden.py report --input out/demo.evidence.json --out out/demo.report.html
+python scripts/golden_control.py --evidence-dir out
 ```
 
 The full check is expected to return nonzero because it sees missing configured independent tools. **Do not waive it, suppress it or print a fake PASS.**
@@ -39,6 +42,7 @@ The full check is expected to return nonzero because it sees missing configured 
 - If the format is compatible, use the dry-run installer with a specific already-existing OpenCode config directory: `python scripts/install_opencode.py --target <CONFIG_DIR>`. Then `--apply` after review. It never overwrites a conflicting file and never enables MCP.
 - Use `python scripts/bootstrap_project.py --target <EXISTING_PROJECT_DIR> --name "Your App" --profile react` in dry-run mode; `--apply` only when the project owner agrees. Review declared capabilities and add actual test commands.
 - Check that agent names, skill discovery, relevant MCP calls where available, and `/golden-build` work on your internal model with a real small code change. Compare the agentic workflow with relevant CLI candidates on the same acceptance criteria; record actual calls/results and use the best-performing tool per operation.
+- Open Golden Control with `python scripts/golden_control.py --target <EXISTING_CONFIG_DIR> --evidence-dir out`. Supply only a real existing config directory you have checked; verify displayed status against source files. Keep company-wide release/usage integrations marked unavailable until their approved sources are connected.
 
 ## Existing company Git/CI integration
 

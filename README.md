@@ -24,6 +24,7 @@ python scripts/golden.py doctor --project examples/python-app
 python scripts/golden.py check --fast --project examples/python-app
 python scripts/golden.py check --full --project examples/python-app --out out/evidence.json
 python scripts/golden.py report --input out/evidence.json --out out/evidence.html
+python scripts/golden_control.py --target "<EXISTING_CONFIG_DIR>" --evidence-dir out
 python scripts/fetch_sources.py --tier pilot --limit 3   # dry run only, no download
 ```
 
@@ -50,7 +51,7 @@ A full example evaluation is expected to **not** be release-qualified because mo
       real applications, user feedback, observability UI
 ```
 
-Golden Control is a **thin standards/tool catalog convenience UI**, not an app registry, deployment system or compliance dashboard. Build it only after the core local+CI workflow proves useful.
+Golden Control is the team-facing operating cockpit for Golden installation, approved releases, usage/evidence, design rationale, progress, and onboarding. A local read-only prototype is included. It is not an application registry, production/deployment system, or raw observability store. Company-wide release and usage data require approved adapters in the existing team platform; unknown states must stay unknown.
 
 ## What's included
 
@@ -60,6 +61,7 @@ Golden Control is a **thin standards/tool catalog convenience UI**, not an app r
 | `.opencode/skills/` | 12 selectively loaded Golden workflows |
 | `.opencode/commands/` | `/golden-build`, `/golden-audit`, `/golden-design`, `/golden-docs`, `/golden-triage`, `/golden-release` |
 | `scripts/golden.py` | Working offline pilot rule evaluator, doctor, explanation and HTML evidence report |
+| `scripts/golden_control.py` and `control/` | Local read-only operator dashboard for asset comparison, integrity, Golden evidence summaries, design, and onboarding |
 | `standards/` | Version pin, 19 initial executable rule definitions (not the entire 151-requirement standard) |
 | `tools/candidates.json` | 63 public GitHub source candidates, grouped by acquisition priority |
 | `scripts/fetch_sources.py` | Public-network opt-in snapshot downloader/pinner; **source only** |
@@ -80,11 +82,11 @@ Start with the actual company's available agent, skill, and connected/approved M
 - **Quality:** Every catalogued rule is assessed; applicable checks run; absent evidence is `NOT_RUN`, and inapplicability has an explicit basis. A fast check never pretends to be full release qualification.
 - **Offline:** Company runtime uses only intranet, permitted internal AI, and approved offline dependencies. No public-net API, hidden downloads or mandatory paid accounts.
 - **Human control:** Golden standard publication and production/irreversible operations require approval under existing company rules, not per-edit developer approval.
-- **Lean ownership:** Feedback and real applications live in the existing team app platform. Golden stores and governs standards and tools only.
+- **Clear ownership:** Golden Control shows Golden installation, releases, minimized usage/evidence, design and onboarding. Applications, hosting, raw feedback and production observability remain in the existing team platform.
 
 ## Current engineering truth
 
-`v0.1.0-dev` is a functional **pilot foundation**, not completed Golden. The 19 rule descriptors are only initial enforcement scaffolding. Most full checks require configuration of approved external tools; no external executables are bundled. License hints are not verified. OpenCode files target public OpenCode V2 documentation (Nov 2026), not proven internal compatibility. Windows and internal CI tests have **NOT_RUN** status. See [`docs/QUALIFICATION_MATRIX.md`](docs/QUALIFICATION_MATRIX.md).
+`v0.1.0-dev` is a functional **pilot foundation**, not completed Golden. The local Golden Control prototype is read-only and does not connect to company installations, approved release feeds, or agent/MCP usage data. The 19 rule descriptors are only initial enforcement scaffolding. Most full checks require configuration of approved external tools; no external executables are bundled. License hints are not verified. OpenCode files target public OpenCode V2 documentation (Nov 2026), not proven internal compatibility. Windows and internal CI tests have **NOT_RUN** status. See [`docs/QUALIFICATION_MATRIX.md`](docs/QUALIFICATION_MATRIX.md).
 
 ## Documentation
 
@@ -95,6 +97,7 @@ Start with the actual company's available agent, skill, and connected/approved M
 - [`docs/FASTEST_IMPLEMENTATION.md`](docs/FASTEST_IMPLEMENTATION.md) — staged team adoption and acceptance
 - [`docs/TOOL_ACQUISITION.md`](docs/TOOL_ACQUISITION.md) — license and offline source staging
 - [`docs/AGENTIC_FIRST_EVALUATION.md`](docs/AGENTIC_FIRST_EVALUATION.md) — compare agent/skill/MCP workflows with CLI candidates
+- [`docs/GOLDEN_CONTROL_SPEC.md`](docs/GOLDEN_CONTROL_SPEC.md) — team UI, data boundaries, integration phases, and acceptance criteria
 - [`docs/QUALIFICATION_MATRIX.md`](docs/QUALIFICATION_MATRIX.md) — real status vs intended features
 - [`docs/OPEN_CODE_COMPATIBILITY.md`](docs/OPEN_CODE_COMPATIBILITY.md) — V2 syntax and internal-version migration check
 - [`docs/reference/README.md`](docs/reference/README.md) — private requirements deliberately excluded from GitHub package

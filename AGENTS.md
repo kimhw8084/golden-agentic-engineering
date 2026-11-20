@@ -16,7 +16,7 @@ This repository is a **Golden engineering toolchain**. It is not the company's a
 
 ## Project structure
 
-`standards/` is the draft normative rule catalog. `.opencode/agents/`, `.opencode/skills/`, and `.opencode/commands/` are OpenCode-facing assets. `scripts/golden.py` is a working **pilot** rule runner (stdlib Python >=3.10). `docs/AGENTIC_FIRST_EVALUATION.md` defines capability discovery and evidence-based tool selection. `tools/candidates.json` is an acquisition candidate catalog, **not** a license or security approval.
+`standards/` is the draft normative rule catalog. `.opencode/agents/`, `.opencode/skills/`, and `.opencode/commands/` are OpenCode-facing assets. `scripts/golden.py` is a working **pilot** rule runner (stdlib Python >=3.10). `scripts/golden_control.py` serves the local, read-only Golden Control UI from `control/`; its company-wide inventory, release, and usage integrations are not implemented. `docs/AGENTIC_FIRST_EVALUATION.md` defines capability discovery and evidence-based tool selection, and `docs/GOLDEN_CONTROL_SPEC.md` defines the team cockpit and its phased company integration. `tools/candidates.json` is an acquisition candidate catalog, **not** a license or security approval.
 
 ## Local checks before proposing a Golden release
 
