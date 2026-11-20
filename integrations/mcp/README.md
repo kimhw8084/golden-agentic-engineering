@@ -1,6 +1,8 @@
-# Optional MCP, DISABLED by default
+# MCP capability discovery; example remains DISABLED by default
 
-CLI/skill first. Golden should attach a local MCP server only when a concrete task needs structured access to an approved internal system (read-only Git query, internal DB schema, Prometheus/Grafana/Splunk authorized query, etc.). Neither a generic internet MCP gateway nor a mandatory background server is part of Golden Core.
+MCP belongs in the initial capability inventory alongside OpenCode agents and skills. Use a connected, approved MCP tool when it provides relevant structured access to an internal system (for example, Git queries, database schemas, or authorized Prometheus/Grafana/Splunk queries). A local CLI may be better for a particular operation; make that choice after comparing the same task and acceptance criteria. Agentic reasoning, skills, MCP service calls, and deterministic CLI execution can be composed in one workflow.
+
+This example stays disabled by default because the server, SDK, permissions, internal compatibility, and offline behavior are not qualified here. Discover and test already-approved integrations; do not install or enable this example until it has passed qualification. Neither a generic internet MCP gateway nor a mandatory background server is part of Golden Core.
 
 Public OpenCode V2 example shape, **not tested against your internal build**:
 

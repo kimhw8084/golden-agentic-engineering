@@ -4,7 +4,19 @@
 
 ## Phase 0 — inspection first (copy into INTERNAL OpenCode)
 
-> You are the implementation lead for our Golden Agentic Engineering System pilot. This is a standards/skills/tools verification toolkit, NOT the team's application-hosting platform. Read `AGENTS.md`, `README.md`, `docs/ARCHITECTURE.md`, `docs/FASTEST_IMPLEMENTATION.md`, `docs/QUALIFICATION_MATRIX.md`, `docs/reference/README.md`, `standards/rules.json`, `.opencode/` and the candidate OSS manifest. Do not blindly fetch public GitHub URLs from the intranet or change our existing OpenCode provider/model settings. First inspect the ACTUAL installed OpenCode version/agent/skill/command/MCP syntax, Python/Node/portable executable environment, Windows/Linux qualification targets, internal Git/CI/artifact arrangements, approved OSS availability, FastAPI deployment limits and existing project conventions. Produce a verified/unverified/blocked matrix; list the minimal pilot changes. Follow speed-first policy: no approval gates for routine developer edits, tests or authorized commits. Preserve production approval boundaries. After inspection, implement the smallest working pilot on one React and one NiceGUI/Python example, with independent no-AI checks and measured development speed. Do not claim tests you haven't executed, and obtain the company authorization required for software import or production operations.
+> You are the implementation lead for our Golden Agentic Engineering System pilot. This is a standards/skills/tools verification toolkit, NOT the team's application-hosting platform. Read `AGENTS.md`, `README.md`, `docs/ARCHITECTURE.md`, `docs/FASTEST_IMPLEMENTATION.md`, `docs/QUALIFICATION_MATRIX.md`, `docs/AGENTIC_FIRST_EVALUATION.md`, `docs/reference/README.md`, `standards/rules.json`, `.opencode/` and the candidate OSS manifest. Do not blindly fetch public GitHub URLs from the intranet or change our existing OpenCode provider/model settings.
+>
+> First inspect the ACTUAL installed OpenCode version and inventory its primary/specialist agents, skills, connected MCP servers/tools, permissions, and orchestration/handoff features. Also inspect Python/Node/portable executable environment, Windows/Linux qualification targets, internal Git/CI/artifact arrangements, approved OSS availability, FastAPI deployment limits, and existing project conventions. Do not assume a capability exists because a file or catalog lists it.
+>
+> Before recommending tools, define a representative authorized fixture task with observable acceptance criteria. Exercise the best-fit agentic workflow first: primary agent plus relevant skill, adding a specialist agent or already-approved MCP tool when relevant. Record the actual calls and results. Then compare relevant CLI workflows against the same task and criteria. Choose the best-performing capability per operation; a CLI must demonstrate that it outperforms the agentic option for that operation. A hybrid may be strongest. Do not answer with a CLI-only recommendation without first checking and exercising relevant agentic capabilities. If a capability cannot be used, record whether it is unavailable, incompatible, unauthorized, or unqualified and why. Do not enable/install unapproved services or force irrelevant MCP calls or agent swarms. Follow [`docs/AGENTIC_FIRST_EVALUATION.md`](docs/AGENTIC_FIRST_EVALUATION.md) and capture task quality, rework, human interventions, and elapsed time.
+>
+> Produce a verified/unverified/blocked matrix and list the minimal pilot changes. Follow speed-first policy: no approval gates for routine developer edits, tests or authorized commits. Preserve production approval boundaries. After inspection, implement the smallest working pilot on one React and one NiceGUI/Python example, with independent no-AI checks and measured development speed. Do not claim tests you haven't executed, and obtain the company authorization required for software import or production operations.
+
+### Required agentic-first evaluation for the first pilot
+
+Follow [`docs/AGENTIC_FIRST_EVALUATION.md`](docs/AGENTIC_FIRST_EVALUATION.md). During Phase 0, inspect the actual internal OpenCode installation for primary and specialist agents, skill discovery, connected MCP servers and tools, permissions, and orchestration/handoff features. Do not treat this repository's files or the CLI candidate catalog as proof that a capability is available.
+
+For a representative authorized fixture task, exercise the best-fit primary agent plus relevant skill first. Add a specialist agent or an already-approved MCP tool when it provides relevant capability. Then compare relevant CLI workflows against the same task and acceptance criteria. Record the actual agent/skill/MCP calls and results, CLI commands and results, task quality, rework, human interventions, and elapsed time. Choose the best-performing capability for each operation; a CLI must demonstrate that it outperforms the agentic workflow for that operation. A hybrid may be strongest. Do not answer with a CLI-only recommendation without first checking and exercising relevant agentic capabilities. If a capability cannot be used, record whether it is unavailable, incompatible, unauthorized, or unqualified and why. Do not enable/install unapproved services or force irrelevant MCP calls or agent swarms.
 
 ## Commands that already work with Python >=3.10
 
@@ -26,7 +38,7 @@ The full check is expected to return nonzero because it sees missing configured 
 - Do NOT replace the existing provider/model configuration.
 - If the format is compatible, use the dry-run installer with a specific already-existing OpenCode config directory: `python scripts/install_opencode.py --target <CONFIG_DIR>`. Then `--apply` after review. It never overwrites a conflicting file and never enables MCP.
 - Use `python scripts/bootstrap_project.py --target <EXISTING_PROJECT_DIR> --name "Your App" --profile react` in dry-run mode; `--apply` only when the project owner agrees. Review declared capabilities and add actual test commands.
-- Check that agent names, skill discovery and `/golden-build` work on your internal model with a real small code change.
+- Check that agent names, skill discovery, relevant MCP calls where available, and `/golden-build` work on your internal model with a real small code change. Compare the agentic workflow with relevant CLI candidates on the same acceptance criteria; record actual calls/results and use the best-performing tool per operation.
 
 ## Existing company Git/CI integration
 
@@ -38,7 +50,7 @@ On public staging PC: `python scripts/fetch_sources.py --tier pilot --limit 3` p
 
 ## First real pilot finish line
 
-- Internal OpenCode has proven actual skills/agent compatibility, without replacing provider configuration.
+- Internal OpenCode has proven actual agent/skill compatibility and task-relevant approved MCP calls where available, without replacing provider configuration; the workflow has been compared against CLI alternatives on the same task.
 - One new app and one existing app both use the same pinned Golden profile, with no artificial edit gates.
 - Fast checks measured, full checks enumerate every rule with PASS/FAIL/NOT_APPLICABLE/NOT_RUN evidence.
 - Company CI runs the same deterministic checks independently and retains reports.

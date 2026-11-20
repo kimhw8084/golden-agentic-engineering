@@ -10,13 +10,13 @@ This repository is a **Golden engineering toolchain**. It is not the company's a
 - Keep Golden Control limited to standards, approved tooling, versioning and customization. Application hosting, observability UI and application feedback belong to the separate team platform.
 - Make deterministic tools authoritative for PASS/FAIL. Never treat a model's confident prose as executed evidence.
 - For a repository audit, assess **every** Golden rule: execute relevant checks; record `NOT_APPLICABLE` with a reason, `NOT_RUN` when evidence is missing, or `DEFERRED` in fast-only runs.
-- The default flow is one agent plus the relevant skill and direct CLI. Delegate only independent/high-complexity work. No mandatory swarms.
+- Start each task by discovering the relevant approved OpenCode agent, skill, and MCP capabilities; exercise the best-fit agentic workflow before choosing implementation tools. Compare CLI candidates on the same task and prefer a CLI for a capability only when evidence shows it performs better against that capability's acceptance criteria. Combine agentic reasoning/integration with deterministic CLI checks when each is strongest. Do not invoke every agent or MCP, and do not create mandatory swarms.
 - Build/packaging/CI must work offline with the model unavailable. No runtime public internet, telemetry uploads, or downloads.
 - Reduce context use: read the smallest relevant `SKILL.md` and referenced policy; do not preload the entire requirements draft or tool catalog.
 
 ## Project structure
 
-`standards/` is the draft normative rule catalog. `.opencode/agents/`, `.opencode/skills/`, and `.opencode/commands/` are OpenCode-facing assets. `scripts/golden.py` is a working **pilot** rule runner (stdlib Python >=3.10). `tools/candidates.json` is an acquisition candidate catalog, **not** a license or security approval.
+`standards/` is the draft normative rule catalog. `.opencode/agents/`, `.opencode/skills/`, and `.opencode/commands/` are OpenCode-facing assets. `scripts/golden.py` is a working **pilot** rule runner (stdlib Python >=3.10). `docs/AGENTIC_FIRST_EVALUATION.md` defines capability discovery and evidence-based tool selection. `tools/candidates.json` is an acquisition candidate catalog, **not** a license or security approval.
 
 ## Local checks before proposing a Golden release
 

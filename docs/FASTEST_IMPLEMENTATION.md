@@ -4,9 +4,9 @@
 
 | Stage | Deliverable | Work done by | Gate to advance |
 |---|---|---|---|
-| 0 | Actual company OpenCode, OS, Git/CI and OSS inventory | Internal OpenCode + owner | Evidence of version syntax/approved runtime, no guessing |
+| 0 | Actual company OpenCode agent/skill/MCP capabilities, OS, Git/CI and OSS inventory | Internal OpenCode + owner | Evidence of version syntax, capability availability/permissions, approved runtime, no guessing |
 | 1 | Golden pilot repo imported with versions and tests | Internal OpenCode | Python stdlib tests PASS; exact Golden root/version documented |
-| 2 | One real React app + one NiceGUI/existing app adopt pinned Golden rules | App owners + OpenCode | Direct development works, fast checks measured, no per-edit approvals |
+| 2 | One real React app + one NiceGUI/existing app adopt pinned Golden rules | App owners + OpenCode | Agentic-first workflow exercised and compared with relevant CLI options; fast checks measured; no per-edit approvals |
 | 3 | Qualify minimal actual OSS tool winners | Company software clearance + owners | License/deps/binaries/security and offline runs proven per Windows/Linux |
 | 4 | Wire company CI to same Golden rule catalog | Existing CI engineer | Full per-rule evidence, status distinction, existing company exception procedure |
 | 5 | Implement missing rule coverage from 151 proposal requirements | Rule owners + verifier | Each mandatory rule maps to actual deterministic test or explicit NOT_RUN |
@@ -16,7 +16,7 @@
 
 ## Tool selection discipline
 
-Start from tools already approved. Then qualify **one winner per function** and add specialized candidates only when pilot tasks require them. The 63-source catalog is not a mandate to install 63 tools. Candidate examples by function:
+First inventory approved OpenCode agents, skills, connected MCP servers/tools, and relevant orchestration features. Exercise the best-fit agentic workflow on a representative task before comparing CLI candidates against the same acceptance criteria. Qualify **one winner per capability**, then compose the strongest agentic, MCP, and CLI parts into a hybrid where useful. A CLI is preferred for an operation only when evidence shows it wins that operation. The 63-source catalog is not a mandate to install 63 tools and does not describe the full agentic capability set. Candidate examples by function:
 
 - Repository inspection: ripgrep, scc, ast-grep; one chosen structural approach.
 - Python: Ruff, real app's existing pytest/unittest; optionally uv if approved.
@@ -25,7 +25,7 @@ Start from tools already approved. Then qualify **one winner per function** and 
 - Docs/diagrams: Typst + a single documentation framework + Mermaid/D2 as required.
 - Data: DuckDB/Polars, then PyOD/ruptures/Drain3 only after proven real use cases.
 - Supply chain: SBOM and secret detection, vulnerability scanner only with locally refreshed vulnerability DB.
-- MCP: no default. Enable approved internal connection when shell/SDK is materially worse.
+- MCP: discover approved internal connections as part of initial capability selection; exercise task-relevant tools and compare the equivalent shell/SDK operation. Leave unqualified servers disabled.
 
 ## What to measure, separately
 
@@ -40,7 +40,7 @@ No overall weighted score. A faster unsafe change is not a successful release; e
 
 ## Self-service learning
 
-Beginner uses `/golden-build` (guided skill routing). Expert invokes direct commands/skills and tool CLI. Both use same pinned standards. Independence is graded by independently completed real apps and reproducible acceptance, not watching tutorials.
+Beginner uses `/golden-build` (guided skill/agent/MCP discovery). Expert invokes relevant agents, skills, and approved MCP tools directly, then uses CLI for operations where it provides the best evidence or outcome. Both use the same pinned standards. Independence is graded by independently completed real apps and reproducible acceptance, not watching tutorials.
 
 ## Stop conditions
 

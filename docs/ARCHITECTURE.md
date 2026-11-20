@@ -18,10 +18,10 @@
        [Developer local cache]     [Existing app CI]
        |                           |
        | OpenCode primary agent    | same deterministic Golden rule runner
-       | on-demand specialists    | same pinned catalog
+       | task-relevant specialists | same pinned catalog
        | selective skills         | evidence per app/release
-       | approved CLI tools       | company exceptions
-       | approved MCP only        |
+       | approved MCP tools       | company exceptions
+       | evidence-selected CLIs   |
        +------- normal Git -------+
                    |
            [Application repositories]
@@ -52,20 +52,20 @@ observability data store, production actions or feedback raw-event storage.
 | Application CI | existing app CI and Git history | Full pre-release and owner-approved standards update scans | Blocks release or uses company-authorized evidence-backed exception |
 | Team Platform | existing separately managed app platform | App hosting + observability single pane + raw feedback | Independent of Golden Control |
 
-## 2. Agentic orchestration choice
+## 2. Agentic-first capability and orchestration choice
 
-**Default:** 1 primary engineer agent + relevant skill + direct CLI. Typical task should not incur subagent cost.
+**Required order:** inspect the actual approved agent, skill, and MCP capabilities first; exercise the best-fit agentic workflow on the task; then compare relevant CLI candidates on the same acceptance criteria. Select by evidence for each capability. A CLI is preferred for a specific operation only when it performs better on the requirements that matter. Combine agents/skills/MCP with deterministic CLIs when that produces the strongest end-to-end result. Do not call irrelevant tools or force extra agents.
 
 | Pattern | Trigger | Tools/actors | Why |
 |---|---|---|---|
-| Direct | Simple feature, bug, test | Golden engineer, CLI | Fewest requests/tokens |
-| Router | Clearly separate React/NiceGUI/data task | Skill chosen from task type | Small context |
-| Sequential | Requirements -> implementation -> verification -> draft docs | One agent, small artifacts between steps | Avoid speculation before code exists |
-| Parallel | Multiple independent constrained investigations | At most necessary subagents | Save wall clock only if truly independent |
-| Orchestrator-worker | Genuine multi-module task with distinct ownership | Scoped subagents | Explicit integration boundaries |
-| Evaluator-optimizer | High-risk or repeated test failure | Deterministic tool -> bounded repair -> retest | Real proof, no AI self-scoring |
+| Direct agentic | Simple feature, bug, or task with one clear owner | Primary agent + relevant skill; approved MCP when relevant | Exercise the best-fit agentic capability with low coordination cost |
+| Router | Clear framework/domain specialization | Primary agent routes to relevant skill and specialist agent/MCP capability | Match expertise without preloading everything |
+| Sequential | Requirements -> implementation -> tests -> documentation | Agent-led stages; CLI checks where they provide deterministic proof | Later steps depend on earlier evidence |
+| Parallel | Multiple independent constrained investigations | Relevant specialist agents or MCP calls, only where useful | Save wall clock only when tasks are genuinely independent |
+| Orchestrator-worker | Genuine multi-module change with distinct ownership | Primary orchestrator + scoped agents and approved tools | Explicit integration boundaries |
+| Evaluator-optimizer | High-risk or repeated test failure | Agent interprets evidence and repairs; deterministic checker verifies | Real proof, no AI self-scoring |
 
-Avoid always-on agent swarms, open-ended loops and noisy MCP lists. Agent descriptions are not execution guarantees.
+Avoid always-on swarms, open-ended loops and irrelevant MCP calls. Agent descriptions are not execution guarantees; verify that the chosen agent/skill/MCP capability was actually invoked and contributed evidence.
 
 ## 3. Context budget (what goes where)
 
@@ -74,7 +74,8 @@ Avoid always-on agent swarms, open-ended loops and noisy MCP lists. Agent descri
 - `standards/rules.json`: machine-checkable rule IDs, applicability and command mapping.
 - `golden.project.json`: pinned version, explicit app profile/capability declarations and local commands.
 - Source code / tests / existing docs: retrieve only relevant files via read/grep; do not put them into persistent prompt.
-- MCP: typed access to authorized internal systems only when direct CLI is not sufficient.
+- MCP: typed access to authorized internal systems; discover and exercise relevant connected tools during capability selection. Compare a CLI for the same operation when useful.
+- CLI: implementation, build, test, lint, or service operations when the candidate is approved and evidence shows it is the best fit for that operation.
 - CI/evidence JSON: authoritative check outputs, linked to real files/versions. AI can explain but never author fabricated verification status.
 
 ## 4. Contract between project, checker, and CI

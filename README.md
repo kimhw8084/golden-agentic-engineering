@@ -4,6 +4,8 @@
 
 A lightweight **OpenCode-first agentic engineering standards toolkit** for a 10-person team. This repository contains functioning Python-standard-library verification scaffolding, OpenCode agents/skills/commands, a real candidate OSS manifest, opt-in public-source staging, and company deployment instructions. It deliberately does **not** host company engineering applications or replace the existing CI, Git, artifact registry, Prometheus, Grafana or Splunk.
 
+Tool selection is agentic-first: inspect and exercise relevant agents, skills, and already-approved MCP capabilities before comparing CLI candidates. Choose by representative task evidence; a CLI becomes preferred for an operation only when it outperforms the agentic option on the stated acceptance criteria. See [`docs/AGENTIC_FIRST_EVALUATION.md`](docs/AGENTIC_FIRST_EVALUATION.md). This is a selection order, not a requirement to call every agent or MCP server.
+
 > **You can push this repository to GitHub now.** You cannot claim it or its OSS candidates are company-cleared or offline-runnable before internal qualification. No external dependencies are shipped by default.
 
 ## Fastest start from a phone
@@ -38,8 +40,8 @@ A full example evaluation is expected to **not** be release-qualified because mo
         existing internal artifact repository
                    /              \
      developer local cache       existing CI
-       | OpenCode + skills         | independent rules
-       | approved CLIs/MCP         | full release checks
+       | OpenCode agents + skills  | independent rules
+       | approved MCP + selected CLIs | full release checks
        | direct Git commits        | evidence / exceptions
                    \              /
                app source repositories
@@ -67,6 +69,10 @@ Golden Control is a **thin standards/tool catalog convenience UI**, not an app r
 | `integrations/` | Vendor-neutral existing-CI and optional MCP configuration guidance |
 | `tests/` and `examples/` | Real unit tests and minimal working sample |
 
+## Tool selection
+
+Start with the actual company's available agent, skill, and connected/approved MCP capabilities. Exercise the best-fit agentic workflow on a representative task, then compare relevant CLI tools against the same acceptance criteria. Select agentic, CLI, or hybrid capabilities by evidence, per operation; do not assume a CLI should replace agentic tools or that an agentic feature automatically wins. The candidate source catalog is not a capability ranking. The procedure and evidence template are in [`docs/AGENTIC_FIRST_EVALUATION.md`](docs/AGENTIC_FIRST_EVALUATION.md).
+
 ## Non-negotiable product behavior
 
 - **Speed:** Authorized application owners direct OpenCode to edit/test/refactor/commit, including main when permitted. No Golden approvals per edit. CI deployment remains separate.
@@ -88,6 +94,7 @@ Golden Control is a **thin standards/tool catalog convenience UI**, not an app r
 - [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) — exact responsibilities and interfaces
 - [`docs/FASTEST_IMPLEMENTATION.md`](docs/FASTEST_IMPLEMENTATION.md) — staged team adoption and acceptance
 - [`docs/TOOL_ACQUISITION.md`](docs/TOOL_ACQUISITION.md) — license and offline source staging
+- [`docs/AGENTIC_FIRST_EVALUATION.md`](docs/AGENTIC_FIRST_EVALUATION.md) — compare agent/skill/MCP workflows with CLI candidates
 - [`docs/QUALIFICATION_MATRIX.md`](docs/QUALIFICATION_MATRIX.md) — real status vs intended features
 - [`docs/OPEN_CODE_COMPATIBILITY.md`](docs/OPEN_CODE_COMPATIBILITY.md) — V2 syntax and internal-version migration check
 - [`docs/reference/README.md`](docs/reference/README.md) — private requirements deliberately excluded from GitHub package

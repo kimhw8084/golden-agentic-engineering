@@ -14,10 +14,11 @@
 | Independent profile/capability discovery | NOT DONE | Current manifest declarations may be inaccurate; verify before release |
 | Company risk-exception workflow | NOT DONE | Integrate with existing company authority, preserve original result |
 | Actual Windows + Linux end-to-end | NOT TESTED | Linux container Python pilot executed; Windows must be tested |
-| Actual company OpenCode + internal model | NOT TESTED | Inspect internal version/config and prove agent/skill calls |
+| Actual company OpenCode + internal model | NOT TESTED | Inspect internal version/config; prove relevant agent/skill/MCP use and compare CLI workflows on the same task |
+| Agentic-first tool selection | NOT TESTED | Run representative task-level comparisons; record actual agent, skill, MCP and CLI invocations, results, latency and rework |
 | Company CI integration | DESIGN ONLY | Existing CI owner builds trigger and evidence storage |
 | Golden Control portal | INTENTIONALLY NOT BUILT | Optional, standards-only, after workflow qualification |
-| Live MCP servers | INTENTIONALLY DISABLED | No public/runtime MCP dependency; enable only approved internal ones |
+| Bundled MCP example server | INTENTIONALLY DISABLED | Example remains off pending server/SDK/permission/offline qualification; inspect and exercise approved MCP servers already connected to company OpenCode |
 | Monitoring single-pane React UI | OUT OF SCOPE | Owned by separate team platform |
 | Lead-approved Golden release | NOT APPROVED | Tests + documented evidence + team lead sign-off |
 | Team adoption and independent proficiency | NOT TESTED | New + existing app pilot, two engineers, independent checks |

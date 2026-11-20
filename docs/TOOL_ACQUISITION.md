@@ -23,12 +23,12 @@ Each acquisition outputs source ZIP snapshots plus `sources.lock.json` with exac
 
 ## Offline qualification checklist for EACH selected tool
 
-1. Define concrete user value and benchmark alternative; prefer already approved package.
+1. Define the task and its acceptance criteria. First inventory approved OpenCode agents, skills, and connected MCP tools; exercise the best-fit agentic workflow before acquiring another tool. Benchmark relevant CLI candidates against the same task. Prefer a CLI for a specific capability only when measured evidence shows it wins on the requirements that matter; choose a hybrid when it performs best end to end.
 2. Pin exact upstream commit/release + checksums; confirm provenance and security advisories.
 3. Independently verify source and binary licenses, embedded components, asset restrictions and third-party notices.
 4. Inventory full dependency tree; stage exact binaries/wheels/npm cache and user assets for target OS.
 5. Install/extract on isolated Windows and Linux test machines with **public network blocked**; no implicit remote install.
-6. Run actual Golden CLI/skill integration smoke tests with the company internal OpenCode.
+6. Run actual task-level agent, skill, and authorized MCP integration smoke tests with company internal OpenCode; compare selected CLI candidates on the same representative task and preserve traces/results.
 7. Run no-AI deterministic tests; measure latency, CPU/RAM and process startup.
 8. Record company approval, owner, update/rollback/removal plan, version and evidence. Publish approved artifact to internal repository.
 
