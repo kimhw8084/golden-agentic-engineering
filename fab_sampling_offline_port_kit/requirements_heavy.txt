@@ -1,0 +1,3 @@
+# OPTIONAL: large neural stack. Check platform/GPU/CUDA and ML weight licenses separately.
+# Torch and compatible dependencies may be very large.
+neuralforecast

@@ -1,0 +1,25 @@
+# Candidate binary wheels for the core Python baseline; do not run pip install on the work PC until approved.
+# Download on a networked computer matching the target OS + CPU + Python ABI.
+# Resolve/pin these into a tested lock after the first successful environment build.
+sqlglot
+pandera[pandas]
+catboost
+mlforecast
+lifelines
+statsforecast
+hierarchicalforecast
+simpy
+mapie
+lightgbm
+polars
+connectorx
+duckdb
+ortools
+shap
+optuna
+xgboost
+sqlalchemy
+scikit-learn
+numpy
+pandas
+pyarrow

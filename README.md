@@ -64,6 +64,7 @@ Golden Control is the team-facing operating cockpit for Golden installation, app
 | `scripts/golden_control.py` and `control/` | Local read-only operator dashboard for asset comparison, integrity, Golden evidence summaries, design, and onboarding |
 | `standards/` | Version pin, 19 initial executable rule definitions (not the entire 151-requirement standard) |
 | `tools/candidates.json` | 64 public GitHub source leads, including one explicitly typed agent skill; not a complete capability inventory |
+| [`fab_sampling_offline_port_kit/README.md`](fab_sampling_offline_port_kit/README.md) | Offline source-transfer guide and scripts; no fab data or downloaded source repositories bundled |
 | `scripts/fetch_sources.py` | Public-network opt-in snapshot downloader/pinner; **source only** |
 | `scripts/bootstrap_project.py` | Non-overwriting application manifest scaffold |
 | `scripts/install_opencode.py` | Non-overwriting install of agent/skill/command files into chosen OpenCode config folder |

@@ -1,0 +1,15 @@
+# Optional challengers; keep separate from core to minimize unnecessary dependencies.
+statsmodels
+river
+ruptures
+pyod
+networkx
+tsfresh
+featuretools
+flaml
+skforecast
+skforecast-ai
+evidently
+mlflow
+dowhy
+conformalforecast

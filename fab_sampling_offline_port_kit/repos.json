@@ -1,0 +1,386 @@
+{
+  "as_of": "2026-11-20",
+  "scope": "offline-first semiconductor sampling-demand prediction / fab capacity",
+  "repositories": [
+    {
+      "rank": 1,
+      "stage": "core",
+      "family": "data",
+      "repo": "tobymao/sqlglot",
+      "url": "https://github.com/tobymao/sqlglot.git",
+      "license_expected": "MIT",
+      "purpose": "Parse SQL, validate lineage and rewrite dialect-specific queries.",
+      "status": "candidate-not-installed"
+    },
+    {
+      "rank": 2,
+      "stage": "core",
+      "family": "data",
+      "repo": "unionai-oss/pandera",
+      "url": "https://github.com/unionai-oss/pandera.git",
+      "license_expected": "MIT",
+      "purpose": "Validate rows, schemas, constraints and as-of feature contracts.",
+      "status": "candidate-not-installed"
+    },
+    {
+      "rank": 3,
+      "stage": "core",
+      "family": "model",
+      "repo": "catboost/catboost",
+      "url": "https://github.com/catboost/catboost.git",
+      "license_expected": "Apache-2.0",
+      "purpose": "High-value tabular sampling-demand and residual predictor.",
+      "status": "candidate-not-installed"
+    },
+    {
+      "rank": 4,
+      "stage": "core",
+      "family": "forecast",
+      "repo": "Nixtla/mlforecast",
+      "url": "https://github.com/Nixtla/mlforecast.git",
+      "license_expected": "Apache-2.0",
+      "purpose": "Multi-series time-aware supervised forecasting and feature lags.",
+      "status": "candidate-not-installed"
+    },
+    {
+      "rank": 5,
+      "stage": "core",
+      "family": "arrival",
+      "repo": "CamDavidsonPilon/lifelines",
+      "url": "https://github.com/CamDavidsonPilon/lifelines.git",
+      "license_expected": "MIT",
+      "purpose": "Censoring-aware time-to-operation/arrival and completion analysis.",
+      "status": "candidate-not-installed"
+    },
+    {
+      "rank": 6,
+      "stage": "core",
+      "family": "forecast",
+      "repo": "Nixtla/statsforecast",
+      "url": "https://github.com/Nixtla/statsforecast.git",
+      "license_expected": "Apache-2.0",
+      "purpose": "Strong low-complexity statistical baselines for all horizons.",
+      "status": "candidate-not-installed"
+    },
+    {
+      "rank": 7,
+      "stage": "core",
+      "family": "forecast",
+      "repo": "Nixtla/hierarchicalforecast",
+      "url": "https://github.com/Nixtla/hierarchicalforecast.git",
+      "license_expected": "Apache-2.0",
+      "purpose": "Reconcile tool, operation, product and fab-wide demand.",
+      "status": "candidate-not-installed"
+    },
+    {
+      "rank": 8,
+      "stage": "core",
+      "family": "simulation",
+      "repo": "simpx/simpy",
+      "url": "https://github.com/simpx/simpy.git",
+      "license_expected": "MIT",
+      "purpose": "Lot-route and capacity discrete-event simulation.",
+      "status": "candidate-not-installed"
+    },
+    {
+      "rank": 9,
+      "stage": "core",
+      "family": "uncertainty",
+      "repo": "scikit-learn-contrib/MAPIE",
+      "url": "https://github.com/scikit-learn-contrib/MAPIE.git",
+      "license_expected": "BSD-3-Clause",
+      "purpose": "Conformal prediction interval calibration and risk evaluation.",
+      "status": "candidate-not-installed"
+    },
+    {
+      "rank": 10,
+      "stage": "core",
+      "family": "model",
+      "repo": "lightgbm-org/LightGBM",
+      "url": "https://github.com/lightgbm-org/LightGBM.git",
+      "license_expected": "MIT",
+      "purpose": "Fast, competitive tabular challenger.",
+      "status": "candidate-not-installed"
+    },
+    {
+      "rank": 11,
+      "stage": "core",
+      "family": "data",
+      "repo": "pola-rs/polars",
+      "url": "https://github.com/pola-rs/polars.git",
+      "license_expected": "MIT",
+      "purpose": "Large historical event transforms with low overhead.",
+      "status": "candidate-not-installed"
+    },
+    {
+      "rank": 12,
+      "stage": "core",
+      "family": "data",
+      "repo": "sfu-db/connector-x",
+      "url": "https://github.com/sfu-db/connector-x.git",
+      "license_expected": "MIT",
+      "purpose": "Fast MSSQL/Oracle extraction where native dependencies are approved.",
+      "status": "candidate-not-installed"
+    },
+    {
+      "rank": 13,
+      "stage": "core",
+      "family": "data",
+      "repo": "duckdb/duckdb",
+      "url": "https://github.com/duckdb/duckdb.git",
+      "license_expected": "MIT",
+      "purpose": "Offline analytical snapshot store and backtest feature queries.",
+      "status": "candidate-not-installed"
+    },
+    {
+      "rank": 14,
+      "stage": "core",
+      "family": "optimization",
+      "repo": "google/or-tools",
+      "url": "https://github.com/google/or-tools.git",
+      "license_expected": "Apache-2.0",
+      "purpose": "Capacity constraint optimization after demand estimation.",
+      "status": "candidate-not-installed"
+    },
+    {
+      "rank": 15,
+      "stage": "core",
+      "family": "explain",
+      "repo": "shap/shap",
+      "url": "https://github.com/shap/shap.git",
+      "license_expected": "MIT",
+      "purpose": "Explain model residual contributions and changes.",
+      "status": "candidate-not-installed"
+    },
+    {
+      "rank": 16,
+      "stage": "core",
+      "family": "optimization",
+      "repo": "optuna/optuna",
+      "url": "https://github.com/optuna/optuna.git",
+      "license_expected": "MIT",
+      "purpose": "Budgeted hyperparameter searches using leakage-safe CV.",
+      "status": "candidate-not-installed"
+    },
+    {
+      "rank": 17,
+      "stage": "core",
+      "family": "model",
+      "repo": "dmlc/xgboost",
+      "url": "https://github.com/dmlc/xgboost.git",
+      "license_expected": "Apache-2.0",
+      "purpose": "Third strong tabular challenger, subject to marginal ROI.",
+      "status": "candidate-not-installed"
+    },
+    {
+      "rank": 18,
+      "stage": "core",
+      "family": "data",
+      "repo": "sqlalchemy/sqlalchemy",
+      "url": "https://github.com/sqlalchemy/sqlalchemy.git",
+      "license_expected": "MIT",
+      "purpose": "Trusted Oracle/MSSQL SQL dialect + read-only data access adapters.",
+      "status": "candidate-not-installed"
+    },
+    {
+      "rank": 19,
+      "stage": "extended",
+      "family": "statistics",
+      "repo": "statsmodels/statsmodels",
+      "url": "https://github.com/statsmodels/statsmodels.git",
+      "license_expected": "BSD-3-Clause",
+      "purpose": "Count regression, probabilistic baselines and diagnostics.",
+      "status": "candidate-not-installed"
+    },
+    {
+      "rank": 20,
+      "stage": "extended",
+      "family": "online",
+      "repo": "online-ml/river",
+      "url": "https://github.com/online-ml/river.git",
+      "license_expected": "BSD-3-Clause",
+      "purpose": "Online drift-aware learning where validated.",
+      "status": "candidate-not-installed"
+    },
+    {
+      "rank": 21,
+      "stage": "extended",
+      "family": "monitor",
+      "repo": "deepcharles/ruptures",
+      "url": "https://github.com/deepcharles/ruptures.git",
+      "license_expected": "BSD-2-Clause",
+      "purpose": "Change-point detection in cycles and sampling policies.",
+      "status": "candidate-not-installed"
+    },
+    {
+      "rank": 22,
+      "stage": "extended",
+      "family": "anomaly",
+      "repo": "yzhao062/pyod",
+      "url": "https://github.com/yzhao062/pyod.git",
+      "license_expected": "BSD-2-Clause",
+      "purpose": "Anomaly flags as features, not blanket replacements for forecasting.",
+      "status": "candidate-not-installed"
+    },
+    {
+      "rank": 23,
+      "stage": "extended",
+      "family": "graph",
+      "repo": "networkx/networkx",
+      "url": "https://github.com/networkx/networkx.git",
+      "license_expected": "BSD-3-Clause",
+      "purpose": "Route graph and data dependencies.",
+      "status": "candidate-not-installed"
+    },
+    {
+      "rank": 24,
+      "stage": "extended",
+      "family": "features",
+      "repo": "blue-yonder/tsfresh",
+      "url": "https://github.com/blue-yonder/tsfresh.git",
+      "license_expected": "MIT",
+      "purpose": "Automated time-series feature discovery.",
+      "status": "candidate-not-installed"
+    },
+    {
+      "rank": 25,
+      "stage": "extended",
+      "family": "features",
+      "repo": "alteryx/featuretools",
+      "url": "https://github.com/alteryx/featuretools.git",
+      "license_expected": "BSD-3-Clause",
+      "purpose": "Relational feature engineering.",
+      "status": "candidate-not-installed"
+    },
+    {
+      "rank": 26,
+      "stage": "extended",
+      "family": "automl",
+      "repo": "microsoft/FLAML",
+      "url": "https://github.com/microsoft/FLAML.git",
+      "license_expected": "MIT",
+      "purpose": "Budget-constrained automated model comparisons.",
+      "status": "candidate-not-installed"
+    },
+    {
+      "rank": 27,
+      "stage": "extended",
+      "family": "forecast",
+      "repo": "skforecast/skforecast",
+      "url": "https://github.com/skforecast/skforecast.git",
+      "license_expected": "BSD-3-Clause",
+      "purpose": "Independent forecasting framework and backtests.",
+      "status": "candidate-not-installed"
+    },
+    {
+      "rank": 28,
+      "stage": "extended",
+      "family": "agent",
+      "repo": "skforecast/skforecast-ai",
+      "url": "https://github.com/skforecast/skforecast-ai.git",
+      "license_expected": "Apache-2.0",
+      "purpose": "Optional local CLI/MCP helper for OpenCode forecasting experiments.",
+      "status": "candidate-not-installed"
+    },
+    {
+      "rank": 29,
+      "stage": "extended",
+      "family": "monitor",
+      "repo": "evidentlyai/evidently",
+      "url": "https://github.com/evidentlyai/evidently.git",
+      "license_expected": "Apache-2.0",
+      "purpose": "Data drift and quality reports, local usage.",
+      "status": "candidate-not-installed"
+    },
+    {
+      "rank": 30,
+      "stage": "extended",
+      "family": "experiment",
+      "repo": "mlflow/mlflow",
+      "url": "https://github.com/mlflow/mlflow.git",
+      "license_expected": "Apache-2.0",
+      "purpose": "Local experiment ledger and model provenance.",
+      "status": "candidate-not-installed"
+    },
+    {
+      "rank": 31,
+      "stage": "extended",
+      "family": "causal",
+      "repo": "py-why/dowhy",
+      "url": "https://github.com/py-why/dowhy.git",
+      "license_expected": "MIT",
+      "purpose": "Hypothesis checks for operational causes, not automatic causal proof.",
+      "status": "candidate-not-installed"
+    },
+    {
+      "rank": 32,
+      "stage": "extended-heavy",
+      "family": "model",
+      "repo": "Nixtla/neuralforecast",
+      "url": "https://github.com/Nixtla/neuralforecast.git",
+      "license_expected": "Apache-2.0",
+      "purpose": "Neural challenger only if it beats simpler models, often heavy.",
+      "status": "candidate-not-installed"
+    },
+    {
+      "rank": 33,
+      "stage": "extended-alpha",
+      "family": "uncertainty",
+      "repo": "Nixtla/conformalforecast",
+      "url": "https://github.com/Nixtla/conformalforecast.git",
+      "license_expected": "Apache-2.0",
+      "purpose": "Experimental adaptive conformal forecasting; alpha.",
+      "status": "candidate-not-installed"
+    },
+    {
+      "rank": 34,
+      "stage": "extended",
+      "family": "model",
+      "repo": "scikit-learn/scikit-learn",
+      "url": "https://github.com/scikit-learn/scikit-learn.git",
+      "license_expected": "BSD-3-Clause",
+      "purpose": "Standard baselines, calibration and evaluation.",
+      "status": "candidate-not-installed"
+    },
+    {
+      "rank": 35,
+      "stage": "fab",
+      "family": "reference",
+      "repo": "LUOaini1213/fab-capacity-planner",
+      "url": "https://github.com/LUOaini1213/fab-capacity-planner.git",
+      "license_expected": "MIT",
+      "purpose": "High-ROI fab capacity + batching + PM + failure logic reference.",
+      "status": "candidate-not-installed"
+    },
+    {
+      "rank": 36,
+      "stage": "fab",
+      "family": "reference",
+      "repo": "prosysscience/PySCFabSim-release",
+      "url": "https://github.com/prosysscience/PySCFabSim-release.git",
+      "license_expected": "MIT",
+      "purpose": "Semiconductor discrete-event simulation reference; separate SMT2020 data may be required.",
+      "status": "candidate-not-installed"
+    },
+    {
+      "rank": 37,
+      "stage": "fab",
+      "family": "reference",
+      "repo": "altonalexander/fab-optimization",
+      "url": "https://github.com/altonalexander/fab-optimization.git",
+      "license_expected": "Apache-2.0",
+      "purpose": "Fab dispatch/CP-SAT simulation reference; embedded SMT2020 data redistribution terms require review.",
+      "status": "candidate-not-installed"
+    },
+    {
+      "rank": 38,
+      "stage": "fab-review",
+      "family": "reference",
+      "repo": "usnistgov/simprocesd",
+      "url": "https://github.com/usnistgov/simprocesd.git",
+      "license_expected": "NIST-Public-Domain-Review",
+      "purpose": "NIST manufacturing condition/maintenance simulation; custom/public-domain notice review.",
+      "status": "candidate-not-installed"
+    }
+  ]
+}
