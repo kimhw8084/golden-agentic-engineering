@@ -12,6 +12,10 @@ The primary OpenCode agent is the default reasoning and routing layer. Tool sele
 
 This is agentic-first because the primary agent handles reasoning and routing by default. It does not require additional agent, MCP, or CLI calls just to demonstrate activity.
 
+## Named skill candidate: diagram design
+
+For polished diagrams, evaluate the [`diagram-design` agent skill](https://github.com/cathrynlavery/diagram-design) before reaching for a CLI renderer. Its upstream README documents a manual copy or symlink into OpenCode's `.opencode/skills/diagram-design` directory; the skill is not installed or verified in the target company environment by this repository. It generates HTML/SVG without a text-diffable source, so keep Mermaid or D2 for diagrams that need routine Git diffs. Default Google Fonts can be disabled with system-font mode for offline use. Treat it as an unqualified candidate until the target OpenCode compatibility, policy, privacy, dependency, and offline checks pass.
+
 ## Trigger a capability evaluation when
 
 - The user asks which approach is fastest or best, or requests a performance comparison.

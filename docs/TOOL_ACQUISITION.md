@@ -1,6 +1,10 @@
 # Public OSS acquisition without an intranet internet dependency
 
-`tools/candidates.json` contains 63 public GitHub **candidate source repos**. IDs are for inventory only. License hints are deliberately unverified and cannot substitute for company legal review or dependency scanning.
+`tools/candidates.json` contains 64 public GitHub **candidate source repos**, currently including one explicitly typed agent-skill source. IDs are for inventory only; this evolving lead list does not cover all relevant skills, agents, MCP servers, or requirements. License hints are deliberately unverified and cannot substitute for company legal review or dependency scanning.
+
+## Agent-skill source currently in the pilot tier
+
+[`cathrynlavery/diagram-design`](https://github.com/cathrynlavery/diagram-design) is a diagram-making agent skill, not a CLI. The upstream README documents copying or symlinking `skills/diagram-design/` into `.opencode/skills/diagram-design`; OpenCode has no marketplace package for it, so copied installs need manual updates. Its output is self-contained HTML/SVG, which suits diagrams for publication but does not provide an editable text source for pull-request diffs. It requests Google Fonts by default; system-font mode avoids that network request. Evaluate its actual skill behavior, output quality, privacy, assets, dependencies, and offline use in the target company OpenCode before recommending adoption. Mermaid/D2 remain candidates for diagrams that need source-level editing and diffs.
 
 ## On a personal/approved public staging computer only
 

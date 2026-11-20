@@ -7,7 +7,7 @@
 | Fast checker and full per-rule enumeration | IMPLEMENTED (pilot) | Python tests and sample run; full blocks without tooling |
 | Evidence JSON + standalone HTML report | IMPLEMENTED (pilot) | Python tests |
 | OpenCode agent/skill/command files written | FILES PRESENT | Actual internal OpenCode V2 compatibility **NOT TESTED** |
-| 63 GitHub source candidates indexed | FILES PRESENT | Licensing, source snapshots and dependency review **NOT DONE** |
+| 64 GitHub source candidates indexed, including one explicitly typed agent skill | FILES PRESENT | Evolving lead list, not a complete capability inventory; licensing, source snapshots and dependency review **NOT DONE** |
 | Source clone/pin/hash script | IMPLEMENTED, dry-run tested | Real public Git downloads **NOT TESTED IN THIS ENV** |
 | Qualified offline tool binaries/wheels/browsers | NOT PROVIDED | Stage separately after company approval |
 | Complete 151 proposed requirements enforceable | NOT DONE | 19 rule descriptors are a starter, not 151 verified contracts |

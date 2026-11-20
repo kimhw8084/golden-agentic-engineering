@@ -63,7 +63,7 @@ Golden Control is the team-facing operating cockpit for Golden installation, app
 | `scripts/golden.py` | Working offline pilot rule evaluator, doctor, explanation and HTML evidence report |
 | `scripts/golden_control.py` and `control/` | Local read-only operator dashboard for asset comparison, integrity, Golden evidence summaries, design, and onboarding |
 | `standards/` | Version pin, 19 initial executable rule definitions (not the entire 151-requirement standard) |
-| `tools/candidates.json` | 63 public GitHub source candidates, grouped by acquisition priority |
+| `tools/candidates.json` | 64 public GitHub source leads, including one explicitly typed agent skill; not a complete capability inventory |
 | `scripts/fetch_sources.py` | Public-network opt-in snapshot downloader/pinner; **source only** |
 | `scripts/bootstrap_project.py` | Non-overwriting application manifest scaffold |
 | `scripts/install_opencode.py` | Non-overwriting install of agent/skill/command files into chosen OpenCode config folder |
@@ -91,7 +91,7 @@ For the initial company pilot, establish and reuse a baseline of actual availabl
 ## Documentation
 
 - [`docs/ARCHITECTURE_VIEW.html`](docs/ARCHITECTURE_VIEW.html) — self-contained visual system diagram (desktop/phone)
-- [`docs/TOOL_BROWSER.html`](docs/TOOL_BROWSER.html) — offline searchable 63-source catalog
+- [`docs/TOOL_BROWSER.html`](docs/TOOL_BROWSER.html) — offline searchable 64-source catalog
 - [`START_HERE_COMPANY_OPENCODE.md`](START_HERE_COMPANY_OPENCODE.md) — what to do at work
 - [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) — exact responsibilities and interfaces
 - [`docs/FASTEST_IMPLEMENTATION.md`](docs/FASTEST_IMPLEMENTATION.md) — staged team adoption and acceptance

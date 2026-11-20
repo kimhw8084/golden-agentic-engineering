@@ -1,6 +1,6 @@
 {
   "schema": "golden-candidates/v0.1",
-  "as_of": "2026-11-19",
+  "as_of": "2026-11-20",
   "notice": "License hints are unverified. Not a complete bill of materials, vulnerability assessment, deployment approval or offline executable package. All repos need per-release OSI/commercial/security/license/dependency reviews.",
   "candidates": [
     {
@@ -407,6 +407,18 @@
       "tier": "research",
       "license_hint_unverified": "MIT",
       "why": "interactive dependency graph",
+      "review_status": "UNQUALIFIED_SOURCE_CANDIDATE",
+      "requires_binary_or_dependency_staging": true
+    },
+    {
+      "id": "cathrynlavery--diagram-design",
+      "repo": "https://github.com/cathrynlavery/diagram-design.git",
+      "browse": "https://github.com/cathrynlavery/diagram-design",
+      "category": "diagram",
+      "candidate_type": "agent-skill",
+      "tier": "pilot",
+      "license_hint_unverified": "MIT",
+      "why": "agent skill for polished diagrams; OpenCode manual copy/symlink is documented; HTML/SVG output is not a text-diffable source; default Google Fonts request needs system-font mode for offline use",
       "review_status": "UNQUALIFIED_SOURCE_CANDIDATE",
       "requires_binary_or_dependency_staging": true
     },

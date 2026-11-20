@@ -117,7 +117,11 @@ class GoldenProofTests(unittest.TestCase):
         catalog = json.loads((ROOT / 'tools' / 'candidates.json').read_text())
         ids = [r['id'] for r in catalog['candidates']]
         self.assertEqual(len(ids), len(set(ids)))
-        self.assertEqual(len(ids), 63)
+        self.assertEqual(len(ids), 64)
+        diagram_skill = next(r for r in catalog['candidates'] if r['id'] == 'cathrynlavery--diagram-design')
+        self.assertEqual(diagram_skill['candidate_type'], 'agent-skill')
+        self.assertEqual(diagram_skill['category'], 'diagram')
+        self.assertEqual(diagram_skill['review_status'], 'UNQUALIFIED_SOURCE_CANDIDATE')
 
 if __name__ == '__main__':
     unittest.main()
