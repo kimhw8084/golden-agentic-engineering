@@ -60,6 +60,22 @@ class PrecompanyEvidenceTests(unittest.TestCase):
             files = [name for name in bundle.namelist() if not name.endswith('/')]
         self.assertEqual(len(files), archive['source_files'])
 
+    def test_simpy_candidate_evidence_is_hash_pinned_and_not_qualified(self):
+        candidate = load('research/fab-candidates/simpy-4.1.2/candidate.json')
+        registry = load('research/capability-selection.json')
+        self.assertEqual(candidate['status'], 'EVALUATION_ONLY_NOT_APPROVED')
+        self.assertFalse(candidate['external_artifact_staged_in_repository'])
+        self.assertEqual(candidate['license'], 'MIT')
+        self.assertEqual(candidate['test_results']['native_windows_linux'], 'NOT_RUN')
+        self.assertEqual(candidate['test_results']['company_runtime_or_clearance'], 'NOT_RUN')
+        self.assertEqual(candidate['test_results']['upstream_tests_directory'].split(';')[1].strip(), '141 passed')
+        self.assertIn('0.11s versus expected 0.10s', candidate['test_results']['upstream_full_pytest'])
+        self.assertIn('repeated with the same timing-sensitive failure', candidate['test_results']['upstream_full_pytest'])
+        capability = next(row for row in registry['candidates'] if row['id'] == 'simpy-discrete-event-simulator')
+        self.assertEqual(capability['decision'], 'EVALUATION_ONLY_NOT_APPROVED; NOT_STAGED_AS_COMPANY_ASSET')
+        decision = next(row for row in registry['task_decisions'] if row['task'] == 'fab discrete-event capacity simulation')
+        self.assertEqual(decision['current_choice'], 'Keep the existing Python standard-library baseline; run SimPy only as an isolated candidate comparison after company OSS clearance')
+
 
 if __name__ == '__main__':
     unittest.main()

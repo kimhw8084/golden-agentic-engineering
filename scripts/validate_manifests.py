@@ -89,6 +89,7 @@ def validate() -> list[str]:
         'opencode.json',
         'schemas/task-routing.schema.json', 'schemas/capability-selection.schema.json',
         'research/capability-selection.json',
+        'research/fab-candidates/simpy-4.1.2/candidate.json',
         'benchmarks/cases.json',
         'integrations/mcp/github-enterprise-readonly.example.json',
         'offline/assets-manifest.json', 'offline/egress-policy.template.json',
@@ -137,6 +138,27 @@ def validate() -> list[str]:
     registry = documents['research/capability-selection.json']
     capability_schema = documents['schemas/capability-selection.schema.json']
     errors.extend(validate_capability_types(registry, capability_schema))
+    simpy = documents['research/fab-candidates/simpy-4.1.2/candidate.json']
+    simpy_artifacts = simpy.get('artifacts')
+    expected_simpy_artifacts = {
+        'simpy-4.1.2-py3-none-any.whl': '43071f84b6512c9b4fcb33ef057f240ccb1d1f3b263f9b4f9229d072e310b372',
+        'simpy-4.1.2.tar.gz': '76ef36b71e0436ba94e55febc001c78879e493a323f045bbcfbb0b216e9b1fbc',
+    }
+    actual_simpy_artifacts = {
+        artifact.get('filename'): artifact.get('sha256')
+        for artifact in simpy_artifacts if isinstance(artifact, dict)
+    } if isinstance(simpy_artifacts, list) else {}
+    if (simpy.get('schema') != 'golden-fab-simulation-candidate/v1'
+            or simpy.get('status') != 'EVALUATION_ONLY_NOT_APPROVED'
+            or simpy.get('package') != 'simpy' or simpy.get('version') != '4.1.2'
+            or simpy.get('license') != 'MIT'
+            or actual_simpy_artifacts != expected_simpy_artifacts
+            or simpy.get('external_artifact_staged_in_repository') is not False
+            or simpy.get('test_results', {}).get('native_windows_linux') != 'NOT_RUN'
+            or simpy.get('test_results', {}).get('company_runtime_or_clearance') != 'NOT_RUN'):
+        errors.append('SimPy candidate evidence must preserve exact release hashes and candidate-only limitations')
+    if not (ROOT / 'verification/2026-11-21/simpy-capacity-candidate.json').is_file():
+        errors.append('SimPy candidate must point to its recorded synthetic contract result')
     decisions = registry.get('task_decisions')
     if not isinstance(decisions, list) or len(decisions) < 12:
         errors.append('capability selection must include task decisions for all engineering workflow types')

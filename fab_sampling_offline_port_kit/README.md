@@ -2,7 +2,7 @@
 
 **As of 2026-11-20.** 38 open-source repositories, exact owner/repo names, with full offline-first transfer procedures and a one-shot evaluation task for a local OpenCode environment. No fab data, application code, models, wheels or Git repositories have been downloaded into this starter kit. It is a *staging kit*, not a completed offline install.
 
-The original user-supplied archive is preserved byte-for-byte at [`offline/source-archives/fab_sampling_offline_port_kit_2026-11-20.zip`](../offline/source-archives/fab_sampling_offline_port_kit_2026-11-20.zip) (SHA-256 `0d8e88391f4a885897e4c498730cb36972f07d20f3678a3950e89d106d32272d`, 20,292 bytes). The extracted folder is the working copy; five files were hardened after the archive was received. The archive contains the kit procedures and candidate manifest, not candidate repository clones or offline dependency assets.
+The original user-supplied archive is preserved byte-for-byte at [`offline/source-archives/fab_sampling_offline_port_kit_2026-11-20.zip`](../offline/source-archives/fab_sampling_offline_port_kit_2026-11-20.zip) (SHA-256 `0d8e88391f4a885897e4c498730cb36972f07d20f3678a3950e89d106d32272d`, 20,292 bytes). The extracted folder is the working copy; selected instructions and manifests have been hardened since extraction, including a correction from the SimPy GitHub fork to its canonical upstream GitLab project. The archive contains the kit procedures and candidate manifest, not candidate repository clones or offline dependency assets.
 
 ## On the INTERNET-CONNECTED PC (NOT the fab work PC)
 

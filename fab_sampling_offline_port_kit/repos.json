@@ -76,8 +76,8 @@
       "rank": 8,
       "stage": "core",
       "family": "simulation",
-      "repo": "simpx/simpy",
-      "url": "https://github.com/simpx/simpy.git",
+      "repo": "team-simpy/simpy",
+      "url": "https://gitlab.com/team-simpy/simpy.git",
       "license_expected": "MIT",
       "purpose": "Lot-route and capacity discrete-event simulation.",
       "status": "candidate-not-installed"

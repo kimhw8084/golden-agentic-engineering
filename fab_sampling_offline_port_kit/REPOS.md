@@ -11,7 +11,7 @@ Source code is for evaluation, not approved production software. Commercial reus
 | 5 | core | [CamDavidsonPilon/lifelines](https://github.com/CamDavidsonPilon/lifelines) | MIT | Censoring-aware time-to-operation/arrival and completion analysis. |
 | 6 | core | [Nixtla/statsforecast](https://github.com/Nixtla/statsforecast) | Apache-2.0 | Strong low-complexity statistical baselines for all horizons. |
 | 7 | core | [Nixtla/hierarchicalforecast](https://github.com/Nixtla/hierarchicalforecast) | Apache-2.0 | Reconcile tool, operation, product and fab-wide demand. |
-| 8 | core | [simpx/simpy](https://github.com/simpx/simpy) | MIT | Lot-route and capacity discrete-event simulation. |
+| 8 | core | [team-simpy/simpy](https://gitlab.com/team-simpy/simpy/-/tree/4.1.2) | MIT | Lot-route and capacity discrete-event simulation; canonical upstream and protected release tag. |
 | 9 | core | [scikit-learn-contrib/MAPIE](https://github.com/scikit-learn-contrib/MAPIE) | BSD-3-Clause | Conformal prediction interval calibration and risk evaluation. |
 | 10 | core | [lightgbm-org/LightGBM](https://github.com/lightgbm-org/LightGBM) | MIT | Fast, competitive tabular challenger. |
 | 11 | core | [pola-rs/polars](https://github.com/pola-rs/polars) | MIT | Large historical event transforms with low overhead. |

@@ -54,6 +54,13 @@ class FabSamplingKitTests(unittest.TestCase):
     def test_all_candidates_require_an_explicit_stage_flag(self):
         self.assertEqual(len(fetch_repos.select_repositories(stage='all')), len(fetch_repos.CANDIDATES))
 
+    def test_simpy_candidate_uses_canonical_upstream_url(self):
+        manifest = json.loads((KIT / 'repos.json').read_text(encoding='utf-8'))
+        simpy = next(row for row in manifest['repositories'] if row['family'] == 'simulation')
+        self.assertEqual(simpy['repo'], 'team-simpy/simpy')
+        self.assertEqual(simpy['url'], 'https://gitlab.com/team-simpy/simpy.git')
+        self.assertEqual(simpy['status'], 'candidate-not-installed')
+
     def _make_partial_lock(self, root: Path):
         sha = 'a' * 40
         repos = [

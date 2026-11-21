@@ -5,7 +5,7 @@ https://github.com/Nixtla/mlforecast.git
 https://github.com/CamDavidsonPilon/lifelines.git
 https://github.com/Nixtla/statsforecast.git
 https://github.com/Nixtla/hierarchicalforecast.git
-https://github.com/simpx/simpy.git
+https://gitlab.com/team-simpy/simpy.git
 https://github.com/scikit-learn-contrib/MAPIE.git
 https://github.com/lightgbm-org/LightGBM.git
 https://github.com/pola-rs/polars.git

@@ -1,0 +1,48 @@
+{
+  "schema": "golden-fab-simulation-candidate/v1",
+  "status": "EVALUATION_ONLY_NOT_APPROVED",
+  "package": "simpy",
+  "version": "4.1.2",
+  "release_tag": "4.1.2",
+  "source_repository": "https://gitlab.com/team-simpy/simpy",
+  "source_commit": "f43816490c6f76f336ad6e457d3cab9f386894af",
+  "tag_state": "protected_and_verified_as_displayed_by_upstream_gitlab",
+  "release_date": "2026-05-24",
+  "license": "MIT",
+  "license_evidence": {
+    "upstream_path": "LICENSE.rst",
+    "wheel_path": "simpy-4.1.2.dist-info/licenses/LICENSE.rst",
+    "sha256": "5f09a7bdf08f239271b15df1cbe2ba7f62649f8b497988274626f48638b84802"
+  },
+  "artifacts": [
+    {
+      "filename": "simpy-4.1.2-py3-none-any.whl",
+      "sha256": "43071f84b6512c9b4fcb33ef057f240ccb1d1f3b263f9b4f9229d072e310b372",
+      "bytes": 27375,
+      "platform_tag": "py3-none-any",
+      "pypi_provenance": "NOT_PUBLISHED"
+    },
+    {
+      "filename": "simpy-4.1.2.tar.gz",
+      "sha256": "76ef36b71e0436ba94e55febc001c78879e493a323f045bbcfbb0b216e9b1fbc",
+      "bytes": 410129,
+      "pypi_provenance": "NOT_PUBLISHED"
+    }
+  ],
+  "runtime_dependencies": [],
+  "source_build_dependencies": [
+    "setuptools>=64",
+    "setuptools_scm[toml]>=8.0"
+  ],
+  "test_results": {
+    "offline_hash_pinned_install": "PASS; exact wheel installed from a local wheelhouse with --no-index, --no-cache-dir, and --require-hashes",
+    "golden_synthetic_contract": "PASS; 4 synthetic jobs; capacity 1 and 2 match fixed schedule oracle",
+    "upstream_tests_directory": "PASS; 141 passed; 10 benchmark tests deselected; pytest-benchmark unavailable and emitted unknown-marker warnings",
+    "upstream_full_pytest": "PARTIAL; 159 passed; 10 benchmark tests deselected; one real-time documentation doctest failed at 0.11s versus expected 0.10s; repeated with the same timing-sensitive failure",
+    "native_windows_linux": "NOT_RUN",
+    "company_runtime_or_clearance": "NOT_RUN"
+  },
+  "selection": "Candidate for a local discrete-event capacity experiment only. No comparison against alternatives, fab workload validation, accuracy, speed, or company approval is established.",
+  "network_or_model_calls_in_golden_contract": false,
+  "external_artifact_staged_in_repository": false
+}

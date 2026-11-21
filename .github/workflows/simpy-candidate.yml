@@ -1,0 +1,55 @@
+name: SimPy candidate smoke
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/simpy-candidate.yml'
+      - 'research/fab-candidates/simpy-4.1.2/**'
+      - 'scripts/run_simpy_candidate_trial.py'
+      - 'tests/test_simpy_candidate_trial.py'
+  pull_request:
+    paths:
+      - '.github/workflows/simpy-candidate.yml'
+      - 'research/fab-candidates/simpy-4.1.2/**'
+      - 'scripts/run_simpy_candidate_trial.py'
+      - 'tests/test_simpy_candidate_trial.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: simpy-candidate-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  wheel-contract:
+    name: ${{ matrix.os }} / Python ${{ matrix.python-version }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python-version: ['3.10', '3.11', '3.14']
+    steps:
+      - name: Check out source
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # actions/checkout v6
+      - name: Set up Python
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # actions/setup-python v6
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Download only the hash-pinned public wheel
+        run: >-
+          python -m pip download --index-url https://pypi.org/simple --no-deps
+          --only-binary=:all: --require-hashes --dest .candidate
+          -r research/fab-candidates/simpy-4.1.2/requirements.lock
+      - name: Verify candidate and run deterministic capacity contract
+        run: >-
+          python scripts/run_simpy_candidate_trial.py
+          --wheel .candidate/simpy-4.1.2-py3-none-any.whl
+          --execution-scope github-hosted --out .candidate/trial-result.json
+      - name: Test fail-closed artifact checks
+        run: python -m unittest discover -s tests -p test_simpy_candidate_trial.py -v
+      - name: Validate Golden manifests
+        run: python scripts/validate_manifests.py

@@ -1,0 +1,139 @@
+{
+  "schema": "golden-fab-simpy-candidate-trial/v1",
+  "status": "PASS_SYNTHETIC_DISCRETE_EVENT_CONTRACT",
+  "qualification": "CANDIDATE_ONLY_NOT_COMPANY_APPROVED",
+  "candidate": {
+    "name": "simpy",
+    "version": "4.1.2",
+    "license": "MIT",
+    "requires_python": ">=3.8",
+    "runtime_dependencies": [],
+    "wheel": "simpy-4.1.2-py3-none-any.whl",
+    "wheel_sha256": "43071f84b6512c9b4fcb33ef057f240ccb1d1f3b263f9b4f9229d072e310b372",
+    "wheel_bytes": 27375,
+    "license_path": "simpy-4.1.2/LICENSE.rst",
+    "license_sha256": "5f09a7bdf08f239271b15df1cbe2ba7f62649f8b497988274626f48638b84802",
+    "archive_paths_checked": 17,
+    "source_archive": "simpy-4.1.2.tar.gz",
+    "source_sha256": "76ef36b71e0436ba94e55febc001c78879e493a323f045bbcfbb0b216e9b1fbc",
+    "source_bytes": 410129,
+    "source_members_checked": 124,
+    "source": "https://pypi.org/project/simpy/4.1.2/",
+    "source_repository": "https://gitlab.com/team-simpy/simpy",
+    "source_commit": "f43816490c6f76f336ad6e457d3cab9f386894af",
+    "license_source": "https://gitlab.com/team-simpy/simpy/-/blob/4.1.2/LICENSE.rst",
+    "pypi_build_provenance": "NOT_PUBLISHED_FOR_4.1.2"
+  },
+  "environment": {
+    "python": "3.11.7",
+    "os": "Darwin",
+    "architecture": "arm64",
+    "runtime_import_source": "hash-verified wheel path; package not installed"
+  },
+  "method": {
+    "fixture": "four synthetic jobs share a finite-capacity processing resource",
+    "jobs": [
+      {
+        "job": "A",
+        "arrival": 0,
+        "service": 3
+      },
+      {
+        "job": "B",
+        "arrival": 0,
+        "service": 2
+      },
+      {
+        "job": "C",
+        "arrival": 1,
+        "service": 1
+      },
+      {
+        "job": "D",
+        "arrival": 2,
+        "service": 1
+      }
+    ],
+    "compared_capacities": [
+      1,
+      2
+    ],
+    "independent_oracle": "fixed expected start/completion/wait schedule"
+  },
+  "results": {
+    "one_tool": {
+      "jobs": [
+        {
+          "job": "A",
+          "arrival": 0,
+          "start": 0,
+          "completion": 3,
+          "wait": 0
+        },
+        {
+          "job": "B",
+          "arrival": 0,
+          "start": 3,
+          "completion": 5,
+          "wait": 3
+        },
+        {
+          "job": "C",
+          "arrival": 1,
+          "start": 5,
+          "completion": 6,
+          "wait": 4
+        },
+        {
+          "job": "D",
+          "arrival": 2,
+          "start": 6,
+          "completion": 7,
+          "wait": 4
+        }
+      ],
+      "makespan": 7
+    },
+    "two_tools": {
+      "jobs": [
+        {
+          "job": "A",
+          "arrival": 0,
+          "start": 0,
+          "completion": 3,
+          "wait": 0
+        },
+        {
+          "job": "B",
+          "arrival": 0,
+          "start": 0,
+          "completion": 2,
+          "wait": 0
+        },
+        {
+          "job": "C",
+          "arrival": 1,
+          "start": 2,
+          "completion": 3,
+          "wait": 1
+        },
+        {
+          "job": "D",
+          "arrival": 2,
+          "start": 3,
+          "completion": 4,
+          "wait": 1
+        }
+      ],
+      "makespan": 4
+    },
+    "oracle_match": true
+  },
+  "network_calls": false,
+  "model_calls": false,
+  "real_fab_data_or_accuracy_claim": false,
+  "windows_linux_native_execution": "NOT_RUN",
+  "company_oss_clearance": "NOT_OBTAINED",
+  "source_archive_validation": "PASS",
+  "execution_scope": "local"
+}
