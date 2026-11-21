@@ -15,13 +15,78 @@ def read(path: Path):
     return json.loads(path.read_text(encoding='utf-8'))
 
 
+def validate_capability_types(registry: dict, schema: dict) -> list[str]:
+    errors: list[str] = []
+    if not isinstance(registry, dict) or not isinstance(schema, dict):
+        return ['capability registry and schema roots must be objects']
+    properties = schema.get('properties')
+    candidate_property = properties.get('candidates') if isinstance(properties, dict) else None
+    candidate_schema = candidate_property.get('items') if isinstance(candidate_property, dict) else None
+    candidate_properties = candidate_schema.get('properties') if isinstance(candidate_schema, dict) else None
+    required = candidate_schema.get('required', []) if isinstance(candidate_schema, dict) else []
+    type_property = candidate_properties.get('capability_type') if isinstance(candidate_properties, dict) else None
+    allowed = type_property.get('enum') if isinstance(type_property, dict) else None
+    root_required = schema.get('required')
+    minimum_candidates = candidate_property.get('minItems') if isinstance(candidate_property, dict) else None
+    if (schema.get('type') != 'object' or not isinstance(properties, dict)
+            or not isinstance(root_required, list) or not root_required
+            or any(not isinstance(key, str) for key in root_required)
+            or len(root_required) != len(set(root_required))
+            or not isinstance(candidate_property, dict)
+            or not isinstance(minimum_candidates, int) or isinstance(minimum_candidates, bool)
+            or minimum_candidates < 0
+            or not isinstance(candidate_properties, dict)
+            or not isinstance(required, list) or not required
+            or any(not isinstance(key, str) for key in required)
+            or len(required) != len(set(required))
+            or set(required) - set(candidate_properties)
+            or not isinstance(type_property, dict) or type_property.get('type') != 'string'
+            or not isinstance(allowed, list) or not allowed
+            or any(not isinstance(value, str) or not value for value in allowed)
+            or len(allowed) != len(set(allowed))
+            or 'capability_type' not in required):
+        return ['capability schema has invalid root/candidate fields, bounds, or capability_type enum']
+    schema_id = properties.get('schema', {}).get('const') if isinstance(properties.get('schema'), dict) else None
+    if registry.get('schema') != schema_id:
+        errors.append('capability registry schema identifier does not match its JSON Schema')
+    missing_root = [key for key in root_required if key not in registry]
+    if missing_root:
+        errors.append(f"capability registry is missing schema-required fields: {', '.join(missing_root)}")
+    rows = registry.get('candidates')
+    if not isinstance(rows, list):
+        return errors + ['capability candidates must be an array of objects']
+    if len(rows) < minimum_candidates:
+        errors.append('capability candidate array is below the schema minimum')
+    for row in rows:
+        if not isinstance(row, dict):
+            errors.append('capability candidate must be an object')
+            continue
+        for key in required:
+            value = row.get(key)
+            field_schema = candidate_properties.get(key)
+            if (not isinstance(field_schema, dict) or field_schema.get('type') != 'string'
+                    or not isinstance(value, str) or not value):
+                errors.append(f"research candidate {row.get('id', 'unknown')}: {key} missing or invalid")
+        kind = row.get('capability_type')
+        if not isinstance(kind, str) or not kind:
+            if 'capability_type' not in required:
+                errors.append(f"research candidate {row.get('id', 'unknown')}: capability_type missing")
+        elif kind not in allowed:
+            errors.append(f"research candidate {row.get('id', 'unknown')}: unknown capability_type {kind}")
+        commit = row.get('commit')
+        if not isinstance(commit, str) or len(commit) != 40 or any(char not in '0123456789abcdefABCDEF' for char in commit):
+            errors.append(f"research candidate {row.get('id', 'unknown')}: commit must be a full 40-character hex pin")
+    return errors
+
+
 def validate() -> list[str]:
     errors: list[str] = []
     required_json = [
         'standards/release.json', 'standards/rules.json', 'tools/candidates.json',
         '.opencode/opencode.json', 'workflows/task-routing.json',
         'opencode.json',
-        'schemas/task-routing.schema.json', 'research/capability-selection.json',
+        'schemas/task-routing.schema.json', 'schemas/capability-selection.schema.json',
+        'research/capability-selection.json',
         'benchmarks/cases.json',
         'offline/assets-manifest.json', 'offline/egress-policy.template.json',
     ]
@@ -67,6 +132,8 @@ def validate() -> list[str]:
             errors.append('task-routing workflow IDs must be unique')
         errors.extend(validate_route_references(ROOT))
     registry = documents['research/capability-selection.json']
+    capability_schema = documents['schemas/capability-selection.schema.json']
+    errors.extend(validate_capability_types(registry, capability_schema))
     decisions = registry.get('task_decisions')
     if not isinstance(decisions, list) or len(decisions) < 12:
         errors.append('capability selection must include task decisions for all engineering workflow types')
@@ -87,7 +154,10 @@ def validate() -> list[str]:
     if not isinstance(registry_candidates, list) or any(not isinstance(candidate, dict) for candidate in registry_candidates):
         errors.append('capability candidates must be an array of objects')
         registry_candidates = []
-    candidate_ids = {candidate.get('id') for candidate in registry_candidates if isinstance(candidate.get('id'), str)}
+    candidate_id_values = [candidate.get('id') for candidate in registry_candidates if isinstance(candidate.get('id'), str)]
+    candidate_ids = set(candidate_id_values)
+    if len(candidate_ids) != len(registry_candidates):
+        errors.append('capability candidate IDs must be nonempty and unique')
     non_public_values = registry.get('non_public_capability_ids')
     if not isinstance(non_public_values, list) or any(not isinstance(candidate, str) for candidate in non_public_values):
         errors.append('non-public capability IDs must be a string array')
@@ -132,12 +202,6 @@ def validate() -> list[str]:
                 or browser.get('automated_browser_status') != 'NOT_RUN_PLAYWRIGHT_ASSETS_NOT_STAGED'
                 or not required_manual_smokes.issubset(manual_smokes)):
             errors.append('browser benchmark must distinguish manual smoke evidence from unrun automated browser checks')
-    for candidate in registry_candidates:
-        for key in ('id', 'owner_repo', 'commit', 'license', 'license_evidence', 'license_url', 'transitive_dependencies', 'windows_linux', 'offline_telemetry', 'context_cost', 'permissions', 'prompt_injection_security', 'measured_evidence', 'decision'):
-            if not candidate.get(key):
-                errors.append(f"research candidate {candidate.get('id')}: {key} missing")
-        if not isinstance(candidate.get('commit'), str) or len(candidate['commit']) != 40 or any(c not in '0123456789abcdef' for c in candidate['commit'].lower()):
-            errors.append(f"research candidate {candidate.get('id')}: commit must be a full 40-character hex pin")
     mcp_config = documents['opencode.json'].get('mcp', {})
     mcp = mcp_config.get('servers', {}) if isinstance(mcp_config, dict) else {}
     if not isinstance(mcp, dict):

@@ -76,6 +76,13 @@ class TaskRoutingTests(unittest.TestCase):
         self.assertIn('<main>', view)
         self.assertNotRegex(view, r'''(?i)(?:src|href)\s*=\s*["'](?:https?:)?//|@import\s+url|url\(\s*["']?(?:https?:)?//|fonts\.googleapis\.com''')
 
+    def test_react_route_loads_local_skill_with_approved_token_hierarchy(self):
+        route = golden_route.route_for('react-app-feature')
+        self.assertEqual([item['id'] for item in route['skills']], ['golden-react'])
+        skill = (ROOT / '.opencode' / 'skills' / 'golden-react' / 'SKILL.md').read_text()
+        self.assertIn('primitive values, purpose-based semantic names, and component aliases', skill)
+        self.assertIn('Never run remote shadcn installers', skill)
+
     def test_every_route_reference_resolves_and_keeps_candidate_mcp_unapproved(self):
         self.assertEqual(golden_route.validation_errors(), [])
         rows = json.loads((ROOT / 'workflows' / 'task-routing.json').read_text())['workflows']
