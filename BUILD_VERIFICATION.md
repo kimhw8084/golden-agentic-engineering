@@ -4,13 +4,13 @@
 
 **Environment:** macOS 25.6.0 arm64; the latest full repository suite and routing checks ran on Python 3.14.5. Earlier fixture runs used Python 3.11.7; local NiceGUI 3.15.0; Node 26.13.0, npm 11.20.0. The local OpenCode path/version metadata is incomplete, so compatibility is `UNKNOWN`. Six required company/offline assets remain unstaged.
 
-**Runtime boundary:** Results cover this checkout and synthetic fixtures. GitHub-hosted source CI passed on Ubuntu and Windows Server 2025 with Python 3.10, 3.11, and 3.14 (run [#20](https://github.com/kimhw8084/golden-agentic-engineering/actions/runs/44860347473), commit `eef6fee`). Neither hosted matrix nor local network probe qualifies company-managed hosts, company OpenCode, the internal model, firewall policy, or company network behavior.
+**Runtime boundary:** Results cover this checkout and synthetic fixtures. GitHub-hosted source CI passed on Ubuntu and Windows Server 2025 with Python 3.10, 3.11, and 3.14 (run [#21](https://github.com/kimhw8084/golden-agentic-engineering/actions/runs/44862885010), commit `4b3cf2c`). Neither hosted matrix nor local network probe qualifies company-managed hosts, company OpenCode, the internal model, firewall policy, or company network behavior.
 
 ## Tests and checks run
 
 | Check | Result |
 |---|---|
-| [GitHub Actions source qualification matrix](https://github.com/kimhw8084/golden-agentic-engineering/actions/runs/44860347473) | PASS — run #20 at `eef6fee`; six jobs on Ubuntu and Windows Server 2025 × Python 3.10/3.11/3.14. Each ran the repository unit suite, route/manifest validation, credential-pattern scan, and Golden fast checks. Hosted runners are not company or air-gap evidence. |
+| [GitHub Actions source qualification matrix](https://github.com/kimhw8084/golden-agentic-engineering/actions/runs/44862885010) | PASS — run #21 at `4b3cf2c`; six jobs on Ubuntu and Windows Server 2025 × Python 3.10/3.11/3.14. Each ran the repository unit suite, route/manifest validation, credential-pattern scan, and Golden fast checks. Hosted runners are not company or air-gap evidence. |
 | `python -m unittest discover -s tests -v` | PASS — 101 repository tests on Python 3.14.5 after project-default agent, low-ceremony routing, and Control status changes. Includes Golden Proof anti-spoofing, per-target bootstrap asset validation, route/default-agent integrity, MCP fixture, and UI/API checks. Fab-kit tests use a temporary local Git repository and make no public-network calls. |
 | `examples/nicegui-app`: `python -m unittest discover -s tests -v` | PASS — 3 standard-library logic tests; the NiceGUI UI simulation is skipped outside pytest. |
 | `examples/nicegui-app`: `pytest -q tests/test_ui.py` | PASS — NiceGUI `user_simulation` exercised required-field validation, ACCEPT and REVIEW states, duplicate-ID rejection, summary counts, and clearing. No browser process is required. |
