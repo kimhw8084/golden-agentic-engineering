@@ -1,6 +1,6 @@
 {
   "schema": "golden-precompany-readiness/v1",
-  "generated_at_utc": "2026-11-21T17:44:31.192071+00:00",
+  "generated_at_utc": "2026-11-21T18:26:51.601069+00:00",
   "status": "PRE_QUALIFICATION",
   "status_explanation": "ASSESSMENT_INCOMPLETE means one or more local checks did not produce valid PASS evidence. PRE_QUALIFICATION means local checks ran, while company-owned requirements remain unverified.",
   "environment": {
@@ -15,11 +15,11 @@
     "implementation_base_commit": "b957a1739517027aeae5fbc7c9df3aedd32b4348"
   },
   "source": {
-    "commit": "aacd322ce71ae86823649793c4999263164d98aa",
+    "commit": "3d122d495e3c27e846fb32b944973d82649e81c6",
     "branch": "main",
     "worktree_clean": true,
     "changed_path_count": 0,
-    "sha256sums_manifest_sha256": "2daeec697419266c2e0c9021d6787cba7a311ef7f30932eb1b4a9528beb16e95"
+    "sha256sums_manifest_sha256": "1ecbce1e9cde703e03eb862fee4dd94982ba96115929b6257fe89e6261a0130f"
   },
   "checks": [
     {
@@ -34,11 +34,11 @@
       "id": "unit-tests",
       "command": "python -m unittest discover -s tests -q",
       "exit_code": 0,
-      "elapsed_seconds": 2.499806,
+      "elapsed_seconds": 2.679695,
       "output_bytes": 7610,
-      "output_sha256": "964a2f46f2405937c0cc3a029759f4489314a0513c97da36ceae10f5be44c154",
+      "output_sha256": "812f4b40ed82896baa2266eb07c476bfb7c83601e88c87fc33787fbb464cfd8d",
       "status": "PASS",
-      "tests_run": 158,
+      "tests_run": 161,
       "tests_skipped": 1,
       "tests_failed": 0,
       "summary_found": true
@@ -47,9 +47,9 @@
       "id": "bootstrap-rollback-tests",
       "command": "python -m unittest discover -s tests -p test_bootstrap_and_fixtures.py -q",
       "exit_code": 0,
-      "elapsed_seconds": 1.488614,
+      "elapsed_seconds": 1.552981,
       "output_bytes": 5929,
-      "output_sha256": "d480f65e943c6f7bc3a834bdc23b100b018a3fbc67c25984eacfeb6ee8a1a72a",
+      "output_sha256": "da65312a3442c876a7fdcb4746dcf73bc49a0f542ea8bc6ce47ed2c1dc8b54ab",
       "status": "PASS",
       "tests_run": 36,
       "tests_skipped": 0,
@@ -61,7 +61,7 @@
       "id": "manifest-validation",
       "command": "python scripts/validate_manifests.py",
       "exit_code": 0,
-      "elapsed_seconds": 0.026698,
+      "elapsed_seconds": 0.030662,
       "output_bytes": 176,
       "output_sha256": "c68d27bf777aaa4d47b2bfe6b2357e06288ef7e8dadf8968292c841cb1a0906c",
       "status": "PASS"
@@ -70,28 +70,28 @@
       "id": "source-checksums",
       "command": "python scripts/verify_contents.py",
       "exit_code": 0,
-      "elapsed_seconds": 0.100581,
+      "elapsed_seconds": 0.116361,
       "output_bytes": 47,
-      "output_sha256": "1b778d2bbd63001c68710ea8a54062ebb7ac6eea563ae162e3bd48b88763b475",
+      "output_sha256": "0d846752b35d82e49a0171ffa4c10a7b228f8fc2d9572732483aab2236759d8a",
       "status": "PASS"
     },
     {
       "id": "secret-scan",
       "command": "python scripts/security_scan.py --repo . --history",
       "exit_code": 0,
-      "elapsed_seconds": 0.847663,
+      "elapsed_seconds": 0.894047,
       "output_bytes": 93,
-      "output_sha256": "7bbc9bca49d6c6ab09acd8084f21e24c38b96f9ff96dbfd95a63909d9e7415e6",
+      "output_sha256": "c0747ed39d7833e6995ea2aa062323183986b3165c98ca6993c0fc234f3764b5",
       "status": "PASS",
-      "scanned_files": 221,
-      "reachable_git_blobs": 778,
+      "scanned_files": 227,
+      "reachable_git_blobs": 812,
       "scope": "High-confidence patterns only; not proof that proprietary material is absent."
     },
     {
       "id": "network-attempt-intercept",
       "command": "python scripts/network_attempt_monitor.py",
       "exit_code": 0,
-      "elapsed_seconds": 0.034764,
+      "elapsed_seconds": 0.037895,
       "output_bytes": 113,
       "output_sha256": "f9002c41b079976f37c54cb7bba915c79ecb5043f3cf15c6964c36deaf1a308e",
       "status": "PASS",
@@ -101,9 +101,9 @@
       "id": "offline-fixtures",
       "command": "python benchmarks/run_local_fixtures.py --include-react --include-nicegui-ui",
       "exit_code": 0,
-      "elapsed_seconds": 6.542568,
+      "elapsed_seconds": 6.328276,
       "output_bytes": 598,
-      "output_sha256": "a5b3332a36a0ba57bc1b1cd70b9b6938009ddfb6d1e8a42e7bd15c5dd2e9498b",
+      "output_sha256": "dd6ac33d6ab7c317bc412ec15ec25a292856cbf40ffca4caef64da3d9edb3b63",
       "status": "PASS",
       "fixture_cases": 8,
       "python_fixture_tests": 76,
@@ -245,8 +245,8 @@
         "NOT_RUN": 10,
         "NOT_APPLICABLE": 4
       },
-      "output_sha256": "1ce31f70eaf34b265551adf9b45d6c13b324034012ac6db2f81fb66861577648",
-      "elapsed_seconds": 0.079224
+      "output_sha256": "30b93a0da664b6d9548c389dafd3cc9ca1569bb1c5a5d6de97419db15521b488",
+      "elapsed_seconds": 0.079609
     },
     {
       "status": "NOT_QUALIFIED",
@@ -367,8 +367,8 @@
         "NOT_APPLICABLE": 3,
         "NOT_RUN": 10
       },
-      "output_sha256": "5617cf98c3f8980000b19a2037678b19c6f0bd466a8cc4c9134635590d65b409",
-      "elapsed_seconds": 1.720279
+      "output_sha256": "6ca7fd523dfc307422a57f0e17c8650c883967dd288ed4f1f6665bb02ef78017",
+      "elapsed_seconds": 1.719219
     },
     {
       "status": "NOT_QUALIFIED",
@@ -490,8 +490,8 @@
         "NOT_RUN": 11,
         "NOT_APPLICABLE": 2
       },
-      "output_sha256": "b924976b82eed6f0eff66772096acce52f04135b27a0ea297e5ff4a0e59a61c4",
-      "elapsed_seconds": 1.430104
+      "output_sha256": "c3b5c91e0c22764be0f2f458b88c2daeee60693a930aedcb556d596cbfa67cf0",
+      "elapsed_seconds": 1.439118
     }
   ],
   "network_policy": {
@@ -503,7 +503,7 @@
     "qualification": "SOURCE_ONLY_NOT_OFFLINE_EXECUTABLE",
     "source_manifest": {
       "path": "offline/assets-manifest.json",
-      "sha256": "53ce6fa954045ff8e4e4f50ec5b68bc313652086d748bd3dd4c674a7d71a3ee6"
+      "sha256": "945a830c896ed851ada9e9486a5e64824c52c57e7ad3d9427dcfc55a034de15e"
     },
     "required_groups": 6,
     "staged_groups": 0,
@@ -526,12 +526,12 @@
       {
         "name": "MCP Python SDK and transitive dependencies",
         "owner": "Company OSS/package owner",
-        "required_action": "Confirm exact Windows/Linux OS, architecture, Python patch/ABI and glibc; independently review candidate licenses and vulnerabilities; import matching hash-locked archives through the approved process; run native offline install and pip check; and resolve OpenCode MCP discovery compatibility. Company approval is not obtained."
+        "required_action": "Confirm exact Windows/Linux OS, architecture, Python patch/ABI and glibc; independently review candidate licenses and vulnerabilities; import matching hash-locked archives through the approved process; run native offline install and pip check. Repeat MCP discovery/calls with the company OpenCode build. Company approval is not obtained."
       },
       {
         "name": "Company OpenCode and internal model evidence",
         "owner": "Company OpenCode owner",
-        "required_action": "Supply the installed internal build/config summary; set OPENCODE_DISABLE_AUTOUPDATE=1 and OPENCODE_DISABLE_MODELS_FETCH=1 on the actual CLI/server process; disable or network-block the separate desktop updater if used; verify the project web tool denies; resolve MCP protocol compatibility; and run an approved internal model trial only after the Windows/Linux egress gate and attempt monitor are active."
+        "required_action": "Supply the installed internal build/config summary; set OPENCODE_DISABLE_AUTOUPDATE=1 and OPENCODE_DISABLE_MODELS_FETCH=1 on the actual CLI/server process; disable or network-block the separate desktop updater if used; verify the project web tool denies; repeat synthetic skill/MCP calls on the company build; and run an approved internal model trial only after the Windows/Linux egress gate and attempt monitor are active."
       },
       {
         "name": "OS-enforced no-public-egress policy and attempt monitor",
@@ -595,7 +595,9 @@
         "public_web_tools": "DENIED_BY_PROJECT_CONFIG",
         "models_fetch_disable_setting": "NO_CATALOG_FETCH_LOG_EVENT_OBSERVED; no packet capture",
         "autoupdate_disable_setting": "SET_IN_PROBE_ENVIRONMENT_NOT_INDEPENDENTLY_MONITORED",
-        "official_sdk_and_existing_fixture_mcp": "FAILED_LOCAL_MCP_HANDSHAKE_OR_TIMEOUT",
+        "official_sdk_mcp": "PASS_LOCAL_SYNTHETIC_CALL; SDK discovery and read-only call with pinned 2026-07-28 and auto modes, 20000 ms timeout",
+        "standard_fixture_mcp": "PASS_LOCAL_SYNTHETIC_CALL; auto discovery fell back to legacy 2025-11-25 and completed read-only call",
+        "provider_and_injection_scope": "SCRIPTED_PROVIDER; tool and skill calls observed, but model reasoning and injection resistance NOT_EVALUATED",
         "authentic_model_quality_tokens_latency": "NOT_MEASURED"
       },
       "authentic_company_model_or_mcp_calls": "NOT_RUN",
@@ -615,9 +617,9 @@
       "id": "bootstrap-rollback-tests",
       "command": "python -m unittest discover -s tests -p test_bootstrap_and_fixtures.py -q",
       "exit_code": 0,
-      "elapsed_seconds": 1.488614,
+      "elapsed_seconds": 1.552981,
       "output_bytes": 5929,
-      "output_sha256": "d480f65e943c6f7bc3a834bdc23b100b018a3fbc67c25984eacfeb6ee8a1a72a",
+      "output_sha256": "da65312a3442c876a7fdcb4746dcf73bc49a0f542ea8bc6ce47ed2c1dc8b54ab",
       "status": "PASS",
       "tests_run": 36,
       "tests_skipped": 0,
@@ -627,7 +629,7 @@
     },
     "company_rollback_drill": "NOT_RUN"
   },
-  "local_fixture_report_sha256": "ad19dc386f11323c3ab4528bc1f3e41b0870ede49850dece3a861453071ca289",
+  "local_fixture_report_sha256": "e0ce452b811107237f41c60cb479633ad978fbcadef3d1f198e32b089e40261a",
   "company_actions": [
     {
       "priority": "P0",
@@ -638,8 +640,8 @@
     {
       "priority": "P0",
       "owner": "OpenCode owner",
-      "action": "Provide the exact internal OpenCode build and sanitized config format; keep `webfetch`/`websearch` denied; verify the Golden agent/skill/command adapter and resolve MCP protocol compatibility without exposing provider values.",
-      "evidence_needed": "Version/build, config-key summary, native skill and MCP discovery/call traces, effective server environment, permission behavior, and approved internal model identifier."
+      "action": "Provide the exact internal OpenCode build and sanitized config format; keep `webfetch`/`websearch` denied; verify the Golden agent/skill/command adapter and repeat the tested synthetic MCP discovery/call on that build without exposing provider values.",
+      "evidence_needed": "Version/build, config-key summary, company skill and MCP discovery/call traces, effective server environment, permission behavior, and approved internal model identifier."
     },
     {
       "priority": "P0",
