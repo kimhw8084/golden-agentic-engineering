@@ -89,10 +89,10 @@
     "secret_pattern_scan": {
       "command": "python scripts/security_scan.py --repo . --history",
       "status": "PASS",
-      "current_files_scanned": 223,
-      "reachable_git_blobs_scanned": 783,
+      "current_files_scanned": 227,
+      "reachable_git_blobs_scanned": 815,
       "limitation": "High-confidence pattern scan only; it does not establish absence of all proprietary information.",
-      "scan_worktree_head": "e9668c49436ec2d9eecc61ab2e72f2c44dde989b"
+      "scan_worktree_head": "c1e13579c1c9c51c888d4047fa16ffab430d95d3"
     },
     "golden_full_release_checks": [
       {
@@ -172,17 +172,17 @@
     },
     "github_hosted_ci": {
       "source_qualification": {
-        "run": 62,
+        "run": 63,
         "status": "PASS",
-        "commit": "2711574d87fe7ee33240a6b9b020a60c741f6d2b",
-        "jobs": "6/6 Ubuntu/Windows \u00d7 Python 3.10/3.11/3.14",
-        "url": "https://github.com/kimhw8084/golden-agentic-engineering/actions/runs/44932120889"
+        "commit": "c1e13579c1c9c51c888d4047fa16ffab430d95d3",
+        "jobs": "6/6 Ubuntu/Windows × Python 3.10/3.11/3.14",
+        "url": "https://github.com/kimhw8084/golden-agentic-engineering/actions/runs/44935668774"
       },
       "react_dependency_matrix": {
         "run": 1,
         "status": "PASS",
         "commit": "abc38d3bc2ef30e98b35904d7cd077033a21e571",
-        "jobs": "4/4 Ubuntu/Windows \u00d7 active Node 20.19.0 and candidate Node 22.12.0",
+        "jobs": "4/4 Ubuntu/Windows × active Node 20.19.0 and candidate Node 22.12.0",
         "url": "https://github.com/kimhw8084/golden-agentic-engineering/actions/runs/44930658112"
       },
       "limitation": "GitHub-hosted runners validate the recorded OS/runtime combinations only; no company-managed host, internal network, license approval, or air-gap qualification is implied."
@@ -190,12 +190,12 @@
     "precompany_readiness": {
       "command": "python scripts/precompany_readiness.py --out <external-json> --report <external-markdown>",
       "status": "PASS_LOCAL_CHECKS; PRE_QUALIFICATION",
-      "source_commit": "aacd322ce71ae86823649793c4999263164d98aa",
+      "source_commit": "3d122d495e3c27e846fb32b944973d82649e81c6",
       "local_checks_passed": "9/9",
       "json": "verification/2026-11-21/precompany-readiness.json",
-      "json_sha256": "2d81998dcb8a62c31ce4c7d585fb31415cde58a4a650005706ffb7dc302bcfb3",
+      "json_sha256": "c1e6b40ffde1438df815b1ffdd3ecc3b57f8918a767f6faeb90ee45fdb9bdec0",
       "report": "verification/2026-11-21/precompany-readiness.md",
-      "report_sha256": "07045acb477d1c26252fe40d0f53c4e805656e150d7ca4fb1e3e0935927cecb1",
+      "report_sha256": "a0eb7e3d7f6b37d7766b4ea8f75de8475db0a218e444e1d902ac5c5c03c9e8f5",
       "limitations": "All three synthetic Golden FULL checks remain NOT_QUALIFIED; Windows/Linux company hosts, internal OpenCode/model, offline assets, OSS clearance and no-public-egress monitor remain company-owned blockers."
     }
   },
@@ -222,7 +222,7 @@
   },
   "privacy_review": {
     "high_confidence_secret_scan": "PASS: zero detected patterns; no match values were emitted.",
-    "reachable_git_history": "786 blobs scanned; source worktree had 227 files scanned.",
+    "reachable_git_history": "815 blobs scanned; source worktree had 227 files scanned.",
     "absolute_user_paths": 0,
     "private_ipv4_addresses": 0,
     "machine_user_path_scan": "PASS: zero hits in current files or reachable Git blobs; ignored local demo evidence was changed to a repository-relative path before release.",
