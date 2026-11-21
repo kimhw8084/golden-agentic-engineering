@@ -11,6 +11,7 @@ import ast
 import datetime as dt
 import hashlib
 import html
+import importlib.util
 import json
 import math
 import os
@@ -72,6 +73,8 @@ def approved_command(key: str, command: list[str]) -> tuple[bool, str]:
     if key == 'python_tests' and py:
         if args in (['-m', 'unittest', 'discover', '-s', 'tests', '-v'], ['-m', 'pytest', '-q']):
             return True, 'python test runner allowlist'
+    if key == 'ui_contracts' and py and args == ['-m', 'pytest', '-q']:
+        return True, 'Python UI contract test allowlist'
     if key == 'python_lint' and ((py and args == ['-m', 'ruff', 'check', '.']) or (executable == 'ruff' and args == ['check', '.'])):
         return True, 'Ruff lint allowlist'
     if key in ('ts_typecheck', 'web_tests', 'ui_contracts') and npm:
@@ -156,6 +159,13 @@ def external(key: str, root: Path, project: dict, timeout: int) -> tuple[str, st
     allowed, basis = approved_command(key, cmd)
     if not allowed:
         return 'NOT_RUN', basis
+    if cmd[0] == '${PYTHON}' and cmd[1:3] == ['-m', 'pytest']:
+        required_modules = ['pytest']
+        if key == 'ui_contracts' and project.get('profile') == 'nicegui':
+            required_modules.append('nicegui')
+        missing = [name for name in required_modules if importlib.util.find_spec(name) is None]
+        if missing:
+            return 'NOT_RUN', f"Python test dependency unavailable: {', '.join(missing)}; check not executed."
     command_hash = hashlib.sha256(json.dumps(cmd, separators=(',', ':')).encode()).hexdigest()
     program = sys.executable if cmd[0] == '${PYTHON}' else cmd[0]
     resolved_program = shutil.which(program)
@@ -179,6 +189,8 @@ def external(key: str, root: Path, project: dict, timeout: int) -> tuple[str, st
             'HF_HUB_OFFLINE': '1', 'TRANSFORMERS_OFFLINE': '1',
             'NO_PROXY': '*', 'no_proxy': '*',
         })
+        if cmd[0] == '${PYTHON}' and cmd[1:3] == ['-m', 'pytest']:
+            safe_env.update({'PYTEST_DISABLE_PLUGIN_AUTOLOAD': '1', 'PYTEST_ADDOPTS': '-p no:cacheprovider'})
         safe_cmd = [str(executable_path), *cmd[1:]]
         p = subprocess.run(safe_cmd, cwd=root, env=safe_env, capture_output=True, text=True,
                            timeout=min(max(timeout, 1), 600), shell=False, check=False)

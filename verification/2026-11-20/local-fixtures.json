@@ -1,18 +1,20 @@
 {
   "schema": "golden-local-fixture-run/v1",
-  "generated_at_utc": "2026-11-21T00:09:21.442646+00:00",
+  "generated_at_utc": "2026-11-21T01:34:15.519649+00:00",
   "environment": {
     "os": "Darwin",
     "architecture": "arm64",
     "python": "3.11.7"
   },
-  "network_policy": "No package manager or network-capable application is launched by this harness; all test processes use offline-related environment flags.",
+  "network_policy": "No fixture calls public services. Python unit tests run with site imports disabled; optional NiceGUI simulation uses in-process ASGI transport; optional React installation is forced offline. No model, browser, or provider is started.",
   "cases": [
     {
       "id": "python-small-fix",
       "status": "PASS",
       "tests_run": 1,
-      "elapsed_seconds": 0.031306,
+      "tests_skipped": 0,
+      "tests_passed": 1,
+      "elapsed_seconds": 0.032667,
       "command": [
         "python",
         "-S",
@@ -30,8 +32,10 @@
     {
       "id": "nicegui-logic",
       "status": "PASS",
-      "tests_run": 3,
-      "elapsed_seconds": 0.025111,
+      "tests_run": 4,
+      "tests_skipped": 1,
+      "tests_passed": 3,
+      "elapsed_seconds": 0.048651,
       "command": [
         "python",
         "-S",
@@ -44,13 +48,15 @@
         "test_*.py",
         "-q"
       ],
-      "output_sha256": "6be407ca5328a10c14a491a37f44ec7c169497125761f2e54018604b20df492f"
+      "output_sha256": "3f22bfe6a5bfb4db6e8d7934a7bd46ebf253144e8d178bf261d0573ee431f701"
     },
     {
       "id": "api-sqlite-contract",
       "status": "PASS",
       "tests_run": 2,
-      "elapsed_seconds": 0.027883,
+      "tests_skipped": 0,
+      "tests_passed": 2,
+      "elapsed_seconds": 0.032341,
       "command": [
         "python",
         "-S",
@@ -63,13 +69,15 @@
         "test_*.py",
         "-q"
       ],
-      "output_sha256": "376bd4637ce939c00f9c93c3a1042c1c2ee33f11c4de836525e01c86a6e2c22b"
+      "output_sha256": "a6885bce81f8369dc38240c31d16c62658d0d0792539e2f42f2c85ea17ec6381"
     },
     {
       "id": "incident-timeline",
       "status": "PASS",
       "tests_run": 1,
-      "elapsed_seconds": 0.027165,
+      "tests_skipped": 0,
+      "tests_passed": 1,
+      "elapsed_seconds": 0.031425,
       "command": [
         "python",
         "-S",
@@ -82,13 +90,15 @@
         "test_*.py",
         "-q"
       ],
-      "output_sha256": "5914a00b30739818e764337ed45d346bbea6db8c2e5824349ed85f584021afb8"
+      "output_sha256": "a76fd5b6cf95872282b9e7d12cd3dd312f70c8908e1dd1b800aac383f0bc2134"
     },
     {
       "id": "manufacturing-sampling",
       "status": "PASS",
       "tests_run": 6,
-      "elapsed_seconds": 0.030034,
+      "tests_skipped": 0,
+      "tests_passed": 6,
+      "elapsed_seconds": 0.033358,
       "command": [
         "python",
         "-S",
@@ -107,7 +117,9 @@
       "id": "mcp-synthetic-contract",
       "status": "PASS",
       "tests_run": 4,
-      "elapsed_seconds": 0.051709,
+      "tests_skipped": 0,
+      "tests_passed": 4,
+      "elapsed_seconds": 0.058699,
       "command": [
         "python",
         "-S",
@@ -120,13 +132,15 @@
         "test_mcp_fixture.py",
         "-q"
       ],
-      "output_sha256": "95be710d3d8b3163320f791b2e547f2c2fa1925e76dba11417dbe4f9f981a7c1"
+      "output_sha256": "44f6ab7b9225f19ff1ee7e671c5dc8ffc0fac798bc03eb4044b85f50341bc06e"
     },
     {
       "id": "golden-proof",
       "status": "PASS",
       "tests_run": 24,
-      "elapsed_seconds": 0.586623,
+      "tests_skipped": 0,
+      "tests_passed": 24,
+      "elapsed_seconds": 0.623825,
       "command": [
         "python",
         "-S",
@@ -139,13 +153,15 @@
         "test_golden.py",
         "-q"
       ],
-      "output_sha256": "fd2c01e8982feee71f24a6ee987bb56205b2420105889634b3a9a9fa80758df5"
+      "output_sha256": "55e2151a9ef9505db0edfebcc3b15b8bf3ef091b637fe347971154f92aae10a6"
     },
     {
       "id": "golden-routing",
       "status": "PASS",
       "tests_run": 6,
-      "elapsed_seconds": 0.047353,
+      "tests_skipped": 0,
+      "tests_passed": 6,
+      "elapsed_seconds": 0.075363,
       "command": [
         "python",
         "-S",
@@ -158,7 +174,7 @@
         "test_routing.py",
         "-q"
       ],
-      "output_sha256": "2358b39ffaf778e8d0da96f14bfee77ec8f19e2dc6917ad5c8a0d1ecfefb9e53"
+      "output_sha256": "ccfb8c6f510f855170838ef6d34889e5ece92497eb7884ce24b3ff04a47ed4b5"
     }
   ],
   "react": {
@@ -197,8 +213,27 @@
         "exit_code": 0
       }
     ],
-    "elapsed_seconds": 3.865662,
-    "output_sha256": "5b4415891d0d48c05ed148aee0c507fa51bfaae5fceb51579c8f781a74a5453d"
+    "elapsed_seconds": 4.159194,
+    "output_sha256": "5a049a29fda09028f9f48d0f1f337dbdad9d2479afcd2c64a98543a3cfa2fd47"
+  },
+  "nicegui_ui": {
+    "status": "PASS",
+    "tests_run": 1,
+    "versions": {
+      "nicegui": "3.15.0",
+      "pytest": "8.4.2"
+    },
+    "elapsed_seconds": 1.090944,
+    "command": [
+      "python",
+      "-m",
+      "pytest",
+      "-q",
+      "-p",
+      "no:cacheprovider",
+      "tests/test_ui.py"
+    ],
+    "output_sha256": "a6d9cfa1a7e5404f0eb6c9218da38822db81fcc53d86191e204f7a42e7aa7808"
   },
   "browser": {
     "status": "NOT_RUN_PLAYWRIGHT_ASSETS_NOT_STAGED",

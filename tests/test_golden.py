@@ -5,6 +5,7 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 SPEC = importlib.util.spec_from_file_location('golden_pilot', ROOT / 'scripts' / 'golden.py')
@@ -37,6 +38,13 @@ class GoldenProofTests(unittest.TestCase):
         self.assertFalse(evidence['qualifies_release'])
         self.assertIn('SEC-001', evidence['blocking_rule_ids'])
 
+    def test_nicegui_example_configures_allowlisted_ui_contracts(self):
+        example = ROOT / 'examples' / 'nicegui-app'
+        project, error = golden.load_manifest(example)
+        self.assertIsNone(error)
+        command = project['commands']['ui_contracts']
+        self.assertTrue(golden.approved_command('ui_contracts', command)[0])
+
     def test_inapplicable_has_reason(self):
         data = golden.run_check(EXAMPLE, full=True)
         rule = by_id(data, 'WEB-001')
@@ -55,6 +63,38 @@ class GoldenProofTests(unittest.TestCase):
         status, reason = golden.external('python_tests', EXAMPLE, project, 5)
         self.assertEqual(status, 'NOT_RUN')
         self.assertIn('allowlist', reason)
+
+    def test_python_ui_contract_command_has_narrow_pytest_allowlist(self):
+        approved = ['${PYTHON}', '-m', 'pytest', '-q']
+        allowed, basis = golden.approved_command('ui_contracts', approved)
+        self.assertTrue(allowed)
+        self.assertIn('UI contract', basis)
+        allowed, _ = golden.approved_command('ui_contracts', approved + ['-c', 'untrusted.ini'])
+        self.assertFalse(allowed)
+
+    def test_python_ui_contract_marks_missing_dependencies_not_run(self):
+        project = {'profile': 'nicegui', 'commands': {'ui_contracts': ['${PYTHON}', '-m', 'pytest', '-q']}}
+        with patch.object(
+            golden.importlib.util, 'find_spec', side_effect=lambda name: object() if name == 'nicegui' else None
+        ):
+            with patch.object(golden.subprocess, 'run') as run:
+                status, evidence = golden.external('ui_contracts', EXAMPLE, project, 5)
+        self.assertEqual(status, 'NOT_RUN')
+        self.assertIn('pytest', evidence)
+        run.assert_not_called()
+
+    def test_python_ui_contract_disables_pytest_plugins_and_cache(self):
+        project = {'profile': 'nicegui', 'commands': {'ui_contracts': ['${PYTHON}', '-m', 'pytest', '-q']}}
+        completed = subprocess.CompletedProcess([], 0, '4 passed in 1.0s', '')
+        with patch.object(golden.importlib.util, 'find_spec', return_value=object()):
+            with patch.object(golden.subprocess, 'run', return_value=completed) as run:
+                status, evidence = golden.external('ui_contracts', EXAMPLE, project, 5)
+        self.assertEqual(status, 'PASS')
+        self.assertIn('output_sha256=', evidence)
+        self.assertNotIn('4 passed', evidence)
+        self.assertEqual(run.call_args.kwargs['env']['PYTEST_DISABLE_PLUGIN_AUTOLOAD'], '1')
+        self.assertEqual(run.call_args.kwargs['env']['PYTEST_ADDOPTS'], '-p no:cacheprovider')
+        self.assertFalse(run.call_args.kwargs.get('shell', False))
 
     def test_evidence_never_contains_raw_command_output(self):
         with tempfile.TemporaryDirectory() as d:

@@ -49,6 +49,46 @@ class ReactHarnessTests(unittest.TestCase):
                 result = HARNESS.run_react()
         self.assertEqual(result['status'], 'BLOCKED_MISSING_LOCKFILE')
 
+    def test_nicegui_ui_runner_uses_only_installed_offline_pytest(self):
+        completed = subprocess.CompletedProcess(
+            [], 0, '.                                                                        [100%]\n1 passed in 0.5s\n', ''
+        )
+        with patch.object(HARNESS, 'ROOT', Path('/synthetic/golden')):
+            with patch.object(HARNESS.importlib.util, 'find_spec', return_value=object()):
+                with patch.object(HARNESS.importlib.metadata, 'version', side_effect=lambda name: {'nicegui': '3.15.0', 'pytest': '8.4.2'}[name]):
+                    with patch.object(HARNESS.subprocess, 'run', return_value=completed) as run:
+                        result = HARNESS.run_nicegui_ui()
+        self.assertEqual(result['status'], 'PASS')
+        self.assertEqual(result['tests_run'], 1)
+        self.assertEqual(result['versions'], {'nicegui': '3.15.0', 'pytest': '8.4.2'})
+        command = run.call_args.args[0]
+        self.assertIn('-m', command)
+        self.assertIn('pytest', command)
+        self.assertIn('tests/test_ui.py', command)
+        self.assertEqual(run.call_args.kwargs['env']['PYTEST_DISABLE_PLUGIN_AUTOLOAD'], '1')
+        self.assertEqual(run.call_args.kwargs['env']['PIP_NO_INDEX'], '1')
+        self.assertFalse(run.call_args.kwargs.get('shell', False))
+
+    def test_nicegui_ui_runner_reports_missing_packages_without_installing(self):
+        with patch.object(HARNESS.importlib.util, 'find_spec', side_effect=lambda name: None if name == 'pytest' else object()):
+            with patch.object(HARNESS.subprocess, 'run') as run:
+                result = HARNESS.run_nicegui_ui()
+        self.assertEqual(result['status'], 'NOT_RUN_DEPENDENCIES_UNAVAILABLE')
+        self.assertEqual(result['missing'], ['pytest'])
+        run.assert_not_called()
+
+    def test_python_runner_reports_optional_skips_separately(self):
+        completed = subprocess.CompletedProcess(
+            [], 0, '', 'Ran 4 tests in 0.1s\n\nOK (skipped=1)\n'
+        )
+        with patch.object(HARNESS, 'ROOT', Path('/synthetic/golden')):
+            with patch.object(HARNESS.subprocess, 'run', return_value=completed):
+                result = HARNESS.run_case(('nicegui-logic', 'examples/nicegui-app', 'examples/nicegui-app/tests'))
+        self.assertEqual(result['status'], 'PASS')
+        self.assertEqual(result['tests_run'], 4)
+        self.assertEqual(result['tests_passed'], 3)
+        self.assertEqual(result['tests_skipped'], 1)
+
 
 class BenchmarkCaseManifestTests(unittest.TestCase):
     def test_case_statuses_match_committed_local_evidence(self):
@@ -58,9 +98,14 @@ class BenchmarkCaseManifestTests(unittest.TestCase):
         self.assertEqual(cases['status'], 'LOCAL_FIXTURES_EXECUTED_COMPANY_RUNTIME_COMPARISON_BLOCKED')
         self.assertEqual(tasks['react-feature']['local_fixture_status'], 'PASS_MACOS_ARM64')
         self.assertIn('local-fixtures.json#/react', tasks['react-feature']['evidence'][0])
-        self.assertEqual(tasks['browser-verification']['local_fixture_status'], 'PARTIAL_MANUAL_REACT_SMOKE')
+        self.assertEqual(tasks['browser-verification']['local_fixture_status'], 'PARTIAL_MANUAL_REACT_AND_NICEGUI_SMOKES')
         self.assertEqual(tasks['browser-verification']['automated_browser_status'], 'NOT_RUN_PLAYWRIGHT_ASSETS_NOT_STAGED')
-        self.assertTrue((ROOT / tasks['browser-verification']['evidence'][0]).is_file())
+        self.assertTrue(all((ROOT / evidence).is_file() for evidence in tasks['browser-verification']['evidence']))
+        self.assertEqual(tasks['nicegui-api-db']['ui_simulation_status'], 'PASS')
+        self.assertTrue(any(reference.endswith('#/nicegui_ui') for reference in tasks['nicegui-api-db']['evidence']))
+        local_fixtures = json.loads((ROOT / 'verification' / '2026-11-20' / 'local-fixtures.json').read_text())
+        self.assertEqual(local_fixtures['nicegui_ui']['status'], 'PASS')
+        self.assertEqual(local_fixtures['nicegui_ui']['tests_run'], 1)
 
 
 if __name__ == '__main__':

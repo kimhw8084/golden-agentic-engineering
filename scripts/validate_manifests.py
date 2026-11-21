@@ -123,8 +123,14 @@ def validate() -> list[str]:
         browser = by_id.get('browser-verification', {})
         if react.get('local_fixture_status') != 'PASS_MACOS_ARM64':
             errors.append('React benchmark status must reflect the committed local macOS arm64 pass')
-        if (browser.get('local_fixture_status') != 'PARTIAL_MANUAL_REACT_SMOKE'
-                or browser.get('automated_browser_status') != 'NOT_RUN_PLAYWRIGHT_ASSETS_NOT_STAGED'):
+        manual_smokes = set(browser.get('evidence', []))
+        required_manual_smokes = {
+            'verification/2026-11-20/react-browser-smoke.md',
+            'verification/2026-11-20/nicegui-browser-smoke.md',
+        }
+        if (browser.get('local_fixture_status') != 'PARTIAL_MANUAL_REACT_AND_NICEGUI_SMOKES'
+                or browser.get('automated_browser_status') != 'NOT_RUN_PLAYWRIGHT_ASSETS_NOT_STAGED'
+                or not required_manual_smokes.issubset(manual_smokes)):
             errors.append('browser benchmark must distinguish manual smoke evidence from unrun automated browser checks')
     for candidate in registry_candidates:
         for key in ('id', 'owner_repo', 'commit', 'license', 'license_evidence', 'license_url', 'transitive_dependencies', 'windows_linux', 'offline_telemetry', 'context_cost', 'permissions', 'prompt_injection_security', 'measured_evidence', 'decision'):
