@@ -16,11 +16,8 @@ from pathlib import Path, PurePosixPath
 ROOT = Path(__file__).resolve().parent.parent
 PREFIX = 'golden-agentic-engineering'
 MANIFEST = f'{PREFIX}/golden-offline-manifest.json'
-SECRET_PATTERNS = (
-    re.compile(r'-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----'),
-    re.compile(r'\bgh[pousr]_[A-Za-z0-9]{30,}\b'),
-    re.compile(r'\bAKIA[0-9A-Z]{16}\b'),
-)
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from secret_patterns import scan_text  # noqa: E402
 
 
 def sha_bytes(data: bytes) -> str:
@@ -59,9 +56,8 @@ def check_clean(root: Path) -> None:
 
 def check_sensitive(path: Path, data: bytes) -> None:
     text = data.decode('utf-8', errors='ignore')
-    for pattern in SECRET_PATTERNS:
-        if pattern.search(text):
-            raise ValueError(f'Possible secret material detected in {path.as_posix()}.')
+    if scan_text(text, path.as_posix()):
+        raise ValueError(f'Possible secret material detected in {path.as_posix()}.')
 
 
 def build_manifest(root: Path) -> dict:

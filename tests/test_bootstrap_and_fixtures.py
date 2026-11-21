@@ -539,6 +539,12 @@ class CompanyBootstrapTests(unittest.TestCase):
 
 
 class SyntheticExampleTests(unittest.TestCase):
+    def test_offline_packager_rejects_secret_families_without_emitting_values(self):
+        synthetic_value = 'github_pat_' + 'Q' * 32
+        with self.assertRaisesRegex(ValueError, 'Possible secret material detected in fixture.txt') as caught:
+            packager.check_sensitive(Path('fixture.txt'), synthetic_value.encode())
+        self.assertNotIn(synthetic_value, str(caught.exception))
+
     def test_secret_scanner_recognizes_common_token_families_and_ignores_placeholders(self):
         samples = [
             ('github_token', 'ghp_' + 'A' * 36),
