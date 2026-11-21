@@ -9,7 +9,7 @@ SPEC.loader.exec_module(monitor)
 
 
 class NetworkAttemptMonitorTests(unittest.TestCase):
-    def test_attempts_are_observed_and_blocked_before_socket_connect(self):
+    def test_synthetic_socket_connect_audit_event_is_observed_and_blocked(self):
         result = monitor.run_probe()
         self.assertGreaterEqual(len(result['attempts']), 1)
         self.assertEqual(result['outcome'], 'blocked')
