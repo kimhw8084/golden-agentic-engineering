@@ -524,9 +524,15 @@ def apply_bundle(archive: Path, target: Path, report: dict, transaction_path: Pa
                 'golden_version': json.loads((ROOT / 'standards' / 'release.json').read_text())['version'],
                 'capabilities': {}, 'commands': {},
             }), encoding='utf-8')
+            smoke_env = {'PATH': os.environ.get('PATH', ''), 'PYTHONNOUSERSITE': '1', 'PIP_NO_INDEX': '1',
+                         'UV_OFFLINE': '1', 'npm_config_offline': 'true'}
+            # Windows Python 3.10 requires the system root for runtime DLL lookup.
+            for key in ('SYSTEMROOT', 'WINDIR', 'TEMP', 'TMP'):
+                value = os.environ.get(key)
+                if value:
+                    smoke_env[key] = value
             result = subprocess.run([sys.executable, '-S', str(ROOT / 'scripts' / 'golden.py'), 'doctor', '--project', str(smoke)],
-                                    capture_output=True, text=True, timeout=10, check=False,
-                                    env={'PATH': os.environ.get('PATH', ''), 'PYTHONNOUSERSITE': '1', 'PIP_NO_INDEX': '1', 'UV_OFFLINE': '1', 'npm_config_offline': 'true'})
+                                    capture_output=True, text=True, timeout=10, check=False, env=smoke_env)
             if result.returncode != 0 or 'Manifest: PASS' not in result.stdout:
                 raise ValueError('Synthetic project smoke test failed.')
         transaction = {'schema': 'golden-bootstrap-transaction/v1', 'bundle_sha256': hash_file(archive),
