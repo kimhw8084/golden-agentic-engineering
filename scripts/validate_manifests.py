@@ -22,6 +22,7 @@ def validate() -> list[str]:
         '.opencode/opencode.json', 'workflows/task-routing.json',
         'opencode.json',
         'schemas/task-routing.schema.json', 'research/capability-selection.json',
+        'benchmarks/cases.json',
         'offline/assets-manifest.json', 'offline/egress-policy.template.json',
     ]
     documents = {}
@@ -97,6 +98,34 @@ def validate() -> list[str]:
                   if isinstance(candidate, str)} if isinstance(decisions, list) else set()
     if ranked_ids - candidate_ids - non_public_ids:
         errors.append(f"capability ranking references unresolved IDs: {sorted(ranked_ids - candidate_ids - non_public_ids)}")
+    benchmark_cases = documents['benchmarks/cases.json']
+    tasks = benchmark_cases.get('tasks')
+    if (benchmark_cases.get('schema') != 'golden-benchmark-cases/v1'
+            or benchmark_cases.get('status') != 'LOCAL_FIXTURES_EXECUTED_COMPANY_RUNTIME_COMPARISON_BLOCKED'
+            or not isinstance(tasks, list) or len(tasks) != 6
+            or len({row.get('id') for row in tasks if isinstance(row, dict)}) != len(tasks)):
+        errors.append('benchmark case manifest requires six uniquely identified local fixtures and an explicit company-runtime block')
+    else:
+        by_id = {row.get('id'): row for row in tasks if isinstance(row, dict)}
+        for task in tasks:
+            if (not isinstance(task, dict)
+                    or not all(task.get(key) for key in ('id', 'fixture', 'acceptance', 'local_fixture_status'))
+                    or not isinstance(task.get('evidence'), list)
+                    or not task['evidence']):
+                errors.append(f"benchmark case {task.get('id') if isinstance(task, dict) else 'unknown'}: acceptance, status and evidence are required")
+                continue
+            for evidence in task['evidence']:
+                relative = evidence.partition('#')[0] if isinstance(evidence, str) else ''
+                if (not relative or Path(relative).is_absolute() or '..' in Path(relative).parts
+                        or not (ROOT / relative).is_file()):
+                    errors.append(f"benchmark case {task['id']}: evidence must reference a repository file")
+        react = by_id.get('react-feature', {})
+        browser = by_id.get('browser-verification', {})
+        if react.get('local_fixture_status') != 'PASS_MACOS_ARM64':
+            errors.append('React benchmark status must reflect the committed local macOS arm64 pass')
+        if (browser.get('local_fixture_status') != 'PARTIAL_MANUAL_REACT_SMOKE'
+                or browser.get('automated_browser_status') != 'NOT_RUN_PLAYWRIGHT_ASSETS_NOT_STAGED'):
+            errors.append('browser benchmark must distinguish manual smoke evidence from unrun automated browser checks')
     for candidate in registry_candidates:
         for key in ('id', 'owner_repo', 'commit', 'license', 'license_evidence', 'license_url', 'transitive_dependencies', 'windows_linux', 'offline_telemetry', 'context_cost', 'permissions', 'prompt_injection_security', 'measured_evidence', 'decision'):
             if not candidate.get(key):

@@ -1,10 +1,10 @@
 {
   "schema": "golden-local-fixture-run/v1",
-  "generated_at_utc": "2026-11-20T23:51:56.676021+00:00",
+  "generated_at_utc": "2026-11-21T00:09:21.442646+00:00",
   "environment": {
     "os": "Darwin",
     "architecture": "arm64",
-    "python": "3.14.5"
+    "python": "3.11.7"
   },
   "network_policy": "No package manager or network-capable application is launched by this harness; all test processes use offline-related environment flags.",
   "cases": [
@@ -12,7 +12,7 @@
       "id": "python-small-fix",
       "status": "PASS",
       "tests_run": 1,
-      "elapsed_seconds": 0.040849,
+      "elapsed_seconds": 0.031306,
       "command": [
         "python",
         "-S",
@@ -31,7 +31,7 @@
       "id": "nicegui-logic",
       "status": "PASS",
       "tests_run": 3,
-      "elapsed_seconds": 0.039444,
+      "elapsed_seconds": 0.025111,
       "command": [
         "python",
         "-S",
@@ -50,7 +50,7 @@
       "id": "api-sqlite-contract",
       "status": "PASS",
       "tests_run": 2,
-      "elapsed_seconds": 0.040541,
+      "elapsed_seconds": 0.027883,
       "command": [
         "python",
         "-S",
@@ -69,7 +69,7 @@
       "id": "incident-timeline",
       "status": "PASS",
       "tests_run": 1,
-      "elapsed_seconds": 0.048179,
+      "elapsed_seconds": 0.027165,
       "command": [
         "python",
         "-S",
@@ -88,7 +88,7 @@
       "id": "manufacturing-sampling",
       "status": "PASS",
       "tests_run": 6,
-      "elapsed_seconds": 0.042902,
+      "elapsed_seconds": 0.030034,
       "command": [
         "python",
         "-S",
@@ -107,7 +107,7 @@
       "id": "mcp-synthetic-contract",
       "status": "PASS",
       "tests_run": 4,
-      "elapsed_seconds": 0.066313,
+      "elapsed_seconds": 0.051709,
       "command": [
         "python",
         "-S",
@@ -120,13 +120,13 @@
         "test_mcp_fixture.py",
         "-q"
       ],
-      "output_sha256": "a8259be17d894da740cc820b6b3bb23d34f100aa12a18e7d7d722ed2b69d4bf8"
+      "output_sha256": "95be710d3d8b3163320f791b2e547f2c2fa1925e76dba11417dbe4f9f981a7c1"
     },
     {
       "id": "golden-proof",
       "status": "PASS",
       "tests_run": 24,
-      "elapsed_seconds": 0.702014,
+      "elapsed_seconds": 0.586623,
       "command": [
         "python",
         "-S",
@@ -139,13 +139,13 @@
         "test_golden.py",
         "-q"
       ],
-      "output_sha256": "febb8a349cc00a9c0e2f3020d8d975c9bc08c3a1348e28c54dacaa480f6a6c0d"
+      "output_sha256": "fd2c01e8982feee71f24a6ee987bb56205b2420105889634b3a9a9fa80758df5"
     },
     {
       "id": "golden-routing",
       "status": "PASS",
       "tests_run": 6,
-      "elapsed_seconds": 0.062494,
+      "elapsed_seconds": 0.047353,
       "command": [
         "python",
         "-S",
@@ -158,7 +158,7 @@
         "test_routing.py",
         "-q"
       ],
-      "output_sha256": "344e5cbbdf8ac6c195e03136c5ca8eaf8baabd52bb1cfd537a9b0502b9d170c6"
+      "output_sha256": "2358b39ffaf778e8d0da96f14bfee77ec8f19e2dc6917ad5c8a0d1ecfefb9e53"
     }
   ],
   "react": {
@@ -197,8 +197,8 @@
         "exit_code": 0
       }
     ],
-    "elapsed_seconds": 4.291582,
-    "output_sha256": "bf229a04c54c1e255efe1ced9494b1aabbb8ef46c16b7d644817cb1a44e85107"
+    "elapsed_seconds": 3.865662,
+    "output_sha256": "5b4415891d0d48c05ed148aee0c507fa51bfaae5fceb51579c8f781a74a5453d"
   },
   "browser": {
     "status": "NOT_RUN_PLAYWRIGHT_ASSETS_NOT_STAGED",

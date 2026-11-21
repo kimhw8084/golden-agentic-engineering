@@ -50,5 +50,18 @@ class ReactHarnessTests(unittest.TestCase):
         self.assertEqual(result['status'], 'BLOCKED_MISSING_LOCKFILE')
 
 
+class BenchmarkCaseManifestTests(unittest.TestCase):
+    def test_case_statuses_match_committed_local_evidence(self):
+        cases = json.loads((ROOT / 'benchmarks' / 'cases.json').read_text(encoding='utf-8'))
+        tasks = {task['id']: task for task in cases['tasks']}
+
+        self.assertEqual(cases['status'], 'LOCAL_FIXTURES_EXECUTED_COMPANY_RUNTIME_COMPARISON_BLOCKED')
+        self.assertEqual(tasks['react-feature']['local_fixture_status'], 'PASS_MACOS_ARM64')
+        self.assertIn('local-fixtures.json#/react', tasks['react-feature']['evidence'][0])
+        self.assertEqual(tasks['browser-verification']['local_fixture_status'], 'PARTIAL_MANUAL_REACT_SMOKE')
+        self.assertEqual(tasks['browser-verification']['automated_browser_status'], 'NOT_RUN_PLAYWRIGHT_ASSETS_NOT_STAGED')
+        self.assertTrue((ROOT / tasks['browser-verification']['evidence'][0]).is_file())
+
+
 if __name__ == '__main__':
     unittest.main()
