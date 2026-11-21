@@ -1,0 +1,86 @@
+name: React Vitest replacement candidate
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/react-vitest-candidate.yml'
+      - 'examples/react-app/**'
+      - 'research/react-vitest-5.1.1-candidate/**'
+  pull_request:
+    paths:
+      - '.github/workflows/react-vitest-candidate.yml'
+      - 'examples/react-app/**'
+      - 'research/react-vitest-5.1.1-candidate/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  react-active:
+    name: ${{ matrix.os }} / Node 20.19.0 (active lock)
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20.19.0'
+      - name: Stage locked packages on the hosted runner
+        working-directory: examples/react-app
+        run: npm ci --ignore-scripts --no-audit --no-fund --registry=https://registry.npmjs.org
+      - name: Check current public npm advisories
+        working-directory: examples/react-app
+        run: npm audit --audit-level=low --registry=https://registry.npmjs.org
+      - name: Reinstall with npm network access disabled
+        working-directory: examples/react-app
+        run: npm ci --offline --ignore-scripts --no-audit --no-fund
+      - name: Typecheck
+        working-directory: examples/react-app
+        run: npm run typecheck
+      - name: Run component and logic tests
+        working-directory: examples/react-app
+        run: npm test
+      - name: Build
+        working-directory: examples/react-app
+        run: npm run build
+
+  react-candidate:
+    name: ${{ matrix.os }} / Node 22.12.0
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.12.0'
+      - name: Select the separately pinned candidate manifests
+        shell: bash
+        run: |
+          cp research/react-vitest-5.1.1-candidate/package.json examples/react-app/package.json
+          cp research/react-vitest-5.1.1-candidate/package-lock.json examples/react-app/package-lock.json
+      - name: Stage locked packages on the hosted runner
+        working-directory: examples/react-app
+        run: npm ci --ignore-scripts --no-audit --no-fund --registry=https://registry.npmjs.org
+      - name: Check current public npm advisories
+        working-directory: examples/react-app
+        run: npm audit --audit-level=low --registry=https://registry.npmjs.org
+      - name: Reinstall with npm network access disabled
+        working-directory: examples/react-app
+        run: npm ci --offline --ignore-scripts --no-audit --no-fund
+      - name: Typecheck
+        working-directory: examples/react-app
+        run: npm run typecheck
+      - name: Run component and logic tests
+        working-directory: examples/react-app
+        run: npm test
+      - name: Build
+        working-directory: examples/react-app
+        run: npm run build

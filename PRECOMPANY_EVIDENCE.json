@@ -12,11 +12,11 @@
     "python_unit_suite": {
       "command": "python -m unittest discover -s tests -q",
       "status": "PASS",
-      "tests_run": 156,
-      "tests_passed": 155,
+      "tests_run": 158,
+      "tests_passed": 157,
       "tests_skipped": 1,
       "tests_failed": 0,
-      "note": "One optional-SDK test is skipped under the default interpreter. The SDK-backed fixture was run separately under the offline MCP SDK candidate virtual environment."
+      "note": "Latest run: 158 tests, 157 passed and one optional test skipped. Includes active React lock and Vitest 5 candidate evidence checks."
     },
     "manifest_validation": {
       "command": "python scripts/validate_manifests.py",
@@ -26,7 +26,7 @@
     "tracked_content_hashes": {
       "command": "python scripts/verify_contents.py",
       "status": "PASS",
-      "checked": 207,
+      "checked": 218,
       "missing": 0,
       "altered": 0,
       "unlisted": 0
@@ -50,7 +50,11 @@
     "mcp_sdk_candidate_archives": {
       "command": "python scripts/mcp_candidate_bundle.py verify <each of three candidate archives>",
       "status": "PASS_CANDIDATE_INTEGRITY_ONLY",
-      "targets": ["macos-arm64-cp311", "windows-amd64-cp311", "linux-x86_64-glibc217-cp311"],
+      "targets": [
+        "macos-arm64-cp311",
+        "windows-amd64-cp311",
+        "linux-x86_64-glibc217-cp311"
+      ],
       "native_install_scope": "macOS arm64 only; Windows and Linux native installation not run",
       "archive_hashes": {
         "macos-arm64-cp311": "5a78a99f2e8775d320d7595862060f351c2645f6dad1df0e0ac1570f021ed794",
@@ -69,8 +73,8 @@
     "secret_pattern_scan": {
       "command": "python scripts/security_scan.py --repo . --history",
       "status": "PASS",
-      "current_files_scanned": 210,
-      "reachable_git_blobs_scanned": 728,
+      "current_files_scanned": 221,
+      "reachable_git_blobs_scanned": 736,
       "limitation": "High-confidence pattern scan only; it does not establish absence of all proprietary information."
     },
     "golden_full_release_checks": [
@@ -78,21 +82,77 @@
         "project": "examples/python-app",
         "evidence": "verification/2026-11-21/python-full-current.json",
         "status": "NOT_QUALIFIED",
-        "blocking_rule_ids": ["AI-001", "API-001", "DATA-001", "DB-001", "JOBS-001", "MCP-001", "OPS-001", "PY-003", "REL-001", "SEC-001"]
+        "blocking_rule_ids": [
+          "AI-001",
+          "API-001",
+          "DATA-001",
+          "DB-001",
+          "JOBS-001",
+          "MCP-001",
+          "OPS-001",
+          "PY-003",
+          "REL-001",
+          "SEC-001"
+        ]
       },
       {
         "project": "examples/react-app",
         "evidence": "verification/2026-11-21/react-full-current.json",
         "status": "NOT_QUALIFIED",
-        "blocking_rule_ids": ["AI-001", "API-001", "DATA-001", "DB-001", "JOBS-001", "MCP-001", "OPS-001", "REL-001", "SEC-001", "UI-002"]
+        "blocking_rule_ids": [
+          "AI-001",
+          "API-001",
+          "DATA-001",
+          "DB-001",
+          "JOBS-001",
+          "MCP-001",
+          "OPS-001",
+          "REL-001",
+          "SEC-001",
+          "UI-002"
+        ]
       },
       {
         "project": "examples/nicegui-app",
         "evidence": "verification/2026-11-21/nicegui-full-current.json",
         "status": "NOT_QUALIFIED",
-        "blocking_rule_ids": ["AI-001", "API-001", "DATA-001", "DB-001", "JOBS-001", "MCP-001", "OPS-001", "PY-003", "REL-001", "SEC-001", "UI-002"]
+        "blocking_rule_ids": [
+          "AI-001",
+          "API-001",
+          "DATA-001",
+          "DB-001",
+          "JOBS-001",
+          "MCP-001",
+          "OPS-001",
+          "PY-003",
+          "REL-001",
+          "SEC-001",
+          "UI-002"
+        ]
       }
-    ]
+    ],
+    "react_dependency_update": {
+      "active_lock": {
+        "path": "examples/react-app/package-lock.json",
+        "sha256": "cee6aec396c6eb2a5fe41343b5fd0114f69ae442d3607f1be461201f652718e1",
+        "vite": "7.3.8",
+        "vitest": "4.1.12",
+        "npm_audit": "PASS_ZERO_FINDINGS_ON_2026-11-21",
+        "lock_install_typecheck_tests_build": "PASS_MACOS_ARM64_NODE_26.13.0"
+      },
+      "candidate": {
+        "path": "research/react-vitest-5.1.1-candidate/package-lock.json",
+        "sha256": "c14223e751f5b533448bc13ec42d7efd6a33dc804a479f1cefc846cfe0cad01e",
+        "vite": "7.3.8",
+        "vitest": "5.1.1",
+        "node_engine": "^22.12.0 || ^24.0.0 || >=26.0.0",
+        "npm_audit": "PASS_ZERO_FINDINGS_ON_2026-11-21",
+        "offline_install_typecheck_tests_build": "PASS_MACOS_ARM64_NODE_26.13.0",
+        "status": "NOT_SELECTED_COMPANY_NODE_UNKNOWN"
+      },
+      "hosted_windows_linux_matrix": "CONFIGURED_RESULTS_PENDING_PUSH",
+      "company_oss_clearance": "NOT_OBTAINED"
+    }
   },
   "runtime_probe": {
     "host_scope": "Local macOS test host only; not company runtime.",

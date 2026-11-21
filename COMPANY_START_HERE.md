@@ -111,7 +111,7 @@ python3 scripts/company_bootstrap.py rollback --transaction /tmp/golden-transact
 ## What is still needed
 
 - Approved Windows and Linux dependency/browser bundles with hashes, license/NOTICE, and SBOM.
-- The React fixture has a transitive lock and a tested macOS arm64 setup. It does not include an offline npm cache in the transfer bundle. All four npm tarballs lack bundled license files; three pinned upstream notices are included as supplemental evidence, while `stackback@0.0.2` remains unresolved. Windows/Linux variants, company license clearance, and Playwright browsers still need review/staging.
+- The active React fixture now pins Vitest 4.1.12 and Vite 7.3.8; its local offline install, typecheck, tests, build and public npm audit pass. It still contains `stackback@0.0.2` with a missing bundled MIT text. A separate Vitest 5.1.1/Vite 7.3.8 candidate removes `stackback`, passes its local offline-cache test and has a clean public npm audit, but requires Node `^22.12.0 || ^24.0.0 || >=26.0.0`; the company Node target is unknown, so the candidate remains unselected. Neither lock includes a transferable npm cache. Company license clearance, target-specific Windows/Linux package stores and Playwright browsers still need review/staging. See [`DEPENDENCY_LICENSE_REPORT.md`](DEPENDENCY_LICENSE_REPORT.md).
 - A pinned, reviewed MCP Python SDK wheelhouse. The local MCP fixture is disabled and is not the SDK.
 - Company default-deny egress policy and endpoint attempt-monitoring evidence.
 - Internal OpenCode version/config compatibility test and authentic agent/skill/MCP call evidence after the egress gate is proven.

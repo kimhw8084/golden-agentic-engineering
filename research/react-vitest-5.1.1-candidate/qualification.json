@@ -1,0 +1,63 @@
+{
+  "schema": "golden-react-test-runner-candidate/v1",
+  "evidence_date": "2026-11-21",
+  "status": "LOCAL_MACOS_PASS; COMPANY_NODE_TARGET_UNKNOWN; NOT_SELECTED",
+  "active_fixture": {
+    "package_lock": "examples/react-app/package-lock.json",
+    "package_lock_sha256": "cee6aec396c6eb2a5fe41343b5fd0114f69ae442d3607f1be461201f652718e1",
+    "vite_version": "7.3.8",
+    "vitest_version": "4.1.12",
+    "npm_audit_report": "research/react-macos-arm64-npm-audit-2026-11-21.json",
+    "npm_audit_report_sha256": "ba89d4335934251ea541770231724d6422098d55d54dacb072cf5f3d910fdcdc",
+    "stackback_present": true
+  },
+  "candidate": {
+    "package_json": "research/react-vitest-5.1.1-candidate/package.json",
+    "package_json_sha256": "7ea89606fd6f3404cdc4a7bfbc989800d2b7169ef5642e1b8144cd8f37977a07",
+    "package_lock": "research/react-vitest-5.1.1-candidate/package-lock.json",
+    "package_lock_sha256": "c14223e751f5b533448bc13ec42d7efd6a33dc804a479f1cefc846cfe0cad01e",
+    "vite_version": "7.3.8",
+    "vitest_version": "5.1.1",
+    "node_engine": "^22.12.0 || ^24.0.0 || >=26.0.0",
+    "why_is_node_running_version": "3.2.1",
+    "why_is_node_running_license_declaration": "MIT",
+    "stackback_present": false,
+    "lock_entries": 123,
+    "registry_entries_missing_integrity": 0,
+    "npm_audit_report": "research/react-vitest-5.1.1-candidate/npm-audit-2026-11-21.json",
+    "npm_audit_report_sha256": "d49b490797280c4ce097d7fa313ad06c74879cc58f91a9f8ccd3a2e95a4f979e",
+    "dependency_audit": "research/react-vitest-5.1.1-candidate/dependency-audit-macos-arm64.json",
+    "dependency_audit_sha256": "868bf04a2a4a2514300ee6663ec4914de5eaa1268dc46aba236b886469588309",
+    "sbom": "research/react-vitest-5.1.1-candidate/sbom-macos-arm64.cdx.json",
+    "sbom_sha256": "0f3dc92738bf8f48dc212b1fd64fb675e564b0b6b2eb2bb471682543949eb2ee"
+  },
+  "local_test_environment": {
+    "os": "macOS 26.6.2",
+    "architecture": "arm64",
+    "node": "v26.13.0",
+    "npm": "11.20.0"
+  },
+  "local_results": {
+    "staging": "PASS: package and lock staged from registry.npmjs.org on the internet-enabled side; no lifecycle scripts ran.",
+    "offline_install": "PASS: clean npm ci --offline --ignore-scripts --no-audit --no-fund; 73 packages installed from the local npm cache.",
+    "typecheck": "PASS: npm run typecheck.",
+    "tests": "PASS: npm test; 2 files and 6 tests passed.",
+    "build": "PASS: npm run build; Vite 7.3.8 transformed 30 modules.",
+    "npm_audit": "PASS: 0 vulnerabilities reported for the exact candidate lock by the public npm registry on 2026-11-21."
+  },
+  "audit_counts": {
+    "locked_entries": 123,
+    "installed_macos_arm64_entries": 73,
+    "other_platform_or_optional_entries_not_staged": 50,
+    "license_metadata_missing": 0,
+    "non_osi_or_unknown_license_ids": 0,
+    "installed_packages_missing_tarball_license_text": 3
+  },
+  "remaining_limits": [
+    "The company's Node version is unknown; do not select this candidate until it satisfies the declared engine range.",
+    "The local npm cache is not packaged or transferable; Windows/Linux npm artifacts remain unstaged until hosted and company-side per-target staging.",
+    "Public CI runner results do not establish company OS, company network isolation, OSS clearance, or production qualification.",
+    "The SBOM and license inventory cover the installed macOS arm64 subset; 50 optional/platform entries were not staged in this local audit."
+  ],
+  "disclaimer": "Integrity-linked local test evidence only. No company approval, company runtime compatibility, or security approval is implied."
+}

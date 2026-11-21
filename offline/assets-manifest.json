@@ -2,11 +2,146 @@
   "schema": "golden-offline-assets/v2",
   "qualification": "SOURCE_ONLY_NOT_OFFLINE_EXECUTABLE",
   "assets": [
-    {"name":"Python wheelhouse and dependency locks","status":"NOT_STAGED","platforms":["Windows","Linux"],"owner":"Company OSS/package owner","required_action":"Stage approved wheels for each target Python ABI/OS/architecture with hashes, SBOM, and complete licenses/NOTICE."},
-    {"name":"React npm lock and offline store","status":"NOT_STAGED","platforms":["Windows","Linux"],"owner":"Company OSS/package owner","partial_progress":"LOCKED_MACOS_ARM64_TESTED_THREE_UPSTREAM_NOTICES_PINNED_ONE_LICENSE_NOTICE_GAP_NOT_CROSS_PLATFORM_OFFLINE_READY","partial_evidence":[{"path":"examples/react-app/package-lock.json","sha256":"baa28d9db7b649e09387751cb3e6a70c756bd708b67bf5eaa233e4b4105607e2"},{"path":"research/react-macos-arm64-dependency-audit.json","sha256":"841583ec067c682fa9161b7a36410cba0e048542103a0843cb57df233c4bbdc4"},{"path":"research/react-macos-arm64.cdx.json","sha256":"47bc5f9dbbfffc014378bd6cde25f6b9dd0fb634d03bc338e9a75a9781b517ee"},{"path":"research/react-license-supplements.json","sha256":"b7a05690b51db0d4deb28e11c3f0b0b592234a11eb14ae07fa54514541dbe4e8"}],"required_action":"Stage and verify the npm cache for each target Windows/Linux OS/architecture, review the three pinned upstream notice supplements, have the company OSS reviewer decide whether stackback@0.0.2's verified MIT declaration is sufficient without a bundled MIT notice while preserving its embedded V8 BSD-3-Clause notice, or require a tested dependency replacement/removal; then complete source/license review and company OSS clearance before fixture tests on each target."},
-    {"name":"Playwright browser binaries","status":"NOT_STAGED","platforms":["Windows","Linux"],"owner":"Company browser/tooling owner","required_action":"Stage matching browser binaries per OS and verify hash, license, and local/intranet-only browser policy."},
-    {"name":"MCP Python SDK and transitive dependencies","status":"NOT_STAGED","platforms":["Windows","Linux"],"owner":"Company OSS/package owner","partial_progress":"OFFICIAL_MCP_SDK_V2_3_0_HASHED_WHEEL_CANDIDATES_FOR_MACOS_WINDOWS_LINUX; MACOS_ARM64_OFFLINE_INSTALL_AND_SDK_STDIO_FIXTURE_PASS; WINDOWS_LINUX_NATIVE_INSTALL_NOT_RUN; OPENCODE_MCP_DISCOVERY_FAILED; COMPANY_CLEARANCE_MISSING","partial_evidence":[{"path":"offline/mcp-sdk-candidate/candidate-manifest.json","sha256":"460c10b1a029d3b0440e8831af9ddb4aeeb827e029f1fe53b22172b23677ec56"},{"path":"scripts/mcp_candidate_bundle.py","sha256":"9019e0fe84182e1dc037d24be01f02da3a8d8b44541078473a6cdfc73c1fe2d4"},{"path":"integrations/mcp/sdk_synthetic_fixture.py","sha256":"9decadac566375214ae9f3054485ff5a54ccc6efa079444e733662658109dee9"}],"required_action":"Confirm the company's exact Windows/Linux OS, architecture, CPython patch/ABI, and glibc; independently review every candidate license and vulnerability; import the matching hash-locked archive through the approved process; run native offline install/pip-check and resolve the OpenCode MCP discovery failure before qualification. Candidate archives and their .sha256 sidecars are outside Git; only their filenames and hashes are recorded in offline/mcp-sdk-candidate/candidate-manifest.json."},
-    {"name":"Company OpenCode and internal model evidence","status":"NOT_STAGED","platforms":["Windows","Linux"],"owner":"Company OpenCode owner","partial_progress":"PUBLIC_OPENCODE_V2_2_7_CANDIDATE_CHECKED; GOLDEN_ROUTING_SKILL_CALL_PASS_WITH_SCRIPTED_MODEL; WEBFETCH_WEBSEARCH_DENIED_BY_PROJECT_CONFIG; MODELS_FETCH_SUPPRESSION_TESTED; UPDATE_DISABLE_ENV_REQUIRED_NOT_INDEPENDENTLY_MONITORED; MCP_HANDSHAKE_FAILED; COMPANY_BUILD_AND_MONITOR_UNKNOWN","partial_evidence":[{"path":"RUNTIME_COMPATIBILITY_MATRIX.md","sha256":"42488452164be14b012777ea6c49bf6656eefb33292a31ee71fda04748d54767"},{"path":"opencode.json","sha256":"8c4884a4b7a51bf1825bb8732fa786ccfbdbabd3ebcce52d841315ca1170d1c2"},{"path":".opencode/opencode.json","sha256":"072b6540b0babd7bbd1ec860b91e19191c07a2d11bf6053c13e3b84acaaa52d6"},{"path":"offline/egress-policy.template.json","sha256":"f8ed2baff589ddf19d3caf80dff39d40c90d1ec9c48345b08ee94e1f407fa8fa"}],"required_action":"Provide the installed internal OpenCode build and sanitized config format; set OPENCODE_DISABLE_AUTOUPDATE=1 and OPENCODE_DISABLE_MODELS_FETCH=1 on the actual OpenCode CLI/server process; confirm webfetch/websearch remain denied; disable or network-block the separate desktop updater if used; resolve MCP protocol compatibility; then run a synthetic skill/MCP trial only after Windows/Linux default-deny public egress and its attempt monitor are active."},
-    {"name":"OS-enforced no-public-egress policy and attempt monitor","status":"NOT_STAGED","platforms":["Windows","Linux"],"owner":"Company security/network owner","required_action":"Apply host/network default-deny egress for OpenCode and child processes, allow only approved intranet/model/package endpoints, and return monitored attempt evidence."}
+    {
+      "name": "Python wheelhouse and dependency locks",
+      "status": "NOT_STAGED",
+      "platforms": [
+        "Windows",
+        "Linux"
+      ],
+      "owner": "Company OSS/package owner",
+      "required_action": "Stage approved wheels for each target Python ABI/OS/architecture with hashes, SBOM, and complete licenses/NOTICE."
+    },
+    {
+      "name": "React npm lock and offline store",
+      "status": "NOT_STAGED",
+      "platforms": [
+        "Windows",
+        "Linux"
+      ],
+      "owner": "Company OSS/package owner",
+      "partial_progress": "ACTIVE_VITEST_4_1_12_VITE_7_3_8_TESTED_MACOS; ACTIVE_AND_CANDIDATE_PUBLIC_NPM_AUDITS_ZERO_FINDINGS_2026_11_21; EXACT_VITEST_5_1_1_CANDIDATE_TESTED; WINDOWS_LINUX_HOSTED_MATRIX_PENDING; NO_TRANSFERABLE_NPM_CACHE",
+      "partial_evidence": [
+        {
+          "path": "examples/react-app/package-lock.json",
+          "sha256": "cee6aec396c6eb2a5fe41343b5fd0114f69ae442d3607f1be461201f652718e1"
+        },
+        {
+          "path": "research/react-macos-arm64-dependency-audit.json",
+          "sha256": "901701ec77bc699d96621cebe1928c3a57479b05e1a280d2231bc29631d0ee68"
+        },
+        {
+          "path": "research/react-macos-arm64.cdx.json",
+          "sha256": "620c45c39937f07f3c0896238f0382aad37d56c5e65711a7a1dd36db6723f068"
+        },
+        {
+          "path": "research/react-macos-arm64-npm-audit-2026-11-21.json",
+          "sha256": "ba89d4335934251ea541770231724d6422098d55d54dacb072cf5f3d910fdcdc"
+        },
+        {
+          "path": "research/react-license-supplements.json",
+          "sha256": "a6e9000157a42adcc391f3d182acb7bc0b6bf96e667dd23ffba8a5d337e07363"
+        },
+        {
+          "path": "research/react-vitest-5.1.1-candidate/qualification.json",
+          "sha256": "c05bcdc717fdbe88742ac4b9737e035a14993304b04819d5a8319a2757818521"
+        },
+        {
+          "path": "research/react-vitest-5.1.1-candidate/package.json",
+          "sha256": "7ea89606fd6f3404cdc4a7bfbc989800d2b7169ef5642e1b8144cd8f37977a07"
+        },
+        {
+          "path": "research/react-vitest-5.1.1-candidate/package-lock.json",
+          "sha256": "c14223e751f5b533448bc13ec42d7efd6a33dc804a479f1cefc846cfe0cad01e"
+        },
+        {
+          "path": "research/react-vitest-5.1.1-candidate/dependency-audit-macos-arm64.json",
+          "sha256": "868bf04a2a4a2514300ee6663ec4914de5eaa1268dc46aba236b886469588309"
+        },
+        {
+          "path": "research/react-vitest-5.1.1-candidate/sbom-macos-arm64.cdx.json",
+          "sha256": "0f3dc92738bf8f48dc212b1fd64fb675e564b0b6b2eb2bb471682543949eb2ee"
+        },
+        {
+          "path": "research/react-vitest-5.1.1-candidate/npm-audit-2026-11-21.json",
+          "sha256": "d49b490797280c4ce097d7fa313ad06c74879cc58f91a9f8ccd3a2e95a4f979e"
+        }
+      ],
+      "required_action": "Confirm the company Node range and target OS/architecture. The active Vitest 4.1.12/Vite 7.3.8 lock and separately tested Vitest 5.1.1/Vite 7.3.8 candidate each returned zero findings in public npm audit snapshots on 2026-11-21; choose only after company runtime compatibility and OSS review. Review the active stackback notice gap or the candidate\u2019s three exact-version notice supplements. The hosted Windows/Linux matrix is configured but pending. Stage per-target npm caches through the approved process, verify hashes, and complete native offline fixture tests plus company OSS clearance. No transferable npm cache is included."
+    },
+    {
+      "name": "Playwright browser binaries",
+      "status": "NOT_STAGED",
+      "platforms": [
+        "Windows",
+        "Linux"
+      ],
+      "owner": "Company browser/tooling owner",
+      "required_action": "Stage matching browser binaries per OS and verify hash, license, and local/intranet-only browser policy."
+    },
+    {
+      "name": "MCP Python SDK and transitive dependencies",
+      "status": "NOT_STAGED",
+      "platforms": [
+        "Windows",
+        "Linux"
+      ],
+      "owner": "Company OSS/package owner",
+      "partial_progress": "OFFICIAL_MCP_SDK_V2_3_0_HASHED_WHEEL_CANDIDATES_FOR_MACOS_WINDOWS_LINUX; MACOS_ARM64_OFFLINE_INSTALL_AND_SDK_STDIO_FIXTURE_PASS; WINDOWS_LINUX_NATIVE_INSTALL_NOT_RUN; OPENCODE_MCP_DISCOVERY_FAILED; COMPANY_CLEARANCE_MISSING",
+      "partial_evidence": [
+        {
+          "path": "offline/mcp-sdk-candidate/candidate-manifest.json",
+          "sha256": "460c10b1a029d3b0440e8831af9ddb4aeeb827e029f1fe53b22172b23677ec56"
+        },
+        {
+          "path": "scripts/mcp_candidate_bundle.py",
+          "sha256": "9019e0fe84182e1dc037d24be01f02da3a8d8b44541078473a6cdfc73c1fe2d4"
+        },
+        {
+          "path": "integrations/mcp/sdk_synthetic_fixture.py",
+          "sha256": "9decadac566375214ae9f3054485ff5a54ccc6efa079444e733662658109dee9"
+        }
+      ],
+      "required_action": "Confirm the company's exact Windows/Linux OS, architecture, CPython patch/ABI, and glibc; independently review every candidate license and vulnerability; import the matching hash-locked archive through the approved process; run native offline install/pip-check and resolve the OpenCode MCP discovery failure before qualification. Candidate archives and their .sha256 sidecars are outside Git; only their filenames and hashes are recorded in offline/mcp-sdk-candidate/candidate-manifest.json."
+    },
+    {
+      "name": "Company OpenCode and internal model evidence",
+      "status": "NOT_STAGED",
+      "platforms": [
+        "Windows",
+        "Linux"
+      ],
+      "owner": "Company OpenCode owner",
+      "partial_progress": "PUBLIC_OPENCODE_V2_2_7_CANDIDATE_CHECKED; GOLDEN_ROUTING_SKILL_CALL_PASS_WITH_SCRIPTED_MODEL; WEBFETCH_WEBSEARCH_DENIED_BY_PROJECT_CONFIG; MODELS_FETCH_SUPPRESSION_TESTED; UPDATE_DISABLE_ENV_REQUIRED_NOT_INDEPENDENTLY_MONITORED; MCP_HANDSHAKE_FAILED; COMPANY_BUILD_AND_MONITOR_UNKNOWN",
+      "partial_evidence": [
+        {
+          "path": "RUNTIME_COMPATIBILITY_MATRIX.md",
+          "sha256": "42488452164be14b012777ea6c49bf6656eefb33292a31ee71fda04748d54767"
+        },
+        {
+          "path": "opencode.json",
+          "sha256": "8c4884a4b7a51bf1825bb8732fa786ccfbdbabd3ebcce52d841315ca1170d1c2"
+        },
+        {
+          "path": ".opencode/opencode.json",
+          "sha256": "072b6540b0babd7bbd1ec860b91e19191c07a2d11bf6053c13e3b84acaaa52d6"
+        },
+        {
+          "path": "offline/egress-policy.template.json",
+          "sha256": "f8ed2baff589ddf19d3caf80dff39d40c90d1ec9c48345b08ee94e1f407fa8fa"
+        }
+      ],
+      "required_action": "Provide the installed internal OpenCode build and sanitized config format; set OPENCODE_DISABLE_AUTOUPDATE=1 and OPENCODE_DISABLE_MODELS_FETCH=1 on the actual OpenCode CLI/server process; confirm webfetch/websearch remain denied; disable or network-block the separate desktop updater if used; resolve MCP protocol compatibility; then run a synthetic skill/MCP trial only after Windows/Linux default-deny public egress and its attempt monitor are active."
+    },
+    {
+      "name": "OS-enforced no-public-egress policy and attempt monitor",
+      "status": "NOT_STAGED",
+      "platforms": [
+        "Windows",
+        "Linux"
+      ],
+      "owner": "Company security/network owner",
+      "required_action": "Apply host/network default-deny egress for OpenCode and child processes, allow only approved intranet/model/package endpoints, and return monitored attempt evidence."
+    }
   ]
 }

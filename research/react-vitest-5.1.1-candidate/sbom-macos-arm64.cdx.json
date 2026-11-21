@@ -1,0 +1,3147 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.6",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2026-11-21T17:23:57Z",
+    "tools": {
+      "components": [
+        {
+          "type": "application",
+          "name": "Golden npm dependency audit",
+          "version": "0.1.0"
+        }
+      ]
+    },
+    "component": {
+      "type": "application",
+      "bom-ref": "pkg:npm/golden-synthetic-react-review@0.1.0",
+      "name": "golden-synthetic-react-review",
+      "version": "0.1.0"
+    },
+    "properties": [
+      {
+        "name": "golden:platform-scope",
+        "value": "Darwin-arm64"
+      },
+      {
+        "name": "golden:license-status",
+        "value": "INVENTORY_ONLY; COMPANY_CLEARANCE_PENDING"
+      }
+    ]
+  },
+  "components": [
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40adobe/css-tools@4.5.0",
+      "name": "@adobe/css-tools",
+      "version": "4.5.0",
+      "purl": "pkg:npm/%40adobe/css-tools@4.5.0",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "e8ecdd7713e2a3d52259309e9a9e0df1c60b57664dd677119d5d5c546b6f7bb7613ceb51925791cb1df61900984b00d881a1d4dd448c9bce2d36cbcacd109ad5"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/@adobe/css-tools/-/css-tools-4.5.0.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/@adobe/css-tools"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40babel/code-frame@7.29.7",
+      "name": "@babel/code-frame",
+      "version": "7.29.7",
+      "purl": "pkg:npm/%40babel/code-frame@7.29.7",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "02ea7b69439fa5b01483644e38937a230e5ff43301973bb4988926fe66a52d014dfd84203b8f300a3d0ac5adec10726f3d5160eec891faa4489f05dddaa8502b"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/@babel/code-frame/-/code-frame-7.29.7.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/@babel/code-frame"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40babel/helper-validator-identifier@7.29.7",
+      "name": "@babel/helper-validator-identifier",
+      "version": "7.29.7",
+      "purl": "pkg:npm/%40babel/helper-validator-identifier@7.29.7",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "a9e8711a4463e7987f7dff0431a27e71887268a947231a980e7ebcdb0403ed1369f54ba3390b07a20dae4b4af6bf3af8a56fac5dff7435e79aca370d697ddf16"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/@babel/helper-validator-identifier/-/helper-validator-identifier-7.29.7.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/@babel/helper-validator-identifier"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40babel/runtime@7.29.15",
+      "name": "@babel/runtime",
+      "version": "7.29.15",
+      "purl": "pkg:npm/%40babel/runtime@7.29.15",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "df4e20b1b6c656641cf9c3461f3c07065a9ea587562ca8f7557090046b7f106715ecf50f7ca23b90050d5b515910e0b095088bbd08e0d4911a025450eb5ea1f9"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/@babel/runtime/-/runtime-7.29.15.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/@babel/runtime"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40esbuild/darwin-arm64@0.28.2",
+      "name": "@esbuild/darwin-arm64",
+      "version": "0.28.2",
+      "purl": "pkg:npm/%40esbuild/darwin-arm64@0.28.2",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "9f82aa90e42badac4725c82333546fc1b8a07d028828956933bc69f8ab318b2512ad17485e7b7bdd586b3c0c747d5e388607e62152a3c4c37d275b798f249593"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/@esbuild/darwin-arm64/-/darwin-arm64-0.28.2.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "LICENSE_FILE_REVIEW_REQUIRED"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/@esbuild/darwin-arm64"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40jridgewell/resolve-uri@3.1.3",
+      "name": "@jridgewell/resolve-uri",
+      "version": "3.1.3",
+      "purl": "pkg:npm/%40jridgewell/resolve-uri@3.1.3",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "9614ed8eda0402b5818e2b26b5f4bbeb54bd1e5ca7fa7219a8e6556286755e7f363cc34c56793e8e3fcd842e1f017193b3bc9d38d709891e6fc90053303bb6ee"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/@jridgewell/resolve-uri/-/resolve-uri-3.1.3.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/@jridgewell/resolve-uri"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40jridgewell/sourcemap-codec@1.6.0",
+      "name": "@jridgewell/sourcemap-codec",
+      "version": "1.6.0",
+      "purl": "pkg:npm/%40jridgewell/sourcemap-codec@1.6.0",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "4fb8dffb9ce0b191f0349e25bd0eff69ecdbca4d27357fb32555a998703b558b04c7b6bbaabe5183921bb4916a920cdee58dacaeeab545463c43cdfb39dee217"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/@jridgewell/sourcemap-codec/-/sourcemap-codec-1.6.0.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/@jridgewell/sourcemap-codec"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40jridgewell/trace-mapping@0.3.31",
+      "name": "@jridgewell/trace-mapping",
+      "version": "0.3.31",
+      "purl": "pkg:npm/%40jridgewell/trace-mapping@0.3.31",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "cf3351f9275048327373c8e869e3fc410a0242bf0db98c76748232b65d507811191c9f6e5ba85e6ecad881bcfc849c1441aa374d608cb667d5f0dbb5b7038b03"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/@jridgewell/trace-mapping/-/trace-mapping-0.3.31.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/@jridgewell/trace-mapping"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40rollup/rollup-darwin-arm64@4.68.7",
+      "name": "@rollup/rollup-darwin-arm64",
+      "version": "4.68.7",
+      "purl": "pkg:npm/%40rollup/rollup-darwin-arm64@4.68.7",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "2e0bb6015ee36ce4cd361910fcebab366ed29eabb5531ff7cbb93cab8edf6e93dadeaeb7688cca2a9d711736b1e4a1f8a5c754cdb9d7feb8ae16cc4a7e5b05fa"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/@rollup/rollup-darwin-arm64/-/rollup-darwin-arm64-4.68.7.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "LICENSE_FILE_REVIEW_REQUIRED"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/@rollup/rollup-darwin-arm64"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40testing-library/dom@10.4.2",
+      "name": "@testing-library/dom",
+      "version": "10.4.2",
+      "purl": "pkg:npm/%40testing-library/dom@10.4.2",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "cb3af64bd1f2008761cf6ffaa8781bb3aeb943b3ca55c0c5d39bec3a51cfc46d66a37ea02957ac75855e0cb9d781f8c9d370ab291934f249dcebe13ff66f2fd9"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/@testing-library/dom/-/dom-10.4.2.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/@testing-library/dom"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40testing-library/jest-dom@6.9.1",
+      "name": "@testing-library/jest-dom",
+      "version": "6.9.1",
+      "purl": "pkg:npm/%40testing-library/jest-dom@6.9.1",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "cc870e35afa156d55249ea7d513de3679ae2ce8d81b318320d853b5850f978808113b9e8dfcf351c679bfd09067ec26ce894e4635690853eeb20f0bb7bed279c"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/@testing-library/jest-dom/-/jest-dom-6.9.1.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/@testing-library/jest-dom"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40testing-library/react@16.3.0",
+      "name": "@testing-library/react",
+      "version": "16.3.0",
+      "purl": "pkg:npm/%40testing-library/react@16.3.0",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "9054b2c62103c2fd562e5d9f82cabaa4f05bc396962abb18dbf9e88b521dd132b450f6ab485eb6a054051875c8c9a1b8a69dad12e6ff6657a5f9f8e36482c3b3"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/@testing-library/react/-/react-16.3.0.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/@testing-library/react"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40testing-library/user-event@14.6.1",
+      "name": "@testing-library/user-event",
+      "version": "14.6.1",
+      "purl": "pkg:npm/%40testing-library/user-event@14.6.1",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "beaedfbf4ae7b7e4135e03f1af91e3736d74a7a60aab692677388b827b191a02c9f5ee95012871d690022ee46377f012fecafba61011e7c3882297f42e599037"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/@testing-library/user-event/-/user-event-14.6.1.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/@testing-library/user-event"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40types/aria-query@5.0.4",
+      "name": "@types/aria-query",
+      "version": "5.0.4",
+      "purl": "pkg:npm/%40types/aria-query@5.0.4",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "adf4fddee8f9b343d12fb13371c18cb376eba6585cae08670e8576e8da8a842012d61568f9674db0fbc4ff26fa8a57ebe618b630493a77911625329dc60f2357"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/@types/aria-query/-/aria-query-5.0.4.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/@types/aria-query"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40types/chai@5.2.3",
+      "name": "@types/chai",
+      "version": "5.2.3",
+      "purl": "pkg:npm/%40types/chai@5.2.3",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "330e79f28780f5f15bbfae7fcb8987b570ecf5b3e714c6402ff8f174f154a4e1c72175fdd667201076d2e4b6a1afea7064547c03b19095e456788e9c1850b650"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/@types/chai/-/chai-5.2.3.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/@types/chai"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40types/deep-eql@4.0.2",
+      "name": "@types/deep-eql",
+      "version": "4.0.2",
+      "purl": "pkg:npm/%40types/deep-eql@4.0.2",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "73d87d75554c8a030f7386f04ef0b9771aada8967040f78fb168cf96948e9e88dba2bea91aa764e78d657c0ec0a8542be6907505176ad23b98f5d6fcd41c3217"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/@types/deep-eql/-/deep-eql-4.0.2.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/@types/deep-eql"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40types/estree@1.0.10",
+      "name": "@types/estree",
+      "version": "1.0.10",
+      "purl": "pkg:npm/%40types/estree@1.0.10",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "953c8e32739c991073742bfaff8cd4642ac4855d31aea422519059b5571b98b1c15ca2e737cabcf6fff029117f4341dbc15b2a6c81b7a391c3a0597db1db8cfa"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/@types/estree/-/estree-1.0.10.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/@types/estree"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40types/node@26.6.6",
+      "name": "@types/node",
+      "version": "26.6.6",
+      "purl": "pkg:npm/%40types/node@26.6.6",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "333423fbc2b1dd7238d0e994004e90a21e7c64c36cb4d34cc27da77dddea5ac7deee70cd4aa24dcdeb389e3873e801f0ad21ce7df48bc1753ac9be3be10e1aa2"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/@types/node/-/node-26.6.6.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/@types/node"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40types/react-dom@19.2.2",
+      "name": "@types/react-dom",
+      "version": "19.2.2",
+      "purl": "pkg:npm/%40types/react-dom@19.2.2",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "f4a40fa0eea66428bb8dc212b529e53969f69c417798d9b2af7ac802c1a701b40a61b44bcaa99e49cdfd11582dc575626be2cc4fc8f792764b019021fb12e6af"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/@types/react-dom/-/react-dom-19.2.2.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/@types/react-dom"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40types/react@19.2.2",
+      "name": "@types/react",
+      "version": "19.2.2",
+      "purl": "pkg:npm/%40types/react@19.2.2",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "ea60ef1d41528f24f6076c9e371da752033187d2ed396be4848537b9e3e7d88da8c8dca65005f5348b1d82f88ce021fe252ae9d83da1b0cbc93a4c58fb4c0d44"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/@types/react/-/react-19.2.2.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/@types/react"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40types/whatwg-mimetype@3.0.2",
+      "name": "@types/whatwg-mimetype",
+      "version": "3.0.2",
+      "purl": "pkg:npm/%40types/whatwg-mimetype@3.0.2",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "73600abc34fc4e8c4b20e525379d604e21d77e5b1f2058ac4b8a4eee90cfa0aa2e242112921667132eb6de0c0ff65682cb99672c3030d6f033bb6bccd982ceac"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/@types/whatwg-mimetype/-/whatwg-mimetype-3.0.2.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/@types/whatwg-mimetype"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40types/ws@8.18.2",
+      "name": "@types/ws",
+      "version": "8.18.2",
+      "purl": "pkg:npm/%40types/ws@8.18.2",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "ebb31097e7e958a5534f53587679a8dd4e2c73fc4fa3fcd00677159c8ef8aa641ad33fdbfb583a898a8d98608f6f13becf3d9a9256f4f1ad281df7a0895774ff"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/@types/ws/-/ws-8.18.2.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/@types/ws"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40vitest/mocker@5.1.1",
+      "name": "@vitest/mocker",
+      "version": "5.1.1",
+      "purl": "pkg:npm/%40vitest/mocker@5.1.1",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "6f63a04c1e3edc899621569f5ca6b3257c0b2b043150d9e2c7a6f7c54bd44cc87b4725e5aedce8c5f66bf1a133f7390738c012e0ae65bb74ef156a2255e55342"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/@vitest/mocker/-/mocker-5.1.1.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/@vitest/mocker"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40vitest/spy@5.1.1",
+      "name": "@vitest/spy",
+      "version": "5.1.1",
+      "purl": "pkg:npm/%40vitest/spy@5.1.1",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "e8af02e9a9501b5fd873cfd9236da2252ec912cc4f755ceab6a0eafbfc4ce19d26195ca47a63158cb86a332feaebf207606de4283f21292c117a7fd977223dbd"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/@vitest/spy/-/spy-5.1.1.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/@vitest/spy"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/ansi-regex@5.0.1",
+      "name": "ansi-regex",
+      "version": "5.0.1",
+      "purl": "pkg:npm/ansi-regex@5.0.1",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "aae2505e54d25062f62c7f52517a3c570b18e2ca1a9e1828e8b3529bce04d4b05c13cb373b4c29762473c91f73fd9649325316bf7eea38e6fda5d26531410a15"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/ansi-regex/-/ansi-regex-5.0.1.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/ansi-regex"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/ansi-styles@5.2.0",
+      "name": "ansi-styles",
+      "version": "5.2.0",
+      "purl": "pkg:npm/ansi-styles@5.2.0",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "0b1c29b7649f4f34ed5dc7ce97318479ef0ef9cf8c994806acd8817179ee5b1b852477ba6b91f3eeac21c1ee4e81a498234209be42ea597d40486f9c24e90488"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/ansi-styles/-/ansi-styles-5.2.0.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/ansi-styles"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/aria-query@5.3.0",
+      "name": "aria-query",
+      "version": "5.3.0",
+      "purl": "pkg:npm/aria-query@5.3.0",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "6f43f4b193cab72bbc1e479101f0aad087d44592be4aec0c8d8d545c6054dbbc290224f0400225ab9e886c83becad93f2634b57cc475e1e7b958105f2a2e49e8"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/aria-query/-/aria-query-5.3.0.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/aria-query"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/assertion-error@2.0.1",
+      "name": "assertion-error",
+      "version": "2.0.1",
+      "purl": "pkg:npm/assertion-error@2.0.1",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "2338bc45071f7ea09e3558058a02a58b5b2c92521ba479c261ce809275c662807a82b26ac9e6f2ee3bf5d895108264c09c80e76dc935bb192c4f87733773d604"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/assertion-error/-/assertion-error-2.0.1.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/assertion-error"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/buffer-image-size@0.6.4",
+      "name": "buffer-image-size",
+      "version": "0.6.4",
+      "purl": "pkg:npm/buffer-image-size@0.6.4",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "9c487e91938f635c3e81c08ca1b67a113529f567e26e7767a2c6e9c01d62264ffc1ade591766e14baf81e9b3d8cf8db82adc2c47a45f95cded0b3d7f8215f675"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/buffer-image-size/-/buffer-image-size-0.6.4.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/buffer-image-size"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/chai@6.3.0",
+      "name": "chai",
+      "version": "6.3.0",
+      "purl": "pkg:npm/chai@6.3.0",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "5d602dc09e8e1cefad8f410a0acd18d946a69f23b1b1e65696d538c76536c21f20e008a0763c2fb548ef2cfdadaa403f6afc4712dcf135aa86abf6063707242a"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/chai/-/chai-6.3.0.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/chai"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/css.escape@1.5.1",
+      "name": "css.escape",
+      "version": "1.5.1",
+      "purl": "pkg:npm/css.escape@1.5.1",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "61489fb175ee9271e552c9a58326343cace03ceafbfc58c278f7c736dd23c66f37c07662e38543310eff7c63648d8dff8d5d4c0bed429996da1f3ba0c9e46da6"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/css.escape/-/css.escape-1.5.1.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "LICENSE_FILE_REVIEW_REQUIRED"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/css.escape"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/csstype@3.2.4",
+      "name": "csstype",
+      "version": "3.2.4",
+      "purl": "pkg:npm/csstype@3.2.4",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "3e829aa0fcd06a99c4a2a5129c7c75bba5ba92ef0254480ab27a669b35379b59f09227693c143c57f66adbe6d636bb0e2a828bc1319d6f1eb117b0573f5ccb55"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/csstype/-/csstype-3.2.4.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/csstype"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/dequal@2.0.3",
+      "name": "dequal",
+      "version": "2.0.3",
+      "purl": "pkg:npm/dequal@2.0.3",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "d237bea8f28710ca21bdf453084a370ab3c6e9c033018826ccacb1462612483912e9e1897725499bb59a600e4409a003f702c1d93e0411eca603968555c61708"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/dequal/-/dequal-2.0.3.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/dequal"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/dom-accessibility-api@0.5.16",
+      "name": "dom-accessibility-api",
+      "version": "0.5.16",
+      "purl": "pkg:npm/dom-accessibility-api@0.5.16",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "5fb049db2125b27389df4a59178b882037c1115805e17101c4bf41c61cba767ae6e61933aa6b161c64e21ea46221336133214bc808969dd2093fb675353b5e0e"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/dom-accessibility-api/-/dom-accessibility-api-0.5.16.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/dom-accessibility-api"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/dom-accessibility-api@0.6.3",
+      "name": "dom-accessibility-api",
+      "version": "0.6.3",
+      "purl": "pkg:npm/dom-accessibility-api@0.6.3",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "ed982881e4e78ee1dba3e72dd741bd15fa749a27f5ee2762d08c9635503fc1cc1c9bb34f383fd610754fde7ee7dcc857ab1a08626f1de8cb99a21616219e13df"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/dom-accessibility-api/-/dom-accessibility-api-0.6.3.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/@testing-library/jest-dom/node_modules/dom-accessibility-api"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/entities@7.0.1",
+      "name": "entities",
+      "version": "7.0.1",
+      "purl": "pkg:npm/entities@7.0.1",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "4d6ae02ce1544131fdf78614ca5d724f8bb26af6399cd0799ae7dff91b566aa3550802b8d3c6f96679db34050458b4c2a6e9bdc3a6ab4fbd22d57750e1478e3c"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "BSD-2-Clause"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/entities/-/entities-7.0.1.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/happy-dom/node_modules/entities"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/es-module-lexer@2.3.2",
+      "name": "es-module-lexer",
+      "version": "2.3.2",
+      "purl": "pkg:npm/es-module-lexer@2.3.2",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "a681c6a4e4400688c926e72757d29b39abc44d6f250559e98645bbec4479fc1439173ee85d2a0235e93b207def4799d18ddb04cfddba89b1585fc2ad2d099dcb"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/es-module-lexer/-/es-module-lexer-2.3.2.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/es-module-lexer"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/esbuild@0.28.2",
+      "name": "esbuild",
+      "version": "0.28.2",
+      "purl": "pkg:npm/esbuild@0.28.2",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "1ca54b4bc76f208fb1a0a5bd926ab16d12ab9d61177c926bfc56618499a2a880747b4e7740d605a8e068b9330efe4e6c203e0cbc28940afbfc6fd338877db020"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/esbuild/-/esbuild-0.28.2.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/esbuild"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/estree-walker@3.0.3",
+      "name": "estree-walker",
+      "version": "3.0.3",
+      "purl": "pkg:npm/estree-walker@3.0.3",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "ed150a7d781230c933b7a66e5e6a9aa4ebab2c63cf7e08fa97db9167b9511a896f934cb6ca871cdf92dd731282e4f419767d8332a8a8010d8da1672b4ca9a6ea"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/estree-walker/-/estree-walker-3.0.3.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/estree-walker"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/expect-type@1.4.0",
+      "name": "expect-type",
+      "version": "1.4.0",
+      "purl": "pkg:npm/expect-type@1.4.0",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "29f61b9a9466d156cb8c4bd56bdc86c028bd188df8c6f8bb03f1d761640eeb90920f6bb731ccd4252bb05ca148c651ac801422cd5f6ae49f4d1e3e151b49fea4"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/expect-type/-/expect-type-1.4.0.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/expect-type"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/fdir@6.5.0",
+      "name": "fdir",
+      "version": "6.5.0",
+      "purl": "pkg:npm/fdir@6.5.0",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "b486d8b596ee70eb340511aa3c992c84951874bf920c7edd54cf208f2f84469dd60148cb105244fb4da46a7c87b708d63a7c2b298062c0098cd29e242c90275e"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/fdir/-/fdir-6.5.0.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/fdir"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/fsevents@2.3.3",
+      "name": "fsevents",
+      "version": "2.3.3",
+      "purl": "pkg:npm/fsevents@2.3.3",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "e71a037d7f9f2fb7da0139da82658fa5b16dc21fd1efb5a630caaa1c64bae42defbc1d181eb805f81d58999df8e35b4c8f99fade4d36d765cda09c339617df43"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/fsevents/-/fsevents-2.3.3.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/fsevents"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/happy-dom@21.0.4",
+      "name": "happy-dom",
+      "version": "21.0.4",
+      "purl": "pkg:npm/happy-dom@21.0.4",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "b459be19a2c1828ea8d1ac079ef1da368ada568dbba89fb6b5912d67e7086b4f215db7a2b6bc4025a8cb234e61b14cbfdbf61329c523418cc77b998272b68b07"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/happy-dom/-/happy-dom-21.0.4.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/happy-dom"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/indent-string@4.0.0",
+      "name": "indent-string",
+      "version": "4.0.0",
+      "purl": "pkg:npm/indent-string@4.0.0",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "11d0c366ee00d8ec882bb2ebff6cc6fb0e6399bba4d435419c4c11110bc1ceca412640846d16bc1b153596085871a1890a745689b8c35e5abbefd5f5ff2e71c2"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/indent-string/-/indent-string-4.0.0.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/indent-string"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/js-tokens@4.0.0",
+      "name": "js-tokens",
+      "version": "4.0.0",
+      "purl": "pkg:npm/js-tokens@4.0.0",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "45d2547e5704ddc5332a232a420b02bb4e853eef5474824ed1b7986cf84737893a6a9809b627dca02b53f5b7313a9601b690f690233a49bce0e026aeb16fcf29"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/js-tokens/-/js-tokens-4.0.0.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/js-tokens"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/lz-string@1.5.0",
+      "name": "lz-string",
+      "version": "1.5.0",
+      "purl": "pkg:npm/lz-string@1.5.0",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "8796e0256a7124db306d4eea0ab574b4829009a4b76e53c3aea296c7e431ceeccbd73194ce28fd5c258bad22ec24fbb9b7e79603fc9c7adcd800ee4838c71601"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/lz-string/-/lz-string-1.5.0.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/lz-string"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/magic-string@1.4.5",
+      "name": "magic-string",
+      "version": "1.4.5",
+      "purl": "pkg:npm/magic-string@1.4.5",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "a0b2c2dbe62f4147c06bebf1a2e7c4ff273589c6fceccf625c846a02847fd84844ffc71bdd217ff868b4736072d41fb9573d9edaf42d52f1e2bb5fbadd99e1fb"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/magic-string/-/magic-string-1.4.5.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/magic-string"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/min-indent@1.0.1",
+      "name": "min-indent",
+      "version": "1.0.1",
+      "purl": "pkg:npm/min-indent@1.0.1",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "23d8f0327d3b4b2fc8c0e8f7cd59158a4d894ef8296b29036448a02fa471e8df4b6cccb0c1448cb71113fbb955a032cb7773b7217c09c2fbae9ecf1407f1de02"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/min-indent/-/min-indent-1.0.1.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/min-indent"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/nanoid@3.3.20",
+      "name": "nanoid",
+      "version": "3.3.20",
+      "purl": "pkg:npm/nanoid@3.3.20",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "b8a760d86dc63422909fd6f260ea716c6aab4f67c63b9291b7927ff1bde9a24f2b4faab119617a871332262118b407fe155c98b83f6145a0ea5f9b8f15827865"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/nanoid/-/nanoid-3.3.20.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/nanoid"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/obug@3.0.0",
+      "name": "obug",
+      "version": "3.0.0",
+      "purl": "pkg:npm/obug@3.0.0",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "e6fbc1e7e5bb78fbfea77baac62f91716d570332d6d3f871b77ff85f82dce2a1ee7733a1981881c0e63a0d1a1be169da9c0106bcd70b8c5f8a34eb9fad4a0443"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/obug/-/obug-3.0.0.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/obug"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/picocolors@1.1.1",
+      "name": "picocolors",
+      "version": "1.1.1",
+      "purl": "pkg:npm/picocolors@1.1.1",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "c5c787dac9e1b5be4cf658aa0ec984c39ea57b7efa993664117fe311bfd1c4d1727a036e97b78db250973fd1438ff2dcbb45fc284c8c71e3f69eda5a1eb0c454"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "ISC"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/picocolors/-/picocolors-1.1.1.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/picocolors"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/picomatch@4.0.7",
+      "name": "picomatch",
+      "version": "4.0.7",
+      "purl": "pkg:npm/picomatch@4.0.7",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "a9c26ef3c436216a89b030f9dbd24a31dc069bf76f2275b81ef427470887f49b62849bf318eb1c0ed1c4df1d6904a794393cac43c91598b9c9da426eef285c18"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/picomatch/-/picomatch-4.0.7.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/picomatch"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/postcss@8.5.33",
+      "name": "postcss",
+      "version": "8.5.33",
+      "purl": "pkg:npm/postcss@8.5.33",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "4551c453dfcfa751678ebfcca4026c668003ba408a85f222d793ae9c46221a4b489182e43d5bc2d6c8a85a89460d2ed7072313c7d9bf2066eba3426cd77ce19d"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/postcss/-/postcss-8.5.33.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/postcss"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/pretty-format@27.5.1",
+      "name": "pretty-format",
+      "version": "27.5.1",
+      "purl": "pkg:npm/pretty-format@27.5.1",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "41bd60cb93ab3f9fb30dfd81be7cdd9778ec4dfd6a5d531acdbbc2a0a86d2aa56ce3f60ae28cd7e2029024957235ef9c6a334f9f42a80b4302dc552668758499"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/pretty-format/-/pretty-format-27.5.1.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/pretty-format"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/react-dom@19.2.0",
+      "name": "react-dom",
+      "version": "19.2.0",
+      "purl": "pkg:npm/react-dom@19.2.0",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "5256d1bb87008866887b090fca2446264d229833764f726389e4fab29a0bd947927f9a1de27e4b07f990e1e8e6c610854f5b587bc22f685ba5cf29d6a2fb0415"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/react-dom/-/react-dom-19.2.0.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/react-dom"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/react-is@17.0.2",
+      "name": "react-is",
+      "version": "17.0.2",
+      "purl": "pkg:npm/react-is@17.0.2",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "c361accae90beb62099e569f7ff9d17a03d047de02fd75da9af3169921d1278cbb4ecff8a1c1919931ef3acf0f484ea90777563ab0ff9ee7ae539b1db81b10e3"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/react-is/-/react-is-17.0.2.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/react-is"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/react@19.2.0",
+      "name": "react",
+      "version": "19.2.0",
+      "purl": "pkg:npm/react@19.2.0",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "b666d683a5b7d6d40b781e5c74804e89c2432514762b35ec57bb922bd88d7cb590e5b2197f1b8f107a7b33cc221f21e79f40c3d62ef0dd99a29f416d92bc2809"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/react/-/react-19.2.0.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/react"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/redent@3.0.0",
+      "name": "redent",
+      "version": "3.0.0",
+      "purl": "pkg:npm/redent@3.0.0",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "ead0c0f20f7c59ed337741af55e313f5aac43a74f0f6a334dcbf5c2576828eb8a9d4e3bbeb844304b05fac1e1cc333460e3e4e0398a8ca60bd1a48b381624352"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/redent/-/redent-3.0.0.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/redent"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/rollup@4.68.7",
+      "name": "rollup",
+      "version": "4.68.7",
+      "purl": "pkg:npm/rollup@4.68.7",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "0b187350873ea1cc4f016c47b9f7fe3c096ea16d68b43e9d1eaa8f2b6876437f1603555893ede08b35fa344839b766bcc8d1906a21ccd51ed5faa7705aebe9e5"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/rollup/-/rollup-4.68.7.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/rollup"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/scheduler@0.27.0",
+      "name": "scheduler",
+      "version": "0.27.0",
+      "purl": "pkg:npm/scheduler@0.27.0",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "78dbfe5ab55b2aed5fdef6d8253ff1b62179b320391cf20cb5ff48818fe72a0d2c5aacc0504bea63fc66ece71973fa9a7cbc7f88ef4580e99e480a78bf9b62fd"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/scheduler/-/scheduler-0.27.0.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/scheduler"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/source-map-js@1.2.4",
+      "name": "source-map-js",
+      "version": "1.2.4",
+      "purl": "pkg:npm/source-map-js@1.2.4",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "27b66332f1ddf4ed5f713ff9574f5059a69297605b5b1dc5e8ed3cb2975ef3635a99ff540741b145520f88d6d5b1d2a4a22cc7892a53a1da37be9d9b032f7530"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "BSD-3-Clause"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/source-map-js/-/source-map-js-1.2.4.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/source-map-js"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/std-env@4.3.0",
+      "name": "std-env",
+      "version": "4.3.0",
+      "purl": "pkg:npm/std-env@4.3.0",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "3ad53f1204359089b92b0a90a410ba644317ad946e8b5d70f3381f4d6a7c71d3bd07c39a3ec6c0f1b4c73b63fe1cda3556551318c541c0f87276eea9a1e5e26a"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/std-env/-/std-env-4.3.0.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/std-env"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/strip-indent@3.0.0",
+      "name": "strip-indent",
+      "version": "3.0.0",
+      "purl": "pkg:npm/strip-indent@3.0.0",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "95a2536b725bf95429682e83b1e1e117b75756a1d37c93c24436846e277f76b3a1822b60624bbf95eb4c52a397168595d3320851b8e9747dadfad623e1b40c45"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/strip-indent/-/strip-indent-3.0.0.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/strip-indent"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/tinybench@6.2.4",
+      "name": "tinybench",
+      "version": "6.2.4",
+      "purl": "pkg:npm/tinybench@6.2.4",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "490e768c49dc5f16cc0b326e63603f8c621b6c0bba358b01596ee0af3da9344f849f341da066a805fa64e2a0bfa2913baa251c1a61a0686233e44a07752d4ef7"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/tinybench/-/tinybench-6.2.4.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/tinybench"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/tinyexec@1.3.1",
+      "name": "tinyexec",
+      "version": "1.3.1",
+      "purl": "pkg:npm/tinyexec@1.3.1",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "182bc1ddaa32b3de88b8314131c4c1e3a24e47a99d32d013a2ac225bc2655a1b288759a11e2ff19fdb2cfc383b379e791a227212ddaace81bf3470b033a87510"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/tinyexec/-/tinyexec-1.3.1.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/tinyexec"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/tinyglobby@0.2.17",
+      "name": "tinyglobby",
+      "version": "0.2.17",
+      "purl": "pkg:npm/tinyglobby@0.2.17",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "c1747f758a5ca8a99f5a911d66388a24ec023459dd0f40cc9eb5bf7188d51adb449017d581c2c51e836b963e3b9a339589cf72c8dbbae5a96c805e0d4324dada"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/tinyglobby/-/tinyglobby-0.2.17.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/tinyglobby"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/typescript@5.9.3",
+      "name": "typescript",
+      "version": "5.9.3",
+      "purl": "pkg:npm/typescript@5.9.3",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "8e5d6f6733c38a72ebf5e52ddc9feded5e8580d130f508ef04f772b33f4a7d00c3e357d0ac2d98e2f290762694a454f86d795bd511e12e9a7cc2d9ba3394e04b"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/typescript/-/typescript-5.9.3.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/typescript"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/undici-types@8.9.0",
+      "name": "undici-types",
+      "version": "8.9.0",
+      "purl": "pkg:npm/undici-types@8.9.0",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "2930f2453617f2c5a629702290f1c74b273adc244f11331cb728ca16ea5c0ba3812d74f7c6c3747bd685ee6fa6217bad156a545ee79db68c06ee22cece9d2442"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/undici-types/-/undici-types-8.9.0.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/undici-types"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/vite@7.3.8",
+      "name": "vite",
+      "version": "7.3.8",
+      "purl": "pkg:npm/vite@7.3.8",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "ded4e2efc3002a1564f61f986555cc43c3ce9a7789b84f7b4143c05ad260847ce11fb040ca2a90382d8a661d4358eb2efd4481d9c4578739cf07269a6ef6177f"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/vite/-/vite-7.3.8.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/vite"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/vitest@5.1.1",
+      "name": "vitest",
+      "version": "5.1.1",
+      "purl": "pkg:npm/vitest@5.1.1",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "b6b566cd414e4ab68265c237b9920c0f916a061e1ab45902fd7b893ff214eeab7241acb4142b3721afb4422436249c06c961bfc6b701a0935e976f8eee4119d2"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/vitest/-/vitest-5.1.1.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/vitest"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/whatwg-mimetype@3.0.0",
+      "name": "whatwg-mimetype",
+      "version": "3.0.0",
+      "purl": "pkg:npm/whatwg-mimetype@3.0.0",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "9edf8dd9dcc8bad551c40471d678213ca1afd711e2914ec729d7da7ca90b34b8a77663d4fdc877537d4d38218603f7663dc99bd559687ced2f9ca01cb26d28fd"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/whatwg-mimetype/-/whatwg-mimetype-3.0.0.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/happy-dom/node_modules/whatwg-mimetype"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/why-is-node-running@3.2.1",
+      "name": "why-is-node-running",
+      "version": "3.2.1",
+      "purl": "pkg:npm/why-is-node-running@3.2.1",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "4dbd85521078bd4b064257d2aae40b62402992e3c01505c6173c562871ee995cf674af97d51526fc79c80f8f937c819827591373039a0a4fdbb9808426be988d"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/why-is-node-running/-/why-is-node-running-3.2.1.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/why-is-node-running"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/ws@8.23.0",
+      "name": "ws",
+      "version": "8.23.0",
+      "purl": "pkg:npm/ws@8.23.0",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "c029265fc40c3ab2a380ef075b65b20db4d219eaa4a1cc600f34bd891efdac401ec6dcbaff6ab38a5c77020f13a9ff72928a778ab2ca95ed0cb559f9aa3567a1"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/ws/-/ws-8.23.0.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/ws"
+        }
+      ]
+    }
+  ],
+  "dependencies": [
+    {
+      "ref": "pkg:npm/%40adobe/css-tools@4.5.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/%40babel/code-frame@7.29.7",
+      "dependsOn": [
+        "pkg:npm/%40babel/helper-validator-identifier@7.29.7",
+        "pkg:npm/js-tokens@4.0.0",
+        "pkg:npm/picocolors@1.1.1"
+      ]
+    },
+    {
+      "ref": "pkg:npm/%40babel/helper-validator-identifier@7.29.7",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/%40babel/runtime@7.29.15",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/%40esbuild/darwin-arm64@0.28.2",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/%40jridgewell/resolve-uri@3.1.3",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/%40jridgewell/sourcemap-codec@1.6.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/%40jridgewell/trace-mapping@0.3.31",
+      "dependsOn": [
+        "pkg:npm/%40jridgewell/resolve-uri@3.1.3",
+        "pkg:npm/%40jridgewell/sourcemap-codec@1.6.0"
+      ]
+    },
+    {
+      "ref": "pkg:npm/%40rollup/rollup-darwin-arm64@4.68.7",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/%40testing-library/dom@10.4.2",
+      "dependsOn": [
+        "pkg:npm/%40babel/code-frame@7.29.7",
+        "pkg:npm/%40babel/runtime@7.29.15",
+        "pkg:npm/%40types/aria-query@5.0.4",
+        "pkg:npm/aria-query@5.3.0",
+        "pkg:npm/dom-accessibility-api@0.5.16",
+        "pkg:npm/lz-string@1.5.0",
+        "pkg:npm/picocolors@1.1.1",
+        "pkg:npm/pretty-format@27.5.1"
+      ]
+    },
+    {
+      "ref": "pkg:npm/%40testing-library/jest-dom@6.9.1",
+      "dependsOn": [
+        "pkg:npm/%40adobe/css-tools@4.5.0",
+        "pkg:npm/aria-query@5.3.0",
+        "pkg:npm/css.escape@1.5.1",
+        "pkg:npm/dom-accessibility-api@0.6.3",
+        "pkg:npm/picocolors@1.1.1",
+        "pkg:npm/redent@3.0.0"
+      ]
+    },
+    {
+      "ref": "pkg:npm/%40testing-library/react@16.3.0",
+      "dependsOn": [
+        "pkg:npm/%40babel/runtime@7.29.15"
+      ]
+    },
+    {
+      "ref": "pkg:npm/%40testing-library/user-event@14.6.1",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/%40types/aria-query@5.0.4",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/%40types/chai@5.2.3",
+      "dependsOn": [
+        "pkg:npm/%40types/deep-eql@4.0.2",
+        "pkg:npm/assertion-error@2.0.1"
+      ]
+    },
+    {
+      "ref": "pkg:npm/%40types/deep-eql@4.0.2",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/%40types/estree@1.0.10",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/%40types/node@26.6.6",
+      "dependsOn": [
+        "pkg:npm/undici-types@8.9.0"
+      ]
+    },
+    {
+      "ref": "pkg:npm/%40types/react-dom@19.2.2",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/%40types/react@19.2.2",
+      "dependsOn": [
+        "pkg:npm/csstype@3.2.4"
+      ]
+    },
+    {
+      "ref": "pkg:npm/%40types/whatwg-mimetype@3.0.2",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/%40types/ws@8.18.2",
+      "dependsOn": [
+        "pkg:npm/%40types/node@26.6.6"
+      ]
+    },
+    {
+      "ref": "pkg:npm/%40vitest/mocker@5.1.1",
+      "dependsOn": [
+        "pkg:npm/%40jridgewell/trace-mapping@0.3.31",
+        "pkg:npm/%40vitest/spy@5.1.1",
+        "pkg:npm/estree-walker@3.0.3",
+        "pkg:npm/magic-string@1.4.5"
+      ]
+    },
+    {
+      "ref": "pkg:npm/%40vitest/spy@5.1.1",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/ansi-regex@5.0.1",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/ansi-styles@5.2.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/aria-query@5.3.0",
+      "dependsOn": [
+        "pkg:npm/dequal@2.0.3"
+      ]
+    },
+    {
+      "ref": "pkg:npm/assertion-error@2.0.1",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/buffer-image-size@0.6.4",
+      "dependsOn": [
+        "pkg:npm/%40types/node@26.6.6"
+      ]
+    },
+    {
+      "ref": "pkg:npm/chai@6.3.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/css.escape@1.5.1",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/csstype@3.2.4",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/dequal@2.0.3",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/dom-accessibility-api@0.5.16",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/dom-accessibility-api@0.6.3",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/entities@7.0.1",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/es-module-lexer@2.3.2",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/esbuild@0.28.2",
+      "dependsOn": [
+        "pkg:npm/%40esbuild/darwin-arm64@0.28.2"
+      ]
+    },
+    {
+      "ref": "pkg:npm/estree-walker@3.0.3",
+      "dependsOn": [
+        "pkg:npm/%40types/estree@1.0.10"
+      ]
+    },
+    {
+      "ref": "pkg:npm/expect-type@1.4.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/fdir@6.5.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/fsevents@2.3.3",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/golden-synthetic-react-review@0.1.0",
+      "dependsOn": [
+        "pkg:npm/%40testing-library/jest-dom@6.9.1",
+        "pkg:npm/%40testing-library/react@16.3.0",
+        "pkg:npm/%40testing-library/user-event@14.6.1",
+        "pkg:npm/%40types/react-dom@19.2.2",
+        "pkg:npm/%40types/react@19.2.2",
+        "pkg:npm/happy-dom@21.0.4",
+        "pkg:npm/react-dom@19.2.0",
+        "pkg:npm/react@19.2.0",
+        "pkg:npm/typescript@5.9.3",
+        "pkg:npm/vite@7.3.8",
+        "pkg:npm/vitest@5.1.1"
+      ]
+    },
+    {
+      "ref": "pkg:npm/happy-dom@21.0.4",
+      "dependsOn": [
+        "pkg:npm/%40types/node@26.6.6",
+        "pkg:npm/%40types/whatwg-mimetype@3.0.2",
+        "pkg:npm/%40types/ws@8.18.2",
+        "pkg:npm/buffer-image-size@0.6.4",
+        "pkg:npm/entities@7.0.1",
+        "pkg:npm/whatwg-mimetype@3.0.0",
+        "pkg:npm/ws@8.23.0"
+      ]
+    },
+    {
+      "ref": "pkg:npm/indent-string@4.0.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/js-tokens@4.0.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/lz-string@1.5.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/magic-string@1.4.5",
+      "dependsOn": [
+        "pkg:npm/%40jridgewell/sourcemap-codec@1.6.0"
+      ]
+    },
+    {
+      "ref": "pkg:npm/min-indent@1.0.1",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/nanoid@3.3.20",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/obug@3.0.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/picocolors@1.1.1",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/picomatch@4.0.7",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/postcss@8.5.33",
+      "dependsOn": [
+        "pkg:npm/nanoid@3.3.20",
+        "pkg:npm/picocolors@1.1.1",
+        "pkg:npm/source-map-js@1.2.4"
+      ]
+    },
+    {
+      "ref": "pkg:npm/pretty-format@27.5.1",
+      "dependsOn": [
+        "pkg:npm/ansi-regex@5.0.1",
+        "pkg:npm/ansi-styles@5.2.0",
+        "pkg:npm/react-is@17.0.2"
+      ]
+    },
+    {
+      "ref": "pkg:npm/react-dom@19.2.0",
+      "dependsOn": [
+        "pkg:npm/scheduler@0.27.0"
+      ]
+    },
+    {
+      "ref": "pkg:npm/react-is@17.0.2",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/react@19.2.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/redent@3.0.0",
+      "dependsOn": [
+        "pkg:npm/indent-string@4.0.0",
+        "pkg:npm/strip-indent@3.0.0"
+      ]
+    },
+    {
+      "ref": "pkg:npm/rollup@4.68.7",
+      "dependsOn": [
+        "pkg:npm/%40rollup/rollup-darwin-arm64@4.68.7",
+        "pkg:npm/%40types/estree@1.0.10",
+        "pkg:npm/fsevents@2.3.3"
+      ]
+    },
+    {
+      "ref": "pkg:npm/scheduler@0.27.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/source-map-js@1.2.4",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/std-env@4.3.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/strip-indent@3.0.0",
+      "dependsOn": [
+        "pkg:npm/min-indent@1.0.1"
+      ]
+    },
+    {
+      "ref": "pkg:npm/tinybench@6.2.4",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/tinyexec@1.3.1",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/tinyglobby@0.2.17",
+      "dependsOn": [
+        "pkg:npm/fdir@6.5.0",
+        "pkg:npm/picomatch@4.0.7"
+      ]
+    },
+    {
+      "ref": "pkg:npm/typescript@5.9.3",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/undici-types@8.9.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/vite@7.3.8",
+      "dependsOn": [
+        "pkg:npm/esbuild@0.28.2",
+        "pkg:npm/fdir@6.5.0",
+        "pkg:npm/fsevents@2.3.3",
+        "pkg:npm/picomatch@4.0.7",
+        "pkg:npm/postcss@8.5.33",
+        "pkg:npm/rollup@4.68.7",
+        "pkg:npm/tinyglobby@0.2.17"
+      ]
+    },
+    {
+      "ref": "pkg:npm/vitest@5.1.1",
+      "dependsOn": [
+        "pkg:npm/%40types/chai@5.2.3",
+        "pkg:npm/%40vitest/mocker@5.1.1",
+        "pkg:npm/chai@6.3.0",
+        "pkg:npm/es-module-lexer@2.3.2",
+        "pkg:npm/expect-type@1.4.0",
+        "pkg:npm/magic-string@1.4.5",
+        "pkg:npm/obug@3.0.0",
+        "pkg:npm/picomatch@4.0.7",
+        "pkg:npm/std-env@4.3.0",
+        "pkg:npm/tinybench@6.2.4",
+        "pkg:npm/tinyexec@1.3.1",
+        "pkg:npm/tinyglobby@0.2.17",
+        "pkg:npm/why-is-node-running@3.2.1"
+      ]
+    },
+    {
+      "ref": "pkg:npm/whatwg-mimetype@3.0.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/why-is-node-running@3.2.1",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/ws@8.23.0",
+      "dependsOn": []
+    }
+  ]
+}

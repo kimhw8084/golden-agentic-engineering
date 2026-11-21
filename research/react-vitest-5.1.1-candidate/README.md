@@ -1,0 +1,11 @@
+# Vitest 5.1.1 React replacement candidate
+
+This is a separately pinned and tested replacement candidate for the React fixture's dev-only Vitest chain. It is **not selected** for the active example because the company Node target is unknown. Vitest 5.1.1 requires `^22.12.0 || ^24.0.0 || >=26.0.0`; the active React fixture now uses Vitest 4.1.12 and Vite 7.3.8 while preserving its Node 20-compatible line.
+
+The exact candidate `package.json` and lockfile are stored beside this note. On the internet-enabled staging side, the candidate was installed from the public npm registry with lifecycle scripts disabled. A subsequent clean `npm ci --offline --ignore-scripts --no-audit --no-fund` installed 73 packages from the local npm cache. Typecheck, both test files (six tests), and the production build passed on macOS arm64 with Node 26.13.0/npm 11.20.0. This is a local cache test, not a transferable npm cache or an OS firewall/egress test.
+
+The candidate lock pins Vitest 5.1.1 and `why-is-node-running` 3.2.1, whose dependency path contains no `stackback`. The lock has SHA-512 integrity for each registry package. Its macOS arm64 audit and CycloneDX SBOM are included, along with a clean public npm audit result captured on 2026-11-21. Three installed platform/package tarballs lack bundled license text (`@esbuild/darwin-arm64`, `@rollup/rollup-darwin-arm64`, and `css.escape`); exact upstream notice supplements for those package versions are recorded in `research/react-license-supplements.json`. License and source review plus company clearance remain required. The active Vitest 4.1.12/Vite 7.3.8 lock also has a clean public npm audit; that active graph still contains stackback.
+
+The workflow [`../../.github/workflows/react-vitest-candidate.yml`](../../.github/workflows/react-vitest-candidate.yml) stages this exact lock on disposable Ubuntu and Windows runners using Node 22.12.0, then repeats `npm ci` in offline mode before the checks. Its hosted results qualify only those public CI runner images and the pinned runtime; they do not identify the company OS or approve the dependency.
+
+Official package evidence: [Vitest 5.1.1 package manifest](https://github.com/vitest-dev/vitest/blob/v5.1.1/packages/vitest/package.json) and [`why-is-node-running` 3.2.1 package manifest](https://github.com/mafintosh/why-is-node-running/blob/v3.2.1/package.json).

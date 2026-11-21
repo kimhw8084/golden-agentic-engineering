@@ -4,7 +4,7 @@
 
 ## Locked package
 
-- Dependency path: `vitest@4.0.8` → `why-is-node-running@2.3.0` → `stackback@0.0.2` (dev-only).
+- Current active dependency path: `vitest@4.1.12` → `why-is-node-running@2.3.0` → `stackback@0.0.2` (dev-only). The package chain was first audited while Vitest 4.0.8 was active; the current lock still pins the same `why-is-node-running` and `stackback` versions and integrities.
 - `package-lock.json` integrity: `sha512-1XMJE5fQo1jGH6Y/7ebnwPOBEkIEnT4QF32d5R1+VXdXveM0IBMJt8zfaxX1P3QhVwrYe+576+jkANtSS2mBbw==`.
 - The lock, installed `package.json`, archived upstream `package.json`, and npm's package record declare MIT.
 
@@ -28,7 +28,7 @@ The upstream root has no `LICENSE` file at that revision. No standalone MIT lice
 
 ## Replacement candidate reviewed, not selected
 
-The checked-in fixture uses Vitest 4.0.8, whose lock requests `why-is-node-running@^2.3.0`, leading to stackback. Upstream Vitest 5.1.1 at commit [`8b0ca603a8342aff1851a37ce0c0ae8cf4fa6b56`](https://github.com/vitest-dev/vitest/commit/8b0ca603a8342aff1851a37ce0c0ae8cf4fa6b56) pins `why-is-node-running@3.2.1`; its package manifest declares MIT and has no runtime dependencies. The pinned [`why-is-node-running v3.2.1` manifest](https://github.com/mafintosh/why-is-node-running/blob/v3.2.1/package.json) requires Node `>=20.11`. This dependency path removes stackback. However Vitest 5.1.1 requires Node `^22.12.0 || ^24.0.0 || >=26.0.0`. The company Node target is unknown, and no lockfile update, offline install, or fixture test for this candidate was run. Do not upgrade solely to clear the notice gap.
+The active fixture now uses Vitest 4.1.12, whose lock still requests `why-is-node-running@^2.3.0`, leading to stackback. This Vitest update and Vite 7.3.8 also close the critical/moderate Vitest and high Vite findings reported for the old lock; both the active lock and separate candidate report zero vulnerabilities in public npm audit data as of 2026-11-21. A tested Vitest 5.1.1/Vite 7.3.8 candidate lock is preserved under `research/react-vitest-5.1.1-candidate/`; it pins `why-is-node-running@3.2.1` and removes stackback. The candidate passed offline-cache install, typecheck, six tests, build and npm audit locally. It requires Node `^22.12.0 || ^24.0.0 || >=26.0.0`; the company Node target is unknown, so it is not selected. A hosted Windows/Ubuntu matrix is configured but has not completed.
 
 ## Remaining action
 

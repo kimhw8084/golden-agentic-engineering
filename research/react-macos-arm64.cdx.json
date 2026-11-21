@@ -3,7 +3,7 @@
   "specVersion": "1.6",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-11-20T23:43:03Z",
+    "timestamp": "2026-11-21T17:20:04Z",
     "tools": {
       "components": [
         {
@@ -181,15 +181,15 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40esbuild/darwin-arm64@0.25.12",
+      "bom-ref": "pkg:npm/%40esbuild/darwin-arm64@0.28.2",
       "name": "@esbuild/darwin-arm64",
-      "version": "0.25.12",
-      "purl": "pkg:npm/%40esbuild/darwin-arm64@0.25.12",
+      "version": "0.28.2",
+      "purl": "pkg:npm/%40esbuild/darwin-arm64@0.28.2",
       "scope": "required",
       "hashes": [
         {
           "alg": "SHA-512",
-          "content": "377ce5fa5c470a27e022570c50fe74d7a11291e4232e3ffde7d471c4d608b61220f82407227ba316e5de59b58c8274e8e1ca795d51ea14f9a9caef49eb90b562"
+          "content": "9f82aa90e42badac4725c82333546fc1b8a07d028828956933bc69f8ab318b2512ad17485e7b7bdd586b3c0c747d5e388607e62152a3c4c37d275b798f249593"
         }
       ],
       "licenses": [
@@ -202,7 +202,7 @@
       "externalReferences": [
         {
           "type": "distribution",
-          "url": "https://registry.npmjs.org/@esbuild/darwin-arm64/-/darwin-arm64-0.25.12.tgz"
+          "url": "https://registry.npmjs.org/@esbuild/darwin-arm64/-/darwin-arm64-0.28.2.tgz"
         }
       ],
       "properties": [
@@ -810,15 +810,15 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40vitest/expect@4.0.8",
+      "bom-ref": "pkg:npm/%40vitest/expect@4.1.12",
       "name": "@vitest/expect",
-      "version": "4.0.8",
-      "purl": "pkg:npm/%40vitest/expect@4.0.8",
+      "version": "4.1.12",
+      "purl": "pkg:npm/%40vitest/expect@4.1.12",
       "scope": "required",
       "hashes": [
         {
           "alg": "SHA-512",
-          "content": "46fd1e69b74fff18c01d01abf1c8c19be3672c73682f6ebc94c0caf39c3668018b16854a2ddf101a75689f994bb645d00a861a34bd30834e041a7c8a9242a13c"
+          "content": "bc5953b7e604bbd581a4d8dd19ac8d9a5315ceb58f8b5facbfce77ffbb76154ee1a4ee6000504a1f3426902ab95e3a6bf9ebde805dbdf782d04f7845de6465a9"
         }
       ],
       "licenses": [
@@ -831,7 +831,7 @@
       "externalReferences": [
         {
           "type": "distribution",
-          "url": "https://registry.npmjs.org/@vitest/expect/-/expect-4.0.8.tgz"
+          "url": "https://registry.npmjs.org/@vitest/expect/-/expect-4.1.12.tgz"
         }
       ],
       "properties": [
@@ -847,15 +847,15 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40vitest/mocker@4.0.8",
+      "bom-ref": "pkg:npm/%40vitest/mocker@4.1.12",
       "name": "@vitest/mocker",
-      "version": "4.0.8",
-      "purl": "pkg:npm/%40vitest/mocker@4.0.8",
+      "version": "4.1.12",
+      "purl": "pkg:npm/%40vitest/mocker@4.1.12",
       "scope": "required",
       "hashes": [
         {
           "alg": "SHA-512",
-          "content": "f4544cdcc64279d5c7dfea4887e304e54a763410470ead30ab084e2a4378567bc288a6d5c5d76a1fd99218f65e6b08ddd76a423869e5fa5a3f6461edd3f7504a"
+          "content": "7ca4a1369299ceea5666e634cfb7a0c9dbcbd2ca96e08344641104c4c04c01aea2ce510d1151f0a1781d69309a059e5fc25af8c5fda8d705c2f379fd4693be34"
         }
       ],
       "licenses": [
@@ -868,7 +868,7 @@
       "externalReferences": [
         {
           "type": "distribution",
-          "url": "https://registry.npmjs.org/@vitest/mocker/-/mocker-4.0.8.tgz"
+          "url": "https://registry.npmjs.org/@vitest/mocker/-/mocker-4.1.12.tgz"
         }
       ],
       "properties": [
@@ -884,15 +884,15 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40vitest/pretty-format@4.0.8",
+      "bom-ref": "pkg:npm/%40vitest/pretty-format@4.1.12",
       "name": "@vitest/pretty-format",
-      "version": "4.0.8",
-      "purl": "pkg:npm/%40vitest/pretty-format@4.0.8",
+      "version": "4.1.12",
+      "purl": "pkg:npm/%40vitest/pretty-format@4.1.12",
       "scope": "required",
       "hashes": [
         {
           "alg": "SHA-512",
-          "content": "a91ae3751908362f436991c08a657ef226bd1aae8b786cf60a020498c2f3dec043615e7712c9cb65b24c475abce33d4764232c7fbb34a2b0e0667ed2717b192a"
+          "content": "5d6f4ef3e331c785690ad91874c24b650430b15af23fdc24edc3ca0f1b5715fc126a4eb2461e7ed9f7a9fd8d1717f12506f247abc6dc61d8ba69eb9a8b4a2964"
         }
       ],
       "licenses": [
@@ -905,7 +905,7 @@
       "externalReferences": [
         {
           "type": "distribution",
-          "url": "https://registry.npmjs.org/@vitest/pretty-format/-/pretty-format-4.0.8.tgz"
+          "url": "https://registry.npmjs.org/@vitest/pretty-format/-/pretty-format-4.1.12.tgz"
         }
       ],
       "properties": [
@@ -921,15 +921,15 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40vitest/runner@4.0.8",
+      "bom-ref": "pkg:npm/%40vitest/runner@4.1.12",
       "name": "@vitest/runner",
-      "version": "4.0.8",
-      "purl": "pkg:npm/%40vitest/runner@4.0.8",
+      "version": "4.1.12",
+      "purl": "pkg:npm/%40vitest/runner@4.1.12",
       "scope": "required",
       "hashes": [
         {
           "alg": "SHA-512",
-          "content": "99d63c49fd60b0cf212895107e23d3de99f59fc445e1005c25816c9605a1e352537eb2b571ba98f30869182173065e392cdd36f20d278cb0989b477b5f149a41"
+          "content": "34a955282af942709ef238a374c9e69291c753e593aa22c547a1b4a478e2f6e4635caf71265d64d674f0e85de938e8f63c372c0edd86290308ef022c693e3dd7"
         }
       ],
       "licenses": [
@@ -942,7 +942,7 @@
       "externalReferences": [
         {
           "type": "distribution",
-          "url": "https://registry.npmjs.org/@vitest/runner/-/runner-4.0.8.tgz"
+          "url": "https://registry.npmjs.org/@vitest/runner/-/runner-4.1.12.tgz"
         }
       ],
       "properties": [
@@ -958,15 +958,15 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40vitest/snapshot@4.0.8",
+      "bom-ref": "pkg:npm/%40vitest/snapshot@4.1.12",
       "name": "@vitest/snapshot",
-      "version": "4.0.8",
-      "purl": "pkg:npm/%40vitest/snapshot@4.0.8",
+      "version": "4.1.12",
+      "purl": "pkg:npm/%40vitest/snapshot@4.1.12",
       "scope": "required",
       "hashes": [
         {
           "alg": "SHA-512",
-          "content": "35aafd393534dca1a2b9bac838585c7c783c15869168d4fe6e1e55525373f2cb4584264f36b26f999921b2bd63b5a62fb9e7d81702b61f0aead36eaee2e3d60b"
+          "content": "928d72d5081bfec97343d9abf9bf3d0aeaae77c586d532adb0f0fcafb65405dbd5386b7ce407f61f00aa1ee8eb87026af7986cffd44cedf7003e0e7ba35be5cf"
         }
       ],
       "licenses": [
@@ -979,7 +979,7 @@
       "externalReferences": [
         {
           "type": "distribution",
-          "url": "https://registry.npmjs.org/@vitest/snapshot/-/snapshot-4.0.8.tgz"
+          "url": "https://registry.npmjs.org/@vitest/snapshot/-/snapshot-4.1.12.tgz"
         }
       ],
       "properties": [
@@ -995,15 +995,15 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40vitest/spy@4.0.8",
+      "bom-ref": "pkg:npm/%40vitest/spy@4.1.12",
       "name": "@vitest/spy",
-      "version": "4.0.8",
-      "purl": "pkg:npm/%40vitest/spy@4.0.8",
+      "version": "4.1.12",
+      "purl": "pkg:npm/%40vitest/spy@4.1.12",
       "scope": "required",
       "hashes": [
         {
           "alg": "SHA-512",
-          "content": "9ef195a94ba7c828191fb926a3e3ab7785a067b94dd2c3942d85d4398b87af9e5dbe0f58bcccf78b37c1d7cf4f829dbcc34bd615b1047cd73f737553aeaad778"
+          "content": "446abdc7824d18d4d91c4271bcdd284a2263792084c66d27da064a28964763d717e40540e8ced52482c14f7649fed27fd09f6e593edf11357dfdbb688bffef4a"
         }
       ],
       "licenses": [
@@ -1016,7 +1016,7 @@
       "externalReferences": [
         {
           "type": "distribution",
-          "url": "https://registry.npmjs.org/@vitest/spy/-/spy-4.0.8.tgz"
+          "url": "https://registry.npmjs.org/@vitest/spy/-/spy-4.1.12.tgz"
         }
       ],
       "properties": [
@@ -1032,15 +1032,15 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40vitest/utils@4.0.8",
+      "bom-ref": "pkg:npm/%40vitest/utils@4.1.12",
       "name": "@vitest/utils",
-      "version": "4.0.8",
-      "purl": "pkg:npm/%40vitest/utils@4.0.8",
+      "version": "4.1.12",
+      "purl": "pkg:npm/%40vitest/utils@4.1.12",
       "scope": "required",
       "hashes": [
         {
           "alg": "SHA-512",
-          "content": "a5d936a613b9343bc415f513c5c4cff111588d58ff91f2d23c837979b3f632ef6470831e0104db927a9c144c81702e33da9265248f5a4b95108dc61f866280a3"
+          "content": "4376b05ebc0e7c457ea9cdd698ee4e372134c8eed0d6043dfe8c87c462d9fe997b37734efd9ceda90c0a2eec0c915f8203525848878ede09079d10c8a3801568"
         }
       ],
       "licenses": [
@@ -1053,7 +1053,7 @@
       "externalReferences": [
         {
           "type": "distribution",
-          "url": "https://registry.npmjs.org/@vitest/utils/-/utils-4.0.8.tgz"
+          "url": "https://registry.npmjs.org/@vitest/utils/-/utils-4.1.12.tgz"
         }
       ],
       "properties": [
@@ -1291,6 +1291,43 @@
     },
     {
       "type": "library",
+      "bom-ref": "pkg:npm/convert-source-map@2.0.0",
+      "name": "convert-source-map",
+      "version": "2.0.0",
+      "purl": "pkg:npm/convert-source-map@2.0.0",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "2afa78e7d1eb576144275080b22d4abbe318de46ac1f5f53172913cf6c5698c7aae9b936354dd75ef7c9f90eb59b4c64b56c2dfb51d261fdc966c4e6b3769126"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/convert-source-map/-/convert-source-map-2.0.0.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/convert-source-map"
+        }
+      ]
+    },
+    {
+      "type": "library",
       "bom-ref": "pkg:npm/css.escape@1.5.1",
       "name": "css.escape",
       "version": "1.5.1",
@@ -1360,43 +1397,6 @@
         {
           "name": "golden:lock-path",
           "value": "node_modules/csstype"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "bom-ref": "pkg:npm/debug@4.4.3",
-      "name": "debug",
-      "version": "4.4.3",
-      "purl": "pkg:npm/debug@4.4.3",
-      "scope": "required",
-      "hashes": [
-        {
-          "alg": "SHA-512",
-          "content": "446c305a7c10be455f6af295b76d8518bc3ec5849dcc04709b4aeee83853540dee994e6165cdbc57790ee2cb6062bcab4e52e9baf808f468a28e5b408cd6dca8"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
-      "externalReferences": [
-        {
-          "type": "distribution",
-          "url": "https://registry.npmjs.org/debug/-/debug-4.4.3.tgz"
-        }
-      ],
-      "properties": [
-        {
-          "name": "golden:review-status",
-          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
-        },
-        {
-          "name": "golden:lock-path",
-          "value": "node_modules/debug"
         }
       ]
     },
@@ -1550,15 +1550,15 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/es-module-lexer@1.7.0",
+      "bom-ref": "pkg:npm/es-module-lexer@2.3.2",
       "name": "es-module-lexer",
-      "version": "1.7.0",
-      "purl": "pkg:npm/es-module-lexer@1.7.0",
+      "version": "2.3.2",
+      "purl": "pkg:npm/es-module-lexer@2.3.2",
       "scope": "required",
       "hashes": [
         {
           "alg": "SHA-512",
-          "content": "8c44280b093c8726f6019ce220e2e10eaa66e7edb0c39b8813a9643bfea370e0aeb1f93a2e1307a575df04b5d367b61dcadd23e15a1442feae18d61b756fa404"
+          "content": "a681c6a4e4400688c926e72757d29b39abc44d6f250559e98645bbec4479fc1439173ee85d2a0235e93b207def4799d18ddb04cfddba89b1585fc2ad2d099dcb"
         }
       ],
       "licenses": [
@@ -1571,7 +1571,7 @@
       "externalReferences": [
         {
           "type": "distribution",
-          "url": "https://registry.npmjs.org/es-module-lexer/-/es-module-lexer-1.7.0.tgz"
+          "url": "https://registry.npmjs.org/es-module-lexer/-/es-module-lexer-2.3.2.tgz"
         }
       ],
       "properties": [
@@ -1587,15 +1587,15 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/esbuild@0.25.12",
+      "bom-ref": "pkg:npm/esbuild@0.28.2",
       "name": "esbuild",
-      "version": "0.25.12",
-      "purl": "pkg:npm/esbuild@0.25.12",
+      "version": "0.28.2",
+      "purl": "pkg:npm/esbuild@0.28.2",
       "scope": "required",
       "hashes": [
         {
           "alg": "SHA-512",
-          "content": "6db3c1618aed65b92de8eb3a1624cb093171beae2db7724a6a5975bd1c2c840ddf755cedb0b01ab45699a1b864042f3f06b3deb686b4a24b18a0a5e81b8af226"
+          "content": "1ca54b4bc76f208fb1a0a5bd926ab16d12ab9d61177c926bfc56618499a2a880747b4e7740d605a8e068b9330efe4e6c203e0cbc28940afbfc6fd338877db020"
         }
       ],
       "licenses": [
@@ -1608,7 +1608,7 @@
       "externalReferences": [
         {
           "type": "distribution",
-          "url": "https://registry.npmjs.org/esbuild/-/esbuild-0.25.12.tgz"
+          "url": "https://registry.npmjs.org/esbuild/-/esbuild-0.28.2.tgz"
         }
       ],
       "properties": [
@@ -1994,43 +1994,6 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/ms@2.1.3",
-      "name": "ms",
-      "version": "2.1.3",
-      "purl": "pkg:npm/ms@2.1.3",
-      "scope": "required",
-      "hashes": [
-        {
-          "alg": "SHA-512",
-          "content": "e85973b9b4cb646dc9d9afcd542025784863ceae68c601f268253dc985ef70bb2fa1568726afece715c8ebf5d73fab73ed1f7100eb479d23bfb57b45dd645394"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
-      "externalReferences": [
-        {
-          "type": "distribution",
-          "url": "https://registry.npmjs.org/ms/-/ms-2.1.3.tgz"
-        }
-      ],
-      "properties": [
-        {
-          "name": "golden:review-status",
-          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
-        },
-        {
-          "name": "golden:lock-path",
-          "value": "node_modules/ms"
-        }
-      ]
-    },
-    {
-      "type": "library",
       "bom-ref": "pkg:npm/nanoid@3.3.20",
       "name": "nanoid",
       "version": "3.3.20",
@@ -2063,6 +2026,43 @@
         {
           "name": "golden:lock-path",
           "value": "node_modules/nanoid"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/obug@2.2.1",
+      "name": "obug",
+      "version": "2.2.1",
+      "purl": "pkg:npm/obug@2.2.1",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "5ebb2b853e6cc9bb4a23ac1a92bd923ce9466565986d45d9edad234fcfd039e00f6aefb55ff6d27a035ee5847be6826611941b2a78a7822ae618e10908893ad5"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "distribution",
+          "url": "https://registry.npmjs.org/obug/-/obug-2.2.1.tgz"
+        }
+      ],
+      "properties": [
+        {
+          "name": "golden:review-status",
+          "value": "OSI_LISTED_METADATA_AND_NOTICE_FILE_PRESENT; COMPANY_CLEARANCE_PENDING"
+        },
+        {
+          "name": "golden:lock-path",
+          "value": "node_modules/obug"
         }
       ]
     },
@@ -2586,15 +2586,15 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/std-env@3.10.0",
+      "bom-ref": "pkg:npm/std-env@4.3.0",
       "name": "std-env",
-      "version": "3.10.0",
-      "purl": "pkg:npm/std-env@3.10.0",
+      "version": "4.3.0",
+      "purl": "pkg:npm/std-env@4.3.0",
       "scope": "required",
       "hashes": [
         {
           "alg": "SHA-512",
-          "content": "e464b5d8574e64d9623399803b115183b22bd295b3f0c769626e8063a54f906a5b03b67399bccd701250d063efbf25a0718ed00210a07fd532f3d234ddf68b92"
+          "content": "3ad53f1204359089b92b0a90a410ba644317ad946e8b5d70f3381f4d6a7c71d3bd07c39a3ec6c0f1b4c73b63fe1cda3556551318c541c0f87276eea9a1e5e26a"
         }
       ],
       "licenses": [
@@ -2607,7 +2607,7 @@
       "externalReferences": [
         {
           "type": "distribution",
-          "url": "https://registry.npmjs.org/std-env/-/std-env-3.10.0.tgz"
+          "url": "https://registry.npmjs.org/std-env/-/std-env-4.3.0.tgz"
         }
       ],
       "properties": [
@@ -2697,15 +2697,15 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/tinyexec@0.3.2",
+      "bom-ref": "pkg:npm/tinyexec@1.3.1",
       "name": "tinyexec",
-      "version": "0.3.2",
-      "purl": "pkg:npm/tinyexec@0.3.2",
+      "version": "1.3.1",
+      "purl": "pkg:npm/tinyexec@1.3.1",
       "scope": "required",
       "hashes": [
         {
           "alg": "SHA-512",
-          "content": "290411f7237b479f8e4b068ad174288f6da9c07a1396062a994b1c3d8a249cea160967e3ff9fc00533118baf45aca5397df3d587941c16292958923f3f5a1c1c"
+          "content": "182bc1ddaa32b3de88b8314131c4c1e3a24e47a99d32d013a2ac225bc2655a1b288759a11e2ff19fdb2cfc383b379e791a227212ddaace81bf3470b033a87510"
         }
       ],
       "licenses": [
@@ -2718,7 +2718,7 @@
       "externalReferences": [
         {
           "type": "distribution",
-          "url": "https://registry.npmjs.org/tinyexec/-/tinyexec-0.3.2.tgz"
+          "url": "https://registry.npmjs.org/tinyexec/-/tinyexec-1.3.1.tgz"
         }
       ],
       "properties": [
@@ -2882,15 +2882,15 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/vite@7.2.2",
+      "bom-ref": "pkg:npm/vite@7.3.8",
       "name": "vite",
-      "version": "7.2.2",
-      "purl": "pkg:npm/vite@7.2.2",
+      "version": "7.3.8",
+      "purl": "pkg:npm/vite@7.3.8",
       "scope": "required",
       "hashes": [
         {
           "alg": "SHA-512",
-          "content": "07100a0569886eb0e0ae891d1991f522090893fe663070eb78b0e6089d2aa7225a02d78ff0dbcc864c2bfd909036a347f7b6f0fdd00d4c4f4f0f3ab026085f31"
+          "content": "ded4e2efc3002a1564f61f986555cc43c3ce9a7789b84f7b4143c05ad260847ce11fb040ca2a90382d8a661d4358eb2efd4481d9c4578739cf07269a6ef6177f"
         }
       ],
       "licenses": [
@@ -2903,7 +2903,7 @@
       "externalReferences": [
         {
           "type": "distribution",
-          "url": "https://registry.npmjs.org/vite/-/vite-7.2.2.tgz"
+          "url": "https://registry.npmjs.org/vite/-/vite-7.3.8.tgz"
         }
       ],
       "properties": [
@@ -2919,15 +2919,15 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/vitest@4.0.8",
+      "bom-ref": "pkg:npm/vitest@4.1.12",
       "name": "vitest",
-      "version": "4.0.8",
-      "purl": "pkg:npm/vitest@4.0.8",
+      "version": "4.1.12",
+      "purl": "pkg:npm/vitest@4.1.12",
       "scope": "required",
       "hashes": [
         {
           "alg": "SHA-512",
-          "content": "babceedcd08457441ad18d8fc2f06d46098db71863e6de542f0edcb8a8481e1dceae42932e5badd259c13aff6a7b93af6e4307da0dfc1bb28f0c24e9232b4156"
+          "content": "e5e59dcf6c9bdda8f1585dc2f02e138e45e5ec51a6de7d84fd595acc02eb407ccaee760c486167099b68d1b6cf365efb03090e6552e4d189c101e8d4bb436258"
         }
       ],
       "licenses": [
@@ -2940,7 +2940,7 @@
       "externalReferences": [
         {
           "type": "distribution",
-          "url": "https://registry.npmjs.org/vitest/-/vitest-4.0.8.tgz"
+          "url": "https://registry.npmjs.org/vitest/-/vitest-4.1.12.tgz"
         }
       ],
       "properties": [
@@ -3088,7 +3088,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/%40esbuild/darwin-arm64@0.25.12",
+      "ref": "pkg:npm/%40esbuild/darwin-arm64@0.28.2",
       "dependsOn": []
     },
     {
@@ -3183,53 +3183,55 @@
       ]
     },
     {
-      "ref": "pkg:npm/%40vitest/expect@4.0.8",
+      "ref": "pkg:npm/%40vitest/expect@4.1.12",
       "dependsOn": [
         "pkg:npm/%40standard-schema/spec@1.1.0",
         "pkg:npm/%40types/chai@5.2.3",
-        "pkg:npm/%40vitest/spy@4.0.8",
-        "pkg:npm/%40vitest/utils@4.0.8",
+        "pkg:npm/%40vitest/spy@4.1.12",
+        "pkg:npm/%40vitest/utils@4.1.12",
         "pkg:npm/chai@6.3.0",
         "pkg:npm/tinyrainbow@3.2.0"
       ]
     },
     {
-      "ref": "pkg:npm/%40vitest/mocker@4.0.8",
+      "ref": "pkg:npm/%40vitest/mocker@4.1.12",
       "dependsOn": [
-        "pkg:npm/%40vitest/spy@4.0.8",
+        "pkg:npm/%40vitest/spy@4.1.12",
         "pkg:npm/estree-walker@3.0.3",
         "pkg:npm/magic-string@0.30.21"
       ]
     },
     {
-      "ref": "pkg:npm/%40vitest/pretty-format@4.0.8",
+      "ref": "pkg:npm/%40vitest/pretty-format@4.1.12",
       "dependsOn": [
         "pkg:npm/tinyrainbow@3.2.0"
       ]
     },
     {
-      "ref": "pkg:npm/%40vitest/runner@4.0.8",
+      "ref": "pkg:npm/%40vitest/runner@4.1.12",
       "dependsOn": [
-        "pkg:npm/%40vitest/utils@4.0.8",
+        "pkg:npm/%40vitest/utils@4.1.12",
         "pkg:npm/pathe@2.0.3"
       ]
     },
     {
-      "ref": "pkg:npm/%40vitest/snapshot@4.0.8",
+      "ref": "pkg:npm/%40vitest/snapshot@4.1.12",
       "dependsOn": [
-        "pkg:npm/%40vitest/pretty-format@4.0.8",
+        "pkg:npm/%40vitest/pretty-format@4.1.12",
+        "pkg:npm/%40vitest/utils@4.1.12",
         "pkg:npm/magic-string@0.30.21",
         "pkg:npm/pathe@2.0.3"
       ]
     },
     {
-      "ref": "pkg:npm/%40vitest/spy@4.0.8",
+      "ref": "pkg:npm/%40vitest/spy@4.1.12",
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/%40vitest/utils@4.0.8",
+      "ref": "pkg:npm/%40vitest/utils@4.1.12",
       "dependsOn": [
-        "pkg:npm/%40vitest/pretty-format@4.0.8",
+        "pkg:npm/%40vitest/pretty-format@4.1.12",
+        "pkg:npm/convert-source-map@2.0.0",
         "pkg:npm/tinyrainbow@3.2.0"
       ]
     },
@@ -3262,18 +3264,16 @@
       "dependsOn": []
     },
     {
+      "ref": "pkg:npm/convert-source-map@2.0.0",
+      "dependsOn": []
+    },
+    {
       "ref": "pkg:npm/css.escape@1.5.1",
       "dependsOn": []
     },
     {
       "ref": "pkg:npm/csstype@3.2.4",
       "dependsOn": []
-    },
-    {
-      "ref": "pkg:npm/debug@4.4.3",
-      "dependsOn": [
-        "pkg:npm/ms@2.1.3"
-      ]
     },
     {
       "ref": "pkg:npm/dequal@2.0.3",
@@ -3292,13 +3292,13 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/es-module-lexer@1.7.0",
+      "ref": "pkg:npm/es-module-lexer@2.3.2",
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/esbuild@0.25.12",
+      "ref": "pkg:npm/esbuild@0.28.2",
       "dependsOn": [
-        "pkg:npm/%40esbuild/darwin-arm64@0.25.12"
+        "pkg:npm/%40esbuild/darwin-arm64@0.28.2"
       ]
     },
     {
@@ -3331,8 +3331,8 @@
         "pkg:npm/react-dom@19.2.0",
         "pkg:npm/react@19.2.0",
         "pkg:npm/typescript@5.9.3",
-        "pkg:npm/vite@7.2.2",
-        "pkg:npm/vitest@4.0.8"
+        "pkg:npm/vite@7.3.8",
+        "pkg:npm/vitest@4.1.12"
       ]
     },
     {
@@ -3370,11 +3370,11 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/ms@2.1.3",
+      "ref": "pkg:npm/nanoid@3.3.20",
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/nanoid@3.3.20",
+      "ref": "pkg:npm/obug@2.2.1",
       "dependsOn": []
     },
     {
@@ -3451,7 +3451,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/std-env@3.10.0",
+      "ref": "pkg:npm/std-env@4.3.0",
       "dependsOn": []
     },
     {
@@ -3465,7 +3465,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/tinyexec@0.3.2",
+      "ref": "pkg:npm/tinyexec@1.3.1",
       "dependsOn": []
     },
     {
@@ -3488,9 +3488,9 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/vite@7.2.2",
+      "ref": "pkg:npm/vite@7.3.8",
       "dependsOn": [
-        "pkg:npm/esbuild@0.25.12",
+        "pkg:npm/esbuild@0.28.2",
         "pkg:npm/fdir@6.5.0",
         "pkg:npm/fsevents@2.3.3",
         "pkg:npm/picomatch@4.0.7",
@@ -3500,27 +3500,27 @@
       ]
     },
     {
-      "ref": "pkg:npm/vitest@4.0.8",
+      "ref": "pkg:npm/vitest@4.1.12",
       "dependsOn": [
-        "pkg:npm/%40vitest/expect@4.0.8",
-        "pkg:npm/%40vitest/mocker@4.0.8",
-        "pkg:npm/%40vitest/pretty-format@4.0.8",
-        "pkg:npm/%40vitest/runner@4.0.8",
-        "pkg:npm/%40vitest/snapshot@4.0.8",
-        "pkg:npm/%40vitest/spy@4.0.8",
-        "pkg:npm/%40vitest/utils@4.0.8",
-        "pkg:npm/debug@4.4.3",
-        "pkg:npm/es-module-lexer@1.7.0",
+        "pkg:npm/%40vitest/expect@4.1.12",
+        "pkg:npm/%40vitest/mocker@4.1.12",
+        "pkg:npm/%40vitest/pretty-format@4.1.12",
+        "pkg:npm/%40vitest/runner@4.1.12",
+        "pkg:npm/%40vitest/snapshot@4.1.12",
+        "pkg:npm/%40vitest/spy@4.1.12",
+        "pkg:npm/%40vitest/utils@4.1.12",
+        "pkg:npm/es-module-lexer@2.3.2",
         "pkg:npm/expect-type@1.4.0",
         "pkg:npm/magic-string@0.30.21",
+        "pkg:npm/obug@2.2.1",
         "pkg:npm/pathe@2.0.3",
         "pkg:npm/picomatch@4.0.7",
-        "pkg:npm/std-env@3.10.0",
+        "pkg:npm/std-env@4.3.0",
         "pkg:npm/tinybench@2.9.0",
-        "pkg:npm/tinyexec@0.3.2",
+        "pkg:npm/tinyexec@1.3.1",
         "pkg:npm/tinyglobby@0.2.17",
         "pkg:npm/tinyrainbow@3.2.0",
-        "pkg:npm/vite@7.2.2",
+        "pkg:npm/vite@7.3.8",
         "pkg:npm/why-is-node-running@2.3.0"
       ]
     },

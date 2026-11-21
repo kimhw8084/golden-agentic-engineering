@@ -18,8 +18,8 @@ EXPECTED_UNRESOLVED_PACKAGES = {"stackback"}
 EXPECTED_MISSING_TARBALL_NOTICES = EXPECTED_NOTICE_PACKAGES | EXPECTED_UNRESOLVED_PACKAGES
 EXPECTED_SOURCE_PINS = {
     "@esbuild/darwin-arm64": (
-        "https://github.com/evanw/esbuild", "v0.25.12",
-        "208f539945b145e7c9d6d844290f81c3fe5af320", "LICENSE.md",
+        "https://github.com/evanw/esbuild", "v0.28.2",
+        "609683d892977362a0f99026cb74b96263d728a9", "LICENSE.md",
     ),
     "@rollup/rollup-darwin-arm64": (
         "https://github.com/rollup/rollup", "v4.68.7",
