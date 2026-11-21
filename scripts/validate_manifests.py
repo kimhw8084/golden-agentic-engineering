@@ -152,7 +152,7 @@ def validate() -> list[str]:
         'Playwright browser binaries', 'MCP Python SDK and transitive dependencies',
         'Company OpenCode and internal model evidence', 'OS-enforced no-public-egress policy and attempt monitor',
     }
-    if assets.get('schema') != 'golden-offline-assets/v1' or not isinstance(asset_rows, list):
+    if assets.get('schema') != 'golden-offline-assets/v2' or not isinstance(asset_rows, list):
         errors.append('offline asset manifest has an unsupported schema or invalid assets field')
     else:
         asset_names = [item.get('name') for item in asset_rows if isinstance(item, dict)]
@@ -168,6 +168,10 @@ def validate() -> list[str]:
                     or not isinstance(item.get('owner'), str) or not item['owner']
                     or not isinstance(item.get('required_action'), str) or not item['required_action']):
                 errors.append(f"offline asset {item.get('name')}: invalid staging fields")
+            if item.get('status') == 'STAGED' and (
+                    not isinstance(item.get('required_targets'), list) or not item['required_targets']
+                    or not isinstance(item.get('platform_artifacts'), list) or not item['platform_artifacts']):
+                errors.append(f"offline asset {item.get('name')}: STAGED requires target-specific artifacts")
             partial_evidence = item.get('partial_evidence', [])
             if not isinstance(partial_evidence, list):
                 errors.append(f"offline asset {item.get('name')}: partial_evidence must be a list")

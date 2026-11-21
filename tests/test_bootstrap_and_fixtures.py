@@ -42,6 +42,37 @@ class CompanyBootstrapTests(unittest.TestCase):
         packager.create_bundle(repo, bundle)
         return bundle
 
+    def _platform_asset(self, assets: Path, *, name: str = 'MCP Python SDK and transitive dependencies',
+                        omit_platform: str | None = None) -> dict:
+        targets = []
+        groups = []
+        for platform_name, target_id in (('Windows', 'windows-x86_64-py311'), ('Linux', 'linux-x86_64-py311')):
+            targets.append({'id': target_id, 'platform': platform_name, 'architecture': 'x86_64', 'runtime': 'Python 3.11'})
+            if platform_name == omit_platform:
+                continue
+            folder = assets / target_id
+            folder.mkdir(parents=True)
+            payload = folder / 'package.whl'; payload.write_bytes(f'fixture-{platform_name}'.encode())
+            descriptor = lambda path: {'path': path.relative_to(assets).as_posix(), 'sha256': bootstrap.hash_file(path)}
+            group = {
+                'target': target_id, 'platform': platform_name, 'architecture': 'x86_64',
+                'runtime': 'Python 3.11', 'files': [descriptor(payload)],
+            }
+            for field in bootstrap.ASSET_METADATA_FIELDS[name]:
+                sidecar = folder / f'{field}.json'
+                sidecar.write_text(json.dumps({'fixture': field, 'target': target_id}))
+                group[field] = descriptor(sidecar)
+            if name in bootstrap.PACKAGE_ASSET_NAMES:
+                group['license_review_status'] = 'APPROVED'
+            groups.append(group)
+        return {
+            'name': name,
+            'status': 'STAGED',
+            'platforms': ['Windows', 'Linux'],
+            'required_targets': targets,
+            'platform_artifacts': groups,
+        }
+
     def test_doctor_reads_only_config_key_names_and_changes_nothing(self):
         with tempfile.TemporaryDirectory() as d:
             config = Path(d) / 'opencode.json'
@@ -310,19 +341,149 @@ class CompanyBootstrapTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as d:
             folder = Path(d); assets = folder / 'assets'; assets.mkdir()
             outside = folder / 'outside.bin'; outside.write_bytes(b'not a staged asset')
-            (assets / 'payload.bin').symlink_to(outside)
+            staged = self._platform_asset(assets)
+            windows_group = next(group for group in staged['platform_artifacts'] if group['target'].startswith('windows-'))
+            payload = assets / windows_group['files'][0]['path']
+            payload.unlink()
+            payload.symlink_to(outside)
             manifest = folder / 'assets-manifest.json'
             rows = [{'name': name, 'status': 'NOT_STAGED'} for name in sorted(bootstrap.REQUIRED_ASSET_NAMES)]
-            rows[0].update({'status': 'STAGED', 'path': 'payload.bin', 'sha256': bootstrap.hash_file(outside), 'license_review_status': 'APPROVED'})
-            manifest.write_text(json.dumps({'schema': 'golden-offline-assets/v1', 'assets': rows}))
+            next(row for row in rows if row['name'] == staged['name']).update(staged)
+            manifest.write_text(json.dumps({'schema': 'golden-offline-assets/v2', 'assets': rows}))
             verified, missing = bootstrap.inspect_assets(folder, manifest, assets)
             self.assertEqual(verified, [])
             self.assertIn('symlink', [item['reason'] for item in missing])
 
+    def test_doctor_verifies_platform_target_artifacts_and_compliance_sidecars(self):
+        with tempfile.TemporaryDirectory() as d:
+            folder = Path(d); assets = folder / 'assets'; assets.mkdir()
+            staged = self._platform_asset(assets)
+            manifest = folder / 'assets-manifest.json'
+            rows = [{'name': name, 'status': 'NOT_STAGED'} for name in sorted(bootstrap.REQUIRED_ASSET_NAMES)]
+            next(row for row in rows if row['name'] == staged['name']).update(staged)
+            manifest.write_text(json.dumps({'schema': 'golden-offline-assets/v2', 'assets': rows}))
+
+            verified, missing = bootstrap.inspect_assets(folder, manifest, assets)
+
+            self.assertEqual(len(verified), 1)
+            self.assertEqual(verified[0]['status'], 'STAGED_AND_HASH_VERIFIED')
+            self.assertEqual(set(verified[0]['targets']), {'windows-x86_64-py311', 'linux-x86_64-py311'})
+            self.assertEqual(verified[0]['artifact_count'], 2)
+            self.assertEqual(set(verified[0]['metadata_hashes_verified']), {'source_lock', 'sbom', 'license_inventory'})
+            self.assertEqual(verified[0]['license_review_declared'], 'APPROVED')
+            self.assertEqual(len(missing), len(bootstrap.REQUIRED_ASSET_NAMES) - 1)
+
+    def test_doctor_does_not_accept_unreviewed_package_license_metadata(self):
+        with tempfile.TemporaryDirectory() as d:
+            folder = Path(d); assets = folder / 'assets'; assets.mkdir()
+            staged = self._platform_asset(assets)
+            del staged['platform_artifacts'][0]['license_review_status']
+            manifest = folder / 'assets-manifest.json'
+            rows = [{'name': name, 'status': 'NOT_STAGED'} for name in sorted(bootstrap.REQUIRED_ASSET_NAMES)]
+            next(row for row in rows if row['name'] == staged['name']).update(staged)
+            manifest.write_text(json.dumps({'schema': 'golden-offline-assets/v2', 'assets': rows}))
+
+            verified, missing = bootstrap.inspect_assets(folder, manifest, assets)
+
+            self.assertEqual(verified, [])
+            self.assertIn('NEEDS_LICENSE_REVIEW', [item['status'] for item in missing])
+
+    def test_doctor_rejects_platform_asset_with_missing_target_group(self):
+        with tempfile.TemporaryDirectory() as d:
+            folder = Path(d); assets = folder / 'assets'; assets.mkdir()
+            staged = self._platform_asset(assets, omit_platform='Linux')
+            manifest = folder / 'assets-manifest.json'
+            rows = [{'name': name, 'status': 'NOT_STAGED'} for name in sorted(bootstrap.REQUIRED_ASSET_NAMES)]
+            next(row for row in rows if row['name'] == staged['name']).update(staged)
+            manifest.write_text(json.dumps({'schema': 'golden-offline-assets/v2', 'assets': rows}))
+
+            verified, missing = bootstrap.inspect_assets(folder, manifest, assets)
+
+            self.assertEqual(verified, [])
+            self.assertIn('platform-target-coverage-incomplete', [item['reason'] for item in missing])
+
+    def test_doctor_rejects_manifest_that_omits_required_linux_target(self):
+        with tempfile.TemporaryDirectory() as d:
+            folder = Path(d); assets = folder / 'assets'; assets.mkdir()
+            staged = self._platform_asset(assets, omit_platform='Linux')
+            staged['platforms'] = ['Windows']
+            staged['required_targets'] = [target for target in staged['required_targets'] if target['platform'] == 'Windows']
+            manifest = folder / 'assets-manifest.json'
+            rows = [{'name': name, 'status': 'NOT_STAGED'} for name in sorted(bootstrap.REQUIRED_ASSET_NAMES)]
+            next(row for row in rows if row['name'] == staged['name']).update(staged)
+            manifest.write_text(json.dumps({'schema': 'golden-offline-assets/v2', 'assets': rows}))
+
+            verified, missing = bootstrap.inspect_assets(folder, manifest, assets)
+
+            self.assertEqual(verified, [])
+            self.assertIn('required-platforms-missing', [item['reason'] for item in missing])
+
+    def test_doctor_rejects_target_metadata_mismatch(self):
+        with tempfile.TemporaryDirectory() as d:
+            folder = Path(d); assets = folder / 'assets'; assets.mkdir()
+            staged = self._platform_asset(assets)
+            staged['platform_artifacts'][0]['architecture'] = 'arm64'
+            manifest = folder / 'assets-manifest.json'
+            rows = [{'name': name, 'status': 'NOT_STAGED'} for name in sorted(bootstrap.REQUIRED_ASSET_NAMES)]
+            next(row for row in rows if row['name'] == staged['name']).update(staged)
+            manifest.write_text(json.dumps({'schema': 'golden-offline-assets/v2', 'assets': rows}))
+
+            verified, missing = bootstrap.inspect_assets(folder, manifest, assets)
+
+            self.assertEqual(verified, [])
+            self.assertIn('target-metadata-mismatch', [item['reason'] for item in missing])
+
+    def test_doctor_rejects_tampered_platform_sbom(self):
+        with tempfile.TemporaryDirectory() as d:
+            folder = Path(d); assets = folder / 'assets'; assets.mkdir()
+            staged = self._platform_asset(assets)
+            sbom_ref = staged['platform_artifacts'][0]['sbom']
+            (assets / sbom_ref['path']).write_text('{"tampered": true}')
+            manifest = folder / 'assets-manifest.json'
+            rows = [{'name': name, 'status': 'NOT_STAGED'} for name in sorted(bootstrap.REQUIRED_ASSET_NAMES)]
+            next(row for row in rows if row['name'] == staged['name']).update(staged)
+            manifest.write_text(json.dumps({'schema': 'golden-offline-assets/v2', 'assets': rows}))
+
+            verified, missing = bootstrap.inspect_assets(folder, manifest, assets)
+
+            self.assertEqual(verified, [])
+            self.assertIn('sbom-missing-or-hash-mismatch', [item['reason'] for item in missing])
+
+    def test_doctor_verifies_network_policy_and_attempt_evidence_per_target(self):
+        with tempfile.TemporaryDirectory() as d:
+            folder = Path(d); assets = folder / 'assets'; assets.mkdir()
+            staged = self._platform_asset(assets, name='OS-enforced no-public-egress policy and attempt monitor')
+            manifest = folder / 'assets-manifest.json'
+            rows = [{'name': name, 'status': 'NOT_STAGED'} for name in sorted(bootstrap.REQUIRED_ASSET_NAMES)]
+            next(row for row in rows if row['name'] == staged['name']).update(staged)
+            manifest.write_text(json.dumps({'schema': 'golden-offline-assets/v2', 'assets': rows}))
+
+            verified, missing = bootstrap.inspect_assets(folder, manifest, assets)
+
+            self.assertEqual(len(verified), 1)
+            self.assertEqual(set(verified[0]['metadata_hashes_verified']), {'policy_evidence', 'attempt_monitor_evidence'})
+            self.assertNotIn('license_review_declared', verified[0])
+            self.assertEqual(len(missing), len(bootstrap.REQUIRED_ASSET_NAMES) - 1)
+
+    def test_doctor_rejects_network_policy_without_attempt_monitor_evidence(self):
+        with tempfile.TemporaryDirectory() as d:
+            folder = Path(d); assets = folder / 'assets'; assets.mkdir()
+            staged = self._platform_asset(assets, name='OS-enforced no-public-egress policy and attempt monitor')
+            del staged['platform_artifacts'][0]['attempt_monitor_evidence']
+            manifest = folder / 'assets-manifest.json'
+            rows = [{'name': name, 'status': 'NOT_STAGED'} for name in sorted(bootstrap.REQUIRED_ASSET_NAMES)]
+            next(row for row in rows if row['name'] == staged['name']).update(staged)
+            manifest.write_text(json.dumps({'schema': 'golden-offline-assets/v2', 'assets': rows}))
+
+            verified, missing = bootstrap.inspect_assets(folder, manifest, assets)
+
+            self.assertEqual(verified, [])
+            self.assertIn('attempt_monitor_evidence-invalid-file-record', [item['reason'] for item in missing])
+
     def test_doctor_rejects_incomplete_asset_inventory(self):
         with tempfile.TemporaryDirectory() as d:
             folder = Path(d); manifest = folder / 'assets.json'; assets = folder / 'assets'; assets.mkdir()
-            manifest.write_text(json.dumps({'schema': 'golden-offline-assets/v1', 'assets': []}))
+            manifest.write_text(json.dumps({'schema': 'golden-offline-assets/v2', 'assets': []}))
             verified, missing = bootstrap.inspect_assets(folder, manifest, assets)
             self.assertEqual(verified, [])
             self.assertEqual(missing[0]['status'], 'UNKNOWN')
@@ -341,7 +502,7 @@ class CompanyBootstrapTests(unittest.TestCase):
                 'partial_progress': 'LOCKED_AND_MACOS_ARM64_TESTED_NOT_CROSS_PLATFORM_OFFLINE_READY',
                 'partial_evidence': [{'path': 'examples/react-app/package-lock.json', 'sha256': bootstrap.hash_file(evidence)}],
             })
-            manifest.write_text(json.dumps({'schema': 'golden-offline-assets/v1', 'assets': rows}))
+            manifest.write_text(json.dumps({'schema': 'golden-offline-assets/v2', 'assets': rows}))
             _, missing = bootstrap.inspect_assets(repo, manifest, assets_root)
             react_missing = next(row for row in missing if row['name'] == 'React npm lock and offline store')
             self.assertEqual(react_missing['status'], 'NOT_STAGED')

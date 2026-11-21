@@ -31,6 +31,7 @@
 - Added expandable task-route detail panels for context, deterministic checks, conditional specialists, trust boundaries, no-AI fallback, outputs and MCP policy. A local browser smoke rendered all 12 cards and collapsed detail controls; expansion and company runtime integration remain unverified.
 - Closed a Golden Proof scoping gap: profile exclusions now require a bounded, complete repository inventory, and unreadable paths, symlinks, ambiguous web sources or inventory limits keep rules at `NOT_RUN`. Added regression cases for manifest-profile spoofing and incomplete scans; the heuristic does not understand arbitrary application architecture.
 - Refined public capability evidence: pinned Promptfoo 0.126.0's release/license and documented offline opt-outs with its upstream warning that they are not a firewall; clarified Grafana MCP query-tool write risk through datasource credentials. Both remain unapproved, unstaged evaluation candidates without a matched company task.
+- Tightened the v2 company doctor asset gate: `STAGED` requires explicit per-platform/runtime target records and hashes for target payloads plus the appropriate source-lock/SBOM/license, runtime compatibility, or egress-policy/attempt evidence. OSS approval remains an unauthenticated declaration; the six checked-in asset groups remain `NOT_STAGED`, and Golden still does not enforce the host firewall.
 - Kept the semiconductor sampling transfer kit generic and source-only. It contains no private dataset or company-specific schema.
 
 ## Verification

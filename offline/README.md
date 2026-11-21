@@ -29,4 +29,12 @@ This ZIP/TAR is **source-only, not an offline executable distribution**. It incl
 5. Stage Playwright's matching browser binaries per OS and verify their checksum and license. The current repository has none.
 6. Transfer the bundle through the company's artifact process, verify the external checksum on receipt, and run `company_bootstrap.py doctor` before the reviewed apply step.
 
+## Target-specific staged-asset manifest
+
+The `golden-offline-assets/v2` manifest lets an asset become `STAGED` only when it has `platforms`, `required_targets`, and one `platform_artifacts` group for every required target. Each target records an `id`, `platform`, `architecture`, and exact `runtime` label. Each group contains one or more `{ "path", "sha256" }` payload records. OSS/package groups also require hashed `source_lock`, `sbom`, and `license_inventory` records plus `license_review_status: "APPROVED"`. The internal-runtime group instead requires `version_evidence` and `compatibility_evidence`; the no-egress group requires `policy_evidence` and `attempt_monitor_evidence`. All paths are relative to the asset root passed to `company_bootstrap.py doctor --assets-root` (by default, the manifest's directory).
+
+For example, the `Python wheelhouse and dependency locks` entry should enumerate the exact Python ABI/runtime and architecture tested for every required Windows and Linux target, with each target's own wheel set and lock/SBOM/license inventory. A single file hash cannot qualify both operating systems. Doctor reports hash-verified target IDs and counts without exposing local asset paths. The repository manifest validator checks top-level v2 structure; the doctor checks local file existence, symlink safety, target coverage, and hashes.
+
+The `APPROVED` field is a manifest declaration. Doctor checks that it is present and that the sidecar hashes match; it does not authenticate the reviewer or replace company OSS/legal approval. The checked-in manifest remains `NOT_STAGED` for all six asset groups. Until the company target matrix and assets exist, this verifier does not establish offline readiness.
+
 Windows/Linux npm caches, Python wheels, browser binaries, approved notices, company endpoints, and OS egress evidence are **not available in this repository**. The checked-in React lock/SBOM does not make the bundle offline-executable. Golden must remain `PRE_QUALIFICATION` until all required assets are staged and checked.

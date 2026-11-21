@@ -1,5 +1,5 @@
 {
-  "schema": "golden-offline-assets/v1",
+  "schema": "golden-offline-assets/v2",
   "qualification": "SOURCE_ONLY_NOT_OFFLINE_EXECUTABLE",
   "assets": [
     {"name":"Python wheelhouse and dependency locks","status":"NOT_STAGED","platforms":["Windows","Linux"],"owner":"Company OSS/package owner","required_action":"Stage approved wheels for each target Python ABI/OS/architecture with hashes, SBOM, and complete licenses/NOTICE."},

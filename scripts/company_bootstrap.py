@@ -24,6 +24,18 @@ REQUIRED_ASSET_NAMES = frozenset({
     'Company OpenCode and internal model evidence',
     'OS-enforced no-public-egress policy and attempt monitor',
 })
+PACKAGE_ASSET_NAMES = frozenset({
+    'Python wheelhouse and dependency locks',
+    'React npm lock and offline store',
+    'Playwright browser binaries',
+    'MCP Python SDK and transitive dependencies',
+})
+ASSET_METADATA_FIELDS = {
+    **{name: ('source_lock', 'sbom', 'license_inventory') for name in PACKAGE_ASSET_NAMES},
+    'Company OpenCode and internal model evidence': ('version_evidence', 'compatibility_evidence'),
+    'OS-enforced no-public-egress policy and attempt monitor': ('policy_evidence', 'attempt_monitor_evidence'),
+}
+REQUIRED_ASSET_PLATFORMS = {name: frozenset({'Windows', 'Linux'}) for name in REQUIRED_ASSET_NAMES}
 sys.path.insert(0, str(ROOT / 'scripts'))
 import package_offline  # noqa: E402
 
@@ -265,6 +277,101 @@ def config_path_label(path: Path) -> tuple[str, str]:
     return label, identity
 
 
+def verify_asset_file(root: Path, descriptor: object) -> str | None:
+    if not isinstance(descriptor, dict):
+        return 'invalid-file-record'
+    raw_path = descriptor.get('path')
+    if not isinstance(raw_path, str) or not raw_path or '\\' in raw_path or ':' in raw_path or '\x00' in raw_path:
+        return 'unsafe-path'
+    rel = PurePosixPath(raw_path)
+    if rel.is_absolute() or '..' in rel.parts or not rel.parts:
+        return 'unsafe-path'
+    artifact = root.joinpath(*rel.parts)
+    cursor = root
+    for part in rel.parts:
+        cursor = cursor / part
+        if cursor.is_symlink():
+            return 'symlink'
+    expected_hash = descriptor.get('sha256')
+    if (root not in artifact.parents or not artifact.is_file()
+            or not isinstance(expected_hash, str)
+            or not re.fullmatch(r'[0-9a-fA-F]{64}', expected_hash)
+            or hash_file(artifact) != expected_hash.lower()):
+        return 'missing-or-hash-mismatch'
+    return None
+
+
+def inspect_platform_asset(item: dict, root: Path) -> tuple[dict | None, dict | None]:
+    platforms = item.get('platforms')
+    targets = item.get('required_targets')
+    groups = item.get('platform_artifacts')
+    if (not isinstance(platforms, list) or not platforms
+            or any(not isinstance(value, str) or not value for value in platforms)
+            or len(platforms) != len(set(platforms))):
+        return None, {'status': 'INVALID', 'reason': 'invalid-platform-list'}
+    if not REQUIRED_ASSET_PLATFORMS.get(item['name'], frozenset({'Windows', 'Linux'})) <= set(platforms):
+        return None, {'status': 'INVALID', 'reason': 'required-platforms-missing'}
+    if not isinstance(targets, list) or not targets:
+        return None, {'status': 'INVALID', 'reason': 'missing-required-targets'}
+    target_ids = []
+    target_by_id = {}
+    target_platforms = set()
+    for target in targets:
+        if not isinstance(target, dict):
+            return None, {'status': 'INVALID', 'reason': 'invalid-target-record'}
+        target_id = target.get('id')
+        platform_name = target.get('platform')
+        if (not isinstance(target_id, str) or not re.fullmatch(r'[A-Za-z0-9._-]{1,100}', target_id)
+                or not isinstance(platform_name, str) or platform_name not in platforms
+                or not isinstance(target.get('architecture'), str) or not target['architecture'].strip()
+                or not isinstance(target.get('runtime'), str) or not target['runtime'].strip()):
+            return None, {'status': 'INVALID', 'reason': 'invalid-target-record'}
+        target_ids.append(target_id)
+        target_by_id[target_id] = target
+        target_platforms.add(platform_name)
+    if len(target_ids) != len(set(target_ids)) or target_platforms != set(platforms):
+        return None, {'status': 'INVALID', 'reason': 'required-targets-do-not-cover-platforms'}
+    if not isinstance(groups, list):
+        return None, {'status': 'INVALID', 'reason': 'missing-platform-artifacts'}
+    group_by_id = {}
+    for group in groups:
+        if not isinstance(group, dict) or group.get('target') not in target_ids or group.get('target') in group_by_id:
+            return None, {'status': 'INVALID', 'reason': 'invalid-platform-artifact-group'}
+        target = target_by_id[group['target']]
+        if any(group.get(field) != target[field] for field in ('platform', 'architecture', 'runtime')):
+            return None, {'status': 'INVALID', 'reason': 'target-metadata-mismatch', 'target': group['target']}
+        group_by_id[group['target']] = group
+    if set(group_by_id) != set(target_ids):
+        return None, {'status': 'INVALID', 'reason': 'platform-target-coverage-incomplete'}
+
+    total_files = 0
+    for target_id, group in group_by_id.items():
+        files = group.get('files')
+        if not isinstance(files, list) or not files:
+            return None, {'status': 'INVALID', 'reason': 'empty-platform-artifact-group'}
+        for descriptor in files:
+            reason = verify_asset_file(root, descriptor)
+            if reason:
+                return None, {'status': 'INVALID', 'reason': reason, 'target': target_id}
+            total_files += 1
+        metadata_fields = ASSET_METADATA_FIELDS.get(item['name'], ('source_lock', 'sbom', 'license_inventory'))
+        for field in metadata_fields:
+            reason = verify_asset_file(root, group.get(field))
+            if reason:
+                return None, {'status': 'INVALID', 'reason': f'{field}-{reason}', 'target': target_id}
+        if item['name'] in PACKAGE_ASSET_NAMES and group.get('license_review_status') != 'APPROVED':
+            return None, {'status': 'NEEDS_LICENSE_REVIEW', 'reason': 'license-review-not-approved', 'target': target_id}
+    verified = {
+        'status': 'STAGED_AND_HASH_VERIFIED',
+        'targets': target_ids,
+        'artifact_count': total_files,
+        'metadata_hashes_verified': list(ASSET_METADATA_FIELDS.get(item['name'], ('source_lock', 'sbom', 'license_inventory'))),
+    }
+    if item['name'] in PACKAGE_ASSET_NAMES:
+        verified['license_review_declared'] = 'APPROVED'
+    return verified, None
+
+
 def inspect_assets(repo: Path, manifest_path: Path | None, assets_root: Path | None) -> tuple[list[dict], list[dict]]:
     path = Path(os.path.abspath((manifest_path or (repo / 'offline' / 'assets-manifest.json')).expanduser()))
     root = Path(os.path.abspath((assets_root or path.parent).expanduser()))
@@ -275,7 +382,7 @@ def inspect_assets(repo: Path, manifest_path: Path | None, assets_root: Path | N
         root = root.resolve(strict=True)
         manifest = json.loads(path.read_text(encoding='utf-8'))
         records = manifest['assets']
-        if manifest.get('schema') != 'golden-offline-assets/v1' or not isinstance(records, list):
+        if manifest.get('schema') != 'golden-offline-assets/v2' or not isinstance(records, list):
             raise ValueError('invalid asset manifest shape')
         names = [item.get('name') for item in records if isinstance(item, dict)]
         if (len(names) != len(records) or any(not isinstance(name, str) for name in names)
@@ -325,21 +432,11 @@ def inspect_assets(repo: Path, manifest_path: Path | None, assets_root: Path | N
                 missing_item['partial_evidence'] = partial_evidence
             missing.append(missing_item)
             continue
-        rel = PurePosixPath(str(item.get('path', '')))
-        if not rel.parts or rel.is_absolute() or '..' in rel.parts:
-            missing.append({'name': name, 'status': 'INVALID', 'reason': 'unsafe-path'})
+        verified, error = inspect_platform_asset(item, root)
+        if error:
+            missing.append({'name': name, **error})
             continue
-        artifact = root.joinpath(*rel.parts)
-        if root not in artifact.parents or any(part.is_symlink() for part in [artifact, *artifact.parents] if part != root):
-            missing.append({'name': name, 'status': 'INVALID', 'reason': 'symlink'})
-            continue
-        if not artifact.is_file() or not isinstance(item.get('sha256'), str) or hash_file(artifact) != item['sha256'].lower():
-            missing.append({'name': name, 'status': 'INVALID', 'reason': 'missing-or-hash-mismatch'})
-            continue
-        if item.get('license_review_status') != 'APPROVED':
-            missing.append({'name': name, 'status': 'NEEDS_LICENSE_REVIEW', 'reason': 'license-review-not-approved'})
-            continue
-        observed.append({'name': name, 'status': 'STAGED_AND_HASH_VERIFIED', 'sha256': item['sha256']})
+        observed.append({'name': name, **verified})
     return observed, missing
 
 
