@@ -111,6 +111,7 @@ The project OpenCode config selects `golden-engineer` as the default primary age
 - [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) — exact responsibilities and interfaces
 - [`docs/FASTEST_IMPLEMENTATION.md`](docs/FASTEST_IMPLEMENTATION.md) — staged team adoption and acceptance
 - [`docs/TOOL_ACQUISITION.md`](docs/TOOL_ACQUISITION.md) — license and offline source staging
+- [`research/diagram-design-audit.md`](research/diagram-design-audit.md) — pinned GitHub skill audit and Golden's offline adaptation decision
 - [`docs/AGENTIC_FIRST_EVALUATION.md`](docs/AGENTIC_FIRST_EVALUATION.md) — compare agent/skill/MCP workflows with CLI candidates
 - [`docs/GOLDEN_CONTROL_SPEC.md`](docs/GOLDEN_CONTROL_SPEC.md) — team UI, data boundaries, integration phases, and acceptance criteria
 - [`docs/QUALIFICATION_MATRIX.md`](docs/QUALIFICATION_MATRIX.md) — real status vs intended features

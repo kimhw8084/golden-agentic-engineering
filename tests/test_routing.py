@@ -61,10 +61,20 @@ class TaskRoutingTests(unittest.TestCase):
 
     def test_documentation_route_surfaces_diagram_design_as_unapproved_candidate(self):
         route = golden_route.route_for('technical-docs-sop-diagrams')
+        self.assertEqual([item['id'] for item in route['skills']], ['golden-docs'])
         diagram = next(item for item in route['capability_candidates'] if item['id'] == 'cathrynlavery-diagram-design')
         self.assertEqual(diagram['owner_repo'], 'cathrynlavery/diagram-design')
         self.assertEqual(diagram['decision'], 'EVALUATION_ONLY_NOT_APPROVED')
         self.assertEqual(diagram['measured_evidence'], 'UNTESTED')
+
+    def test_documentation_diagram_defaults_are_self_contained_and_offline(self):
+        skill = (ROOT / '.opencode' / 'skills' / 'golden-docs' / 'SKILL.md').read_text()
+        self.assertIn('cathrynlavery/diagram-design', skill)
+        self.assertIn('system fonts only', skill)
+        view = (ROOT / 'docs' / 'ARCHITECTURE_VIEW.html').read_text()
+        self.assertIn('<html lang="en">', view)
+        self.assertIn('<main>', view)
+        self.assertNotRegex(view, r'''(?i)(?:src|href)\s*=\s*["'](?:https?:)?//|@import\s+url|url\(\s*["']?(?:https?:)?//|fonts\.googleapis\.com''')
 
     def test_every_route_reference_resolves_and_keeps_candidate_mcp_unapproved(self):
         self.assertEqual(golden_route.validation_errors(), [])
