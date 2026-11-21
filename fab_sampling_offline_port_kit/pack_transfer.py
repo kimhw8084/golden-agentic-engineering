@@ -16,10 +16,15 @@ def pack(target: Path, allow_incomplete: bool = False) -> str:
  checksum_path=Path(str(target)+'.sha256')
  if target.exists() or target.is_symlink() or checksum_path.exists() or checksum_path.is_symlink():
   raise FileExistsError('Archive or checksum already exists; move it explicitly before packing again.')
- if not allow_incomplete:
-  check=subprocess.run([sys.executable,str(ROOT/'verify_bundle.py')])
-  if check.returncode:
-   raise ValueError('Cannot pack all-repos bundle: verification failed. Use --allow-incomplete only for an explicitly incomplete transfer.')
+ verify_command=[sys.executable,str(ROOT/'verify_bundle.py')]
+ if allow_incomplete:
+  verify_command.append('--allow-incomplete')
+ try:
+  check=subprocess.run(verify_command,timeout=60,check=False)
+ except (OSError,subprocess.SubprocessError):
+  raise ValueError('Cannot run staged source verification.') from None
+ if check.returncode:
+  raise ValueError('Cannot pack transfer: staged source verification failed. Review the exact selected subset and its lock.')
  target.parent.mkdir(parents=True,exist_ok=True)
  ignored={'.venv','__pycache__','.pytest_cache','.mypy_cache','node_modules','.ruff_cache'}
  files=[]

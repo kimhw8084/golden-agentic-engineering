@@ -11,21 +11,58 @@ from pathlib import Path
 HOME = Path(__file__).resolve().parent
 CANDIDATES = json.loads((HOME / 'repos.json').read_text(encoding='utf-8'))['repositories']
 
+
+def select_repositories(stage=None, repo_names=None):
+    """Select an explicit candidate subset; never default to all public sources."""
+    if stage and repo_names:
+        raise ValueError('Choose one --stage or one or more exact --repo values, not both.')
+    if stage is None and not repo_names:
+        raise ValueError('Choose an explicit --stage or at least one exact --repo value.')
+    if repo_names:
+        if len(repo_names) != len(set(repo_names)):
+            raise ValueError('Duplicate --repo values are not allowed.')
+        known = {item['repo'] for item in CANDIDATES}
+        unknown = sorted(set(repo_names) - known)
+        if unknown:
+            raise ValueError('Unknown repository candidate(s): ' + ', '.join(unknown))
+        requested = set(repo_names)
+        return [item for item in CANDIDATES if item['repo'] in requested]
+    if stage == 'all':
+        return list(CANDIDATES)
+    if stage == 'core':
+        return [item for item in CANDIDATES if item['stage'] == 'core']
+    if stage == 'fab':
+        return [item for item in CANDIDATES if item['stage'].startswith('fab')]
+    if stage == 'extended':
+        return [item for item in CANDIDATES if item['stage'].startswith('extended')]
+    raise ValueError('Unsupported repository selection.')
+
+
 def git(*args, cwd=None):
     return subprocess.run(['git', *args], cwd=cwd, capture_output=True, text=True)
 
 def main():
     p = argparse.ArgumentParser()
-    p.add_argument('--stage', choices=['core','fab','extended','all'], default='all')
+    selection = p.add_mutually_exclusive_group(required=True)
+    selection.add_argument('--stage', choices=['core','fab','extended','all'],
+                           help='Select a named candidate group; "all" requires explicit full-scope review.')
+    selection.add_argument('--repo', action='append', metavar='OWNER/REPO',
+                           help='Select one exact candidate from repos.json; repeat for additional approved candidates.')
     p.add_argument('--output', default=str(HOME / 'sources'))
     args = p.parse_args()
+    try:
+        selected = select_repositories(args.stage, args.repo)
+    except ValueError as exc:
+        p.error(str(exc))
     target = Path(args.output).resolve()
     try:
         target.relative_to(HOME.resolve())
     except ValueError:
         p.error('--output must remain inside the kit so its lock can be verified without recording host paths')
+    prior_path = HOME / 'repos.lock.json'
+    if prior_path.is_symlink():
+        p.error('refusing symlinked repos.lock.json')
     target.mkdir(parents=True, exist_ok=True)
-    selected = [r for r in CANDIDATES if args.stage == 'all' or (args.stage == 'core' and r['stage'] == 'core') or (args.stage == 'fab' and r['stage'].startswith('fab')) or (args.stage == 'extended' and r['stage'].startswith('extended'))]
     output = []
     for r in selected:
         dest = target / r['repo'].replace('/','__')
@@ -47,7 +84,6 @@ def main():
         state.update(status='CLONED_PENDING_AUDIT',sha=sha.stdout.strip(),license_files=license_files,has_submodules=(dest/'.gitmodules').exists(),has_lfs_pointers='not_checked')
         output.append(state)
         print('OK '+state['sha'][:12])
-    prior_path=HOME/'repos.lock.json'
     prior=[]
     if prior_path.exists():
         prior=json.loads(prior_path.read_text(encoding='utf-8')).get('entries',[])

@@ -26,6 +26,7 @@ class TransferKitTests(unittest.TestCase):
         source = kit / 'custom' / 'path' / 'sample'
         source.mkdir(parents=True)
         (source / '.git').mkdir()
+        (source / 'LICENSE').write_text('MIT')
         repo = 'example/sample'
         url = 'https://github.com/example/sample.git'
         manifest = {'repositories': [{'repo': repo, 'stage': 'core', 'url': url}]}
@@ -70,7 +71,9 @@ class TransferKitTests(unittest.TestCase):
             (kit / 'README.md').write_text('transfer fixture')
             archive = folder / 'bundle.zip'
             with patch.object(pack_transfer, 'ROOT', kit):
-                pack_transfer.pack(archive, allow_incomplete=True)
+                with patch.object(pack_transfer.subprocess, 'run',
+                                  return_value=type('Result', (), {'returncode': 0})()):
+                    pack_transfer.pack(archive, allow_incomplete=True)
                 original = archive.read_bytes()
                 with self.assertRaises(FileExistsError):
                     pack_transfer.pack(archive, allow_incomplete=True)
@@ -89,8 +92,10 @@ class TransferKitTests(unittest.TestCase):
             with patch.object(pack_transfer, 'ROOT', kit):
                 with self.assertRaisesRegex(ValueError, 'outside the kit'):
                     pack_transfer.pack(kit / 'nested.zip', allow_incomplete=True)
-                with self.assertRaisesRegex(ValueError, 'symlink'):
-                    pack_transfer.pack(folder / 'bundle.zip', allow_incomplete=True)
+                with patch.object(pack_transfer.subprocess, 'run',
+                                  return_value=type('Result', (), {'returncode': 0})()):
+                    with self.assertRaisesRegex(ValueError, 'symlink'):
+                        pack_transfer.pack(folder / 'bundle.zip', allow_incomplete=True)
             self.assertFalse((folder / 'bundle.zip').exists())
 
 

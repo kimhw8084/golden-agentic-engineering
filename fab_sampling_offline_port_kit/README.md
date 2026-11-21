@@ -7,28 +7,29 @@
 Prerequisites: Python 3.10+ and Git, corporate authorization to transfer open-source code. Choose an OS/CPU/Python matching the work PC for binary wheel preparation.
 
 ```bash
-python fetch_repos.py --stage all
-python verify_bundle.py
-python download_wheels.py --requirements core
-# Do NOT download extended/heavy until OpenCode has a reason to test them.
-python pack_transfer.py
+# After the source owner selects and approves exact candidates from REPOS.md:
+python fetch_repos.py --repo tobymao/sqlglot --repo unionai-oss/pandera
+python verify_bundle.py --allow-incomplete
+python pack_transfer.py --allow-incomplete
 ```
 
 `fetch_repos.py --output` accepts a staging directory only when it remains inside this kit; the lock records a kit-relative path so it contains no staging-PC absolute path and the verifier checks that exact location. The verifier also checks each Git origin against the manifest. `pack_transfer.py --output PATH` can choose an archive destination outside the kit. It refuses to overwrite an archive/checksum and refuses to package symlinks.
 
-`fetch_repos.py` downloads all 38 repository source trees with shallow Git history and writes `repos.lock.json` containing exact commit SHAs. It does not clone submodules, fetch Git LFS objects, or download SMT2020 (or any other external data). **Check for missing submodules/LFS/datasets before declaring any repo testable.** A failed clone is never silently marked complete.
+`fetch_repos.py` requires an explicit `--stage` or repeated exact `--repo OWNER/REPO` selection; it never defaults to all 38 candidates. `--stage all` remains available only as an explicit full-scope request. It downloads selected source trees with shallow Git history and records exact commit SHAs and Git origins in `repos.lock.json`. A partial lock is accepted only by `verify_bundle.py --allow-incomplete`; that mode verifies every selected clone and refuses unknown lock entries, while the default requires all manifest candidates. The packer runs the matching verifier even for a partial transfer. This verifies local source identity only; it is not license, security, or company-transfer approval. The fetcher does not clone submodules, fetch Git LFS objects, or download SMT2020 (or any other external data). **Check for missing submodules/LFS/datasets before declaring any repo testable.** A failed clone is never silently marked complete.
 
 `download_wheels.py` downloads, but does **not install**, Python binary wheels and their dependencies for the selected requirement set. Ensure matched OS/architecture/Python ABI. Some source-only, GPU, Rust, C++, Oracle and SQL Server dependencies need separate approved artifacts. You can test source code with preinstalled work PC packages before making a wheelhouse.
 
+The checked-in `requirements_core.txt` is a broad candidate list, not a dependency closure derived from the exact `--repo` subset. Review and reduce it for the selected sources, target ABI and company-approved packages before running `python download_wheels.py --requirements core`; do not download it by habit. The kit does not yet emit a complete resolved, hash-pinned dependency lock or SBOM for downloaded wheels.
+
 `verify_wheelhouse.py` can verify the staged wheel hashes after transport.
 
-`pack_transfer.py` packages sources, commit lock, the instructions and any downloaded wheelhouse as `fab_sampling_source_transfer.zip` next to this directory, with a `.sha256` hash. The default is a full 38-repository verification; `--allow-incomplete` explicitly permits a partial evaluation archive. Scan and approve both archive and dependencies in accordance with work-PC policy.
+`pack_transfer.py` packages sources, commit lock, the instructions and any downloaded wheelhouse as `fab_sampling_source_transfer.zip` next to this directory, with a `.sha256` hash. The default requires a full 38-repository verification; `--allow-incomplete` explicitly permits a partial evaluation archive only after verifying all selected source identities. Scan and approve both archive and dependencies in accordance with work-PC policy.
 
 ## On the OFFLINE work PC
 
 1. Verify transfer SHA256 and approved artifact provenance.
 2. Extract the full source archive to a **read-only external-reference** directory. Do not overwrite existing fab prediction code.
-3. Run `python verify_bundle.py` to check the Git SHA pins.
+3. Run `python verify_bundle.py --allow-incomplete` to verify the explicitly locked subset's Git SHA and origins. Omit the flag only when all 38 manifest entries were staged and approved for transfer.
 4. Prior to installing, check all source licenses, bundled data licenses, dependencies and system-native libraries. **No auto-pip, auto-git, auto-model download, or unapproved execution.**
 5. If `wheelhouse/core/` is complete for your target and approved, use an isolated Python environment, e.g.:
    `python -m pip install --no-index --find-links ./wheelhouse/core -r requirements_core.txt`
@@ -49,7 +50,7 @@ python pack_transfer.py
 - `REPOS.md` — ranked, clickable full list of all 38 source repositories.
 - `clone_urls.txt` — exact Git URLs, one per line.
 - `repos.json` — machine-readable manifest.
-- `fetch_repos.py` — deterministic one-command source clone and Git pin capture.
+- `fetch_repos.py` — explicitly selected source clones and Git pin capture; no default bulk download.
 - `verify_bundle.py` — local source consistency check.
 - `requirements_*.txt` — controlled offline binary dependency candidates.
 - `download_wheels.py` — staged download + wheel SHA256 checksums.
