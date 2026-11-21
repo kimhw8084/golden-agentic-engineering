@@ -1,4 +1,5 @@
 # SHA256 for all source files; excludes this manifest, this writer, Git metadata and ignored runtime output.
+ea6be3e81da8c0570aee5453c8a7f3063c55bfb5e80c31fc748d5eacf305702a  .gitattributes
 e59ec462461db2e7bd4086a5109db3676167c39f1c0ae231ead9754ad7148241  .github/workflows/qualification-tests.yml
 ad653aaee68f321e7e84f2a40c82658290b0d519c896e803f6d4795a7ff96ab1  .gitignore
 c915caef980412964365044fe4ff21d366e683b40651d4b1ec39175d4e06c212  .opencode/agents/golden-architect.md
