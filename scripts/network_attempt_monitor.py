@@ -31,8 +31,12 @@ def run_probe() -> dict:
     if child.returncode != 0:
         raise RuntimeError('Probe subprocess failed; output omitted.')
     result = json.loads(child.stdout)
-    if len(result.get('attempts', [])) != 1 or result.get('outcome') != 'blocked':
-        raise RuntimeError('Expected one observed and blocked socket attempt.')
+    attempt_count = len(result.get('attempts', []))
+    if attempt_count < 1 or result.get('outcome') != 'blocked':
+        raise RuntimeError(
+            'Expected at least one audit-hook-observed attempt blocked before connect; '
+            f'observed={attempt_count} outcome={result.get("outcome", "missing")!r}.'
+        )
     return result
 
 

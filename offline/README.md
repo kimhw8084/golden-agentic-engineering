@@ -8,7 +8,7 @@ This ZIP/TAR is **source-only, not an offline executable distribution**. It incl
 
 `egress-policy.template.json` is a fail-closed policy shape with no default allowed hosts. It is not installed or enforced by Golden. The actual firewall must deny outbound traffic from OpenCode and child tools except a company-approved intranet allowlist; the company security owner must supply that list. Do not add a public model/package/browser-provider fallback. Windows Firewall/App Control and Linux nftables/host firewall need separate policy deployment and administrative review.
 
-`python scripts/network_attempt_monitor.py` runs a local Python audit-hook probe against the reserved documentation IP `203.0.113.1` and blocks it before the OS socket connect. Its test asserts that the **attempt is observed and blocked**. This proves the Python instrumentation path only; it does not test a real OS firewall or monitor Node, browsers, OpenCode, or other child processes. A company test workstation with approved endpoint monitoring is still required.
+`python scripts/network_attempt_monitor.py` runs a local Python audit-hook probe against the reserved documentation IP `203.0.113.1` and blocks it before the OS socket connect. Its test asserts that **at least one attempt is observed and blocked**; the count can vary by platform if the socket library retries multiple address records. This proves the Python instrumentation path only; it does not test a real OS firewall or monitor Node, browsers, OpenCode, or other child processes. A company test workstation with approved endpoint monitoring is still required.
 
 ## Staging recipes
 
