@@ -1,0 +1,107 @@
+{
+  "schema": "golden-precompany-evidence/v1",
+  "status": "PRE_QUALIFICATION",
+  "evidence_date": "2026-11-21",
+  "repository": {
+    "url": "https://github.com/kimhw8084/golden-agentic-engineering",
+    "branch": "main",
+    "visibility": "public",
+    "implementation_base_commit": "b957a1739517027aeae5fbc7c9df3aedd32b4348"
+  },
+  "tests": {
+    "python_unit_suite": {
+      "command": "python -m unittest discover -s tests -q",
+      "status": "PASS",
+      "tests_passed": 136,
+      "tests_failed": 0
+    },
+    "manifest_validation": {
+      "command": "python scripts/validate_manifests.py",
+      "status": "PASS",
+      "summary": "19 rules; 64 source candidates; 12 workflows; 5 agents; 12 skills; 7 commands; 34 typed capability candidates; 17 task decisions; 3 supplemental React notices; 1 unresolved license gap."
+    },
+    "tracked_content_hashes": {
+      "command": "python scripts/verify_contents.py",
+      "status": "PASS",
+      "checked": 195,
+      "missing": 0,
+      "altered": 0,
+      "unlisted": 0
+    },
+    "local_fixture_harness": {
+      "command": "python benchmarks/run_local_fixtures.py --out /private/tmp/golden-local-fixtures-20261121.json --include-react --include-nicegui-ui",
+      "status": "PASS",
+      "committed_evidence": "verification/2026-11-21/local-fixtures-current.json",
+      "react": "PASS: offline npm ci, typecheck, 6 tests, and build",
+      "nicegui_ui": "PASS: 1 user-simulation test; logic fixture has 1 optional skip",
+      "python_api_incident_manufacturing_mcp_proof_routing": "PASS",
+      "browser": "NOT_RUN_PLAYWRIGHT_ASSETS_NOT_STAGED",
+      "scope": "Deterministic synthetic fixtures only; not an OpenCode agent benchmark."
+    },
+    "network_attempt_monitor": {
+      "command": "python scripts/network_attempt_monitor.py",
+      "status": "PASS",
+      "evidence": "One Python loopback socket.connect was observed and rejected before the socket operation.",
+      "limitation": "This audit hook is not an OS firewall and does not monitor OpenCode, Node, browsers, or arbitrary child processes."
+    },
+    "secret_pattern_scan": {
+      "command": "python scripts/security_scan.py --repo . --history",
+      "status": "PASS",
+      "current_files_scanned": 197,
+      "reachable_git_blobs_scanned": 662,
+      "limitation": "High-confidence pattern scan only; it does not establish absence of all proprietary information."
+    },
+    "golden_full_release_checks": [
+      {
+        "project": "examples/python-app",
+        "evidence": "verification/2026-11-21/python-full-current.json",
+        "status": "NOT_QUALIFIED",
+        "blocking_rule_ids": ["AI-001", "API-001", "DATA-001", "DB-001", "JOBS-001", "MCP-001", "OPS-001", "PY-003", "REL-001", "SEC-001"]
+      },
+      {
+        "project": "examples/react-app",
+        "evidence": "verification/2026-11-21/react-full-current.json",
+        "status": "NOT_QUALIFIED",
+        "blocking_rule_ids": ["AI-001", "API-001", "DATA-001", "DB-001", "JOBS-001", "MCP-001", "OPS-001", "REL-001", "SEC-001", "UI-002"]
+      },
+      {
+        "project": "examples/nicegui-app",
+        "evidence": "verification/2026-11-21/nicegui-full-current.json",
+        "status": "NOT_QUALIFIED",
+        "blocking_rule_ids": ["AI-001", "API-001", "DATA-001", "DB-001", "JOBS-001", "MCP-001", "OPS-001", "PY-003", "REL-001", "SEC-001", "UI-002"]
+      }
+    ]
+  },
+  "runtime_probe": {
+    "host_scope": "Local macOS test host only; not company runtime.",
+    "open_code_version": "1.3.9",
+    "public_catalog": "OpenCode logged a models.dev fetch attempt; the isolated follow-up run denied non-loopback networking using macOS Seatbelt.",
+    "repo_v2_config_on_local_v1": "INCOMPATIBLE: the local V1 CLI rejected the V2 mcp.servers configuration.",
+    "temporary_v1_config": "Local synthetic OpenAI-compatible provider was reached over loopback and the CLI exposed a skill tool. A scripted skill call did not complete because the hosted sandbox denied spawning rg.",
+    "evidence": "verification/2026-11-21/opencode-local-runtime-probe.json",
+    "authentic_company_model_or_mcp_calls": "NOT_RUN",
+    "company_runtime_benchmark": "BLOCKED_COMPANY_RUNTIME"
+  },
+  "privacy_review": {
+    "high_confidence_secret_scan": "PASS: zero detected patterns; no match values were emitted.",
+    "reachable_git_history": "662 blobs scanned.",
+    "absolute_user_paths": 0,
+    "private_ipv4_addresses": 0,
+    "email_address_matches": "4 files: three invalid-domain test fixtures and one public upstream license attribution; no company email was identified.",
+    "limitation": "Pattern-based scan only; this does not prove the absence of all proprietary information."
+  },
+  "assets": {
+    "manifest": "offline/assets-manifest.json",
+    "status": "SOURCE_ONLY_NOT_OFFLINE_EXECUTABLE",
+    "required_asset_groups": 6,
+    "staged_asset_groups": 0,
+    "fab_repository_candidates": 38,
+    "fab_repository_sources_staged": 0
+  },
+  "qualification": {
+    "overall": "PRE_QUALIFICATION",
+    "company_approval": "NOT_OBTAINED",
+    "production_deployment": "NOT_AUTHORIZED",
+    "performance_uplift_claim": "NONE"
+  }
+}

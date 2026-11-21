@@ -1,0 +1,44 @@
+{
+  "schema": "golden-opencode-local-probe/v1",
+  "date": "2026-11-21",
+  "scope": "Temporary synthetic repo and config on a local macOS host; not a company OpenCode or internal-model test.",
+  "runtime": {
+    "version": "1.3.9",
+    "generation": "V1"
+  },
+  "network": {
+    "observation": "OpenCode logged a models.dev fetch attempt.",
+    "enforcement_run": "macOS Seatbelt profile denied all network; a later synthetic-provider run allowed loopback only.",
+    "result": "No public destination was allowed in the sandboxed probes. The initial unsandboxed version check failed to connect; it is retained as an attempted fetch, not proof of packet-level egress."
+  },
+  "checks": [
+    {
+      "id": "repo-v2-config-on-v1-cli",
+      "status": "INCOMPATIBLE",
+      "observation": "V1 CLI rejected the repo V2 mcp.servers configuration.",
+      "repo_changed": false
+    },
+    {
+      "id": "temporary-v1-local-provider",
+      "status": "PARTIAL_PASS",
+      "observation": "OpenCode reached a deterministic OpenAI-compatible stub on loopback and advertised its native skill tool."
+    },
+    {
+      "id": "native-skill-call",
+      "status": "BLOCKED",
+      "observation": "The scripted golden-routing skill call failed before loading the skill because the hosted sandbox denied posix_spawn of OpenCode's rg helper.",
+      "skill_body_loaded": false,
+      "synthetic_model_response": "Scripted by the test server; not model reasoning."
+    },
+    {
+      "id": "company-runtime-mcp-and-model",
+      "status": "NOT_RUN"
+    }
+  ],
+  "limitations": [
+    "macOS Seatbelt probe does not qualify Windows/Linux egress enforcement.",
+    "OpenCode error logs are not packet capture or company endpoint-monitor evidence.",
+    "The Python audit-hook monitor covers one CPython socket.connect path only.",
+    "No authenticated invocation trace source is available."
+  ]
+}

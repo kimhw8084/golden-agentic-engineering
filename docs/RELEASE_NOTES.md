@@ -51,6 +51,13 @@
 
 See [`../BUILD_VERIFICATION.md`](../BUILD_VERIFICATION.md) for current commands, test counts, generated evidence, and blockers. The full Python suite and offline React fixture pass locally. The full synthetic-project Golden check intentionally remains non-qualified. Windows/Linux, automated browser checks, internal OpenCode/model, authentic MCP trace, company network controls, third-party dependency approval, and performance comparisons remain `NOT_RUN` or blocked.
 
+## 2026-11-21 pre-company replay
+
+- Added machine-readable pre-company test evidence and offline-asset inventory, including exact full-check blockers and the 38-source fab kit's candidate-only status.
+- Added runtime compatibility, license-gap, and company-owner handoff reports. Confirmed the local OpenCode V1 binary rejects the repository's V2 MCP config and logs a failed public model-catalog fetch; subsequent runtime probes used a localhost-only stub under default-deny Seatbelt.
+- A scripted local skill call reached the V1 skill tool but was blocked before skill loading because the hosted sandbox denied the `rg` subprocess. The company runtime and internal model remain untested.
+- Replayed the 133-test suite plus three evidence consistency tests; deterministic React and NiceGUI fixture checks pass. Full Golden example checks stay non-qualified and browser automation remains unrun.
+
 ## Release limits
 
 Do not label this build company-qualified, fully offline-executable, or production-ready. The team lead and company security/OSS owners must complete the internal checks and approve any later release. The public repository must remain free of company secrets and proprietary details.

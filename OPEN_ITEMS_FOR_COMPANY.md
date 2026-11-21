@@ -2,6 +2,8 @@
 
 These are company-only prerequisites. Repository implementation status and current evidence are in [`docs/QUALIFICATION_MATRIX.md`](docs/QUALIFICATION_MATRIX.md).
 
+The latest exact owner/actions are summarized in [`COMPANY_ONLY_BLOCKERS.md`](COMPANY_ONLY_BLOCKERS.md), with local runtime evidence in [`RUNTIME_COMPATIBILITY_MATRIX.md`](RUNTIME_COMPATIBILITY_MATRIX.md). The local V1 CLI result is not evidence about the company's installed OpenCode.
+
 | Priority | Owner | Required action | Evidence to return |
 |---|---|---|---|
 | P0 | Security / network owner | Enforce default-deny public egress for OpenCode and every child process; allow only explicitly approved intranet/model/package endpoints. Provide endpoint-attempt monitoring on a Windows and Linux pilot host. | Policy/version, approved host allowlist, zero public attempts during approved smoke/evaluation tasks, and proof that an injected test attempt is observed and blocked. |

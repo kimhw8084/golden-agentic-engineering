@@ -1,0 +1,64 @@
+{
+  "schema": "golden-precompany-offline-inventory/v1",
+  "overall_status": "SOURCE_ONLY_NOT_OFFLINE_EXECUTABLE",
+  "required_company_targets": {
+    "windows": "UNKNOWN: company OS build, architecture, Python/Node versions, and browser version not supplied",
+    "linux": "UNKNOWN: company distribution, glibc, architecture, Python/Node versions, and browser version not supplied"
+  },
+  "source_manifest": {
+    "path": "offline/assets-manifest.json",
+    "sha256": "3036d1826b0a82cb9a58035f8a091391d2e62d7e71984daac06f071794a9e20b"
+  },
+  "staged_asset_groups": 0,
+  "assets": [
+    {
+      "name": "Python wheelhouse and dependency locks",
+      "status": "NOT_STAGED",
+      "owner": "Company OSS/package owner",
+      "required_action": "Select target Python ABI/OS/architecture; stage the approved complete wheel closure with hashes, SBOM, and license inventory."
+    },
+    {
+      "name": "React npm lock and offline store",
+      "status": "NOT_STAGED",
+      "partial_evidence": "Locked macOS arm64 fixture passes offline install/typecheck/tests/build; Windows/Linux caches are absent and stackback@0.0.2 license text remains unresolved.",
+      "owner": "Company OSS/package owner",
+      "required_action": "Resolve license review, stage per-target npm caches, and obtain company OSS clearance."
+    },
+    {
+      "name": "Playwright browser binaries",
+      "status": "NOT_STAGED",
+      "owner": "Company browser/tooling owner",
+      "required_action": "Stage matching, hash-verified, licensed browser binaries per supported Windows/Linux target."
+    },
+    {
+      "name": "MCP Python SDK and transitive dependencies",
+      "status": "NOT_STAGED",
+      "owner": "Company OSS/package owner",
+      "required_action": "Pin an official SDK release, review its dependency/license closure, and stage target-compatible wheels."
+    },
+    {
+      "name": "Company OpenCode and internal model evidence",
+      "status": "NOT_STAGED",
+      "owner": "Company OpenCode owner",
+      "required_action": "Supply installed build/config compatibility evidence and an approved internal model trial after the egress gate."
+    },
+    {
+      "name": "OS-enforced no-public-egress policy and attempt monitor",
+      "status": "NOT_STAGED",
+      "owner": "Company security/network owner",
+      "required_action": "Enforce host/network default-deny egress for OpenCode and children, allow approved intranet destinations only, and return monitored blocked-attempt evidence."
+    }
+  ],
+  "fab_sampling_transfer_kit": {
+    "manifest": "fab_sampling_offline_port_kit/repos.json",
+    "manifest_sha256": "387832580abb2737d23a70d22f54b68a0ea3427dce773b5dbbca993899b90f76",
+    "candidate_repository_count": 38,
+    "source_repositories_staged": 0,
+    "wheels_or_models_or_datasets_staged": 0,
+    "status": "CANDIDATE_LIST_ONLY"
+  },
+  "transfer_archive": {
+    "status": "REPRODUCIBLE_SOURCE_ONLY_ARCHIVE; NOT AN EXECUTABLE OFFLINE BUNDLE",
+    "contains_executable_third_party_assets": false
+  }
+}

@@ -2,6 +2,12 @@
 
 **Current state: PRE_QUALIFICATION.** This public repository contains no company data. Transfer it through the approved import path. Golden does not install packages, download models, enable an MCP server, edit provider settings, create a repository, or change company Git state.
 
+## Local runtime evidence (2026-11-21)
+
+The local OpenCode binary reports V1 `1.3.9`; it is not the company's runtime. A non-sandboxed version check logged a failed `models.dev` fetch. Follow-up CLI and synthetic-provider probes ran under macOS Seatbelt with all non-loopback networking denied; the provider probe allowed only a local stub. The V1 binary rejected this repo's V2 `mcp.servers` config. With a temporary V1-compatible config it exposed the native `skill` tool, but the skill call could not complete because the hosted sandbox blocked OpenCode's `rg` child process. This is partial runtime evidence, not a successful skill/MCP/model test. See [`RUNTIME_COMPATIBILITY_MATRIX.md`](RUNTIME_COMPATIBILITY_MATRIX.md).
+
+Do not run OpenCode for a company task until the company security/network owner has enforced and monitored default-deny public egress for it and every child process. A logged failed lookup does not prove that a different host or build is blocked.
+
 ## Step A — offline doctor / dry run
 
 The supported handoff is one command here and one reviewed apply command in Step B. Apply rechecks the approved source archive's checksum and file hashes.

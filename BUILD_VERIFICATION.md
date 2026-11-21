@@ -66,3 +66,12 @@ JSON evidence is unsigned and cannot authenticate who ran a check or prove that 
 - Company CI/artifact/SSO integration.
 
 See [the qualification matrix](docs/QUALIFICATION_MATRIX.md), [offline asset manifest](offline/assets-manifest.json), and [company open items](OPEN_ITEMS_FOR_COMPANY.md) for current gaps and owners.
+
+## Pre-company verification replay — 2026-11-21
+
+- `python -m unittest discover -s tests -q`: 136 tests pass, including checks that the new pre-company evidence and offline inventory agree with their authoritative manifests.
+- `python scripts/validate_manifests.py`: passes. `python scripts/verify_contents.py`: passes after checksum refresh. `python scripts/network_attempt_monitor.py`: one loopback attempt observed and blocked by the CPython audit hook. `python scripts/security_scan.py --repo . --history`: current-file and reachable-history counts are recorded in `PRECOMPANY_EVIDENCE.json` after the final scan.
+- `python benchmarks/run_local_fixtures.py --include-react --include-nicegui-ui`: deterministic scenarios pass; offline React typecheck, six tests, and build pass; NiceGUI UI simulation passes. Playwright browser journey remains `NOT_RUN` because browser binaries are not staged.
+- Fresh Golden `--full` checks ran for the Python, React, and NiceGUI fixtures. Each correctly returns exit 2 and preserves missing evidence as blockers; detailed records are in `verification/2026-11-21/*-full-current.json`.
+- The local OpenCode V1 probe and its failed skill-tool attempt are recorded in `verification/2026-11-21/opencode-local-runtime-probe.json`. The V2 project config mismatch, logged `models.dev` fetch, localhost-only test stub, and sandbox-blocked `rg` helper do not qualify a company runtime.
+- `PRECOMPANY_COMPLETION_REPORT.md`, `RUNTIME_COMPATIBILITY_MATRIX.md`, `DEPENDENCY_LICENSE_REPORT.md`, `OFFLINE_ASSET_INVENTORY.json`, and `COMPANY_ONLY_BLOCKERS.md` carry the exact handoff status. Overall status remains `PRE_QUALIFICATION`.

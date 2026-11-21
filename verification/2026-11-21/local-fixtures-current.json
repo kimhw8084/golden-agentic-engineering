@@ -1,0 +1,244 @@
+{
+  "schema": "golden-local-fixture-run/v1",
+  "generated_at_utc": "2026-11-21T14:33:14.158605+00:00",
+  "environment": {
+    "os": "Darwin",
+    "architecture": "arm64",
+    "python": "3.11.7"
+  },
+  "network_policy": "No fixture calls public services. Python unit tests run with site imports disabled; optional NiceGUI simulation uses in-process ASGI transport; optional React installation is forced offline. No model, browser, or provider is started.",
+  "cases": [
+    {
+      "id": "python-small-fix",
+      "status": "PASS",
+      "tests_run": 1,
+      "tests_skipped": 0,
+      "tests_passed": 1,
+      "elapsed_seconds": 0.028745,
+      "command": [
+        "python",
+        "-S",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "examples/python-app/tests",
+        "-p",
+        "test_*.py",
+        "-q"
+      ],
+      "output_sha256": "5914a00b30739818e764337ed45d346bbea6db8c2e5824349ed85f584021afb8"
+    },
+    {
+      "id": "nicegui-logic",
+      "status": "PASS",
+      "tests_run": 4,
+      "tests_skipped": 1,
+      "tests_passed": 3,
+      "elapsed_seconds": 0.051285,
+      "command": [
+        "python",
+        "-S",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "examples/nicegui-app/tests",
+        "-p",
+        "test_*.py",
+        "-q"
+      ],
+      "output_sha256": "3f22bfe6a5bfb4db6e8d7934a7bd46ebf253144e8d178bf261d0573ee431f701"
+    },
+    {
+      "id": "api-sqlite-contract",
+      "status": "PASS",
+      "tests_run": 2,
+      "tests_skipped": 0,
+      "tests_passed": 2,
+      "elapsed_seconds": 0.032626,
+      "command": [
+        "python",
+        "-S",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "examples/scenarios/api_db",
+        "-p",
+        "test_*.py",
+        "-q"
+      ],
+      "output_sha256": "376bd4637ce939c00f9c93c3a1042c1c2ee33f11c4de836525e01c86a6e2c22b"
+    },
+    {
+      "id": "incident-timeline",
+      "status": "PASS",
+      "tests_run": 1,
+      "tests_skipped": 0,
+      "tests_passed": 1,
+      "elapsed_seconds": 0.029405,
+      "command": [
+        "python",
+        "-S",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "examples/scenarios/incident",
+        "-p",
+        "test_*.py",
+        "-q"
+      ],
+      "output_sha256": "5914a00b30739818e764337ed45d346bbea6db8c2e5824349ed85f584021afb8"
+    },
+    {
+      "id": "manufacturing-sampling",
+      "status": "PASS",
+      "tests_run": 6,
+      "tests_skipped": 0,
+      "tests_passed": 6,
+      "elapsed_seconds": 0.030831,
+      "command": [
+        "python",
+        "-S",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "examples/scenarios/manufacturing",
+        "-p",
+        "test_*.py",
+        "-q"
+      ],
+      "output_sha256": "f3b6cbca80f78a58badc70541b02e7ba7f323894e9a2c10c21e25315cc0b9119"
+    },
+    {
+      "id": "mcp-synthetic-contract",
+      "status": "PASS",
+      "tests_run": 6,
+      "tests_skipped": 0,
+      "tests_passed": 6,
+      "elapsed_seconds": 0.054988,
+      "command": [
+        "python",
+        "-S",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_mcp_fixture.py",
+        "-q"
+      ],
+      "output_sha256": "789076d9b046c11a7b87541c93c5dc88ebb8cc3f129326f464b656b95b94fd36"
+    },
+    {
+      "id": "golden-proof",
+      "status": "PASS",
+      "tests_run": 38,
+      "tests_skipped": 0,
+      "tests_passed": 38,
+      "elapsed_seconds": 0.69651,
+      "command": [
+        "python",
+        "-S",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_golden.py",
+        "-q"
+      ],
+      "output_sha256": "6289e0f8e2da7274ee634d257dd05b90f529c7509003409431174d2c292c1696"
+    },
+    {
+      "id": "golden-routing",
+      "status": "PASS",
+      "tests_run": 18,
+      "tests_skipped": 0,
+      "tests_passed": 18,
+      "elapsed_seconds": 0.100368,
+      "command": [
+        "python",
+        "-S",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_routing.py",
+        "-q"
+      ],
+      "output_sha256": "377fcc202141da15833d640f23a50b9ecf87ced3bdc9486806b58f9d8d0fc7b3"
+    }
+  ],
+  "react": {
+    "status": "PASS",
+    "tests_run": 6,
+    "commands": [
+      {
+        "args": [
+          "ci",
+          "--offline",
+          "--ignore-scripts",
+          "--no-audit",
+          "--no-fund"
+        ],
+        "exit_code": 0
+      },
+      {
+        "args": [
+          "run",
+          "typecheck"
+        ],
+        "exit_code": 0
+      },
+      {
+        "args": [
+          "run",
+          "test"
+        ],
+        "exit_code": 0
+      },
+      {
+        "args": [
+          "run",
+          "build"
+        ],
+        "exit_code": 0
+      }
+    ],
+    "elapsed_seconds": 4.415825,
+    "output_sha256": "606bce7ea445f2e42f1b823ba8411417ac501f627ac25fa01a2bd2dddb3cab5f"
+  },
+  "nicegui_ui": {
+    "status": "PASS",
+    "tests_run": 1,
+    "versions": {
+      "nicegui": "3.15.0",
+      "pytest": "8.4.2"
+    },
+    "elapsed_seconds": 1.199495,
+    "command": [
+      "python",
+      "-m",
+      "pytest",
+      "-q",
+      "-p",
+      "no:cacheprovider",
+      "tests/test_ui.py"
+    ],
+    "output_sha256": "0851eb1fe18f14c02158d7b727a84644de365a2bbdccc5f2d0f0a0e723b8ff96"
+  },
+  "browser": {
+    "status": "NOT_RUN_PLAYWRIGHT_ASSETS_NOT_STAGED",
+    "required_action": "Stage approved Playwright browser binaries before UI journey/accessibility tests."
+  },
+  "scope": "Local deterministic fixture tests only; optional React scripts are forced offline. Not an agent comparison, company OpenCode run, or productivity benchmark.",
+  "status": "PASS"
+}

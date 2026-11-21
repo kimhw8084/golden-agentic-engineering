@@ -1,6 +1,6 @@
 {
   "schema": "golden-evidence/v0.1",
-  "generated_at_utc": "2026-11-21T06:36:13.847748+00:00",
+  "generated_at_utc": "2026-11-21T14:42:00.952685+00:00",
   "golden_version": "0.1.0-dev",
   "rules_sha256": "ce47462f54550bc60b9d30989bd56825257bd21f6b8721d1b28855dd58e61449",
   "project_manifest_sha256": "a37290b5e4fe9bb153614049146bdbd614f7b661b4b0b76c27cc9af8637a8d61",
@@ -46,7 +46,7 @@
       "mandatory": true,
       "stage": "full",
       "evidence": "Git worktree detected.",
-      "duration_ms": 10.72
+      "duration_ms": 11.83
     },
     {
       "rule_id": "PY-001",
@@ -82,7 +82,7 @@
       "mandatory": true,
       "stage": "full",
       "evidence": "Exit=0; locked local TypeScript compiler allowlist; argv_sha256=a1b93236f7bcbe4cf8edd74f469f2234cdc2e6722414f6236a5a99b242acad79; executable_sha256=3b78c226730ec2d7b65704113f63ce3c04a8168cdf990390ec3adfc0a356d87f; output_bytes=0; output_sha256=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855; locked_typescript=5.9.3; compiler_sha256=8d5fa5bd883fec0979fc2004f1fe1d99aef40570155d550eadc0b03b55513bf0",
-      "duration_ms": 665.92
+      "duration_ms": 994.42
     },
     {
       "rule_id": "WEB-002",
@@ -90,8 +90,8 @@
       "status": "PASS",
       "mandatory": true,
       "stage": "full",
-      "evidence": "Exit=0; locked local Vitest runner allowlist; argv_sha256=be78b9a7c0a543837457eb56270af991bc4dc2d392354849b8c0ea4a2ab81c54; executable_sha256=3b78c226730ec2d7b65704113f63ce3c04a8168cdf990390ec3adfc0a356d87f; output_bytes=107; output_sha256=b45286c29afe9492bd5cac7f45282a9225398e4386084edbc0de80626c965258; locked_vitest=4.0.8; tests_run=6; tests_passed=6; tests_pending=0; tests_failed=0; vitest_entry_sha256=39db22f579acf5639bbb17a261408debbde03f4692c0c439e77e7f13aeba74d6; test_result_sha256=d0cb65f8c2b807018716624b504ebfdb009a944046f5e3f86aefad07f5f06e57",
-      "duration_ms": 503.54
+      "evidence": "Exit=0; locked local Vitest runner allowlist; argv_sha256=be78b9a7c0a543837457eb56270af991bc4dc2d392354849b8c0ea4a2ab81c54; executable_sha256=3b78c226730ec2d7b65704113f63ce3c04a8168cdf990390ec3adfc0a356d87f; output_bytes=107; output_sha256=16c22b18d007be037133aaff044c81938638c04ebcb75b711962ab0146dd2337; locked_vitest=4.0.8; tests_run=6; tests_passed=6; tests_pending=0; tests_failed=0; vitest_entry_sha256=39db22f579acf5639bbb17a261408debbde03f4692c0c439e77e7f13aeba74d6; test_result_sha256=241bcbcc10122f6b2afd371dfe5aa4556cc28cc7ca00ffc7010e99135cafbdcf",
+      "duration_ms": 738.35
     },
     {
       "rule_id": "UI-001",
@@ -99,8 +99,8 @@
       "status": "PASS",
       "mandatory": true,
       "stage": "full",
-      "evidence": "Exit=0; locked local Vitest runner allowlist; argv_sha256=be78b9a7c0a543837457eb56270af991bc4dc2d392354849b8c0ea4a2ab81c54; executable_sha256=3b78c226730ec2d7b65704113f63ce3c04a8168cdf990390ec3adfc0a356d87f; output_bytes=107; output_sha256=b7409d2c9e57433aadcaf5b812a2ff5fe60479ad1cd5f7d5906e3665844cc33e; locked_vitest=4.0.8; tests_run=6; tests_passed=6; tests_pending=0; tests_failed=0; vitest_entry_sha256=39db22f579acf5639bbb17a261408debbde03f4692c0c439e77e7f13aeba74d6; test_result_sha256=3f1c4be03549aae23ab61f0f5b4b6762404b0597aa0135b371cef392c2afdff4",
-      "duration_ms": 496.23
+      "evidence": "Exit=0; locked local Vitest runner allowlist; argv_sha256=be78b9a7c0a543837457eb56270af991bc4dc2d392354849b8c0ea4a2ab81c54; executable_sha256=3b78c226730ec2d7b65704113f63ce3c04a8168cdf990390ec3adfc0a356d87f; output_bytes=107; output_sha256=44d57e8243c2145527d9039ad7e45ea774ef0370f383a01528742bddd074daaa; locked_vitest=4.0.8; tests_run=6; tests_passed=6; tests_pending=0; tests_failed=0; vitest_entry_sha256=39db22f579acf5639bbb17a261408debbde03f4692c0c439e77e7f13aeba74d6; test_result_sha256=11b5a484d326a09c0021cc0957ecc227e92975c309148ada0d6a14c6b6be4467",
+      "duration_ms": 548.12
     },
     {
       "rule_id": "UI-002",
@@ -118,7 +118,7 @@
       "mandatory": true,
       "stage": "full",
       "evidence": "Applicability evidence missing for capabilities ['api']; false declarations alone do not prove non-applicability.",
-      "duration_ms": 0.0
+      "duration_ms": 0.01
     },
     {
       "rule_id": "DB-001",

@@ -108,6 +108,10 @@ The project OpenCode config selects `golden-engineer` as the default primary age
 - [`docs/ARCHITECTURE_VIEW.html`](docs/ARCHITECTURE_VIEW.html) — self-contained visual system diagram (desktop/phone)
 - [`docs/TOOL_BROWSER.html`](docs/TOOL_BROWSER.html) — offline searchable 64-source catalog
 - [`COMPANY_START_HERE.md`](COMPANY_START_HERE.md) — exact offline doctor/apply steps for Windows and Linux
+- [`PRECOMPANY_COMPLETION_REPORT.md`](PRECOMPANY_COMPLETION_REPORT.md) and [`PRECOMPANY_EVIDENCE.json`](PRECOMPANY_EVIDENCE.json) — executed checks, truthful blockers, and company handoff prompt
+- [`RUNTIME_COMPATIBILITY_MATRIX.md`](RUNTIME_COMPATIBILITY_MATRIX.md) — local OpenCode probe versus company-only runtime requirements
+- [`OFFLINE_ASSET_INVENTORY.json`](OFFLINE_ASSET_INVENTORY.json) and [`DEPENDENCY_LICENSE_REPORT.md`](DEPENDENCY_LICENSE_REPORT.md) — unstaged targets and unresolved review work
+- [`COMPANY_ONLY_BLOCKERS.md`](COMPANY_ONLY_BLOCKERS.md) — exact owners and evidence needed for qualification
 - [`START_HERE_COMPANY_OPENCODE.md`](START_HERE_COMPANY_OPENCODE.md) — historical runtime pilot prompt; follow the no-egress gate first
 - [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) — exact responsibilities and interfaces
 - [`docs/FASTEST_IMPLEMENTATION.md`](docs/FASTEST_IMPLEMENTATION.md) — staged team adoption and acceptance
