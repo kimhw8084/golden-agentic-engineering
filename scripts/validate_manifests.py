@@ -88,6 +88,7 @@ def validate() -> list[str]:
         'schemas/task-routing.schema.json', 'schemas/capability-selection.schema.json',
         'research/capability-selection.json',
         'benchmarks/cases.json',
+        'integrations/mcp/github-enterprise-readonly.example.json',
         'offline/assets-manifest.json', 'offline/egress-policy.template.json',
     ]
     documents = {}
@@ -209,6 +210,20 @@ def validate() -> list[str]:
     fixture = mcp.get('golden-synthetic-readonly')
     if not isinstance(fixture, dict) or fixture.get('disabled') is not True:
         errors.append('synthetic MCP fixture must exist and remain disabled')
+    github_template = documents['integrations/mcp/github-enterprise-readonly.example.json']
+    github_servers = github_template.get('mcp', {}).get('servers', {}) if isinstance(github_template.get('mcp'), dict) else {}
+    github = github_servers.get('github-enterprise-readonly') if isinstance(github_servers, dict) else None
+    github_env = github.get('environment', {}) if isinstance(github, dict) else {}
+    github_command = github.get('command', []) if isinstance(github, dict) else []
+    if (not isinstance(github, dict) or github.get('type') != 'local' or github.get('disabled') is not True
+            or github.get('protocol') != 'legacy'
+            or not isinstance(github_command, list) or len(github_command) != 4
+            or github_command[0] != 'github-mcp-server'
+            or github_command[1:] != ['--read-only', '--toolsets', 'repos,issues,pull_requests,actions']
+            or not isinstance(github_env, dict)
+            or github_env.get('GITHUB_HOST') != 'https://replace-with-approved-internal-ghes-hostname.invalid'
+            or github_env.get('GITHUB_PERSONAL_ACCESS_TOKEN') != '{env:GITHUB_PERSONAL_ACCESS_TOKEN}'):
+        errors.append('GitHub MCP example must remain disabled, local, read-only, narrowly scoped, and use non-routable placeholders')
     assets = documents['offline/assets-manifest.json']
     asset_rows = assets.get('assets')
     required_asset_names = {

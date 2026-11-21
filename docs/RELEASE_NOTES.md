@@ -1,4 +1,4 @@
-# Pre-qualification implementation notes — 2026-11-20
+# Pre-qualification implementation notes — 2026-11-21
 
 **Version:** `v0.1.0-dev`
 
@@ -38,7 +38,8 @@
 - Refined public capability evidence: pinned Promptfoo 0.126.0's release/license and documented offline opt-outs with its upstream warning that they are not a firewall; clarified Grafana MCP query-tool write risk through datasource credentials. Both remain unapproved, unstaged evaluation candidates without a matched company task.
 - Tightened the v2 company doctor asset gate: `STAGED` requires explicit per-platform/runtime target records and hashes for target payloads plus the appropriate source-lock/SBOM/license, runtime compatibility, or egress-policy/attempt evidence. OSS approval remains an unauthenticated declaration; the six checked-in asset groups remain `NOT_STAGED`, and Golden still does not enforce the host firewall.
 - Kept the semiconductor sampling transfer kit generic and source-only. It contains no private dataset or company-specific schema.
-- Added a local-only searchable capability explorer to Golden Control. It surfaces the 17 task decisions and 31 candidate records with pinned commits, license/dependency/platform/offline/permission/prompt-safety evidence, and explicit measurement and approval gaps. Search and type filters never contact public services; the UI does not infer installation, runtime availability, or performance.
+- Added a local-only searchable capability explorer to Golden Control. It surfaces the 17 task decisions and 32 candidate records with pinned commits, license/dependency/platform/offline/permission/prompt-safety evidence, and explicit measurement and approval gaps. Search and type filters never contact public services; the UI does not infer installation, runtime availability, or performance.
+- Added GitHub's official v2.2.0 MCP server as a conditional read-only internal-GHES evaluation candidate and a disabled OpenCode template using an external environment variable for the PAT. The route surfaces it for remote issue/PR/Actions context only. The Go module closure, staged binaries, host compatibility, endpoint policy and matched MCP-vs-CLI result remain unverified; no server is enabled.
 - Expanded the pinned agentic browser review to include agent-browser's versioned skill/CLI/MCP, Chrome DevTools MCP's security advisories, and Browser Use's autonomous agent/MCP framework. Browser routing now exposes agentic candidates first and returns the matching selection rationale and measured-or-blocked state; no unapproved candidate is enabled or called a winner.
 
 ## Verification

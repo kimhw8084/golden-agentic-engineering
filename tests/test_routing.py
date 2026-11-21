@@ -38,6 +38,27 @@ class TaskRoutingTests(unittest.TestCase):
             self.assertIn(row['selection_task'], decisions, row['id'])
             self.assertEqual(golden_route.route_for(row['id'])['capability_selection']['task'], row['selection_task'])
 
+    def test_github_context_route_surfaces_only_the_disabled_internal_mcp_candidate(self):
+        route = golden_route.route_for('golden-upstream-improvement')
+        self.assertEqual(route['mcp']['configured_for_route'], [])
+        self.assertEqual(route['mcp']['evaluation_candidates_only'], ['github-github-mcp-server'])
+        candidate = next(item for item in route['capability_candidates']
+                         if item['id'] == 'github-github-mcp-server')
+        self.assertEqual(candidate['decision'], 'EVALUATION_CANDIDATE_READ_ONLY_INTERNAL_GHES_ONLY; NOT_STAGED_OR_APPROVED')
+        self.assertIn('approved intranet GitHub Enterprise Server', route['mcp']['policy'])
+        self.assertIn('read-only mode', route['capability_selection']['current_choice'])
+
+    def test_github_enterprise_mcp_example_keeps_secret_external_and_server_disabled(self):
+        config = json.loads((ROOT / 'integrations' / 'mcp' / 'github-enterprise-readonly.example.json').read_text())
+        server = config['mcp']['servers']['github-enterprise-readonly']
+        self.assertIs(server['disabled'], True)
+        self.assertEqual(server['type'], 'local')
+        self.assertEqual(server['command'][0], 'github-mcp-server')
+        self.assertIn('--read-only', server['command'])
+        self.assertIn('repos,issues,pull_requests,actions', server['command'])
+        self.assertEqual(server['environment']['GITHUB_PERSONAL_ACCESS_TOKEN'], '{env:GITHUB_PERSONAL_ACCESS_TOKEN}')
+        self.assertTrue(server['environment']['GITHUB_HOST'].endswith('.invalid'))
+
     def test_project_uses_golden_primary_and_small_fixes_skip_skill_loading(self):
         config = json.loads((ROOT / '.opencode' / 'opencode.json').read_text())
         agent = (ROOT / '.opencode' / 'agents' / 'golden-engineer.md').read_text()

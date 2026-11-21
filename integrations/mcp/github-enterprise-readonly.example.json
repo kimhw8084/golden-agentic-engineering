@@ -1,0 +1,21 @@
+{
+  "mcp": {
+    "servers": {
+      "github-enterprise-readonly": {
+        "type": "local",
+        "command": [
+          "github-mcp-server",
+          "--read-only",
+          "--toolsets",
+          "repos,issues,pull_requests,actions"
+        ],
+        "environment": {
+          "GITHUB_HOST": "https://replace-with-approved-internal-ghes-hostname.invalid",
+          "GITHUB_PERSONAL_ACCESS_TOKEN": "{env:GITHUB_PERSONAL_ACCESS_TOKEN}"
+        },
+        "disabled": true,
+        "protocol": "legacy"
+      }
+    }
+  }
+}

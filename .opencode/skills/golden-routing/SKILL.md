@@ -20,7 +20,7 @@ Machine-readable task routes live in [`workflows/task-routing.json`](../../../wo
 | `browser-ui-verification` | `golden-react` or `golden-nicegui` | `golden-verifier` for independent acceptance; Playwright MCP remains a candidate. |
 | `technical-docs-sop-diagrams` | `golden-docs` | `cathrynlavery/diagram-design` is an evaluation candidate; Mermaid/SVG is the local fallback. |
 | `release-qualification` | `golden-release` | `golden-verifier` for independent evidence review. |
-| `golden-upstream-improvement` | `golden-offline-toolchain` | `golden-engineer` only for a bounded, independent implementation slice. |
+| `golden-upstream-improvement` | `golden-offline-toolchain` | For issue/PR/Actions context, evaluate the disabled GitHub MCP template only against an approved internal GHES endpoint; `golden-engineer` only for a bounded, independent implementation slice. |
 
 Choose tools by evidence, not by a CLI-first default, while keeping selection overhead proportional to the task.
 

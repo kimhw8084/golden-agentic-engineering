@@ -6,6 +6,14 @@ MCP belongs in the initial capability inventory alongside OpenCode agents and sk
 
 The repo-local OpenCode V2 example entry is present in root `opencode.json` and `.opencode/opencode.json` with `disabled: true` and legacy protocol pinned. Neither config file is copied into a company config by bootstrap. Runtime public internet is not allowed. OpenCode's public V2 docs define local servers as stdio commands and use `disabled: true`; verify against the internal build before adopting that shape: https://opencode.ai/docs/mcp-servers/.
 
+## GitHub Enterprise read-only candidate
+
+[`github-enterprise-readonly.example.json`](github-enterprise-readonly.example.json) is a disabled configuration example for GitHub's official local MCP server v2.2.0. It targets only an approved **internal GitHub Enterprise Server** host, selects repository/issue/pull-request/Actions toolsets, and sets upstream `--read-only`. It does not use GitHub's remote MCP service, GitHub.com, GitHub Enterprise Cloud, or an online container image. The `.invalid` hostname is a placeholder; place the approved per-platform `github-mcp-server` executable on the managed `PATH` only after staging and review.
+
+The template reads `GITHUB_PERSONAL_ACCESS_TOKEN` from the OpenCode process environment through OpenCode's `{env:NAME}` substitution. Put that value in the company's approved credential mechanism, never in this repository or a committed OpenCode config. Server read-only mode hides write tools but does not replace least-privilege PAT permissions, GHES authorization, or default-deny network controls. Keep the server disabled until the internal OpenCode schema/build, staged binary/module/SBOM/license package, GHES endpoint, token handling, permission scope, and Windows/Linux behavior have passed company review. This is an evaluation template, not an enabled or approved integration.
+
+For local code edits and commits, keep using the existing Git workflow. Compare the MCP with another path only for a matching remote task such as reading issue/PR/Actions context, using the same acceptance criteria. The server's GitHub API audit entries are not by themselves proof that a specific OpenCode MCP tool was invoked.
+
 Public OpenCode V2 example shape, **not tested against your internal build**:
 
 ```json

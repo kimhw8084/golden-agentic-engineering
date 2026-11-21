@@ -515,8 +515,13 @@
           "when": "A bounded implementation slice can be separated from primary integration."
         }
       ],
-      "mcp_candidates": [],
-      "mcp_policy": "Use only if already connected and explicitly company-approved; otherwise do not connect or invoke.",
+      "mcp_candidates": [
+        "github-github-mcp-server"
+      ],
+      "capability_candidates": [
+        "github-github-mcp-server"
+      ],
+      "mcp_policy": "Evaluation-only. For issue, pull-request, or Actions context, use only a staged local server targeting an explicitly approved intranet GitHub Enterprise Server, with read-only mode and narrow tool allowlists. Never use the GitHub-hosted remote MCP or a public GitHub/GHEC endpoint at company runtime.",
       "selection_task": "Golden upstream improvement"
     }
   ]
