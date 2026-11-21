@@ -4,13 +4,14 @@
 
 **Environment:** macOS 25.6.0 arm64; Python 3.11.7 for the latest repository and fixture runs; Node 26.13.0, npm 11.20.0. The local OpenCode path/version metadata is incomplete, so compatibility is `UNKNOWN`. Six required company/offline assets remain unstaged.
 
-**Runtime boundary:** Results cover this checkout and synthetic fixtures only. They are not Windows, managed Linux, company OpenCode, internal model, firewall, hosted CI, or company network evidence.
+**Runtime boundary:** Results cover this checkout and synthetic fixtures. GitHub-hosted source CI passed on Ubuntu and Windows Server 2025 with Python 3.10, 3.11, and 3.14 (run [#7](https://github.com/kimhw8084/golden-agentic-engineering/actions/runs/44846261444), commit `c650284`). That matrix does not qualify company-managed hosts, company OpenCode, the internal model, firewall policy, or company network behavior.
 
 ## Tests and checks run
 
 | Check | Result |
 |---|---|
-| `python -m unittest discover -s tests -v` | PASS — 69 repository tests. Covers bootstrap doctor/apply/repeat/rollback, default config-root selection and safe fresh-root creation, staged asset evidence, npm audit safeguards, benchmark case/status validation, transfer-kit path/origin/symlink/overwrite checks, Golden Proof, routing, MCP fixture, security scanner, network monitor, and synthetic scenarios. |
+| [GitHub Actions source qualification matrix](https://github.com/kimhw8084/golden-agentic-engineering/actions/runs/44846261444) | PASS — six jobs on Ubuntu/Windows Server 2025 × Python 3.10/3.11/3.14. Each ran the repository unit suite, route/manifest validation, credential-pattern scan, and Golden fast checks. Hosted runners are not company or air-gap evidence. |
+| `python -m unittest discover -s tests -v` | PASS — 69 repository tests. Covers bootstrap doctor/apply/repeat/rollback, default config-root selection and safe fresh-root creation, staged asset evidence, npm audit safeguards, benchmark case/status validation, transfer-kit path/origin/symlink/overwrite checks, Golden Proof, routing, MCP fixture, security scanner, synthetic Python audit-hook dispatch, and synthetic scenarios. |
 | `python benchmarks/run_local_fixtures.py --include-react --out verification/2026-11-20/local-fixtures.json` | PASS — 47 Python fixture tests plus six React logic/component tests; React `npm ci` ran with `--offline --ignore-scripts --no-audit --no-fund`, then typecheck, Vitest, and Vite build. Browser automation remains unrun. This is not an agent or productivity comparison. |
 | React `npm ci --offline --ignore-scripts --no-audit --no-fund` | PASS — 82 packages installed from the local npm cache on macOS arm64; no lifecycle scripts. |
 | React `npm run typecheck`, `npm run test`, `npm run build` | PASS — TypeScript clean; six tests across two files; Vite transformed 30 modules. |
@@ -41,12 +42,12 @@ JSON evidence is unsigned and cannot authenticate who ran a check or prove that 
 
 ## Not tested / remaining limits
 
-- Windows and a separate managed Linux host, including bootstrap/apply/rollback abuse cases and their npm caches.
+- Company-managed Windows/Linux hosts; platform-specific Node/npm caches, NiceGUI/browser workflows, and apply/rollback qualification against actual company OpenCode installations.
 - Playwright browser automation, NiceGUI browser/UI checks, and a formal accessibility audit.
 - Company OpenCode discovery, agent/skill use, internal model, connected MCPs, or invocation-event provenance.
 - OS-enforced no-public-egress policy and attempt monitoring across OpenCode and all child processes.
 - Full dependency/source license closure, the four missing npm license texts, company OSS clearance, and staged Windows/Linux executable assets.
 - Paired agentic-vs-CLI or plain-OpenCode-vs-Golden measurements. No uplift, latency, token, request, or productivity claims are made.
-- Hosted GitHub CI or company CI/artifact/SSO integration.
+- Company CI/artifact/SSO integration.
 
 See [the qualification matrix](docs/QUALIFICATION_MATRIX.md), [offline asset manifest](offline/assets-manifest.json), and [company open items](OPEN_ITEMS_FOR_COMPANY.md) for current gaps and owners.
