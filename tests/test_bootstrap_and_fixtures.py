@@ -545,6 +545,26 @@ class SyntheticExampleTests(unittest.TestCase):
             packager.check_sensitive(Path('fixture.txt'), synthetic_value.encode())
         self.assertNotIn(synthetic_value, str(caught.exception))
 
+    def test_source_bundle_creation_rejects_sensitive_file_before_writing_archive(self):
+        with tempfile.TemporaryDirectory() as d:
+            folder = Path(d)
+            repo = folder / 'repo'
+            repo.mkdir()
+            synthetic_value = 'github_pat_' + 'Q' * 32
+            (repo / 'fixture.txt').write_text(synthetic_value)
+            subprocess.run(['git', '-C', str(repo), 'init', '-q'], check=True)
+            subprocess.run(['git', '-C', str(repo), 'config', 'user.email', 'test@example.invalid'], check=True)
+            subprocess.run(['git', '-C', str(repo), 'config', 'user.name', 'Package Scan Test'], check=True)
+            subprocess.run(['git', '-C', str(repo), 'add', 'fixture.txt'], check=True)
+            subprocess.run(['git', '-C', str(repo), 'commit', '-qm', 'synthetic package scan fixture'], check=True)
+            archive = folder / 'source.tar.gz'
+
+            with self.assertRaisesRegex(ValueError, 'Possible secret material detected in fixture.txt') as caught:
+                packager.create_bundle(repo, archive)
+
+            self.assertNotIn(synthetic_value, str(caught.exception))
+            self.assertFalse(archive.exists())
+
     def test_secret_scanner_recognizes_common_token_families_and_ignores_placeholders(self):
         samples = [
             ('github_token', 'ghp_' + 'A' * 36),
