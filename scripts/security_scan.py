@@ -33,16 +33,13 @@ def scan_text(text: str, relative: str) -> list[dict]:
     for number, line in enumerate(text.splitlines(), 1):
         for kind, pattern in PATTERNS:
             match = pattern.search(line)
-            if match and not PLACEHOLDER.search(match.group(0)):
+            if match and not (kind == 'credential_assignment' and PLACEHOLDER.search(match.group(0))):
                 findings.append({'file': relative, 'line': number, 'kind': kind})
     return findings
 
 
 def scan_file(path: Path, relative: str) -> list[dict]:
-    try:
-        text = path.read_text(encoding='utf-8')
-    except (UnicodeError, OSError):
-        return []
+    text = path.read_bytes().decode('utf-8', errors='ignore')
     return scan_text(text, relative)
 
 
@@ -99,10 +96,7 @@ def scan_history(repo: Path) -> tuple[list[dict], int]:
             if object_type == b'blob':
                 scanned_blobs += 1
                 data = object_output.read(size)
-                try:
-                    text = data.decode('utf-8')
-                except UnicodeDecodeError:
-                    text = ''
+                text = data.decode('utf-8', errors='ignore')
                 if text:
                     oid_text = oid.decode('ascii')
                     relative = f"history:{paths.get(oid_text, oid_text)}@blob:{oid_text[:12]}"
@@ -127,7 +121,13 @@ def main() -> int:
              and not any(part in excluded for part in path.relative_to(repo).parts)]
     for path in files:
         if path.is_file() and not path.is_symlink():
-            findings.extend(scan_file(path, path.relative_to(repo).as_posix()))
+            relative = path.relative_to(repo).as_posix()
+            try:
+                findings.extend(scan_file(path, relative))
+            except OSError:
+                safe_path = json.dumps(relative, ensure_ascii=True)
+                print(f'SECRET_PATTERN_SCAN_INCOMPLETE unreadable_file={safe_path} no_values_emitted=true', file=sys.stderr)
+                return 3
     if args.history:
         try:
             history_findings, history_blobs = scan_history(repo)

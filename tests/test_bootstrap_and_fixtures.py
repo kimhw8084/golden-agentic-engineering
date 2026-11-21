@@ -559,7 +559,10 @@ class SyntheticExampleTests(unittest.TestCase):
         for _, token in samples:
             self.assertNotIn(token, json.dumps(findings))
         placeholder_token = 'github_pat_' + 'placeholder' + 'Q' * 24
-        self.assertEqual(security_scan.scan_text(placeholder_token, 'docs.txt'), [])
+        self.assertEqual([item['kind'] for item in security_scan.scan_text(placeholder_token, 'docs.txt')],
+                         ['github_fine_grained_token'])
+        placeholder_assignment = 'api_key = "' + 'example_' + 'Q' * 24 + '"'
+        self.assertEqual(security_scan.scan_text(placeholder_assignment, 'docs.txt'), [])
         self.assertEqual([item['line'] for item in findings], list(range(1, len(samples) + 1)))
 
     def test_secret_scanner_finds_deleted_secret_in_reachable_history_without_emitting_value(self):
@@ -621,13 +624,17 @@ class SyntheticExampleTests(unittest.TestCase):
             hidden.mkdir(parents=True)
             private_value = 'localTestCredential_' + 'ZXY123456789'
             (hidden / 'SKILL.md').write_text('api' + '_key = ' + repr(private_value) + '\n')
+            binary_value = 'ghp_' + 'Z' * 40
+            (hidden / 'fixture.bin').write_bytes(b'\xffbinary-prefix:' + binary_value.encode() + b'\x00')
             (root / '.git').mkdir(); (root / '.git' / 'ignored.txt').write_text('password="' + private_value + '"')
             result = subprocess.run([sys.executable, '-S', str(ROOT / 'scripts' / 'security_scan.py'), '--repo', d],
                                     capture_output=True, text=True, check=False)
             self.assertEqual(result.returncode, 2)
             self.assertIn('.opencode/skills/fixture/SKILL.md', result.stdout)
+            self.assertIn('.opencode/skills/fixture/fixture.bin', result.stdout)
             self.assertNotIn('ignored.txt', result.stdout)
             self.assertNotIn(private_value, result.stdout)
+            self.assertNotIn(binary_value, result.stdout)
 
     def test_api_sqlite_contract_and_incident_timeline(self):
         api_dir = ROOT / 'examples' / 'scenarios' / 'api_db'
