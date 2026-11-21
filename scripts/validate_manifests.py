@@ -9,6 +9,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 from golden_route import validation_errors as validate_route_references
+from react_license_supplements import validate as validate_react_license_supplements
 
 
 def read(path: Path):
@@ -81,6 +82,7 @@ def validate_capability_types(registry: dict, schema: dict) -> list[str]:
 
 def validate() -> list[str]:
     errors: list[str] = []
+    errors.extend(validate_react_license_supplements(ROOT))
     required_json = [
         'standards/release.json', 'standards/rules.json', 'tools/candidates.json',
         '.opencode/opencode.json', 'workflows/task-routing.json',
@@ -328,7 +330,7 @@ def main() -> int:
             print('FAIL', error)
         return 2
     selection = read(ROOT / 'research' / 'capability-selection.json')
-    print(f"MANIFEST_VALIDATION_PASS rules=19 candidates=64 workflows=12 agents=5 skills=12 commands=7 capability_candidates={len(selection.get('candidates', []))} task_decisions={len(selection.get('task_decisions', []))}")
+    print(f"MANIFEST_VALIDATION_PASS rules=19 candidates=64 workflows=12 agents=5 skills=12 commands=7 capability_candidates={len(selection.get('candidates', []))} task_decisions={len(selection.get('task_decisions', []))} react_license_supplements=3 unresolved=1")
     return 0
 
 

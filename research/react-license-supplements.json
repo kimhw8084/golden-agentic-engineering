@@ -1,0 +1,78 @@
+{
+  "schema": "golden-react-package-license-supplements/v1",
+  "status": "SUPPLEMENTAL_UPSTREAM_NOTICES; PACKAGE_TARBALL_NOTICE_GAPS_AND_COMPANY_CLEARANCE_REMAIN",
+  "source_package_audit": {
+    "path": "research/react-macos-arm64-dependency-audit.json",
+    "package_lock_path": "examples/react-app/package-lock.json",
+    "package_lock_sha256": "baa28d9db7b649e09387751cb3e6a70c756bd708b67bf5eaa233e4b4105607e2"
+  },
+  "notices": [
+    {
+      "package": "@esbuild/darwin-arm64",
+      "version": "0.25.12",
+      "npm_integrity": "sha512-N3zl+lxHCifgIlcMUP5016ESkeQjLj/959RxxNYIthIg+CQHInujFuXeWbWMgnTo4cp5XVHqFPmpyu9J65C1Yg==",
+      "license_id": "MIT",
+      "package_tarball_notice_present": false,
+      "source_repository": "https://github.com/evanw/esbuild",
+      "source_tag": "v0.25.12",
+      "source_commit": "208f539945b145e7c9d6d844290f81c3fe5af320",
+      "source_path": "LICENSE.md",
+      "source_url": "https://github.com/evanw/esbuild/blob/208f539945b145e7c9d6d844290f81c3fe5af320/LICENSE.md",
+      "file": "research/react-macos-arm64-licenses/esbuild-0.25.12-LICENSE.md",
+      "sha256": "b40ec5baec7bb34fa5b1c09521fa3cd52d5fad7adafed74932a2010d3612a681",
+      "assessment": "Exact-version upstream root notice supplement; does not change the npm tarball inventory or establish company approval.",
+      "copy_transform": "Preserved words and punctuation; removed trailing whitespace and extra final blank lines from the upstream text."
+    },
+    {
+      "package": "@rollup/rollup-darwin-arm64",
+      "version": "4.68.7",
+      "npm_integrity": "sha512-Lgu2AV7jbOTNNhkQ/OurNm7Snqu1Ux/3y7k8q47fbpPa3q63aIzKKp1xFzax5KH4pcdUzbnX/riuFsxKflsF+g==",
+      "license_id": "MIT",
+      "package_tarball_notice_present": false,
+      "source_repository": "https://github.com/rollup/rollup",
+      "source_tag": "v4.68.7",
+      "source_commit": "dd75c77b718581406bd6886f84dfdf2ebf50c5e7",
+      "source_path": "LICENSE.md",
+      "source_url": "https://github.com/rollup/rollup/blob/dd75c77b718581406bd6886f84dfdf2ebf50c5e7/LICENSE.md",
+      "file": "research/react-macos-arm64-licenses/rollup-4.68.7-LICENSE.md",
+      "sha256": "ad457a6619017a7f47cdbead25a8ec61907818be3e0834f1885bdf6c3ddfb668",
+      "assessment": "Exact-version upstream license and bundled-notice collection supplement; does not establish that the platform npm tarball includes those notices or establish company approval.",
+      "copy_transform": "Preserved words and punctuation; removed trailing whitespace and extra final blank lines from the upstream text."
+    },
+    {
+      "package": "css.escape",
+      "version": "1.5.1",
+      "npm_integrity": "sha512-YUifsXXuknHlUsmlgyY0PKzgPOr7/FjCePfHNt0jxm83wHZi44VDMQ7/fGNkjY3/jV1MC+1CmZbaHzugyeRtpg==",
+      "license_id": "MIT",
+      "package_tarball_notice_present": false,
+      "source_repository": "https://github.com/mathiasbynens/CSS.escape",
+      "source_tag": "v1.5.1",
+      "source_commit": "b036d330b93f58b1bc87f1097fdc822da58e090f",
+      "source_path": "LICENSE-MIT.txt",
+      "source_url": "https://github.com/mathiasbynens/CSS.escape/blob/b036d330b93f58b1bc87f1097fdc822da58e090f/LICENSE-MIT.txt",
+      "file": "research/react-macos-arm64-licenses/css.escape-1.5.1-LICENSE-MIT.txt",
+      "sha256": "483acb265f182907d1caf6cff9c16c96f31325ed23792832cc5d8b12d5f88c8a",
+      "assessment": "Exact-version upstream root notice supplement; does not change the npm tarball inventory or establish company approval.",
+      "copy_transform": "Preserved words and punctuation; removed trailing whitespace and extra final blank lines from the upstream text."
+    }
+  ],
+  "unresolved": [
+    {
+      "package": "stackback",
+      "version": "0.0.2",
+      "npm_integrity": "sha512-1XMJE5fQo1jGH6Y/7ebnwPOBEkIEnT4QF32d5R1+VXdXveM0IBMJt8zfaxX1P3QhVwrYe+576+jkANtSS2mBbw==",
+      "declared_license": "MIT",
+      "status": "UNRESOLVED",
+      "source_repository": "https://github.com/defunctzombie/node-stackback",
+      "repository_archived": true,
+      "evidence_url": "https://github.com/defunctzombie/node-stackback",
+      "evidence_note": "The archived upstream repository root listing has no license text. The npm package metadata declares MIT, but that declaration does not provide the missing notice text.",
+      "required_action": "Company OSS/legal reviewer or package maintainer must provide authoritative license text or reject this dependency before company import."
+    }
+  ],
+  "counts": {
+    "supplemented_upstream_notices": 3,
+    "unresolved_packages": 1,
+    "npm_tarballs_missing_license_files": 4
+  }
+}
