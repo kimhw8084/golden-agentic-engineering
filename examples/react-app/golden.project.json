@@ -4,5 +4,9 @@
   "criticality":"simple",
   "golden_version":"0.1.0-dev",
   "capabilities":{"ui":true,"manufacturing_data":true},
-  "commands":{"ts_typecheck":["npm","run","typecheck"],"web_tests":["npm","run","test"],"ui_contracts":["npm","run","test"]}
+  "commands":{
+    "ts_typecheck":["${NODE}","node_modules/typescript/bin/tsc","--noEmit","--project","tsconfig.json"],
+    "web_tests":["${NODE}","node_modules/vitest/vitest.mjs","run"],
+    "ui_contracts":["${NODE}","node_modules/vitest/vitest.mjs","run"]
+  }
 }

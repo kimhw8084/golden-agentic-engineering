@@ -217,9 +217,9 @@ def validate() -> list[str]:
     github_command = github.get('command', []) if isinstance(github, dict) else []
     if (not isinstance(github, dict) or github.get('type') != 'local' or github.get('disabled') is not True
             or github.get('protocol') != 'legacy'
-            or not isinstance(github_command, list) or len(github_command) != 4
+            or not isinstance(github_command, list) or len(github_command) != 5
             or github_command[0] != 'github-mcp-server'
-            or github_command[1:] != ['--read-only', '--toolsets', 'repos,issues,pull_requests,actions']
+            or github_command[1:] != ['stdio', '--read-only', '--toolsets', 'repos,issues,pull_requests,actions']
             or not isinstance(github_env, dict)
             or github_env.get('GITHUB_HOST') != 'https://replace-with-approved-internal-ghes-hostname.invalid'
             or github_env.get('GITHUB_PERSONAL_ACCESS_TOKEN') != '{env:GITHUB_PERSONAL_ACCESS_TOKEN}'):

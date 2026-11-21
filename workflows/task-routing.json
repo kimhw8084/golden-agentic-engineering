@@ -90,8 +90,18 @@
           "when": "UI complexity or a disjoint independent slice justifies coordination."
         }
       ],
-      "mcp_candidates": [],
-      "mcp_policy": "Use only if already connected and explicitly company-approved; otherwise do not connect or invoke.",
+      "mcp_candidates": [
+        "shadcn-ui-mcp-server"
+      ],
+      "capability_candidates": [
+        "golden-react-skill",
+        "shadcn-ui-agent-skill",
+        "shadcn-ui-mcp-server",
+        "nextlevelbuilder-ui-ux-pro-max",
+        "vercel-agent-skills",
+        "anthropics-skills"
+      ],
+      "mcp_policy": "Evaluation-only. Consider the pinned shadcn MCP only with a pre-staged local package and an explicitly approved intranet component registry. Restrict to list/search/view/examples tools; never use npx/dlx @latest, public registries, or add/install actions. Keep disconnected until internal OpenCode, tool permissions, offline behavior and attempt monitoring are tested.",
       "selection_task": "React product UI and design system"
     },
     {

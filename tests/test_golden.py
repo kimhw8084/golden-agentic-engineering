@@ -131,6 +131,58 @@ class GoldenProofTests(unittest.TestCase):
         allowed, _ = golden.approved_command('ui_contracts', approved + ['-c', 'untrusted.ini'])
         self.assertFalse(allowed)
 
+    def test_react_tools_use_locked_direct_entrypoints_not_npm_scripts(self):
+        self.assertTrue(golden.approved_command('ts_typecheck', [
+            '${NODE}', 'node_modules/typescript/bin/tsc', '--noEmit', '--project', 'tsconfig.json'
+        ])[0])
+        self.assertTrue(golden.approved_command('web_tests', [
+            '${NODE}', 'node_modules/vitest/vitest.mjs', 'run'
+        ])[0])
+        self.assertFalse(golden.approved_command('web_tests', ['npm', 'run', 'test'])[0])
+        self.assertFalse(golden.approved_command('ts_typecheck', ['npm', 'run', 'typecheck'])[0])
+
+    def test_react_tool_is_not_run_when_installed_version_differs_from_lock(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            package = root / 'node_modules' / 'vitest'
+            package.mkdir(parents=True)
+            (root / 'package-lock.json').write_text(json.dumps({
+                'packages': {'node_modules/vitest': {'version': '4.0.8'}}
+            }), encoding='utf-8')
+            (package / 'package.json').write_text(json.dumps({'name': 'vitest', 'version': '4.0.9'}), encoding='utf-8')
+            (package / 'vitest.mjs').write_text('process.exit(0);', encoding='utf-8')
+            path, version, error = golden.locked_node_tool(root, 'web_tests')
+        self.assertIsNone(path)
+        self.assertIsNone(version)
+        self.assertIn('does not match package-lock.json', error)
+
+    def test_empty_unittest_discovery_is_not_pass(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / 'tests').mkdir()
+            status, evidence = golden.external('python_tests', root, {
+                'commands': {'python_tests': ['${PYTHON}', '-m', 'unittest', 'discover', '-s', 'tests', '-v']}
+            }, 5)
+        self.assertEqual(status, 'NOT_RUN')
+        self.assertIn('tests_run=0', evidence)
+
+    def test_all_skipped_unittest_discovery_is_not_pass(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            tests = root / 'tests'
+            tests.mkdir()
+            (tests / 'test_skipped.py').write_text(
+                'import unittest\nclass Skipped(unittest.TestCase):\n'
+                '    @unittest.skip("fixture")\n    def test_only(self):\n        self.fail()\n',
+                encoding='utf-8',
+            )
+            status, evidence = golden.external('python_tests', root, {
+                'commands': {'python_tests': ['${PYTHON}', '-m', 'unittest', 'discover', '-s', 'tests', '-v']}
+            }, 5)
+        self.assertEqual(status, 'NOT_RUN')
+        self.assertIn('tests_run=1', evidence)
+        self.assertIn('tests_passed=0', evidence)
+
     def test_python_ui_contract_marks_missing_dependencies_not_run(self):
         project = {'profile': 'nicegui', 'commands': {'ui_contracts': ['${PYTHON}', '-m', 'pytest', '-q']}}
         with patch.object(
@@ -144,13 +196,15 @@ class GoldenProofTests(unittest.TestCase):
 
     def test_python_ui_contract_disables_pytest_plugins_and_cache(self):
         project = {'profile': 'nicegui', 'commands': {'ui_contracts': ['${PYTHON}', '-m', 'pytest', '-q']}}
-        completed = subprocess.CompletedProcess([], 0, '4 passed in 1.0s', '')
+        completed = subprocess.CompletedProcess([], 0,
+            'GOLDEN_TEST_RESULT={"framework":"pytest","tests_run":4,"passed":4,"skipped":0,"failed":0,"errors":0,"pytest_exit_code":0}', '')
         with patch.object(golden.importlib.util, 'find_spec', return_value=object()):
             with patch.object(golden.subprocess, 'run', return_value=completed) as run:
                 status, evidence = golden.external('ui_contracts', EXAMPLE, project, 5)
         self.assertEqual(status, 'PASS')
-        self.assertIn('output_sha256=', evidence)
-        self.assertNotIn('4 passed', evidence)
+        self.assertIn('tests_run=4', evidence)
+        self.assertIn('tests_passed=4', evidence)
+        self.assertNotIn('GOLDEN_TEST_RESULT=', evidence)
         self.assertEqual(run.call_args.kwargs['env']['PYTEST_DISABLE_PLUGIN_AUTOLOAD'], '1')
         self.assertEqual(run.call_args.kwargs['env']['PYTEST_ADDOPTS'], '-p no:cacheprovider')
         self.assertFalse(run.call_args.kwargs.get('shell', False))
@@ -165,6 +219,7 @@ class GoldenProofTests(unittest.TestCase):
             # Run the allowlisted interpreter only against an empty local test folder.
             (root / 'tests').mkdir()
             data = golden.run_check(root, full=True)
+            self.assertEqual(by_id(data, 'PY-002')['status'], 'NOT_RUN')
             serialized = json.dumps(data)
             self.assertNotIn(str(root), serialized)
             self.assertNotIn('Traceback', serialized)

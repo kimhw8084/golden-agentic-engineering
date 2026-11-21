@@ -97,13 +97,13 @@ Each app supplies `golden.project.json`:
   "criticality": "workflow",
   "capabilities": {"ui": true, "api": true, "database": false},
   "commands": {
-    "ts_typecheck": ["npm", "run", "typecheck", "--", "--offline"],
-    "web_tests": ["npm", "run", "test:ci"]
+    "ts_typecheck": ["${NODE}", "node_modules/typescript/bin/tsc", "--noEmit", "--project", "tsconfig.json"],
+    "web_tests": ["${NODE}", "node_modules/vitest/vitest.mjs", "run"]
   }
 }
 ```
 
-Commands above are **illustrative** and must be adapted to actual approved offline project scripts and package-manager options. Do not use `npm` install at check time.
+Commands above are **illustrative**. Golden resolves the local Node binary, checks that the direct TypeScript/Vitest entrypoint versions match `package-lock.json`, and does not execute package-manager scripts during a proof check. Do not install dependencies at check time.
 
 Full check output uses `PASS`, `FAIL`, `NOT_APPLICABLE`, `NOT_RUN`. Fast-only runs add `DEFERRED`, which is not a release pass. Result includes Golden version, rule manifest SHA256, timestamp, execution duration and a short evidence excerpt. Original FAIL/NOT_RUN must remain visible even when a company exception exists. **The pilot engine does not implement exception grants**, so adding them is a pre-release work item.
 

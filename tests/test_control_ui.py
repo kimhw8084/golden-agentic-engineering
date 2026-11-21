@@ -87,13 +87,15 @@ class GoldenControlUITests(unittest.TestCase):
         control.ControlHandler.do_GET(capabilities)
         self.assertEqual(capabilities.response, 200)
         registry = json.loads(capabilities.wfile.getvalue())
-        self.assertEqual(len(registry['candidates']), 32)
+        self.assertEqual(len(registry['candidates']), 34)
         self.assertEqual(len(registry['task_decisions']), 17)
         self.assertIn('vercel-agent-browser', {row['id'] for row in registry['candidates']})
         self.assertIn('chrome-devtools-mcp', {row['id'] for row in registry['candidates']})
         self.assertIn('browser-use', {row['id'] for row in registry['candidates']})
         self.assertIn('inspect-ai', {row['id'] for row in registry['candidates']})
         self.assertIn('github-github-mcp-server', {row['id'] for row in registry['candidates']})
+        self.assertIn('shadcn-ui-agent-skill', {row['id'] for row in registry['candidates']})
+        self.assertIn('shadcn-ui-mcp-server', {row['id'] for row in registry['candidates']})
         required_evidence = {
             'capability_type', 'owner_repo', 'commit', 'license', 'license_evidence',
             'transitive_dependencies', 'windows_linux', 'offline_telemetry',

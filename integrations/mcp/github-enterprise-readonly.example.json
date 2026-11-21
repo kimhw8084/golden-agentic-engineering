@@ -5,6 +5,7 @@
         "type": "local",
         "command": [
           "github-mcp-server",
+          "stdio",
           "--read-only",
           "--toolsets",
           "repos,issues,pull_requests,actions"

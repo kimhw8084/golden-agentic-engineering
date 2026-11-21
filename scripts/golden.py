@@ -19,6 +19,7 @@ import re
 import shutil
 import subprocess
 import sys
+import tempfile
 import time
 from pathlib import Path
 
@@ -73,7 +74,7 @@ def approved_command(key: str, command: list[str]) -> tuple[bool, str]:
     # Resolve Python through this already-running interpreter. PATH aliases can
     # point to user-controlled wrappers and are not valid provenance.
     py = executable == '${python}'
-    npm = executable in ('npm', 'pnpm')
+    node = executable == '${node}'
     if key == 'python_tests' and py:
         if args in (['-m', 'unittest', 'discover', '-s', 'tests', '-v'], ['-m', 'pytest', '-q']):
             return True, 'python test runner allowlist'
@@ -81,14 +82,87 @@ def approved_command(key: str, command: list[str]) -> tuple[bool, str]:
         return True, 'Python UI contract test allowlist'
     if key == 'python_lint' and ((py and args == ['-m', 'ruff', 'check', '.']) or (executable == 'ruff' and args == ['check', '.'])):
         return True, 'Ruff lint allowlist'
-    if key in ('ts_typecheck', 'web_tests', 'ui_contracts') and npm:
-        if args in (['run', 'typecheck'], ['run', 'test'], ['test']):
-            return True, 'Node package-script allowlist'
-    if key == 'browser_tests' and py and args[:2] == ['-m', 'pytest']:
+    if key == 'ts_typecheck' and node and args == [
+        'node_modules/typescript/bin/tsc', '--noEmit', '--project', 'tsconfig.json'
+    ]:
+        return True, 'locked local TypeScript compiler allowlist'
+    if key in ('web_tests', 'ui_contracts') and node and args == [
+        'node_modules/vitest/vitest.mjs', 'run'
+    ]:
+        return True, 'locked local Vitest runner allowlist'
+    if key == 'browser_tests' and py and args == ['-m', 'pytest', '-q']:
         return True, 'Python browser-test allowlist'
     if key == 'security_scan' and ((py and args[:2] == ['-m', 'bandit']) or executable == 'bandit'):
         return True, 'Bandit allowlist'
     return False, f'Command is outside the deterministic allowlist for {key!r}.'
+
+
+def python_test_framework(key: str, command: list[str]) -> str | None:
+    if not command or command[0].lower() != '${python}':
+        return None
+    args = command[1:]
+    if key == 'python_tests' and args == ['-m', 'unittest', 'discover', '-s', 'tests', '-v']:
+        return 'unittest'
+    if key in ('python_tests', 'ui_contracts', 'browser_tests') and args == ['-m', 'pytest', '-q']:
+        return 'pytest'
+    return None
+
+
+def locked_node_tool(root: Path, key: str) -> tuple[Path | None, str | None, str | None]:
+    """Return a direct local compiler/test entrypoint only when lock and installed versions match."""
+    tools = {
+        'ts_typecheck': ('typescript', 'node_modules/typescript/bin/tsc'),
+        'web_tests': ('vitest', 'node_modules/vitest/vitest.mjs'),
+        'ui_contracts': ('vitest', 'node_modules/vitest/vitest.mjs'),
+    }
+    package, relative = tools[key]
+    project = root.resolve()
+    lock_path = project / 'package-lock.json'
+    installed_package_path = project / 'node_modules' / package / 'package.json'
+    script_path = project / relative
+    for path in (lock_path, installed_package_path, script_path):
+        if path.is_symlink() or not path.is_file():
+            return None, None, 'Pinned local Node dependency or direct tool entrypoint is missing or unsafe.'
+    for relative_path in ('node_modules', f'node_modules/{package}', relative):
+        cursor = project
+        for part in Path(relative_path).parts:
+            cursor = cursor / part
+            if cursor.is_symlink():
+                return None, None, 'Pinned local Node dependency path contains a symlink.'
+    try:
+        for path in (installed_package_path, script_path):
+            path.resolve(strict=True).relative_to(project)
+        lock = read_json(lock_path)
+        installed = read_json(installed_package_path)
+    except (OSError, ValueError, json.JSONDecodeError):
+        return None, None, 'Local Node lock or installed dependency metadata is unreadable.'
+    packages = lock.get('packages') if isinstance(lock, dict) else None
+    record = packages.get(f'node_modules/{package}') if isinstance(packages, dict) else None
+    locked_version = record.get('version') if isinstance(record, dict) else None
+    installed_version = installed.get('version') if isinstance(installed, dict) else None
+    if not isinstance(locked_version, str) or not locked_version or installed_version != locked_version:
+        return None, None, 'Installed Node dependency does not match package-lock.json.'
+    if key == 'ts_typecheck':
+        config = project / 'tsconfig.json'
+        if config.is_symlink() or not config.is_file():
+            return None, None, 'TypeScript project config is missing or unsafe.'
+    return script_path, locked_version, None
+
+
+def parse_project_test_summary(output: str, framework: str) -> dict | None:
+    marker = 'GOLDEN_TEST_RESULT='
+    lines = [line[len(marker):] for line in output.splitlines() if line.startswith(marker)]
+    if len(lines) != 1:
+        return None
+    try:
+        summary = json.loads(lines[0])
+    except json.JSONDecodeError:
+        return None
+    count_fields = ('tests_run', 'passed', 'skipped', 'failed', 'errors')
+    if (not isinstance(summary, dict) or summary.get('framework') != framework
+            or any(type(summary.get(field)) is not int or summary[field] < 0 for field in count_fields)):
+        return None
+    return summary
 
 
 def load_manifest(root: Path):
@@ -292,15 +366,26 @@ def external(key: str, root: Path, project: dict, timeout: int) -> tuple[str, st
     allowed, basis = approved_command(key, cmd)
     if not allowed:
         return 'NOT_RUN', basis
-    if cmd[0] == '${PYTHON}' and cmd[1:3] == ['-m', 'pytest']:
+    framework = python_test_framework(key, cmd)
+    if framework == 'pytest':
         required_modules = ['pytest']
         if key == 'ui_contracts' and project.get('profile') == 'nicegui':
             required_modules.append('nicegui')
         missing = [name for name in required_modules if importlib.util.find_spec(name) is None]
         if missing:
             return 'NOT_RUN', f"Python test dependency unavailable: {', '.join(missing)}; check not executed."
+    node_tool_path = None
+    node_tool_version = None
+    node_test = cmd[0].lower() == '${node}' and key in ('web_tests', 'ui_contracts')
+    if cmd[0].lower() == '${node}':
+        node_tool_path, node_tool_version, node_error = locked_node_tool(root, key)
+        if node_error:
+            return 'NOT_RUN', node_error
     command_hash = hashlib.sha256(json.dumps(cmd, separators=(',', ':')).encode()).hexdigest()
-    program = sys.executable if cmd[0] == '${PYTHON}' else cmd[0]
+    python_runner = HOME / 'scripts' / 'project_test_runner.py'
+    if framework and (python_runner.is_symlink() or not python_runner.is_file()):
+        return 'NOT_RUN', 'Golden test-count runner is missing or unsafe.'
+    program = sys.executable if cmd[0].lower() == '${python}' else ('node' if cmd[0].lower() == '${node}' else cmd[0])
     resolved_program = shutil.which(program)
     if not resolved_program:
         return 'NOT_RUN', f'Executable unavailable: {program}.'
@@ -322,15 +407,81 @@ def external(key: str, root: Path, project: dict, timeout: int) -> tuple[str, st
             'HF_HUB_OFFLINE': '1', 'TRANSFORMERS_OFFLINE': '1',
             'NO_PROXY': '*', 'no_proxy': '*',
         })
-        if cmd[0] == '${PYTHON}' and cmd[1:3] == ['-m', 'pytest']:
+        if framework == 'pytest':
             safe_env.update({'PYTEST_DISABLE_PLUGIN_AUTOLOAD': '1', 'PYTEST_ADDOPTS': '-p no:cacheprovider'})
-        safe_cmd = [str(executable_path), *cmd[1:]]
-        p = subprocess.run(safe_cmd, cwd=root, env=safe_env, capture_output=True, text=True,
-                           timeout=min(max(timeout, 1), 600), shell=False, check=False)
+        runner_sha256 = None
+        if framework:
+            runner_sha256 = hashlib.sha256(python_runner.read_bytes()).hexdigest()
+            safe_cmd = [str(executable_path), str(python_runner), framework]
+        elif cmd[0].lower() == '${node}':
+            if node_tool_path is None:
+                return 'NOT_RUN', 'Locked Node tool entrypoint is unavailable.'
+            safe_cmd = [str(executable_path), str(node_tool_path), *cmd[2:]]
+        else:
+            safe_cmd = [str(executable_path), *cmd[1:]]
+
+        node_report_bytes = None
+        if node_test:
+            with tempfile.TemporaryDirectory(prefix='golden-vitest-') as report_dir:
+                report_path = Path(report_dir) / 'results.json'
+                effective_cmd = [*safe_cmd, '--reporter=json', f'--outputFile={report_path}']
+                p = subprocess.run(effective_cmd, cwd=root, env=safe_env, capture_output=True, text=True,
+                                   timeout=min(max(timeout, 1), 600), shell=False, check=False)
+                try:
+                    node_report_bytes = report_path.read_bytes()
+                except OSError:
+                    node_report_bytes = None
+        else:
+            p = subprocess.run(safe_cmd, cwd=root, env=safe_env, capture_output=True, text=True,
+                               timeout=min(max(timeout, 1), 600), shell=False, check=False)
         output = ((p.stdout or '') + '\n' + (p.stderr or '')).strip()
         output_hash = hashlib.sha256(output.encode('utf-8', errors='replace')).hexdigest()
         # Never persist raw command output; it may contain credentials, source or internal paths.
-        return ('PASS' if p.returncode == 0 else 'FAIL'), f'Exit={p.returncode}; {basis}; argv_sha256={command_hash}; executable_sha256={executable_sha256}; output_bytes={len(output.encode("utf-8", errors="replace"))}; output_sha256={output_hash}'
+        base = (f'Exit={p.returncode}; {basis}; argv_sha256={command_hash}; '
+                f'executable_sha256={executable_sha256}; output_bytes={len(output.encode("utf-8", errors="replace"))}; '
+                f'output_sha256={output_hash}')
+        if framework:
+            summary = parse_project_test_summary(output, framework)
+            if summary is None:
+                return 'NOT_RUN', f'No unique structured test-count evidence; {base}; runner_sha256={runner_sha256}'
+            tests_run = summary['tests_run']
+            passed = summary['passed']
+            skipped = summary['skipped']
+            failures = summary['failed'] + summary['errors'] + summary.get('unexpected_successes', 0)
+            result_hash = hashlib.sha256(json.dumps(summary, sort_keys=True, separators=(',', ':')).encode()).hexdigest()
+            evidence = (f'{base}; runner_sha256={runner_sha256}; tests_run={tests_run}; tests_passed={passed}; '
+                        f'tests_skipped={skipped}; test_result_sha256={result_hash}')
+            if failures:
+                return 'FAIL', evidence
+            if tests_run == 0 or passed == 0:
+                return 'NOT_RUN', evidence
+            return ('PASS' if p.returncode == 0 else 'FAIL'), evidence
+        if node_test:
+            try:
+                report = json.loads(node_report_bytes) if node_report_bytes is not None else None
+            except (UnicodeDecodeError, json.JSONDecodeError):
+                report = None
+            required = ('numTotalTests', 'numPassedTests', 'numPendingTests', 'numFailedTests')
+            if (not isinstance(report, dict) or any(type(report.get(field)) is not int or report[field] < 0 for field in required)
+                    or not isinstance(report.get('success'), bool)):
+                return 'NOT_RUN', f'No valid Vitest JSON report; {base}; locked_vitest={node_tool_version}'
+            total = report['numTotalTests']
+            passed = report['numPassedTests']
+            pending = report['numPendingTests']
+            failed = report['numFailedTests']
+            result_hash = hashlib.sha256(node_report_bytes).hexdigest()
+            tool_hash = hashlib.sha256(node_tool_path.read_bytes()).hexdigest() if node_tool_path else 'unavailable'
+            evidence = (f'{base}; locked_vitest={node_tool_version}; tests_run={total}; tests_passed={passed}; '
+                        f'tests_pending={pending}; tests_failed={failed}; vitest_entry_sha256={tool_hash}; '
+                        f'test_result_sha256={result_hash}')
+            if failed or not report['success']:
+                return 'FAIL', evidence
+            if total == 0 or passed == 0:
+                return 'NOT_RUN', evidence
+            return ('PASS' if p.returncode == 0 else 'FAIL'), evidence
+        if key == 'ts_typecheck':
+            return ('PASS' if p.returncode == 0 else 'FAIL'), f'{base}; locked_typescript={node_tool_version}; compiler_sha256={hashlib.sha256(node_tool_path.read_bytes()).hexdigest() if node_tool_path else "unavailable"}'
+        return ('PASS' if p.returncode == 0 else 'FAIL'), base
     except subprocess.TimeoutExpired:
         return 'NOT_RUN', f'Command timed out after {timeout}s; not counted as PASS.'
     except OSError as exc:

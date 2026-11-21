@@ -48,12 +48,23 @@ class TaskRoutingTests(unittest.TestCase):
         self.assertIn('approved intranet GitHub Enterprise Server', route['mcp']['policy'])
         self.assertIn('read-only mode', route['capability_selection']['current_choice'])
 
+    def test_react_route_surfaces_shadcn_skill_and_mcp_as_conditional_candidates(self):
+        route = golden_route.route_for('react-app-feature')
+        self.assertEqual(route['mcp']['configured_for_route'], [])
+        self.assertEqual(route['mcp']['evaluation_candidates_only'], ['shadcn-ui-mcp-server'])
+        candidate_ids = {item['id'] for item in route['capability_candidates']}
+        self.assertIn('shadcn-ui-agent-skill', candidate_ids)
+        self.assertIn('shadcn-ui-mcp-server', candidate_ids)
+        self.assertIn('golden-react plus approved company design tokens', route['capability_selection']['current_choice'])
+        self.assertIn('never use npx/dlx @latest', route['mcp']['policy'])
+
     def test_github_enterprise_mcp_example_keeps_secret_external_and_server_disabled(self):
         config = json.loads((ROOT / 'integrations' / 'mcp' / 'github-enterprise-readonly.example.json').read_text())
         server = config['mcp']['servers']['github-enterprise-readonly']
         self.assertIs(server['disabled'], True)
         self.assertEqual(server['type'], 'local')
         self.assertEqual(server['command'][0], 'github-mcp-server')
+        self.assertEqual(server['command'][1], 'stdio')
         self.assertIn('--read-only', server['command'])
         self.assertIn('repos,issues,pull_requests,actions', server['command'])
         self.assertEqual(server['environment']['GITHUB_PERSONAL_ACCESS_TOKEN'], '{env:GITHUB_PERSONAL_ACCESS_TOKEN}')
