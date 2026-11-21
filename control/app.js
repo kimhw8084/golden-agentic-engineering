@@ -155,7 +155,7 @@ function populateWorkflows(rows) {
     const heading = document.createElement('h3'); heading.textContent = display(item.id).replaceAll('-', ' ');
     const summary = document.createElement('p'); summary.textContent = display(item.entry);
     const skills = Array.isArray(item.skills) ? item.skills.join(' / ') : 'skill unavailable';
-    const route = document.createElement('p'); route.className = 'workflow-route'; route.textContent = `${display(item.primary_agent)} · ${skills} · ${display(item.pattern)}`;
+    const route = document.createElement('p'); route.className = 'workflow-route'; route.textContent = `${display(item.primary_agent)} · ${skills} · ${display(item.pattern)} · ${display(item.complexity)} complexity`;
     const mcp = document.createElement('p'); mcp.className = 'workflow-route';
     const candidates = Array.isArray(item.mcp_candidates) ? item.mcp_candidates : [];
     mcp.textContent = candidates.length ? `MCP evaluation candidates only: ${candidates.join(', ')}; no connection is enabled by this route.` : 'No MCP candidate selected for this route.';
@@ -165,7 +165,34 @@ function populateWorkflows(rows) {
       ? `Capability candidates require separate review: ${capabilityCandidates.join(', ')}.`
       : 'No additional capability candidate listed.';
     const accept = document.createElement('p'); accept.className = 'workflow-acceptance'; accept.textContent = `Done when: ${display(item.acceptance)}`;
-    card.append(heading, summary, route, mcp, capability, accept);
+    const details = document.createElement('details'); details.className = 'workflow-details';
+    const detailsSummary = document.createElement('summary'); detailsSummary.textContent = 'Full route details';
+    const detailGrid = document.createElement('div'); detailGrid.className = 'workflow-details-grid';
+    const addDetail = (label, value) => {
+      const block = document.createElement('section'); block.className = 'workflow-detail';
+      const title = document.createElement('h4'); title.textContent = label;
+      block.append(title);
+      if (Array.isArray(value)) {
+        const list = document.createElement('ul');
+        const entries = value.map((entry) => typeof entry === 'string' ? entry : `${display(entry.agent)} — ${display(entry.when)}`);
+        (entries.length ? entries : ['Not specified']).forEach((entry) => {
+          const row = document.createElement('li'); row.textContent = entry; list.append(row);
+        });
+        block.append(list);
+      } else {
+        const text = document.createElement('p'); text.textContent = display(value, 'Not specified'); block.append(text);
+      }
+      detailGrid.append(block);
+    };
+    addDetail('Context to load', item.context);
+    addDetail('Deterministic checks', item.deterministic_tools);
+    addDetail('Conditional specialists', item.specialists);
+    addDetail('Trust boundary', item.trust);
+    addDetail('No-AI fallback', item.no_ai);
+    addDetail('Expected outputs', item.outputs);
+    addDetail('MCP policy', item.mcp_policy);
+    details.append(detailsSummary, detailGrid);
+    card.append(heading, summary, route, mcp, capability, accept, details);
     workflowRouteElement.append(card);
   });
 }

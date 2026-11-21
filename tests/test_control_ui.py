@@ -43,6 +43,9 @@ class GoldenControlUITests(unittest.TestCase):
         self.assertIn('COMPANY_START_HERE.md', page.wfile.getvalue().decode('utf-8'))
         app = (ROOT / 'control' / 'app.js').read_text(encoding='utf-8')
         self.assertIn('Capability candidates require separate review', app)
+        self.assertIn('Full route details', app)
+        self.assertIn('No-AI fallback', app)
+        self.assertIn('Conditional specialists', app)
         self.assertIn('capability-selection.json', page.wfile.getvalue().decode('utf-8'))
 
         workflows = Request('/api/workflows')
@@ -54,6 +57,8 @@ class GoldenControlUITests(unittest.TestCase):
         docs_route = next(row for row in payload['workflows'] if row['id'] == 'technical-docs-sop-diagrams')
         self.assertEqual(docs_route['capability_candidates'], [
             'cathrynlavery-diagram-design', 'existing-markdown-svg-mermaid'])
+        for field in ('context', 'deterministic_tools', 'specialists', 'trust', 'no_ai', 'outputs', 'mcp_policy'):
+            self.assertIn(field, docs_route)
 
         capabilities = Request('/research/capability-selection.json')
         control.ControlHandler.do_GET(capabilities)

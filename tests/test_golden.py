@@ -1,5 +1,6 @@
 import importlib.util
 import json
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -49,7 +50,65 @@ class GoldenProofTests(unittest.TestCase):
         data = golden.run_check(EXAMPLE, full=True)
         rule = by_id(data, 'WEB-001')
         self.assertEqual(rule['status'], 'NOT_APPLICABLE')
-        self.assertIn('Profile', rule['evidence'])
+        self.assertIn('repository profile inventory sha256=', rule['evidence'])
+        self.assertNotIn(str(EXAMPLE), rule['evidence'])
+
+    def test_declared_python_profile_cannot_hide_react_repository_evidence(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            shutil.copytree(EXAMPLE, root, dirs_exist_ok=True)
+            manifest_path = root / 'golden.project.json'
+            manifest = json.loads(manifest_path.read_text(encoding='utf-8'))
+            manifest['profile'] = 'python'
+            manifest['capabilities']['ui'] = False
+            manifest_path.write_text(json.dumps(manifest), encoding='utf-8')
+            (root / 'package.json').write_text(json.dumps({
+                'dependencies': {'react': '19.2.0', 'react-dom': '19.2.0'}
+            }), encoding='utf-8')
+            (root / 'src').mkdir(exist_ok=True)
+            (root / 'src' / 'App.tsx').write_text("import { createElement } from 'react';\n", encoding='utf-8')
+
+            with patch.object(golden, 'external', return_value=('NOT_RUN', 'not executed in this test')):
+                data = golden.run_check(root, full=True)
+
+            self.assertEqual(by_id(data, 'WEB-001')['status'], 'NOT_RUN')
+            self.assertEqual(by_id(data, 'WEB-002')['status'], 'NOT_RUN')
+            self.assertEqual(by_id(data, 'UI-001')['status'], 'NOT_RUN')
+            self.assertFalse(data['qualifies_release'])
+
+    def test_unknown_profile_without_repository_markers_stays_not_run(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            manifest = json.loads((EXAMPLE / 'golden.project.json').read_text(encoding='utf-8'))
+            manifest['profile'] = 'other'
+            (root / 'golden.project.json').write_text(json.dumps(manifest), encoding='utf-8')
+
+            data = golden.run_check(root, full=True)
+
+            self.assertEqual(by_id(data, 'PY-001')['status'], 'NOT_RUN')
+            self.assertEqual(by_id(data, 'WEB-001')['status'], 'NOT_RUN')
+            self.assertFalse(data['qualifies_release'])
+
+    def test_incomplete_profile_inventory_cannot_mark_a_rule_not_applicable(self):
+        manifest = json.loads((EXAMPLE / 'golden.project.json').read_text(encoding='utf-8'))
+        rule = next(r for r in golden.read_json(golden.RULES)['rules'] if r['id'] == 'WEB-001')
+        with patch.object(golden, 'PROFILE_SCAN_MAX_ENTRIES', 0):
+            evidence = golden.repository_profile_evidence(EXAMPLE)
+        status, reason = golden.applicable(rule, manifest, evidence)
+        self.assertFalse(evidence['complete'])
+        self.assertEqual(status, 'NOT_RUN')
+        self.assertIn('inventory is incomplete', reason)
+
+    def test_unreadable_directory_cannot_be_omitted_from_profile_inventory(self):
+        def walk_with_error(_root, *, followlinks, onerror):
+            self.assertFalse(followlinks)
+            onerror(PermissionError('synthetic unreadable directory'))
+            return iter(())
+
+        with patch.object(golden.os, 'walk', side_effect=walk_with_error):
+            evidence = golden.repository_profile_evidence(EXAMPLE)
+
+        self.assertFalse(evidence['complete'])
 
     def test_false_capability_does_not_prove_non_applicability(self):
         manifest = json.loads((EXAMPLE / 'golden.project.json').read_text())

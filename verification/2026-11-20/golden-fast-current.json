@@ -1,6 +1,6 @@
 {
   "schema": "golden-evidence/v0.1",
-  "generated_at_utc": "2026-11-20T23:43:50.123640+00:00",
+  "generated_at_utc": "2026-11-21T02:50:34.303306+00:00",
   "golden_version": "0.1.0-dev",
   "rules_sha256": "ce47462f54550bc60b9d30989bd56825257bd21f6b8721d1b28855dd58e61449",
   "project_manifest_sha256": "fa86ac5bb9058ce4b741abd68f1771e441d7692bee0a3da563852e1252495d1c",
@@ -44,7 +44,7 @@
       "mandatory": true,
       "stage": "fast",
       "evidence": "AST-parsed 2 Python source files.",
-      "duration_ms": 0.87
+      "duration_ms": 0.28
     },
     {
       "rule_id": "PY-002",
@@ -70,7 +70,7 @@
       "status": "NOT_APPLICABLE",
       "mandatory": true,
       "stage": "full",
-      "evidence": "Profile 'python' not in ['react']; based on the project profile manifest.",
+      "evidence": "Profile 'python' excluded by repository profile inventory sha256=1fd18795bcf5e16a6ff82ce3c181b56ad7020cc47428454c8222756dfcc722d8; Python files=2, React dependency manifests=0, NiceGUI markers=0, JS/TS sources=0.",
       "duration_ms": 0.0
     },
     {
@@ -79,7 +79,7 @@
       "status": "NOT_APPLICABLE",
       "mandatory": true,
       "stage": "full",
-      "evidence": "Profile 'python' not in ['react']; based on the project profile manifest.",
+      "evidence": "Profile 'python' excluded by repository profile inventory sha256=1fd18795bcf5e16a6ff82ce3c181b56ad7020cc47428454c8222756dfcc722d8; Python files=2, React dependency manifests=0, NiceGUI markers=0, JS/TS sources=0.",
       "duration_ms": 0.0
     },
     {
@@ -88,7 +88,7 @@
       "status": "NOT_APPLICABLE",
       "mandatory": true,
       "stage": "full",
-      "evidence": "Profile 'python' not in ['react', 'nicegui']; based on the project profile manifest.",
+      "evidence": "Profile 'python' excluded by repository profile inventory sha256=1fd18795bcf5e16a6ff82ce3c181b56ad7020cc47428454c8222756dfcc722d8; Python files=2, React dependency manifests=0, NiceGUI markers=0, JS/TS sources=0.",
       "duration_ms": 0.0
     },
     {
@@ -97,7 +97,7 @@
       "status": "NOT_APPLICABLE",
       "mandatory": true,
       "stage": "full",
-      "evidence": "Profile 'python' not in ['react', 'nicegui']; based on the project profile manifest.",
+      "evidence": "Profile 'python' excluded by repository profile inventory sha256=1fd18795bcf5e16a6ff82ce3c181b56ad7020cc47428454c8222756dfcc722d8; Python files=2, React dependency manifests=0, NiceGUI markers=0, JS/TS sources=0.",
       "duration_ms": 0.0
     },
     {

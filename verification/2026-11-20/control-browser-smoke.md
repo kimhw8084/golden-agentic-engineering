@@ -5,3 +5,7 @@
 **Observed:** The overview rendered in the in-app browser and hydrated its local state. It showed version `0.1.0-dev`, qualification `PILOT UNQUALIFIED`, five agents, 12 skills, seven commands, seven local Golden reports, and 162 checksums matching. Installation remained `Not checked`, the approved update feed remained unconfigured, company agent/skill/MCP discovery remained unrun, and usage provenance remained `NOT INSTRUMENTED`.
 
 **Limit:** This was a manual overview smoke, not automated browser coverage, a formal accessibility audit, an external-request capture, or company OpenCode evidence. The server bound to loopback and was stopped after inspection.
+
+## Task-route follow-up
+
+On the local revision containing the route-detail UI update, the task-routing view rendered 12 route cards, route skills/patterns and candidate notes. Every card displayed a collapsed `Full route details` control. The detail sections were not expanded during this smoke. This did not test company data, installation state, usage provenance or external-network behavior.

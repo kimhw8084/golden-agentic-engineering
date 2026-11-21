@@ -109,7 +109,7 @@ Full check output uses `PASS`, `FAIL`, `NOT_APPLICABLE`, `NOT_RUN`. Fast-only ru
 
 ### Applicability caveat
 
-The pilot reads project-declared capabilities as scope hints, but a declared `false` no longer proves non-applicability: missing independent basis returns `NOT_RUN`. It does not independently inspect the entire project to validate positive declarations or prove that an omitted capability is absent. During company implementation, cross-check the actual code/framework/dependencies/endpoints and attach evidence before treating a rule as out of scope. If capability detection is uncertain, use `NOT_RUN`, not `NOT_APPLICABLE`.
+The pilot reads project-declared capabilities as scope hints, but a declared `false` no longer proves non-applicability: missing independent basis returns `NOT_RUN`. Profile-scoped rules also use a bounded, local repository inventory of Python imports, React package manifests, and JavaScript/TypeScript sources; the inventory hash is recorded without exposing project paths. A conflicting or incomplete inventory returns `NOT_RUN`. This is a conservative framework-marker check, not general application understanding or proof that an omitted API, database, UI, job, or service is absent. Criticality remains a project declaration and is not independently certified. Company implementation must validate actual endpoints and responsibilities; if evidence is uncertain, use `NOT_RUN`, not `NOT_APPLICABLE`.
 
 ### Fast vs full
 

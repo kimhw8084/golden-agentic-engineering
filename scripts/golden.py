@@ -15,6 +15,7 @@ import importlib.util
 import json
 import math
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -25,6 +26,9 @@ HOME = Path(__file__).resolve().parent.parent
 RULES = HOME / 'standards' / 'rules.json'
 VERSION = HOME / 'standards' / 'release.json'
 SKIP = {'.git', '.venv', 'venv', '__pycache__', 'node_modules', 'dist', 'build', '.golden', '.next', 'coverage'}
+PROFILE_SCAN_MAX_ENTRIES = 5000
+PROFILE_SCAN_MAX_FILE_BYTES = 1024 * 1024
+PROFILE_SCAN_MAX_TOTAL_BYTES = 16 * 1024 * 1024
 
 
 def read_json(path: Path):
@@ -97,11 +101,140 @@ def load_manifest(root: Path):
         return {}, f'Cannot read golden.project.json: {exc}'
 
 
-def applicable(rule: dict, project: dict) -> tuple[str, str]:
+def repository_profile_evidence(root: Path) -> dict:
+    """Inventory local technology markers so a manifest profile cannot suppress checks by itself."""
+    profiles: set[str] = set()
+    complete = True
+    entries_seen = 0
+    bytes_seen = 0
+    python_files = 0
+    nicegui_markers = 0
+    react_manifests = 0
+    web_sources = 0
+    inventory = hashlib.sha256()
+
+    def mark_incomplete(_error):
+        nonlocal complete
+        complete = False
+
+    for current, dirs, files in os.walk(root, followlinks=False, onerror=mark_incomplete):
+        entries_seen += len(dirs) + len(files)
+        if entries_seen > PROFILE_SCAN_MAX_ENTRIES:
+            complete = False
+            break
+        kept_dirs = []
+        for name in dirs:
+            path = Path(current) / name
+            if name in SKIP:
+                continue
+            if path.is_symlink():
+                complete = False
+                continue
+            kept_dirs.append(name)
+        dirs[:] = sorted(kept_dirs)
+
+        for name in sorted(files):
+            path = Path(current) / name
+            suffix = path.suffix.lower()
+            is_package = name == 'package.json'
+            is_python = suffix == '.py'
+            is_web_source = suffix in ('.js', '.jsx', '.ts', '.tsx', '.mjs', '.cjs')
+            is_dependency_file = name == 'pyproject.toml' or (name.startswith('requirements') and suffix == '.txt')
+            if not (is_package or is_python or is_web_source or is_dependency_file):
+                continue
+            if path.is_symlink():
+                complete = False
+                continue
+            try:
+                size = path.stat().st_size
+                if size > PROFILE_SCAN_MAX_FILE_BYTES or bytes_seen + size > PROFILE_SCAN_MAX_TOTAL_BYTES:
+                    complete = False
+                    continue
+                content = path.read_bytes()
+            except OSError:
+                complete = False
+                continue
+            bytes_seen += len(content)
+            relative = path.relative_to(root).as_posix().encode('utf-8', errors='replace')
+            inventory.update(len(relative).to_bytes(4, 'big'))
+            inventory.update(relative)
+            inventory.update(hashlib.sha256(content).digest())
+
+            if is_package:
+                try:
+                    package = json.loads(content.decode('utf-8'))
+                except (UnicodeError, ValueError):
+                    complete = False
+                    continue
+                if not isinstance(package, dict):
+                    complete = False
+                    continue
+                dependencies = {}
+                for field in ('dependencies', 'devDependencies', 'peerDependencies', 'optionalDependencies'):
+                    value = package.get(field, {})
+                    if value is not None and not isinstance(value, dict):
+                        complete = False
+                        continue
+                    if isinstance(value, dict):
+                        dependencies.update(value)
+                if 'react' in dependencies or 'react-dom' in dependencies:
+                    profiles.add('react')
+                    react_manifests += 1
+            if is_python:
+                python_files += 1
+                try:
+                    source = content.decode('utf-8-sig')
+                except UnicodeError:
+                    complete = False
+                    continue
+                if re.search(r'(?im)^\s*(?:from|import)\s+nicegui(?:\s|\.|$)', source):
+                    profiles.add('nicegui')
+                    nicegui_markers += 1
+            if is_web_source:
+                web_sources += 1
+            if is_dependency_file:
+                text = content.decode('utf-8', errors='replace')
+                if name.startswith('requirements'):
+                    lines = (line.split('#', 1)[0].strip().lower() for line in text.splitlines())
+                    if any(re.match(r'^nicegui(?:\b|\[|[<=>~!; ])', line) for line in lines):
+                        profiles.add('nicegui')
+                        nicegui_markers += 1
+                elif re.search(r'(?i)\bnicegui\b', text):
+                    profiles.add('nicegui')
+                    nicegui_markers += 1
+
+    if python_files:
+        profiles.add('python')
+    ambiguous_web_sources = web_sources > 0 and 'react' not in profiles
+    if ambiguous_web_sources:
+        complete = False
+    return {
+        'profiles': profiles,
+        'complete': complete,
+        'summary': (
+            f"repository profile inventory sha256={inventory.hexdigest()}; "
+            f"Python files={python_files}, React dependency manifests={react_manifests}, "
+            f"NiceGUI markers={nicegui_markers}, JS/TS sources={web_sources}"
+        ),
+    }
+
+
+def applicable(rule: dict, project: dict, profile_evidence: dict | None = None) -> tuple[str, str]:
     profile = project['profile']
     profiles = rule.get('profiles', ['*'])
-    if '*' not in profiles and profile not in profiles:
-        return 'NOT_APPLICABLE', f'Profile {profile!r} not in {profiles!r}; based on the project profile manifest.'
+    if '*' not in profiles and not set(profiles).intersection((profile_evidence or {}).get('profiles', set())):
+        detected = (profile_evidence or {}).get('profiles', set())
+        if profile in profiles:
+            return 'NOT_RUN', f'Declared profile {profile!r} is not confirmed by repository technology evidence.'
+        if not profile_evidence:
+            return 'NOT_RUN', 'Profile mismatch is unresolved; no repository technology inventory is available.'
+        if not profile_evidence.get('complete'):
+            return 'NOT_RUN', 'Profile mismatch is unresolved; repository technology inventory is incomplete.'
+        if profile not in detected:
+            return 'NOT_RUN', f'Declared profile {profile!r} is not confirmed by repository technology evidence.'
+        if any(project['capabilities'].get(cap) is True for cap in rule.get('capabilities', [])):
+            return 'NOT_RUN', 'Profile mismatch conflicts with a declared capability; applicability is unresolved.'
+        return 'NOT_APPLICABLE', f'Profile {profile!r} excluded by {profile_evidence["summary"]}.'
     missing = [cap for cap in rule.get('capabilities', []) if project['capabilities'].get(cap) is not True]
     if missing:
         return 'NOT_RUN', f'Applicability evidence missing for capabilities {missing!r}; false declarations alone do not prove non-applicability.'
@@ -209,6 +342,7 @@ def run_check(root: Path, full: bool):
     release = read_json(VERSION)
     project, loading_error = load_manifest(root)
     schema_error = loading_error or manifest_check(project, release['version'])
+    profile_evidence = repository_profile_evidence(root) if not schema_error else None
     results = []
     for rule in spec['rules']:
         start = time.perf_counter()
@@ -217,7 +351,7 @@ def run_check(root: Path, full: bool):
         elif schema_error:
             result, evidence = 'NOT_RUN', 'Project manifest invalid; applicability cannot be inferred safely.'
         else:
-            applicability, basis = applicable(rule, project)
+            applicability, basis = applicable(rule, project, profile_evidence)
             if applicability != 'APPLICABLE':
                 result, evidence = applicability, basis
             elif not full and rule['stage'] != 'fast':
