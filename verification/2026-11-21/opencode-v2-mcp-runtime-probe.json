@@ -1,0 +1,79 @@
+{
+  "schema": "golden-opencode-v2-local-probe/v1",
+  "date": "2026-11-21",
+  "qualification": "LOCAL_SYNTHETIC_ONLY_NOT_COMPANY_RUNTIME",
+  "runtime": {
+    "version": "2.2.7",
+    "source": "https://github.com/anomalyco/opencode/releases/tag/v2.2.7",
+    "binary_sha256": "811c42be9cad489ea8c411ead49e06f691deee4957ba9a0a56a159a7d6c1abdc",
+    "checksum_source": "official release SHA256SUMS",
+    "company_runtime": "NOT_RUN"
+  },
+  "isolation": {
+    "host": "local macOS only",
+    "project": "temporary synthetic project with Golden golden-engineer agent and golden-routing skill",
+    "provider": "scripted OpenAI-compatible loopback stub; no real model",
+    "credentials": "none",
+    "network_policy": "macOS Seatbelt allowed localhost service/model traffic and denied all other networking",
+    "packet_capture_or_company_attempt_monitor": "NOT_AVAILABLE"
+  },
+  "checks": {
+    "default_catalog_behavior_without_disable_setting": {
+      "status": "PUBLIC_FETCH_ATTEMPT_OBSERVED_AND_DENIED",
+      "observation": "OpenCode logged GET https://models.opencode.ai/experimental/v2.0/api.json?type=chat,decision,image despite an explicitly configured loopback model; DNS failed under the default-deny Seatbelt policy. No public connection succeeded.",
+      "request_count_to_public_network": "No successful connection observed; no packet capture available"
+    },
+    "models_fetch_disable_setting": {
+      "status": "NO_CATALOG_FETCH_LOG_EVENT_OBSERVED",
+      "setting": "OPENCODE_DISABLE_MODELS_FETCH=1",
+      "limitation": "OpenCode logs are not packet-level or company endpoint-monitor evidence"
+    },
+    "autoupdate_disable_setting": {
+      "status": "SET_IN_PROBE_ENVIRONMENT_NOT_INDEPENDENTLY_MONITORED",
+      "setting": "OPENCODE_DISABLE_AUTOUPDATE=1",
+      "limitation": "The probe did not separately capture updater traffic; company egress attempt monitoring is still required."
+    },
+    "public_web_tool_permissions": {
+      "status": "PASS_LOCAL_CONFIG",
+      "denied_actions": ["webfetch", "websearch"],
+      "observation": "Both actions were absent from the scripted provider's V2 tool list after project permissions loaded"
+    },
+    "native_skill_call": {
+      "status": "PASS_LOCAL_SCRIPTED_SKILL",
+      "tool": "skill",
+      "arguments": {"id": "golden-routing"},
+      "observation": "OpenCode returned the actual local skill body to the scripted provider",
+      "model_reasoning_or_skill_quality": "NOT_EVALUATED"
+    },
+    "official_sdk_mcp_pinned_protocol": {
+      "status": "FAILED_PROTOCOL_DISCOVERY",
+      "sdk": "mcp==2.3.0",
+      "opencode_protocol": "2026-07-28",
+      "observation": "OpenCode reported the server did not offer the pinned server/discover protocol"
+    },
+    "official_sdk_mcp_legacy_protocol": {
+      "status": "FAILED_CONNECTION_TIMEOUT",
+      "sdk": "mcp==2.3.0",
+      "observation": "The SDK fixture process started and exited when OpenCode closed stdio; no MCP tool appeared in the model request"
+    },
+    "existing_synthetic_mcp_legacy_control": {
+      "status": "FAILED_CONNECTION_TIMEOUT",
+      "observation": "The same temporary project shape also timed out with the repository's original synthetic JSON-RPC fixture"
+    },
+    "direct_official_sdk_stdio_test": {
+      "status": "PASS_MACOS_ARM64",
+      "evidence": "tests.test_mcp_sdk_fixture under the staged SDK venv; discovery returned read_synthetic_sample, fixture-001 returned 12.5 synthetic-unit, out-of-scope identifier returned an is_error result"
+    }
+  },
+  "attempts_and_performance": {
+    "agent_calls": "one native skill call observed; no MCP call observed",
+    "scripted_provider_requests": "synthetic protocol requests only; not a trusted company runtime counter",
+    "tokens_latency_uplift_or_quality": "NOT_MEASURED"
+  },
+  "company_actions": [
+    "Return the exact internal OpenCode build and sanitized config format.",
+    "Set OPENCODE_DISABLE_MODELS_FETCH=1 on the actual managed OpenCode server process and verify its inherited environment.",
+    "Enforce and monitor Windows/Linux default-deny public egress for OpenCode and every child process.",
+    "Resolve the internal OpenCode MCP protocol/transport against an approved synthetic server before enabling any MCP."
+  ]
+}

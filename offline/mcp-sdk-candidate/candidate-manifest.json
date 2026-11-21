@@ -1,0 +1,62 @@
+{
+  "schema": "golden-mcp-candidate-transfer/v1",
+  "observed_on": "2026-11-21",
+  "status": "CANDIDATE_ONLY_COMPANY_OSS_AND_TARGET_COMPATIBILITY_UNKNOWN",
+  "source": {
+    "repository": "https://github.com/modelcontextprotocol/python-sdk",
+    "release": "v2.3.0",
+    "package": "mcp==2.3.0",
+    "commit": "2118f14f8a19bc158d8a1cf90af58d85d187f849",
+    "python": "CPython 3.11"
+  },
+  "evidence_scope": "Wheel metadata, embedded license files, target tags and dependency closure were inspected. No company OSS/security approval is implied.",
+  "candidate_archives": [
+    {
+      "filename": "macos-arm64-cp311.tar.gz",
+      "sha256": "5a78a99f2e8775d320d7595862060f351c2645f6dad1df0e0ac1570f021ed794",
+      "bytes": 8641469,
+      "wheel_count": 28,
+      "dependency_edges": 48,
+      "wheel_bytes": 8737221,
+      "status": "VERIFIED_CANDIDATE_ONLY; OFFLINE_INSTALL_AND_PIP_CHECK_PASS_ON_MACOS_ARM64"
+    },
+    {
+      "filename": "windows-amd64-cp311.tar.gz",
+      "sha256": "b8cf24e8c8d3ce94ea813aba59dc5a733aea808f53db1d8c9ea589ebb43c2145",
+      "bytes": 18024230,
+      "wheel_count": 29,
+      "dependency_edges": 49,
+      "wheel_bytes": 18171495,
+      "includes": ["pywin32==311"],
+      "status": "VERIFIED_CANDIDATE_ONLY; NOT_INSTALLED_ON_WINDOWS"
+    },
+    {
+      "filename": "linux-x86_64-glibc217-cp311.tar.gz",
+      "sha256": "596087fb092476b1663fdff7ddc0bfdb441036ae0d6d413d6551bae0fe4f57b7",
+      "bytes": 9604243,
+      "wheel_count": 28,
+      "dependency_edges": 48,
+      "wheel_bytes": 9726729,
+      "status": "VERIFIED_CANDIDATE_ONLY; NOT_INSTALLED_ON_LINUX"
+    }
+  ],
+  "license_inventory_summary": {
+    "method": "wheel METADATA declarations plus SHA-256 of license files embedded in each wheel",
+    "packages_missing_embedded_license_files": 0,
+    "company_approval": "NOT_OBTAINED",
+    "independent_vulnerability_review": "NOT_RUN"
+  },
+  "runtime_evidence": {
+    "sdk_stdio_discovery_and_tool_call": "PASS_ON_MACOS_ARM64_SYNTHETIC_FIXTURE",
+    "opencode_v2_2_7_mcp_2026_07_28_protocol": "FAILED_SERVER_DISCOVERY_PIN_NOT_OFFERED",
+    "opencode_v2_2_7_mcp_legacy_protocol": "FAILED_CONNECTION_TIMEOUT",
+    "company_opencode": "NOT_RUN"
+  },
+  "company_target": {
+    "os_build": "UNKNOWN",
+    "python_patch_and_abi": "UNKNOWN",
+    "windows_linux_native_install_tests": "NOT_RUN",
+    "required_action": "Company OSS/package owner must confirm exact Windows/Linux targets, approve licenses and vulnerabilities, then run offline installation and the OpenCode MCP handshake on those hosts."
+  },
+  "archive_location_note": "The binary candidate archives and sidecar checksums are staged outside this repository on the local prequalification workspace; this repository contains only their names and hashes."
+}

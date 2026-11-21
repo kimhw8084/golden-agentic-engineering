@@ -7,7 +7,7 @@
   },
   "source_manifest": {
     "path": "offline/assets-manifest.json",
-    "sha256": "ab5124b93994e3181269f6a5bb2294d14188685734296e4bb62755336eaf16f0"
+    "sha256": "e54bd381b3eb1b5a4e01683b21861b3819d5400c26640b3efc215b159b0d1390"
   },
   "staged_asset_groups": 0,
   "assets": [
@@ -34,13 +34,15 @@
       "name": "MCP Python SDK and transitive dependencies",
       "status": "NOT_STAGED",
       "owner": "Company OSS/package owner",
-      "required_action": "Pin an official SDK release, review its dependency/license closure, and stage target-compatible wheels."
+      "partial_evidence": "Official modelcontextprotocol/python-sdk v2.3.0 is pinned to commit 2118f14f8a19bc158d8a1cf90af58d85d187f849. Hash-verified CPython 3.11 wheel candidate bundles exist for macOS arm64, Windows AMD64, and Linux x86-64/glibc 2.17; macOS offline install and pip check pass, while Windows/Linux native installs are untested. OpenCode v2.2.7 loaded the Golden skill but its MCP SDK handshake failed. Candidate archive hashes and limitations are in offline/mcp-sdk-candidate/candidate-manifest.json.",
+      "required_action": "Confirm exact Windows/Linux OS, architecture, Python patch/ABI and glibc; independently review candidate licenses and vulnerabilities; import matching hash-locked archives through the approved process; run native offline install and pip check; and resolve OpenCode MCP discovery compatibility. Company approval is not obtained."
     },
     {
       "name": "Company OpenCode and internal model evidence",
       "status": "NOT_STAGED",
       "owner": "Company OpenCode owner",
-      "required_action": "Supply installed build/config compatibility evidence and an approved internal model trial after the egress gate."
+      "partial_evidence": "Public OpenCode v2.2.7 candidate tested in an isolated loopback-only environment. The Golden routing skill loaded through the native skill tool using a scripted provider; webfetch/websearch were denied by project config; OPENCODE_DISABLE_MODELS_FETCH=1 suppressed the catalog-fetch log event. The probe set OPENCODE_DISABLE_AUTOUPDATE=1 but did not separately capture updater traffic. The SDK and original synthetic MCP fixtures failed the local OpenCode handshake. Internal build and company network-monitor evidence are unknown. See RUNTIME_COMPATIBILITY_MATRIX.md.",
+      "required_action": "Supply the installed internal build/config summary; set OPENCODE_DISABLE_AUTOUPDATE=1 and OPENCODE_DISABLE_MODELS_FETCH=1 on the actual CLI/server process; disable or network-block the separate desktop updater if used; verify the project web tool denies; resolve MCP protocol compatibility; and run an approved internal model trial only after the Windows/Linux egress gate and attempt monitor are active."
     },
     {
       "name": "OS-enforced no-public-egress policy and attempt monitor",

@@ -1,5 +1,9 @@
 {
   "default_agent": "golden-engineer",
+  "permissions": [
+    { "action": "webfetch", "resource": "*", "effect": "deny" },
+    { "action": "websearch", "resource": "*", "effect": "deny" }
+  ],
   "mcp": {
     "servers": {
       "golden-synthetic-readonly": {

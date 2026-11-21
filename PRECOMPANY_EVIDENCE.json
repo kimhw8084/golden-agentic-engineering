@@ -12,8 +12,11 @@
     "python_unit_suite": {
       "command": "python -m unittest discover -s tests -q",
       "status": "PASS",
-      "tests_passed": 136,
-      "tests_failed": 0
+      "tests_run": 155,
+      "tests_passed": 154,
+      "tests_skipped": 1,
+      "tests_failed": 0,
+      "note": "One optional-SDK test is skipped under the default interpreter. The SDK-backed fixture was run separately under the offline MCP SDK candidate virtual environment."
     },
     "manifest_validation": {
       "command": "python scripts/validate_manifests.py",
@@ -23,7 +26,7 @@
     "tracked_content_hashes": {
       "command": "python scripts/verify_contents.py",
       "status": "PASS",
-      "checked": 195,
+      "checked": 206,
       "missing": 0,
       "altered": 0,
       "unlisted": 0
@@ -44,11 +47,30 @@
       "evidence": "One Python loopback socket.connect was observed and rejected before the socket operation.",
       "limitation": "This audit hook is not an OS firewall and does not monitor OpenCode, Node, browsers, or arbitrary child processes."
     },
+    "mcp_sdk_candidate_archives": {
+      "command": "python scripts/mcp_candidate_bundle.py verify <each of three candidate archives>",
+      "status": "PASS_CANDIDATE_INTEGRITY_ONLY",
+      "targets": ["macos-arm64-cp311", "windows-amd64-cp311", "linux-x86_64-glibc217-cp311"],
+      "native_install_scope": "macOS arm64 only; Windows and Linux native installation not run",
+      "archive_hashes": {
+        "macos-arm64-cp311": "5a78a99f2e8775d320d7595862060f351c2645f6dad1df0e0ac1570f021ed794",
+        "windows-amd64-cp311": "b8cf24e8c8d3ce94ea813aba59dc5a733aea808f53db1d8c9ea589ebb43c2145",
+        "linux-x86_64-glibc217-cp311": "596087fb092476b1663fdff7ddc0bfdb441036ae0d6d413d6551bae0fe4f57b7"
+      },
+      "license_and_company_approval": "Metadata and embedded license files inventoried; company OSS/security approval not obtained."
+    },
+    "official_mcp_sdk_fixture": {
+      "command": "<offline MCP SDK CPython 3.11 venv>/bin/python -m unittest tests.test_mcp_sdk_fixture -v",
+      "status": "PASS",
+      "tests_run": 1,
+      "host_target": "macOS arm64",
+      "behavior": "SDK stdio discovery and fixed-sample call pass; out-of-scope ID returns MCP is_error."
+    },
     "secret_pattern_scan": {
       "command": "python scripts/security_scan.py --repo . --history",
       "status": "PASS",
-      "current_files_scanned": 197,
-      "reachable_git_blobs_scanned": 662,
+      "current_files_scanned": 209,
+      "reachable_git_blobs_scanned": 697,
       "limitation": "High-confidence pattern scan only; it does not establish absence of all proprietary information."
     },
     "golden_full_release_checks": [
@@ -75,19 +97,29 @@
   "runtime_probe": {
     "host_scope": "Local macOS test host only; not company runtime.",
     "open_code_version": "1.3.9",
-    "public_catalog": "OpenCode logged a models.dev fetch attempt; the isolated follow-up run denied non-loopback networking using macOS Seatbelt.",
+    "public_catalog": "The older local V1 probe logged a models.dev fetch attempt. A separately checksum-verified public OpenCode V2.2.7 probe showed an attempted GET to models.opencode.ai without OPENCODE_DISABLE_MODELS_FETCH=1; Seatbelt denied non-loopback networking. With the variable set, no catalog-fetch log event appeared. Logs are not packet capture or endpoint-monitor evidence.",
     "repo_v2_config_on_local_v1": "INCOMPATIBLE: the local V1 CLI rejected the V2 mcp.servers configuration.",
-    "temporary_v1_config": "Local synthetic OpenAI-compatible provider was reached over loopback and the CLI exposed a skill tool. A scripted skill call did not complete because the hosted sandbox denied spawning rg.",
+    "temporary_v1_config": "A temporary V1-compatible config reached a local synthetic OpenAI-compatible provider and exposed a skill tool. Its scripted skill call did not complete because the hosted sandbox denied spawning rg.",
     "evidence": "verification/2026-11-21/opencode-local-runtime-probe.json",
+    "v2_candidate_probe": "verification/2026-11-21/opencode-v2-mcp-runtime-probe.json",
+    "v2_probe_results": {
+      "native_skill_call": "PASS_LOCAL_SCRIPTED_SKILL",
+      "public_web_tools": "DENIED_BY_PROJECT_CONFIG",
+      "models_fetch_disable_setting": "NO_CATALOG_FETCH_LOG_EVENT_OBSERVED; no packet capture",
+      "autoupdate_disable_setting": "SET_IN_PROBE_ENVIRONMENT_NOT_INDEPENDENTLY_MONITORED",
+      "official_sdk_and_existing_fixture_mcp": "FAILED_LOCAL_MCP_HANDSHAKE_OR_TIMEOUT",
+      "authentic_model_quality_tokens_latency": "NOT_MEASURED"
+    },
     "authentic_company_model_or_mcp_calls": "NOT_RUN",
     "company_runtime_benchmark": "BLOCKED_COMPANY_RUNTIME"
   },
   "privacy_review": {
     "high_confidence_secret_scan": "PASS: zero detected patterns; no match values were emitted.",
-    "reachable_git_history": "662 blobs scanned.",
+    "reachable_git_history": "697 blobs scanned.",
     "absolute_user_paths": 0,
     "private_ipv4_addresses": 0,
-    "email_address_matches": "4 files: three invalid-domain test fixtures and one public upstream license attribution; no company email was identified.",
+    "machine_user_path_scan": "PASS: zero hits in current files or reachable Git blobs; ignored local demo evidence was changed to a repository-relative path before release.",
+    "email_address_matches": "4 files: three invalid-domain test fixtures and one public upstream license attribution; no company email was identified in the earlier scan. New changes contain no company identity or runtime detail.",
     "limitation": "Pattern-based scan only; this does not prove the absence of all proprietary information."
   },
   "assets": {

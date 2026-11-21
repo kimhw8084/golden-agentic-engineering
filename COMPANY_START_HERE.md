@@ -20,7 +20,27 @@ python3 scripts/precompany_readiness.py --out /tmp/golden-readiness.json --repor
 
 ## Local runtime evidence (2026-11-21)
 
-The local OpenCode binary reports V1 `1.3.9`; it is not the company's runtime. A non-sandboxed version check logged a failed `models.dev` fetch. Follow-up CLI and synthetic-provider probes ran under macOS Seatbelt with all non-loopback networking denied; the provider probe allowed only a local stub. The V1 binary rejected this repo's V2 `mcp.servers` config. With a temporary V1-compatible config it exposed the native `skill` tool, but the skill call could not complete because the hosted sandbox blocked OpenCode's `rg` child process. This is partial runtime evidence, not a successful skill/MCP/model test. See [`RUNTIME_COMPATIBILITY_MATRIX.md`](RUNTIME_COMPATIBILITY_MATRIX.md).
+The local OpenCode binary reports V1 `1.3.9`; it is not the company's runtime. An official checksum-verified OpenCode V2 `2.2.7` binary was also tested in an isolated temporary project under a macOS Seatbelt profile that allowed loopback only. With a local custom provider and no catalog-fetch-disable environment, it attempted `GET https://models.opencode.ai/experimental/v2.0/api.json`; the sandbox denied the request. Repeating with `OPENCODE_DISABLE_MODELS_FETCH=1` produced no catalog-fetch log event. The OpenCode project config now denies `webfetch` and `websearch`; the V2 probe confirmed they were absent from the model tool list. The probe also set `OPENCODE_DISABLE_AUTOUPDATE=1`, but did not separately capture updater traffic. Neither environment setting nor project permissions replace company egress enforcement or attempt monitoring.
+
+The V2 probe successfully loaded `golden-routing` through the native OpenCode `skill` tool using a scripted loopback model. The SDK-backed MCP fixture passed its own local stdio client test, but OpenCode v2.2.7 did not connect to either the SDK fixture or the existing synthetic fixture: the pinned `2026-07-28` mode reported that the server did not offer `server/discover`, and legacy mode timed out. The scripted model is not evidence of model reasoning. The older local V1 CLI rejected the V2 MCP config, and its earlier skill subprocess probe was blocked by the hosted sandbox. No company runtime was tested. See [`RUNTIME_COMPATIBILITY_MATRIX.md`](RUNTIME_COMPATIBILITY_MATRIX.md) and [`offline/mcp-sdk-candidate/README.md`](offline/mcp-sdk-candidate/README.md).
+
+### Before starting a company OpenCode process
+
+The company OpenCode owner must set `OPENCODE_DISABLE_AUTOUPDATE=1` and `OPENCODE_DISABLE_MODELS_FETCH=1` on the **actual server process** and confirm both are inherited by standalone CLI runs. The catalog setting is identified by an OpenCode maintainer in [issue #34730](https://github.com/anomalyco/opencode/issues/34730); the update setting is described in [OpenCode's environment-variable guidance](https://github.com/anomalyco/opencode/issues/55308) and [global update configuration](https://opencode.ai/docs/config/). If the company uses a managed background service, setting variables only in a client shell is not enough; update the approved service environment and restart it under the company's change process. The project config also denies public webfetch and websearch. OpenCode's desktop updater has a separate update path; if the desktop app is used, the company owner must disable or network-block that updater separately. These application settings are not a verified network boundary; the security/network owner must deploy a default-deny intranet-only egress policy for OpenCode and all child processes and verify attempts with its monitor before any company task runs.
+
+Standalone CLI launch examples after the company owners have verified the egress gate:
+
+```powershell
+$env:OPENCODE_DISABLE_AUTOUPDATE = "1"
+$env:OPENCODE_DISABLE_MODELS_FETCH = "1"
+opencode --standalone
+```
+
+```sh
+OPENCODE_DISABLE_AUTOUPDATE=1 OPENCODE_DISABLE_MODELS_FETCH=1 opencode --standalone
+```
+
+Do not use the local runtime probe as a substitute for the company's monitored pilot.
 
 Do not run OpenCode for a company task until the company security/network owner has enforced and monitored default-deny public egress for it and every child process. A logged failed lookup does not prove that a different host or build is blocked.
 

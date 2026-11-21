@@ -13,7 +13,9 @@
 ## Python and MCP
 
 - The synthetic examples use the Python standard library for core correctness tests. Optional NiceGUI and other installed packages are used only by their explicitly requested UI simulation tests.
-- No official `modelcontextprotocol/python-sdk` release or transitive wheelhouse is pinned or staged. The repository's small synthetic stdio fixture does not count as the SDK and is not a substitute for SDK conformance evidence.
+- The official `modelcontextprotocol/python-sdk` v2.3.0 source is pinned to commit `2118f14f8a19bc158d8a1cf90af58d85d187f849`. Hash-locked candidate archives now exist for macOS arm64, Windows AMD64, and Linux x86-64/glibc 2.17. They contain 28/29/28 wheels, target-specific dependency closures, package metadata, embedded-license file hashes, and CycloneDX 1.5 SBOMs. Every wheel in these staged candidates contained at least one license file; the archive inventories are evidence, not company legal or vulnerability approval.
+- The macOS arm64 wheelhouse installed offline with `--no-index --require-hashes`, passed `pip check`, and ran the SDK-backed synthetic stdio tool test. Windows and Linux bundles were cross-platform downloaded and structurally verified on macOS; neither was installed natively. Exact company OS, Python patch/ABI, and glibc remain unknown. The archives are outside Git; filenames and hashes are in [`MCP candidate manifest`](offline/mcp-sdk-candidate/candidate-manifest.json).
+- OpenCode v2.2.7 did not connect to the SDK fixture in the local runtime probe. Pinning protocol `2026-07-28` failed because the server did not offer `server/discover`; legacy mode timed out. The original homemade fixture also timed out through this OpenCode local-stdio config. Direct SDK stdio conformance therefore must not be described as OpenCode MCP compatibility.
 - The `fab_sampling_offline_port_kit/requirements_*.txt` files are broad candidate lists, not a resolver-produced, hash-pinned closure. They have no downloaded wheelhouse, complete SBOM, or per-target license inventory.
 
 ## Fab-source candidates
@@ -24,8 +26,8 @@
 
 1. The OSS/package owner selects the exact company Python, Node, Windows/Linux OS, architecture, and browser versions.
 2. Have the company OSS reviewer accept or reject the verified `stackback@0.0.2` MIT declaration without a bundled MIT notice; preserve its embedded V8 BSD-3-Clause notice or remove the dependency through a tested lock update.
-3. Stage exact target-specific Python wheels, npm cache and browser binaries; record source lock, hashes, full dependency closure, SBOM, and licenses/NOTICE.
+3. Review and import the recorded MCP candidate only after confirming the company's exact target; stage exact Python wheels, npm cache and browser binaries; record source lock, hashes, full dependency closure, SBOM, and licenses/NOTICE.
 4. Review each source, dependency, bundled asset, model and dataset under company policy and record an attributable approval.
 5. Keep platform assets separate, transfer them through the approved internal artifact path, and rerun local verification offline on both target OSes.
 
-Until those actions are complete, the repository remains source-only and all third-party candidate selections remain unapproved.
+Until those actions are complete, the repository remains a source bundle plus externally staged candidate archives, not a company-approved offline executable distribution. All third-party candidate selections remain unapproved.

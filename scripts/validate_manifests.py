@@ -212,6 +212,12 @@ def validate() -> list[str]:
     fixture = mcp.get('golden-synthetic-readonly')
     if not isinstance(fixture, dict) or fixture.get('disabled') is not True:
         errors.append('synthetic MCP fixture must exist and remain disabled')
+    for config_name in ('opencode.json', '.opencode/opencode.json'):
+        permissions = documents[config_name].get('permissions', [])
+        denied = {(item.get('action'), item.get('resource'), item.get('effect'))
+                  for item in permissions if isinstance(item, dict)}
+        if not {('webfetch', '*', 'deny'), ('websearch', '*', 'deny')} <= denied:
+            errors.append(f'{config_name}: public webfetch and websearch must be denied by project permissions')
     github_template = documents['integrations/mcp/github-enterprise-readonly.example.json']
     github_servers = github_template.get('mcp', {}).get('servers', {}) if isinstance(github_template.get('mcp'), dict) else {}
     github = github_servers.get('github-enterprise-readonly') if isinstance(github_servers, dict) else None
@@ -298,6 +304,14 @@ def validate() -> list[str]:
     if (egress.get('schema') != 'golden-egress-policy/v1' or egress.get('enforcement') != 'DEFAULT_DENY'
             or egress.get('allowed_destinations') != [] or egress.get('status') != 'TEMPLATE_ONLY_NOT_APPLIED'):
         errors.append('egress policy template must remain empty-allowlist default deny and unapplied')
+    opencode_env = egress.get('required_opencode_environment', {}).get('variables', {})
+    if (opencode_env.get('OPENCODE_DISABLE_AUTOUPDATE') != '1'
+            or opencode_env.get('OPENCODE_DISABLE_MODELS_FETCH') != '1'
+            or not any(item == {'action': 'webfetch', 'resource': '*', 'effect': 'deny'}
+                       for item in egress.get('project_tool_permissions', []))
+            or not any(item == {'action': 'websearch', 'resource': '*', 'effect': 'deny'}
+                       for item in egress.get('project_tool_permissions', []))):
+        errors.append('egress template must disable OpenCode update/catalog checks and deny public web tools')
     for root, expected in (('agents', 5), ('skills', 12), ('commands', 7)):
         folder = ROOT / '.opencode' / root
         files = sorted(folder.rglob('*.md'))

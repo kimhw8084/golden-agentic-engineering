@@ -3,6 +3,17 @@
   "enforcement": "DEFAULT_DENY",
   "allowed_destinations": [],
   "applies_to": ["opencode", "python", "node", "browser_processes", "subprocesses"],
+  "required_opencode_environment": {
+    "variables": {
+      "OPENCODE_DISABLE_AUTOUPDATE": "1",
+      "OPENCODE_DISABLE_MODELS_FETCH": "1"
+    },
+    "scope": "OpenCode server process and standalone CLI process"
+  },
+  "project_tool_permissions": [
+    {"action": "webfetch", "resource": "*", "effect": "deny"},
+    {"action": "websearch", "resource": "*", "effect": "deny"}
+  ],
   "status": "TEMPLATE_ONLY_NOT_APPLIED",
-  "company_action_required": "Security/network owner must supply the exact approved intranet/model/package endpoints and deploy an OS/network firewall allowlist."
+  "company_action_required": "Set OPENCODE_DISABLE_AUTOUPDATE=1 and OPENCODE_DISABLE_MODELS_FETCH=1 on the actual OpenCode CLI/server process; keep public webfetch/websearch denied; have the security/network owner supply the exact approved intranet/model/package endpoints and deploy an OS/network firewall allowlist plus an attempt monitor. Desktop updater behavior is separate and must be independently disabled or network-blocked. The environment variables and project permissions are not an OS firewall."
 }

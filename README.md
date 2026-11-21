@@ -6,6 +6,8 @@ A lightweight **OpenCode-first agentic engineering standards toolkit** for engin
 
 The primary OpenCode agent is the default reasoning/routing layer. For nontrivial requests, match a route in [`workflows/task-routing.json`](workflows/task-routing.json), invoke its named Golden skill before choosing implementation tools, and check only the route-relevant agents and MCP capabilities visible in the current runtime. Do not skip an applicable skill or replace a relevant available agent/MCP with a CLI out of habit. Keep one/few-file fixes direct and lean; use deterministic tools for reproducible proof and compare alternatives only when they could perform the same operation. See [`research/capability-selection.json`](research/capability-selection.json) for pinned candidate evidence and [`docs/AGENTIC_FIRST_EVALUATION.md`](docs/AGENTIC_FIRST_EVALUATION.md) for the selection method. No performance winner is claimed without matched runtime evidence.
 
+The project OpenCode configs deny public `webfetch` and `websearch`. The OpenCode CLI/server process must also start with `OPENCODE_DISABLE_AUTOUPDATE=1` and `OPENCODE_DISABLE_MODELS_FETCH=1` to disable its update and model-catalog checks. The separate desktop updater must be independently disabled or network-blocked. These application settings are not a firewall; company use still requires an OS-enforced intranet-only egress policy and attempt monitoring for OpenCode and every child process. See [`START_HERE_COMPANY_OPENCODE.md`](START_HERE_COMPANY_OPENCODE.md).
+
 > **You can push this repository to GitHub now.** You cannot claim it or its OSS candidates are company-cleared or offline-runnable before internal qualification. No external dependencies are shipped by default.
 
 ## Fastest start from a phone
@@ -73,6 +75,8 @@ Golden Control is the team-facing operating cockpit for Golden installation, app
 | `research/capability-selection.json` | Pinned public capability candidates, observed license evidence, per-task rankings, and known gaps |
 | [`fab_sampling_offline_port_kit/README.md`](fab_sampling_offline_port_kit/README.md) | Offline source-transfer guide and scripts; no fab data or downloaded source repositories bundled |
 | `scripts/fetch_sources.py` | Public-network opt-in snapshot downloader/pinner; **source only** |
+| `scripts/mcp_candidate_bundle.py` | Offline-only validator, hash-lock, license inventory and CycloneDX SBOM packager for staged MCP SDK wheels |
+| [`offline/mcp-sdk-candidate/`](offline/mcp-sdk-candidate/README.md) | Hash-pinned external candidate archive manifest and exact platform/clearance limitations; archives remain outside Git |
 | `scripts/bootstrap_project.py` | Non-overwriting application manifest scaffold |
 | `scripts/install_opencode.py` | Non-overwriting install of agent/skill/command files into chosen OpenCode config folder |
 | `scripts/company_bootstrap.py` | Offline Step A doctor, reviewed add-only apply and hash-checked rollback |
