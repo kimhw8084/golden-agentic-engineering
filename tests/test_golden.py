@@ -123,6 +123,30 @@ class GoldenProofTests(unittest.TestCase):
         self.assertEqual(status, 'NOT_RUN')
         self.assertIn('allowlist', reason)
 
+    def test_security_and_lint_commands_require_exact_python_module_allowlist(self):
+        self.assertTrue(golden.approved_command('python_lint', [
+            '${PYTHON}', '-m', 'ruff', 'check', '.'
+        ])[0])
+        self.assertTrue(golden.approved_command('security_scan', [
+            '${PYTHON}', '-m', 'bandit', '-r', '.'
+        ])[0])
+        self.assertFalse(golden.approved_command('python_lint', ['ruff', 'check', '.'])[0])
+        self.assertFalse(golden.approved_command('security_scan', [
+            '${PYTHON}', '-m', 'bandit', '-r', '.', '-o', '/tmp/report.json'
+        ])[0])
+        self.assertFalse(golden.approved_command('security_scan', [
+            '${PYTHON}', '-m', 'bandit', '-r', '/'
+        ])[0])
+
+    def test_missing_static_security_tool_is_not_run(self):
+        project = {'commands': {'security_scan': ['${PYTHON}', '-m', 'bandit', '-r', '.']}}
+        with patch.object(golden.importlib.util, 'find_spec', return_value=None):
+            with patch.object(golden.subprocess, 'run') as run:
+                status, evidence = golden.external('security_scan', EXAMPLE, project, 5)
+        self.assertEqual(status, 'NOT_RUN')
+        self.assertIn('bandit', evidence)
+        run.assert_not_called()
+
     def test_python_ui_contract_command_has_narrow_pytest_allowlist(self):
         approved = ['${PYTHON}', '-m', 'pytest', '-q']
         allowed, basis = golden.approved_command('ui_contracts', approved)

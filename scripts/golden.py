@@ -80,7 +80,7 @@ def approved_command(key: str, command: list[str]) -> tuple[bool, str]:
             return True, 'python test runner allowlist'
     if key == 'ui_contracts' and py and args == ['-m', 'pytest', '-q']:
         return True, 'Python UI contract test allowlist'
-    if key == 'python_lint' and ((py and args == ['-m', 'ruff', 'check', '.']) or (executable == 'ruff' and args == ['check', '.'])):
+    if key == 'python_lint' and py and args == ['-m', 'ruff', 'check', '.']:
         return True, 'Ruff lint allowlist'
     if key == 'ts_typecheck' and node and args == [
         'node_modules/typescript/bin/tsc', '--noEmit', '--project', 'tsconfig.json'
@@ -92,7 +92,7 @@ def approved_command(key: str, command: list[str]) -> tuple[bool, str]:
         return True, 'locked local Vitest runner allowlist'
     if key == 'browser_tests' and py and args == ['-m', 'pytest', '-q']:
         return True, 'Python browser-test allowlist'
-    if key == 'security_scan' and ((py and args[:2] == ['-m', 'bandit']) or executable == 'bandit'):
+    if key == 'security_scan' and py and args == ['-m', 'bandit', '-r', '.']:
         return True, 'Bandit allowlist'
     return False, f'Command is outside the deterministic allowlist for {key!r}.'
 
@@ -374,6 +374,10 @@ def external(key: str, root: Path, project: dict, timeout: int) -> tuple[str, st
         missing = [name for name in required_modules if importlib.util.find_spec(name) is None]
         if missing:
             return 'NOT_RUN', f"Python test dependency unavailable: {', '.join(missing)}; check not executed."
+    python_tool_modules = {'python_lint': 'ruff', 'security_scan': 'bandit'}
+    python_tool_module = python_tool_modules.get(key)
+    if python_tool_module and importlib.util.find_spec(python_tool_module) is None:
+        return 'NOT_RUN', f'Python tool dependency unavailable: {python_tool_module}; check not executed.'
     node_tool_path = None
     node_tool_version = None
     node_test = cmd[0].lower() == '${node}' and key in ('web_tests', 'ui_contracts')
