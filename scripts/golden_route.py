@@ -51,14 +51,18 @@ def validation_errors(root: Path = ROOT) -> list[str]:
     default = routing.get('default')
     if (not isinstance(default, dict) or set(default) != {
             'agent', 'specialists', 'skill_loading', 'selection_registry',
-            'agentic_first_policy', 'patterns', 'pattern_policy', 'mcp_policy'}
+            'agentic_first_policy', 'nontrivial_capability_order', 'small_task_exception',
+            'patterns', 'pattern_policy', 'mcp_policy'}
             or default.get('agent') != 'primary'
             or any(not isinstance(default.get(field), str) or len(default[field]) < 8
-                   for field in ('pattern_policy', 'mcp_policy', 'skill_loading', 'selection_registry', 'agentic_first_policy', 'specialists'))
+                   for field in ('pattern_policy', 'mcp_policy', 'skill_loading', 'selection_registry', 'agentic_first_policy', 'small_task_exception', 'specialists'))
             or not isinstance(default.get('patterns'), list)
             or not default['patterns']
             or any(not isinstance(pattern, str) or not pattern.strip() for pattern in default['patterns'])
-            or len(set(default['patterns'])) != len(default['patterns'])):
+            or len(set(default['patterns'])) != len(default['patterns'])
+            or default.get('nontrivial_capability_order') != [
+                'classify_task_and_risk', 'invoke_route_skill', 'check_relevant_agents_and_mcp',
+                'choose_execution_tools', 'verify_deterministically']):
         errors.append('Default routing policy is incomplete.')
     candidate_records = capabilities.get('candidates', [])
     non_public = capabilities.get('non_public_capability_ids', [])
@@ -141,7 +145,8 @@ def route_for(task_id: str, root: Path = ROOT) -> dict:
     errors = validation_errors(root)
     if errors:
         raise ValueError('Routing manifest invalid: ' + '; '.join(errors))
-    routes = read_json(root / 'workflows' / 'task-routing.json')['workflows']
+    routing = read_json(root / 'workflows' / 'task-routing.json')
+    routes = routing['workflows']
     capability_registry = read_json(root / 'research' / 'capability-selection.json')
     capabilities = {item['id']: item for item in capability_registry.get('candidates', []) if isinstance(item, dict) and isinstance(item.get('id'), str)}
     matches = [row for row in routes if row['id'] == task_id]
@@ -173,6 +178,8 @@ def route_for(task_id: str, root: Path = ROOT) -> dict:
         'no_ai': row['no_ai'],
         'outputs': row['outputs'],
         'acceptance': row['acceptance'],
+        'nontrivial_capability_order': routing['default']['nontrivial_capability_order'],
+        'small_task_exception': routing['default']['small_task_exception'],
     }
 
 
@@ -200,6 +207,7 @@ def main() -> int:
             print(f"ROUTE {route['id']} ({route['complexity']})")
             print(f"Primary: OpenCode {route['primary_agent']}")
             print('Load skills: ' + ', '.join(skill['path'] for skill in route['skills']))
+            print('Capability order (nontrivial tasks): ' + ' → '.join(route['nontrivial_capability_order']))
             print('Conditional specialists: ' + (', '.join(item['agent'] for item in route['specialists']) or 'none'))
             print('Configured MCP for route: ' + (', '.join(route['mcp']['configured_for_route']) or 'none'))
             print('MCP candidates are evaluation-only; ' + route['mcp']['policy'])

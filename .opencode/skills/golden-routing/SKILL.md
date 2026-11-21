@@ -27,9 +27,9 @@ Choose tools by evidence, not by a CLI-first default, while keeping selection ov
 ## Routine delivery (default)
 
 1. Use the primary OpenCode agent for reasoning, routing, and integration.
-2. Load one relevant skill when it materially applies. Reuse the recent runtime/capability baseline; do not re-scan every agent, skill, and MCP connection on every task.
-3. Use a task-relevant approved MCP capability when the task needs its structured service access. Add a specialist only when expected quality or time savings exceed coordination cost.
-4. Use deterministic CLI checks for reproducible proof. Do not benchmark alternative tools or create an invocation ledger for routine work.
+2. For a nontrivial task, invoke the matching route skill before choosing implementation tools. A clear one/few-file fix stays direct and skips this step.
+3. Check only the matching specialist and task-relevant MCP capabilities visible in the current runtime, including permissions. Use them when the route condition and task justify the handoff or structured service access; do not substitute a CLI for an available, relevant capability out of habit.
+4. Use deterministic checks for reproducible proof. Reuse a recent compatible baseline; do not re-scan every capability, benchmark alternatives, or create an invocation ledger for routine work.
 
 ## Capability evaluation (triggered)
 
@@ -37,7 +37,7 @@ Run the fuller comparison when the user asks which tool is fastest/best, an unfa
 
 The primary agentic layer is the default; additional capability discovery and measurement are triggered by actual uncertainty or a decision need. The winner is task-specific. Do not invoke every capability or create a swarm just to satisfy an order.
 
-**Direct primary agent** is the lightest pattern for clear routine fixes; no skill or route command is required when neither adds value. For a nontrivial task, load the route's skill when its procedure changes the method or reduces a concrete risk. A specialist subagent is useful only when its distinct expertise improves the result enough to justify coordination.
+**Direct primary agent** is the lightest pattern for clear routine fixes; no skill or route command is required. For a nontrivial routed task, invoke its named skill first. A specialist subagent is useful only when its distinct expertise improves the result enough to justify coordination.
 
 **Sequential chain** for requirements → implementation → tests → documentation when later steps genuinely depend on completed earlier outputs. Pass only artifacts/paths and acceptance criteria, not entire conversation histories.
 

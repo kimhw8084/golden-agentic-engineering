@@ -3,9 +3,17 @@
   "default": {
     "agent": "primary",
     "specialists": "Only when measurable value exceeds handoff cost",
-    "skill_loading": "Load a task skill only when it changes the method or reduces risk; small fixes use the primary agent directly",
+    "skill_loading": "For a nontrivial task, invoke the matching route skill before choosing execution tools; one/few-file clear fixes use the primary agent directly",
     "selection_registry": "research/capability-selection.json",
-    "agentic_first_policy": "Use the relevant skill and authorized specialist/MCP when they materially help; use CLI tools for deterministic proof or when matched evidence shows they fit better.",
+    "agentic_first_policy": "For nontrivial work, use the matching skill, check only relevant current specialist/MCP availability and permissions, then choose execution tools. Do not skip a matching skill or default to CLI by habit. Use MCP only when already connected and approved; use deterministic tools for reproducible proof.",
+    "nontrivial_capability_order": [
+      "classify_task_and_risk",
+      "invoke_route_skill",
+      "check_relevant_agents_and_mcp",
+      "choose_execution_tools",
+      "verify_deterministically"
+    ],
+    "small_task_exception": "For one/few-file clear fixes, act directly; skip route skill, catalog scan, specialist and MCP discovery unless the user names one or the task requires it.",
     "patterns": [
       "direct",
       "sequential",

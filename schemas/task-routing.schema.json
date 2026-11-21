@@ -7,13 +7,15 @@
     "schema": {"const": "golden-task-routing/v2"},
     "default": {
       "type": "object",
-      "required": ["agent", "specialists", "skill_loading", "selection_registry", "agentic_first_policy", "patterns", "pattern_policy", "mcp_policy"],
+      "required": ["agent", "specialists", "skill_loading", "selection_registry", "agentic_first_policy", "nontrivial_capability_order", "small_task_exception", "patterns", "pattern_policy", "mcp_policy"],
       "properties": {
         "agent": {"const": "primary"},
         "specialists": {"type": "string", "minLength": 8},
         "skill_loading": {"type": "string", "minLength": 8},
         "selection_registry": {"type": "string", "minLength": 8},
         "agentic_first_policy": {"type": "string", "minLength": 20},
+        "nontrivial_capability_order": {"type": "array", "const": ["classify_task_and_risk", "invoke_route_skill", "check_relevant_agents_and_mcp", "choose_execution_tools", "verify_deterministically"]},
+        "small_task_exception": {"type": "string", "minLength": 20},
         "patterns": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 3}},
         "pattern_policy": {"type": "string", "minLength": 20},
         "mcp_policy": {"type": "string", "minLength": 20}

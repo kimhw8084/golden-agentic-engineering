@@ -59,13 +59,13 @@ hosting, production actions, or raw application feedback/observability storage. 
 
 ## 2. Agentic-first capability and orchestration choice
 
-**Default:** use the project-selected primary OpenCode agent for reasoning and routing. Clear small fixes stay direct with no route command or extra skill. For nontrivial tasks, keep discovery proportional: load only a useful skill, reuse a recent runtime baseline, and use known approved MCP capabilities when the task needs them. Do not inventory every agent/MCP, benchmark alternatives, or keep a tool-call ledger for routine work. Add a specialist or MCP call when its expected benefit exceeds latency/coordination cost.
+**Default:** use the project-selected primary OpenCode agent for reasoning and routing. Clear small fixes stay direct with no route command or extra skill. For nontrivial tasks, invoke the matching route skill before choosing implementation tools, then check only route-relevant specialist and task-relevant MCP availability and permissions. Use them when the route condition and task justify the handoff or structured service access. Reuse a recent runtime baseline; do not inventory every agent/MCP, benchmark alternatives, or keep a tool-call ledger for routine work.
 
 **Triggered evaluation:** inspect live capabilities when a non-obvious integration is central, the runtime/config/permissions changed, the user requests tool selection or performance measurement, or a pilot/release needs qualification. Exercise the strongest suitable agentic workflow before comparing a CLI that is a plausible alternative for that operation. Compare matched acceptance criteria and choose per capability. See `docs/AGENTIC_FIRST_EVALUATION.md`.
 
 | Pattern | Trigger | Tools/actors | Why |
 |---|---|---|---|
-| Direct agentic | Simple feature, bug, or task with one clear owner | Primary agent; useful skill or approved MCP when relevant | Exercise the best-fit agentic capability with low coordination cost |
+| Direct agentic | Clear small fix or nontrivial task with one clear owner | Primary agent; direct for clear small fixes, route skill before tool choice for nontrivial work | Exercise the best-fit agentic capability with low coordination cost |
 | Router | Clear framework/domain specialization | Primary agent routes to relevant skill and specialist agent/MCP capability | Match expertise without preloading everything |
 | Sequential | Requirements -> implementation -> tests -> documentation | Agent-led stages; CLI checks where they provide deterministic proof | Later steps depend on earlier evidence |
 | Parallel | Multiple independent constrained investigations | Relevant specialist agents or MCP calls, only where useful | Save wall clock only when tasks are genuinely independent |
@@ -77,7 +77,7 @@ Avoid always-on swarms, open-ended loops and irrelevant MCP calls. Agent descrip
 ## 3. Context budget (what goes where)
 
 - `AGENTS.md` (short): stable universal non-negotiables, company boundaries and fast commands.
-- `.opencode/skills/<task>/SKILL.md`: only task-specific procedures. Loaded when relevant, not pre-injected wholesale.
+- `.opencode/skills/<task>/SKILL.md`: only task-specific procedures. The matching route skill is invoked for nontrivial work, not pre-injected wholesale.
 - `standards/rules.json`: machine-checkable rule IDs, applicability and command mapping.
 - `golden.project.json`: pinned version, explicit app profile/capability declarations and local commands.
 - Source code / tests / existing docs: retrieve only relevant files via read/grep; do not put them into persistent prompt.

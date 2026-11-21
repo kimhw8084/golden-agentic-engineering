@@ -29,6 +29,15 @@ class TaskRoutingTests(unittest.TestCase):
         self.assertEqual(route['primary_agent'], 'primary')
         self.assertEqual(route['skills'], [])
 
+    def test_nontrivial_route_surfaces_skill_before_execution_tool_selection(self):
+        route = golden_route.route_for('react-app-feature')
+        self.assertEqual(route['skills'][0]['id'], 'golden-react')
+        self.assertEqual(route['nontrivial_capability_order'], [
+            'classify_task_and_risk', 'invoke_route_skill', 'check_relevant_agents_and_mcp',
+            'choose_execution_tools', 'verify_deterministically',
+        ])
+        self.assertIn('one/few-file clear fixes', route['small_task_exception'])
+
     def test_project_default_agent_must_exist_and_be_primary(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

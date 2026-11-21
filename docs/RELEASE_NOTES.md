@@ -9,6 +9,7 @@
 ## Implemented
 
 - Selected `golden-engineer` as the project default OpenCode primary and made clear small fixes direct, without a mandatory route command or skill.
+- Made the nontrivial task route actionable: OpenCode should invoke the route's named skill before choosing implementation tools, then check only relevant visible specialists/MCP and permissions. The route order is machine-readable and tested; small clear fixes remain direct. Company runtime skill invocation is still unverified.
 - Added a truthful Golden Control status for the checked-in project default agent, separated from untested company runtime discovery and build compatibility.
 - Preserved the 107 provisional decisions, 151 proposed requirements, 19 pilot rule descriptors, 64 source-catalog leads, and existing `.opencode` asset structure. The repository has 5 agents, 12 skills, and 7 commands.
 - Added an executable OpenCode-native `/golden-route` command and an offline route resolver. It validates skill, agent, configured MCP, and candidate references before returning one task path; candidate MCPs remain disconnected and unapproved.
