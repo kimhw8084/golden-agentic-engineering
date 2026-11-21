@@ -37,6 +37,7 @@
 - Refined public capability evidence: pinned Promptfoo 0.126.0's release/license and documented offline opt-outs with its upstream warning that they are not a firewall; clarified Grafana MCP query-tool write risk through datasource credentials. Both remain unapproved, unstaged evaluation candidates without a matched company task.
 - Tightened the v2 company doctor asset gate: `STAGED` requires explicit per-platform/runtime target records and hashes for target payloads plus the appropriate source-lock/SBOM/license, runtime compatibility, or egress-policy/attempt evidence. OSS approval remains an unauthenticated declaration; the six checked-in asset groups remain `NOT_STAGED`, and Golden still does not enforce the host firewall.
 - Kept the semiconductor sampling transfer kit generic and source-only. It contains no private dataset or company-specific schema.
+- Added a local-only searchable capability explorer to Golden Control. It surfaces the 17 task decisions and 27 candidate records with pinned commits, license/dependency/platform/offline/permission/prompt-safety evidence, and explicit measurement and approval gaps. Search and type filters never contact public services; the UI does not infer installation, runtime availability, or performance.
 
 ## Verification
 

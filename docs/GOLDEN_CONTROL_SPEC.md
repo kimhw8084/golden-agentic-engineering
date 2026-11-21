@@ -41,7 +41,7 @@ Every status needs a source and last-checked time. Distinguish `UNKNOWN`, `NOT_R
 
 ## Rollout sequence
 
-1. **Local UI and honest adapters (current prototype):** run offline on localhost. Compare source files with an explicitly supplied OpenCode config directory and summarize explicitly supplied Golden evidence JSON files. Show company runtime discovery, approved release feed, and agent/skill/MCP usage as unconnected until real adapters exist.
+1. **Local UI and honest adapters (current prototype):** run offline on localhost. Compare source files with an explicitly supplied OpenCode config directory and summarize explicitly supplied Golden evidence JSON files. Render the task routes and a searchable local capability registry with per-task choices and source evidence; candidate presence is not installation or approval. Show company runtime discovery, approved release feed, and agent/skill/MCP usage as unconnected until real adapters exist.
 2. **Company OpenCode compatibility:** inspect the installed internal version, agent/skill/MCP interfaces, permissions, and available event hooks. Test one representative workflow, exercise agents/skills/MCP first, then compare CLI and hybrid candidates on the same acceptance criteria.
 3. **Installation/update integration:** connect read-only per-machine status and the approved internal artifact source. Test safe update and rollback on supported Windows/Linux configurations.
 4. **Usage evidence:** only display privacy-reviewed aggregate measures that the existing platform already owns. Do not add Golden-side instrumentation. Compare accepted outcomes in scoped pilots; raw call/token counts are not task quality.

@@ -27,6 +27,11 @@ document.querySelector(".brand").addEventListener("click", (event) => {
 });
 $("refreshButton").addEventListener("click", loadState);
 const workflowRouteElement = $("workflowRoutes");
+const capabilitySearch = $("capabilitySearch");
+const capabilityTypeFilter = $("capabilityTypeFilter");
+const capabilityDecisionElement = $("capabilityDecisions");
+const capabilityResultElement = $("capabilityResults");
+let capabilityRegistry = null;
 
 function mark(element, kind) {
   if (!element) return;
@@ -209,6 +214,132 @@ async function loadWorkflows() {
   }
 }
 
+function textNode(tag, className, text) {
+  const element = document.createElement(tag);
+  if (className) element.className = className;
+  element.textContent = text;
+  return element;
+}
+
+function capabilityMatches(item, query, type) {
+  return (!type || item.capability_type === type)
+    && (!query || JSON.stringify(item).toLowerCase().includes(query));
+}
+
+function populateCapabilities(payload) {
+  if (!payload || !Array.isArray(payload.candidates) || !Array.isArray(payload.task_decisions)) {
+    throw new Error('Capability registry has an unsupported shape');
+  }
+  capabilityRegistry = payload;
+  const types = [...new Set(payload.candidates.map((item) => item.capability_type).filter(Boolean))].sort();
+  capabilityTypeFilter.replaceChildren(textNode('option', '', 'All capability types'));
+  capabilityTypeFilter.firstElementChild.value = '';
+  types.forEach((type) => {
+    const option = textNode('option', '', type.replaceAll('_', ' '));
+    option.value = type;
+    capabilityTypeFilter.append(option);
+  });
+  renderCapabilities();
+}
+
+function renderCapabilities() {
+  if (!capabilityRegistry || !capabilityDecisionElement || !capabilityResultElement) return;
+  const query = (capabilitySearch.value || '').trim().toLowerCase();
+  const type = capabilityTypeFilter.value;
+  const candidates = capabilityRegistry.candidates.filter((item) => capabilityMatches(item, query, type));
+  const candidateById = new Map(capabilityRegistry.candidates.map((item) => [item.id, item]));
+  const decisions = capabilityRegistry.task_decisions.filter((decision) => {
+    const ranked = Array.isArray(decision.ranked_candidates) ? decision.ranked_candidates : [];
+    const relevantCandidates = ranked.map((id) => candidateById.get(id)).filter(Boolean);
+    const typeMatches = !type || relevantCandidates.some((item) => item.capability_type === type);
+    const queryMatches = !query || JSON.stringify(decision).toLowerCase().includes(query)
+      || relevantCandidates.some((item) => JSON.stringify(item).toLowerCase().includes(query));
+    return typeMatches && queryMatches;
+  });
+
+  capabilityDecisionElement.replaceChildren();
+  decisions.forEach((decision) => {
+    const card = document.createElement('article');
+    card.className = 'capability-decision';
+    const title = textNode('h3', '', display(decision.task, 'Task decision'));
+    const choice = textNode('p', 'decision-choice', `Current design choice: ${display(decision.current_choice)} · not a measured winner`);
+    const reason = textNode('p', 'decision-reason', display(decision.reason));
+    const ranked = Array.isArray(decision.ranked_candidates) ? decision.ranked_candidates : [];
+    const list = document.createElement('ul');
+    ranked.forEach((candidateId) => {
+      const item = candidateById.get(candidateId);
+      if (type && (!item || item.capability_type !== type)) return;
+      const row = document.createElement('li');
+      row.textContent = item ? `${candidateId} · ${item.capability_type} · ${display(item.decision, 'UNREVIEWED')}` : candidateId;
+      list.append(row);
+    });
+    const rankBlock = document.createElement('div');
+    rankBlock.className = 'decision-ranked';
+    rankBlock.append(textNode('strong', '', 'Options considered'), list);
+    const measurement = textNode('p', 'decision-measurement', `Evidence: ${display(decision.measurement, 'NOT_RECORDED')}`);
+    card.append(title, choice, reason, rankBlock, measurement);
+    capabilityDecisionElement.append(card);
+  });
+
+  capabilityResultElement.replaceChildren();
+  candidates.forEach((item) => {
+    const card = document.createElement('article');
+    card.className = 'capability-candidate';
+    const header = document.createElement('div');
+    header.className = 'candidate-header';
+    const titleGroup = document.createElement('div');
+    titleGroup.append(textNode('h3', '', display(item.id, 'Unnamed candidate')));
+    titleGroup.append(textNode('p', 'candidate-owner', `${display(item.capability_type)} · ${display(item.owner_repo)}`));
+    header.append(titleGroup, textNode('span', 'candidate-decision', display(item.decision, 'UNREVIEWED').replaceAll('_', ' ')));
+    const purpose = textNode('p', 'candidate-purpose', display(item.purpose));
+    const version = textNode('p', 'candidate-version', `${display(item.version, 'Version not pinned')} · commit ${display(item.commit, 'not pinned')}`);
+    const details = document.createElement('details');
+    details.className = 'candidate-evidence';
+    details.append(textNode('summary', '', 'License, safety, platform, and measurement evidence'));
+    const grid = document.createElement('div');
+    grid.className = 'candidate-evidence-grid';
+    const fields = [
+      ['License', item.license], ['License evidence', item.license_evidence],
+      ['Dependencies', item.transitive_dependencies], ['Models and browsers', item.models_browsers],
+      ['Windows and Linux', item.windows_linux], ['Offline and telemetry', item.offline_telemetry],
+      ['Context cost', item.context_cost], ['Maintenance', item.maintenance],
+      ['Permissions', item.permissions], ['Prompt-injection review', item.prompt_injection_security],
+      ['Source review', item.source_review], ['Measured evidence', item.measured_evidence],
+    ];
+    fields.forEach(([label, value]) => {
+      const field = document.createElement('section');
+      field.className = 'candidate-evidence-field';
+      field.append(textNode('h4', '', label), textNode('p', '', display(value, 'NOT_RECORDED')));
+      grid.append(field);
+    });
+    details.append(grid);
+    card.append(header, purpose, version, details);
+    capabilityResultElement.append(card);
+  });
+
+  const summary = $("capabilitySummary");
+  summary.textContent = `${decisions.length} of ${capabilityRegistry.task_decisions.length} task decisions · ${candidates.length} of ${capabilityRegistry.candidates.length} candidate records. All entries remain research-only; installed/runtime availability is not represented.`;
+  if (!decisions.length && !candidates.length) {
+    capabilityResultElement.append(textNode('p', 'capability-empty', 'No capability or task decision matches. Clear the search or choose another type.'));
+  }
+}
+
+async function loadCapabilities() {
+  if (!capabilityDecisionElement || !capabilityResultElement) return;
+  try {
+    const response = await fetch('/research/capability-selection.json', {cache: 'no-store'});
+    if (!response.ok) throw new Error('Local capability registry unavailable');
+    populateCapabilities(await response.json());
+  } catch (_error) {
+    $("capabilitySummary").textContent = 'Local capability evidence is unavailable.';
+    capabilityDecisionElement.replaceChildren();
+    capabilityResultElement.replaceChildren();
+  }
+}
+
+capabilitySearch?.addEventListener('input', renderCapabilities);
+capabilityTypeFilter?.addEventListener('change', renderCapabilities);
+
 function render(data) {
   const {product,repository,assets,project_agent:projectAgent,installation,updates,integrity,activity,runtime,progress} = data;
   $("releaseVersion").textContent = product.version;
@@ -280,3 +411,4 @@ const initial = location.hash.slice(1);
 showPage(labels[initial] ? initial : "overview");
 loadState();
 loadWorkflows();
+loadCapabilities();

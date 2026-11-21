@@ -59,6 +59,17 @@ class GoldenControlUITests(unittest.TestCase):
         self.assertIn('build version and company compatibility are unknown', app)
         self.assertIn('OPENCODE PATH', page.wfile.getvalue().decode('utf-8'))
         self.assertIn('capability-selection.json', page.wfile.getvalue().decode('utf-8'))
+        self.assertIn('capabilitySearch', page.wfile.getvalue().decode('utf-8'))
+        self.assertIn('capabilityTypeFilter', page.wfile.getvalue().decode('utf-8'))
+        self.assertIn('aria-live="polite"', page.wfile.getvalue().decode('utf-8'))
+        self.assertIn('NOT APPROVED', page.wfile.getvalue().decode('utf-8'))
+        self.assertIn('No public endpoint is contacted by this explorer', page.wfile.getvalue().decode('utf-8'))
+        self.assertIn("fetch('/research/capability-selection.json'", app)
+        self.assertIn('renderCapabilities', app)
+        self.assertIn('Measured evidence', app)
+        self.assertNotIn('innerHTML', app)
+        styles = (ROOT / 'control' / 'styles.css').read_text(encoding='utf-8')
+        self.assertIn('.panel .panel-link+.panel-link', styles)
 
         workflows = Request('/api/workflows')
         control.ControlHandler.do_GET(workflows)
@@ -76,6 +87,15 @@ class GoldenControlUITests(unittest.TestCase):
         control.ControlHandler.do_GET(capabilities)
         self.assertEqual(capabilities.response, 200)
         registry = json.loads(capabilities.wfile.getvalue())
+        self.assertEqual(len(registry['candidates']), 27)
+        self.assertEqual(len(registry['task_decisions']), 17)
+        required_evidence = {
+            'capability_type', 'owner_repo', 'commit', 'license', 'license_evidence',
+            'transitive_dependencies', 'windows_linux', 'offline_telemetry',
+            'context_cost', 'permissions', 'prompt_injection_security',
+            'measured_evidence', 'decision',
+        }
+        self.assertTrue(all(required_evidence.issubset(row) for row in registry['candidates']))
         diagram = next(row for row in registry['candidates'] if row['id'] == 'cathrynlavery-diagram-design')
         self.assertEqual(diagram['decision'], 'EVALUATION_ONLY_NOT_APPROVED')
 
