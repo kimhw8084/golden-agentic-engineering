@@ -20,7 +20,7 @@
         "Linux"
       ],
       "owner": "Company OSS/package owner",
-      "partial_progress": "ACTIVE_VITEST_4_1_12_VITE_7_3_8_TESTED_MACOS; ACTIVE_AND_CANDIDATE_PUBLIC_NPM_AUDITS_ZERO_FINDINGS_2026_11_21; EXACT_VITEST_5_1_1_CANDIDATE_TESTED; WINDOWS_LINUX_HOSTED_MATRIX_PENDING; NO_TRANSFERABLE_NPM_CACHE",
+      "partial_progress": "ACTIVE_VITEST_4_1_12_VITE_7_3_8_TESTED_MACOS; ACTIVE_AND_CANDIDATE_PUBLIC_NPM_AUDITS_ZERO_FINDINGS_2026_11_21; EXACT_VITEST_5_1_1_CANDIDATE_TESTED; HOSTED_UBUNTU_WINDOWS_MATRIX_PASS_NODE20_19_AND22_12; NO_TRANSFERABLE_NPM_CACHE",
       "partial_evidence": [
         {
           "path": "examples/react-app/package-lock.json",
@@ -67,7 +67,7 @@
           "sha256": "d49b490797280c4ce097d7fa313ad06c74879cc58f91a9f8ccd3a2e95a4f979e"
         }
       ],
-      "required_action": "Confirm the company Node range and target OS/architecture. The active Vitest 4.1.12/Vite 7.3.8 lock and separately tested Vitest 5.1.1/Vite 7.3.8 candidate each returned zero findings in public npm audit snapshots on 2026-11-21; choose only after company runtime compatibility and OSS review. Review the active stackback notice gap or the candidate\u2019s three exact-version notice supplements. The hosted Windows/Linux matrix is configured but pending. Stage per-target npm caches through the approved process, verify hashes, and complete native offline fixture tests plus company OSS clearance. No transferable npm cache is included."
+      "required_action": "Confirm the company Node range and target OS/architecture. The active Vitest 4.1.12/Vite 7.3.8 lock and separately tested Vitest 5.1.1/Vite 7.3.8 candidate each returned zero findings in public npm audit snapshots on 2026-11-21; choose only after company runtime compatibility and OSS review. Review the active stackback notice gap or the candidate\u2019s three exact-version notice supplements. The hosted Ubuntu/Windows matrix passed for both tested Node versions; company-native OS qualification remains outstanding. Stage per-target npm caches through the approved process, verify hashes, and complete native offline fixture tests plus company OSS clearance. No transferable npm cache is included."
     },
     {
       "name": "Playwright browser binaries",

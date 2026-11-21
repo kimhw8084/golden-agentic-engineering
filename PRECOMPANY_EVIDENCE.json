@@ -74,8 +74,9 @@
       "command": "python scripts/security_scan.py --repo . --history",
       "status": "PASS",
       "current_files_scanned": 221,
-      "reachable_git_blobs_scanned": 736,
-      "limitation": "High-confidence pattern scan only; it does not establish absence of all proprietary information."
+      "reachable_git_blobs_scanned": 769,
+      "limitation": "High-confidence pattern scan only; it does not establish absence of all proprietary information.",
+      "scan_worktree_head": "91446530698af5d5c6fd9203b65dd47e5c231881"
     },
     "golden_full_release_checks": [
       {
@@ -150,8 +151,25 @@
         "offline_install_typecheck_tests_build": "PASS_MACOS_ARM64_NODE_26.13.0",
         "status": "NOT_SELECTED_COMPANY_NODE_UNKNOWN"
       },
-      "hosted_windows_linux_matrix": "CONFIGURED_RESULTS_PENDING_PUSH",
+      "hosted_windows_linux_matrix": "PASS_4_OF_4_GITHUB_ACTIONS_JOBS; https://github.com/kimhw8084/golden-agentic-engineering/actions/runs/44930658112",
       "company_oss_clearance": "NOT_OBTAINED"
+    },
+    "github_hosted_ci": {
+      "source_qualification": {
+        "run": 59,
+        "status": "PASS",
+        "commit": "91446530698af5d5c6fd9203b65dd47e5c231881",
+        "jobs": "6/6 Ubuntu/Windows \u00d7 Python 3.10/3.11/3.14",
+        "url": "https://github.com/kimhw8084/golden-agentic-engineering/actions/runs/44931185833"
+      },
+      "react_dependency_matrix": {
+        "run": 1,
+        "status": "PASS",
+        "commit": "abc38d3bc2ef30e98b35904d7cd077033a21e571",
+        "jobs": "4/4 Ubuntu/Windows \u00d7 active Node 20.19.0 and candidate Node 22.12.0",
+        "url": "https://github.com/kimhw8084/golden-agentic-engineering/actions/runs/44930658112"
+      },
+      "limitation": "GitHub-hosted runners validate the recorded OS/runtime combinations only; no company-managed host, internal network, license approval, or air-gap qualification is implied."
     }
   },
   "runtime_probe": {

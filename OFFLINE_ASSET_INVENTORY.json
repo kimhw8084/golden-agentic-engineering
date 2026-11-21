@@ -7,7 +7,7 @@
   },
   "source_manifest": {
     "path": "offline/assets-manifest.json",
-    "sha256": "0e77fc35e4520faae182db1be305c624a0ef53615d4dd3b90de0bf5ea82d662a"
+    "sha256": "53ce6fa954045ff8e4e4f50ec5b68bc313652086d748bd3dd4c674a7d71a3ee6"
   },
   "staged_asset_groups": 0,
   "assets": [
@@ -20,9 +20,9 @@
     {
       "name": "React npm lock and offline store",
       "status": "NOT_STAGED",
-      "partial_evidence": "Active Vitest 4.1.12/Vite 7.3.8 and separate Vitest 5.1.1/Vite 7.3.8 candidate both pass offline-cache npm ci, typecheck, six tests, and build on macOS arm64/Node 26.13.0; both public npm audit snapshots reported zero vulnerabilities on 2026-11-21. The active graph retains stackback@0.0.2; the candidate removes it but requires Node ^22.12.0 || ^24.0.0 || >=26.0.0. Candidate package/lock/audit/SBOM and active evidence hashes are in offline/assets-manifest.json and research/react-vitest-5.1.1-candidate/qualification.json. Hosted Windows/Linux matrix is configured but pending; no transferable npm cache is staged.",
+      "partial_evidence": "Active Vitest 4.1.12/Vite 7.3.8 and separate Vitest 5.1.1/Vite 7.3.8 candidate both pass offline-cache npm ci, typecheck, six tests, and build on macOS arm64/Node 26.13.0; both public npm audit snapshots reported zero vulnerabilities on 2026-11-21. The active graph retains stackback@0.0.2; the candidate removes it but requires Node ^22.12.0 || ^24.0.0 || >=26.0.0. Candidate package/lock/audit/SBOM and active evidence hashes are in offline/assets-manifest.json and research/react-vitest-5.1.1-candidate/qualification.json. Hosted Ubuntu/Windows active and candidate matrix passed in GitHub Actions, including offline reinstalls; no transferable npm cache is staged.",
       "owner": "Company OSS/package owner",
-      "required_action": "Confirm company Node range, OS and architecture; choose active Vitest 4.1.12 or candidate Vitest 5.1.1 only after native compatibility and company OSS review. Review the active stackback notice gap or candidate three notice supplements. Complete the hosted and native Windows/Linux matrix, stage per-target npm caches and browser artifacts through the approved process, verify hashes, and complete company OSS clearance. Neither lock nor public npm audit establishes company approval."
+      "required_action": "Confirm company Node range, OS and architecture; choose active Vitest 4.1.12 or candidate Vitest 5.1.1 only after native compatibility and company OSS review. Review the active stackback notice gap or candidate three notice supplements. Complete company-native Windows/Linux fixture qualification, stage per-target npm caches and browser artifacts through the approved process, verify hashes, and complete company OSS clearance. Neither lock nor public npm audit establishes company approval."
     },
     {
       "name": "Playwright browser binaries",
