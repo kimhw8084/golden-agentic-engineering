@@ -1,0 +1,675 @@
+{
+  "schema": "golden-precompany-readiness/v1",
+  "generated_at_utc": "2026-11-21T17:44:31.192071+00:00",
+  "status": "PRE_QUALIFICATION",
+  "status_explanation": "ASSESSMENT_INCOMPLETE means one or more local checks did not produce valid PASS evidence. PRE_QUALIFICATION means local checks ran, while company-owned requirements remain unverified.",
+  "environment": {
+    "os": "Darwin",
+    "architecture": "arm64",
+    "python": "3.11.7"
+  },
+  "repository": {
+    "url": "https://github.com/kimhw8084/golden-agentic-engineering",
+    "branch": "main",
+    "visibility": "public",
+    "implementation_base_commit": "b957a1739517027aeae5fbc7c9df3aedd32b4348"
+  },
+  "source": {
+    "commit": "aacd322ce71ae86823649793c4999263164d98aa",
+    "branch": "main",
+    "worktree_clean": true,
+    "changed_path_count": 0,
+    "sha256sums_manifest_sha256": "2daeec697419266c2e0c9021d6787cba7a311ef7f30932eb1b4a9528beb16e95"
+  },
+  "checks": [
+    {
+      "id": "source-worktree",
+      "command": "git status --porcelain (must be empty)",
+      "status": "PASS",
+      "exit_code": 0,
+      "changed_path_count": 0,
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "id": "unit-tests",
+      "command": "python -m unittest discover -s tests -q",
+      "exit_code": 0,
+      "elapsed_seconds": 2.499806,
+      "output_bytes": 7610,
+      "output_sha256": "964a2f46f2405937c0cc3a029759f4489314a0513c97da36ceae10f5be44c154",
+      "status": "PASS",
+      "tests_run": 158,
+      "tests_skipped": 1,
+      "tests_failed": 0,
+      "summary_found": true
+    },
+    {
+      "id": "bootstrap-rollback-tests",
+      "command": "python -m unittest discover -s tests -p test_bootstrap_and_fixtures.py -q",
+      "exit_code": 0,
+      "elapsed_seconds": 1.488614,
+      "output_bytes": 5929,
+      "output_sha256": "d480f65e943c6f7bc3a834bdc23b100b018a3fbc67c25984eacfeb6ee8a1a72a",
+      "status": "PASS",
+      "tests_run": 36,
+      "tests_skipped": 0,
+      "tests_failed": 0,
+      "summary_found": true,
+      "scope": "Synthetic bootstrap apply/rollback tests; not company rollback evidence."
+    },
+    {
+      "id": "manifest-validation",
+      "command": "python scripts/validate_manifests.py",
+      "exit_code": 0,
+      "elapsed_seconds": 0.026698,
+      "output_bytes": 176,
+      "output_sha256": "c68d27bf777aaa4d47b2bfe6b2357e06288ef7e8dadf8968292c841cb1a0906c",
+      "status": "PASS"
+    },
+    {
+      "id": "source-checksums",
+      "command": "python scripts/verify_contents.py",
+      "exit_code": 0,
+      "elapsed_seconds": 0.100581,
+      "output_bytes": 47,
+      "output_sha256": "1b778d2bbd63001c68710ea8a54062ebb7ac6eea563ae162e3bd48b88763b475",
+      "status": "PASS"
+    },
+    {
+      "id": "secret-scan",
+      "command": "python scripts/security_scan.py --repo . --history",
+      "exit_code": 0,
+      "elapsed_seconds": 0.847663,
+      "output_bytes": 93,
+      "output_sha256": "7bbc9bca49d6c6ab09acd8084f21e24c38b96f9ff96dbfd95a63909d9e7415e6",
+      "status": "PASS",
+      "scanned_files": 221,
+      "reachable_git_blobs": 778,
+      "scope": "High-confidence patterns only; not proof that proprietary material is absent."
+    },
+    {
+      "id": "network-attempt-intercept",
+      "command": "python scripts/network_attempt_monitor.py",
+      "exit_code": 0,
+      "elapsed_seconds": 0.034764,
+      "output_bytes": 113,
+      "output_sha256": "f9002c41b079976f37c54cb7bba915c79ecb5043f3cf15c6964c36deaf1a308e",
+      "status": "PASS",
+      "scope": "One CPython loopback connect is blocked before socket operation; not OS firewall or child-process monitoring."
+    },
+    {
+      "id": "offline-fixtures",
+      "command": "python benchmarks/run_local_fixtures.py --include-react --include-nicegui-ui",
+      "exit_code": 0,
+      "elapsed_seconds": 6.542568,
+      "output_bytes": 598,
+      "output_sha256": "a5b3332a36a0ba57bc1b1cd70b9b6938009ddfb6d1e8a42e7bd15c5dd2e9498b",
+      "status": "PASS",
+      "fixture_cases": 8,
+      "python_fixture_tests": 76,
+      "react_status": "PASS",
+      "react_tests": 6,
+      "nicegui_ui_status": "PASS",
+      "nicegui_ui_tests": 1,
+      "browser_status": "NOT_RUN_PLAYWRIGHT_ASSETS_NOT_STAGED",
+      "scope": "Local deterministic fixture tests only; optional React scripts are forced offline. Not an agent comparison, company OpenCode run, or productivity benchmark."
+    },
+    {
+      "id": "golden-full-checks",
+      "command": "python scripts/golden.py check --full on Python, React, and NiceGUI fixtures",
+      "status": "PASS",
+      "exit_code": 0,
+      "projects_run": 3,
+      "not_qualified_projects": 3,
+      "runner_errors": 0
+    }
+  ],
+  "local_check_failures": [],
+  "full_project_checks": [
+    {
+      "status": "NOT_QUALIFIED",
+      "qualifies_release": false,
+      "blocking_rule_ids": [
+        "AI-001",
+        "API-001",
+        "DATA-001",
+        "DB-001",
+        "JOBS-001",
+        "MCP-001",
+        "OPS-001",
+        "PY-003",
+        "REL-001",
+        "SEC-001"
+      ],
+      "rule_statuses": [
+        {
+          "rule_id": "GOLD-001",
+          "status": "PASS",
+          "mandatory": true
+        },
+        {
+          "rule_id": "GOLD-002",
+          "status": "PASS",
+          "mandatory": true
+        },
+        {
+          "rule_id": "GOLD-003",
+          "status": "PASS",
+          "mandatory": true
+        },
+        {
+          "rule_id": "PY-001",
+          "status": "PASS",
+          "mandatory": true
+        },
+        {
+          "rule_id": "PY-002",
+          "status": "PASS",
+          "mandatory": true
+        },
+        {
+          "rule_id": "PY-003",
+          "status": "NOT_RUN",
+          "mandatory": true
+        },
+        {
+          "rule_id": "WEB-001",
+          "status": "NOT_APPLICABLE",
+          "mandatory": true
+        },
+        {
+          "rule_id": "WEB-002",
+          "status": "NOT_APPLICABLE",
+          "mandatory": true
+        },
+        {
+          "rule_id": "UI-001",
+          "status": "NOT_APPLICABLE",
+          "mandatory": true
+        },
+        {
+          "rule_id": "UI-002",
+          "status": "NOT_APPLICABLE",
+          "mandatory": true
+        },
+        {
+          "rule_id": "API-001",
+          "status": "NOT_RUN",
+          "mandatory": true
+        },
+        {
+          "rule_id": "DB-001",
+          "status": "NOT_RUN",
+          "mandatory": true
+        },
+        {
+          "rule_id": "SEC-001",
+          "status": "NOT_RUN",
+          "mandatory": true
+        },
+        {
+          "rule_id": "OPS-001",
+          "status": "NOT_RUN",
+          "mandatory": true
+        },
+        {
+          "rule_id": "JOBS-001",
+          "status": "NOT_RUN",
+          "mandatory": true
+        },
+        {
+          "rule_id": "MCP-001",
+          "status": "NOT_RUN",
+          "mandatory": true
+        },
+        {
+          "rule_id": "AI-001",
+          "status": "NOT_RUN",
+          "mandatory": true
+        },
+        {
+          "rule_id": "DATA-001",
+          "status": "NOT_RUN",
+          "mandatory": true
+        },
+        {
+          "rule_id": "REL-001",
+          "status": "NOT_RUN",
+          "mandatory": true
+        }
+      ],
+      "project": "examples/python-app",
+      "rules_count": 19,
+      "rule_status_counts": {
+        "PASS": 5,
+        "NOT_RUN": 10,
+        "NOT_APPLICABLE": 4
+      },
+      "output_sha256": "1ce31f70eaf34b265551adf9b45d6c13b324034012ac6db2f81fb66861577648",
+      "elapsed_seconds": 0.079224
+    },
+    {
+      "status": "NOT_QUALIFIED",
+      "qualifies_release": false,
+      "blocking_rule_ids": [
+        "AI-001",
+        "API-001",
+        "DATA-001",
+        "DB-001",
+        "JOBS-001",
+        "MCP-001",
+        "OPS-001",
+        "REL-001",
+        "SEC-001",
+        "UI-002"
+      ],
+      "rule_statuses": [
+        {
+          "rule_id": "GOLD-001",
+          "status": "PASS",
+          "mandatory": true
+        },
+        {
+          "rule_id": "GOLD-002",
+          "status": "PASS",
+          "mandatory": true
+        },
+        {
+          "rule_id": "GOLD-003",
+          "status": "PASS",
+          "mandatory": true
+        },
+        {
+          "rule_id": "PY-001",
+          "status": "NOT_APPLICABLE",
+          "mandatory": true
+        },
+        {
+          "rule_id": "PY-002",
+          "status": "NOT_APPLICABLE",
+          "mandatory": true
+        },
+        {
+          "rule_id": "PY-003",
+          "status": "NOT_APPLICABLE",
+          "mandatory": true
+        },
+        {
+          "rule_id": "WEB-001",
+          "status": "PASS",
+          "mandatory": true
+        },
+        {
+          "rule_id": "WEB-002",
+          "status": "PASS",
+          "mandatory": true
+        },
+        {
+          "rule_id": "UI-001",
+          "status": "PASS",
+          "mandatory": true
+        },
+        {
+          "rule_id": "UI-002",
+          "status": "NOT_RUN",
+          "mandatory": true
+        },
+        {
+          "rule_id": "API-001",
+          "status": "NOT_RUN",
+          "mandatory": true
+        },
+        {
+          "rule_id": "DB-001",
+          "status": "NOT_RUN",
+          "mandatory": true
+        },
+        {
+          "rule_id": "SEC-001",
+          "status": "NOT_RUN",
+          "mandatory": true
+        },
+        {
+          "rule_id": "OPS-001",
+          "status": "NOT_RUN",
+          "mandatory": true
+        },
+        {
+          "rule_id": "JOBS-001",
+          "status": "NOT_RUN",
+          "mandatory": true
+        },
+        {
+          "rule_id": "MCP-001",
+          "status": "NOT_RUN",
+          "mandatory": true
+        },
+        {
+          "rule_id": "AI-001",
+          "status": "NOT_RUN",
+          "mandatory": true
+        },
+        {
+          "rule_id": "DATA-001",
+          "status": "NOT_RUN",
+          "mandatory": true
+        },
+        {
+          "rule_id": "REL-001",
+          "status": "NOT_RUN",
+          "mandatory": true
+        }
+      ],
+      "project": "examples/react-app",
+      "rules_count": 19,
+      "rule_status_counts": {
+        "PASS": 6,
+        "NOT_APPLICABLE": 3,
+        "NOT_RUN": 10
+      },
+      "output_sha256": "5617cf98c3f8980000b19a2037678b19c6f0bd466a8cc4c9134635590d65b409",
+      "elapsed_seconds": 1.720279
+    },
+    {
+      "status": "NOT_QUALIFIED",
+      "qualifies_release": false,
+      "blocking_rule_ids": [
+        "AI-001",
+        "API-001",
+        "DATA-001",
+        "DB-001",
+        "JOBS-001",
+        "MCP-001",
+        "OPS-001",
+        "PY-003",
+        "REL-001",
+        "SEC-001",
+        "UI-002"
+      ],
+      "rule_statuses": [
+        {
+          "rule_id": "GOLD-001",
+          "status": "PASS",
+          "mandatory": true
+        },
+        {
+          "rule_id": "GOLD-002",
+          "status": "PASS",
+          "mandatory": true
+        },
+        {
+          "rule_id": "GOLD-003",
+          "status": "PASS",
+          "mandatory": true
+        },
+        {
+          "rule_id": "PY-001",
+          "status": "PASS",
+          "mandatory": true
+        },
+        {
+          "rule_id": "PY-002",
+          "status": "PASS",
+          "mandatory": true
+        },
+        {
+          "rule_id": "PY-003",
+          "status": "NOT_RUN",
+          "mandatory": true
+        },
+        {
+          "rule_id": "WEB-001",
+          "status": "NOT_APPLICABLE",
+          "mandatory": true
+        },
+        {
+          "rule_id": "WEB-002",
+          "status": "NOT_APPLICABLE",
+          "mandatory": true
+        },
+        {
+          "rule_id": "UI-001",
+          "status": "PASS",
+          "mandatory": true
+        },
+        {
+          "rule_id": "UI-002",
+          "status": "NOT_RUN",
+          "mandatory": true
+        },
+        {
+          "rule_id": "API-001",
+          "status": "NOT_RUN",
+          "mandatory": true
+        },
+        {
+          "rule_id": "DB-001",
+          "status": "NOT_RUN",
+          "mandatory": true
+        },
+        {
+          "rule_id": "SEC-001",
+          "status": "NOT_RUN",
+          "mandatory": true
+        },
+        {
+          "rule_id": "OPS-001",
+          "status": "NOT_RUN",
+          "mandatory": true
+        },
+        {
+          "rule_id": "JOBS-001",
+          "status": "NOT_RUN",
+          "mandatory": true
+        },
+        {
+          "rule_id": "MCP-001",
+          "status": "NOT_RUN",
+          "mandatory": true
+        },
+        {
+          "rule_id": "AI-001",
+          "status": "NOT_RUN",
+          "mandatory": true
+        },
+        {
+          "rule_id": "DATA-001",
+          "status": "NOT_RUN",
+          "mandatory": true
+        },
+        {
+          "rule_id": "REL-001",
+          "status": "NOT_RUN",
+          "mandatory": true
+        }
+      ],
+      "project": "examples/nicegui-app",
+      "rules_count": 19,
+      "rule_status_counts": {
+        "PASS": 6,
+        "NOT_RUN": 11,
+        "NOT_APPLICABLE": 2
+      },
+      "output_sha256": "b924976b82eed6f0eff66772096acce52f04135b27a0ea297e5ff4a0e59a61c4",
+      "elapsed_seconds": 1.430104
+    }
+  ],
+  "network_policy": {
+    "tool_env_forces_offline_package_operations": true,
+    "this_command_attempted_public_network": false,
+    "attempt_monitor_scope": "One CPython loopback connect only; not OS firewall or child-process monitoring."
+  },
+  "assets": {
+    "qualification": "SOURCE_ONLY_NOT_OFFLINE_EXECUTABLE",
+    "source_manifest": {
+      "path": "offline/assets-manifest.json",
+      "sha256": "53ce6fa954045ff8e4e4f50ec5b68bc313652086d748bd3dd4c674a7d71a3ee6"
+    },
+    "required_groups": 6,
+    "staged_groups": 0,
+    "missing_groups": [
+      {
+        "name": "Python wheelhouse and dependency locks",
+        "owner": "Company OSS/package owner",
+        "required_action": "Select target Python ABI/OS/architecture; stage the approved complete wheel closure with hashes, SBOM, and license inventory."
+      },
+      {
+        "name": "React npm lock and offline store",
+        "owner": "Company OSS/package owner",
+        "required_action": "Confirm company Node range, OS and architecture; choose active Vitest 4.1.12 or candidate Vitest 5.1.1 only after native compatibility and company OSS review. Review the active stackback notice gap or candidate three notice supplements. Complete company-native Windows/Linux fixture qualification, stage per-target npm caches and browser artifacts through the approved process, verify hashes, and complete company OSS clearance. Neither lock nor public npm audit establishes company approval."
+      },
+      {
+        "name": "Playwright browser binaries",
+        "owner": "Company browser/tooling owner",
+        "required_action": "Stage matching, hash-verified, licensed browser binaries per supported Windows/Linux target."
+      },
+      {
+        "name": "MCP Python SDK and transitive dependencies",
+        "owner": "Company OSS/package owner",
+        "required_action": "Confirm exact Windows/Linux OS, architecture, Python patch/ABI and glibc; independently review candidate licenses and vulnerabilities; import matching hash-locked archives through the approved process; run native offline install and pip check; and resolve OpenCode MCP discovery compatibility. Company approval is not obtained."
+      },
+      {
+        "name": "Company OpenCode and internal model evidence",
+        "owner": "Company OpenCode owner",
+        "required_action": "Supply the installed internal build/config summary; set OPENCODE_DISABLE_AUTOUPDATE=1 and OPENCODE_DISABLE_MODELS_FETCH=1 on the actual CLI/server process; disable or network-block the separate desktop updater if used; verify the project web tool denies; resolve MCP protocol compatibility; and run an approved internal model trial only after the Windows/Linux egress gate and attempt monitor are active."
+      },
+      {
+        "name": "OS-enforced no-public-egress policy and attempt monitor",
+        "owner": "Company security/network owner",
+        "required_action": "Enforce host/network default-deny egress for OpenCode and children, allow approved intranet destinations only, and return monitored blocked-attempt evidence."
+      }
+    ],
+    "required_company_targets": {
+      "windows": "UNKNOWN: company OS build, architecture, Python/Node versions, and browser version not supplied",
+      "linux": "UNKNOWN: company distribution, glibc, architecture, Python/Node versions, and browser version not supplied"
+    },
+    "fab_sampling": {
+      "manifest": "fab_sampling_offline_port_kit/repos.json",
+      "manifest_sha256": "387832580abb2737d23a70d22f54b68a0ea3427dce773b5dbbca993899b90f76",
+      "source_archive": {
+        "path": "offline/source-archives/fab_sampling_offline_port_kit_2026-11-20.zip",
+        "sha256": "0d8e88391f4a885897e4c498730cb36972f07d20f3678a3950e89d106d32272d",
+        "bytes": 20292,
+        "source_files": 14,
+        "original_preserved_byte_for_byte": true
+      },
+      "candidate_repository_count": 38,
+      "source_repositories_staged": 0,
+      "wheels_or_models_or_datasets_staged": 0,
+      "status": "CANDIDATE_LIST_ONLY"
+    }
+  },
+  "dependencies": {
+    "react_locked_entries": 132,
+    "react_packages_without_tarball_license_files": 4,
+    "unresolved_license_packages": [
+      {
+        "package": "stackback",
+        "version": "0.0.2",
+        "status": "NOTICE_TEXT_UNRESOLVED",
+        "license_declaration_verified": true,
+        "source_repository": "https://github.com/defunctzombie/node-stackback",
+        "source_commit": "24d55717e16f1bb2109e848ea2b3a90ea900ddb5",
+        "embedded_notice": {
+          "path": "formatstack.js",
+          "license": "BSD-3-Clause",
+          "copyright": "2012 V8 project authors",
+          "status": "FULL_NOTICE_PRESENT_IN_SOURCE_FILE"
+        },
+        "required_action": "Company OSS reviewer must decide whether the package's pinned MIT metadata is sufficient without a bundled MIT notice, confirm the embedded V8 BSD notice remains preserved, or require a tested dependency replacement/removal. Do not treat this evidence as company clearance."
+      }
+    ],
+    "company_oss_clearance": "NOT_OBTAINED"
+  },
+  "runtime": {
+    "local_probe": {
+      "host_scope": "Local macOS test host only; not company runtime.",
+      "open_code_version": "1.3.9",
+      "public_catalog": "The older local V1 probe logged a models.dev fetch attempt. A separately checksum-verified public OpenCode V2.2.7 probe showed an attempted GET to models.opencode.ai without OPENCODE_DISABLE_MODELS_FETCH=1; Seatbelt denied non-loopback networking. With the variable set, no catalog-fetch log event appeared. Logs are not packet capture or endpoint-monitor evidence.",
+      "repo_v2_config_on_local_v1": "INCOMPATIBLE: the local V1 CLI rejected the V2 mcp.servers configuration.",
+      "temporary_v1_config": "A temporary V1-compatible config reached a local synthetic OpenAI-compatible provider and exposed a skill tool. Its scripted skill call did not complete because the hosted sandbox denied spawning rg.",
+      "evidence": "verification/2026-11-21/opencode-local-runtime-probe.json",
+      "v2_candidate_probe": "verification/2026-11-21/opencode-v2-mcp-runtime-probe.json",
+      "v2_probe_results": {
+        "native_skill_call": "PASS_LOCAL_SCRIPTED_SKILL",
+        "public_web_tools": "DENIED_BY_PROJECT_CONFIG",
+        "models_fetch_disable_setting": "NO_CATALOG_FETCH_LOG_EVENT_OBSERVED; no packet capture",
+        "autoupdate_disable_setting": "SET_IN_PROBE_ENVIRONMENT_NOT_INDEPENDENTLY_MONITORED",
+        "official_sdk_and_existing_fixture_mcp": "FAILED_LOCAL_MCP_HANDSHAKE_OR_TIMEOUT",
+        "authentic_model_quality_tokens_latency": "NOT_MEASURED"
+      },
+      "authentic_company_model_or_mcp_calls": "NOT_RUN",
+      "company_runtime_benchmark": "BLOCKED_COMPANY_RUNTIME"
+    },
+    "company_internal_model_or_mcp": "NOT_RUN",
+    "company_agent_benchmark": "BLOCKED_COMPANY_RUNTIME"
+  },
+  "cross_platform": {
+    "host_os": "Darwin",
+    "windows": "NOT_RUN_WINDOWS_HOST_REQUIRED",
+    "linux": "NOT_RUN_LINUX_HOST_REQUIRED",
+    "scope": "This assessment reports only the native host OS; macOS results do not qualify Windows or Linux."
+  },
+  "rollback_recovery": {
+    "synthetic_tests": {
+      "id": "bootstrap-rollback-tests",
+      "command": "python -m unittest discover -s tests -p test_bootstrap_and_fixtures.py -q",
+      "exit_code": 0,
+      "elapsed_seconds": 1.488614,
+      "output_bytes": 5929,
+      "output_sha256": "d480f65e943c6f7bc3a834bdc23b100b018a3fbc67c25984eacfeb6ee8a1a72a",
+      "status": "PASS",
+      "tests_run": 36,
+      "tests_skipped": 0,
+      "tests_failed": 0,
+      "summary_found": true,
+      "scope": "Synthetic bootstrap apply/rollback tests; not company rollback evidence."
+    },
+    "company_rollback_drill": "NOT_RUN"
+  },
+  "local_fixture_report_sha256": "ad19dc386f11323c3ab4528bc1f3e41b0870ede49850dece3a861453071ca289",
+  "company_actions": [
+    {
+      "priority": "P0",
+      "owner": "Security/network",
+      "action": "Enforce default-deny public egress for OpenCode and every child process on managed Windows and Linux pilot hosts; allow only approved intranet/model/package endpoints. OpenCode v2.2.7 attempts the public `models.opencode.ai` catalog by default. Set `OPENCODE_DISABLE_AUTOUPDATE=1` and `OPENCODE_DISABLE_MODELS_FETCH=1` on the actual managed CLI/server process before a session; separately disable or block the desktop updater if used; monitor denied-attempt evidence.",
+      "evidence_needed": "Policy/version, approved host allowlist, a blocked injected connection attempt, the server's effective environment, and monitored zero-public-attempt evidence during the smoke run."
+    },
+    {
+      "priority": "P0",
+      "owner": "OpenCode owner",
+      "action": "Provide the exact internal OpenCode build and sanitized config format; keep `webfetch`/`websearch` denied; verify the Golden agent/skill/command adapter and resolve MCP protocol compatibility without exposing provider values.",
+      "evidence_needed": "Version/build, config-key summary, native skill and MCP discovery/call traces, effective server environment, permission behavior, and approved internal model identifier."
+    },
+    {
+      "priority": "P0",
+      "owner": "Pilot engineering lead",
+      "action": "Run matched plain-OpenCode versus Golden synthetic tasks after the egress gate; record independent acceptance, elapsed time, rework, latency and trusted runtime token/request events where available.",
+      "evidence_needed": "Reproducible task records. Otherwise retain `BLOCKED_COMPANY_RUNTIME`; no uplift claim."
+    },
+    {
+      "priority": "P1",
+      "owner": "CI/artifact owner",
+      "action": "Map Golden qualification and signed immutable bundle delivery onto existing company CI and artifact systems.",
+      "evidence_needed": "Existing pipeline/artifact identifiers and rollback/exception owners."
+    },
+    {
+      "priority": "P1",
+      "owner": "Windows/Linux pilot owners",
+      "action": "Run doctor/apply/rollback and no-AI/offline tests on the approved company images.",
+      "evidence_needed": "Sanitized results, per-target versions and asset hashes."
+    },
+    {
+      "priority": "P2",
+      "owner": "Team lead",
+      "action": "Review the qualification evidence and explicitly approve or reject a Golden release.",
+      "evidence_needed": "Human release decision; no automatic/model approval."
+    }
+  ],
+  "qualification_record": {
+    "overall": "PRE_QUALIFICATION",
+    "company_approval": "NOT_OBTAINED",
+    "production_deployment": "NOT_AUTHORIZED",
+    "performance_uplift_claim": "NONE"
+  }
+}

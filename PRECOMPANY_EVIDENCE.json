@@ -26,7 +26,7 @@
     "tracked_content_hashes": {
       "command": "python scripts/verify_contents.py",
       "status": "PASS",
-      "checked": 218,
+      "checked": 220,
       "missing": 0,
       "altered": 0,
       "unlisted": 0
@@ -73,10 +73,10 @@
     "secret_pattern_scan": {
       "command": "python scripts/security_scan.py --repo . --history",
       "status": "PASS",
-      "current_files_scanned": 221,
-      "reachable_git_blobs_scanned": 769,
+      "current_files_scanned": 223,
+      "reachable_git_blobs_scanned": 778,
       "limitation": "High-confidence pattern scan only; it does not establish absence of all proprietary information.",
-      "scan_worktree_head": "91446530698af5d5c6fd9203b65dd47e5c231881"
+      "scan_worktree_head": "aacd322ce71ae86823649793c4999263164d98aa"
     },
     "golden_full_release_checks": [
       {
@@ -170,6 +170,17 @@
         "url": "https://github.com/kimhw8084/golden-agentic-engineering/actions/runs/44930658112"
       },
       "limitation": "GitHub-hosted runners validate the recorded OS/runtime combinations only; no company-managed host, internal network, license approval, or air-gap qualification is implied."
+    },
+    "precompany_readiness": {
+      "command": "python scripts/precompany_readiness.py --out <external-json> --report <external-markdown>",
+      "status": "PASS_LOCAL_CHECKS; PRE_QUALIFICATION",
+      "source_commit": "aacd322ce71ae86823649793c4999263164d98aa",
+      "local_checks_passed": "9/9",
+      "json": "verification/2026-11-21/precompany-readiness.json",
+      "json_sha256": "2d81998dcb8a62c31ce4c7d585fb31415cde58a4a650005706ffb7dc302bcfb3",
+      "report": "verification/2026-11-21/precompany-readiness.md",
+      "report_sha256": "07045acb477d1c26252fe40d0f53c4e805656e150d7ca4fb1e3e0935927cecb1",
+      "limitations": "All three synthetic Golden FULL checks remain NOT_QUALIFIED; Windows/Linux company hosts, internal OpenCode/model, offline assets, OSS clearance and no-public-egress monitor remain company-owned blockers."
     }
   },
   "runtime_probe": {
