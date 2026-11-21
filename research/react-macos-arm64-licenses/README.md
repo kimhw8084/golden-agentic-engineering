@@ -1,6 +1,6 @@
 # React dependency license supplements
 
-This directory holds three root license files from the exact upstream commits corresponding to installed package versions in the macOS arm64 dependency audit. Words and punctuation are preserved; trailing whitespace and extra final blank lines were removed. The source and copied-file SHA-256 values are recorded in [the supplement manifest](../react-license-supplements.json).
+This directory holds three root license files from the exact upstream commits corresponding to installed package versions in the macOS arm64 dependency audit. Words and punctuation are preserved; trailing whitespace and extra final blank lines were removed. Manifest hashes normalize CRLF to LF so Windows and Linux validate the same text. The source and copied-file SHA-256 values are recorded in [the supplement manifest](../react-license-supplements.json).
 
 These are **supplemental upstream notices**, not files recovered from the npm tarballs. The package tarballs still lack their own license files: the audit count remains four. The Rollup source notice also includes notices for bundled dependencies; it is preserved in full.
 

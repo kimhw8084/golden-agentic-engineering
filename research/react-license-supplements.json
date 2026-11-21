@@ -1,6 +1,7 @@
 {
   "schema": "golden-react-package-license-supplements/v1",
   "status": "SUPPLEMENTAL_UPSTREAM_NOTICES; PACKAGE_TARBALL_NOTICE_GAPS_AND_COMPANY_CLEARANCE_REMAIN",
+  "sha256_normalization": "Hash UTF-8 notice bytes after converting CRLF to LF; reject other carriage returns.",
   "source_package_audit": {
     "path": "research/react-macos-arm64-dependency-audit.json",
     "package_lock_path": "examples/react-app/package-lock.json",

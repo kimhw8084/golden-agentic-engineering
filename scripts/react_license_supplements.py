@@ -32,6 +32,7 @@ EXPECTED_SOURCE_PINS = {
 }
 SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
 COMMIT_RE = re.compile(r"^[0-9a-f]{40}$")
+SHA256_NORMALIZATION = "Hash UTF-8 notice bytes after converting CRLF to LF; reject other carriage returns."
 COPY_TRANSFORM = "Preserved words and punctuation; removed trailing whitespace and extra final blank lines from the upstream text."
 
 
@@ -54,6 +55,8 @@ def validate(root: Path) -> list[str]:
         return ["React license supplement manifest has an unsupported schema"]
     if manifest.get("status") != "SUPPLEMENTAL_UPSTREAM_NOTICES; PACKAGE_TARBALL_NOTICE_GAPS_AND_COMPANY_CLEARANCE_REMAIN":
         errors.append("React license supplement status must retain the package-tarball and company-clearance gaps")
+    if manifest.get("sha256_normalization") != SHA256_NORMALIZATION:
+        errors.append("React license supplement must state its cross-platform SHA-256 newline normalization")
 
     audit_ref = manifest.get("source_package_audit")
     if not isinstance(audit_ref, dict):
@@ -138,7 +141,10 @@ def validate(root: Path) -> list[str]:
                 symlinked = True
                 break
         try:
-            actual = hashlib.sha256(artifact.read_bytes()).hexdigest() if artifact.is_file() and not symlinked else None
+            raw = artifact.read_bytes() if artifact.is_file() and not symlinked else None
+            normalized = raw.replace(bytes((13, 10)), bytes((10,))) if raw is not None else None
+            actual = (hashlib.sha256(normalized).hexdigest()
+                      if normalized is not None and bytes((13,)) not in normalized else None)
         except OSError:
             actual = None
         if actual != digest:
