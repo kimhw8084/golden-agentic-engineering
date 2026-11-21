@@ -149,6 +149,34 @@ def evidence_activity(directory: Path | None) -> dict:
     }
 
 
+def project_agent_configuration() -> dict:
+    """Report the checked-in default-agent declaration without implying runtime discovery."""
+    config_path = ROOT / '.opencode' / 'opencode.json'
+    try:
+        config = json.loads(config_path.read_text(encoding='utf-8'))
+    except (OSError, UnicodeError, ValueError):
+        return {'status': 'UNKNOWN', 'agent': None, 'config_path': '.opencode/opencode.json',
+                'runtime_selection': 'NOT_TESTED', 'evidence_scope': 'CHECKED_IN_CONFIG_ONLY'}
+    if not isinstance(config, dict):
+        status = 'INVALID_CONFIG'
+        agent = None
+    elif config.get('default_agent') != 'golden-engineer':
+        status = 'NOT_GOLDEN_DEFAULT'
+        agent = None
+    else:
+        agent_path = ROOT / '.opencode' / 'agents' / 'golden-engineer.md'
+        try:
+            source = agent_path.read_text(encoding='utf-8')
+        except (OSError, UnicodeError):
+            source = ''
+        header = source.split('---', 2)
+        is_primary = len(header) == 3 and any(line.strip() == 'mode: primary' for line in header[1].splitlines())
+        status = 'CONFIGURED' if is_primary else 'INVALID_AGENT_REFERENCE'
+        agent = 'golden-engineer' if is_primary else None
+    return {'status': status, 'agent': agent, 'config_path': '.opencode/opencode.json',
+            'runtime_selection': 'NOT_TESTED', 'evidence_scope': 'CHECKED_IN_CONFIG_ONLY'}
+
+
 def git_status() -> dict:
     def run(*args: str) -> str | None:
         try:
@@ -186,6 +214,7 @@ def snapshot(target: Path | None, evidence_dir: Path | None) -> dict:
 
     installation = compare_installation(target)
     activity = evidence_activity(evidence_dir)
+    project_agent = project_agent_configuration()
     package = checksum_status()
     update_count = None if installation['missing'] is None else installation['missing'] + installation['changed']
     return {
@@ -193,6 +222,7 @@ def snapshot(target: Path | None, evidence_dir: Path | None) -> dict:
         'product': {'version': version, 'qualification': qualification, 'minimum_python': minimum_python},
         'repository': git_status(),
         'assets': source_asset_counts(),
+        'project_agent': project_agent,
         'installation': installation,
         'updates': {
             'status': 'CHECKOUT_ONLY' if installation['target_configured'] else 'NOT_CHECKED',
@@ -214,7 +244,7 @@ def snapshot(target: Path | None, evidence_dir: Path | None) -> dict:
         },
         'progress': [
             {'title': 'Agentic-first workflow', 'status': 'IN_REPOSITORY',
-             'detail': 'Primary agent, routing skill, MCP guidance, and pilot prompt require discovery and a real agentic run before CLI comparison.'},
+             'detail': 'Project config selects the Golden primary in compatible builds; company runtime discovery and a real agentic run remain unverified.'},
             {'title': 'Local Golden Control', 'status': 'PROTOTYPE',
              'detail': 'Read-only local view compares assets and summarizes local Golden evidence.'},
             {'title': 'Company OpenCode compatibility', 'status': 'NOT_TESTED',

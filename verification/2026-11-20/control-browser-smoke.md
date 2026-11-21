@@ -9,3 +9,7 @@
 ## Task-route follow-up
 
 On the local revision containing the route-detail UI update, the task-routing view rendered 12 route cards, route skills/patterns and candidate notes. Every card displayed a collapsed `Full route details` control. The detail sections were not expanded during this smoke. This did not test company data, installation state, usage provenance or external-network behavior.
+
+## Project-agent configuration follow-up
+
+The local `#installation` page showed `GOLDEN PRIMARY CONFIGURED`, `golden-engineer`, and `.opencode/opencode.json`. The panel explicitly stated that this is checked-in project-config evidence only and that company OpenCode loading and compatibility are not tested. It did not inspect or display provider/auth settings. Company agent/skill/MCP discovery and usage provenance remained unknown.

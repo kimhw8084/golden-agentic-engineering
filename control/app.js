@@ -210,7 +210,7 @@ async function loadWorkflows() {
 }
 
 function render(data) {
-  const {product,repository,assets,installation,updates,integrity,activity,runtime,progress} = data;
+  const {product,repository,assets,project_agent:projectAgent,installation,updates,integrity,activity,runtime,progress} = data;
   $("releaseVersion").textContent = product.version;
   $("qualificationState").textContent = product.qualification.replaceAll("_"," ");
   $("checkoutVersion").textContent = product.version;
@@ -219,6 +219,18 @@ function render(data) {
   populateProgress(progress);
   populateInstall(installation,assets);
   populateEvidence(activity);
+  const projectAgentLabels = {
+    CONFIGURED:"Golden primary configured",
+    NOT_GOLDEN_DEFAULT:"Golden is not the project default",
+    INVALID_CONFIG:"Project config is invalid",
+    INVALID_AGENT_REFERENCE:"Golden primary reference is invalid",
+    UNKNOWN:"Project config unknown"
+  };
+  $("projectAgentStatus").textContent = (projectAgentLabels[projectAgent.status] || "Unknown").toUpperCase();
+  $("projectAgentValue").textContent = projectAgent.agent || "Not configured";
+  $("projectAgentDetail").textContent = projectAgent.status === "CONFIGURED"
+    ? `${projectAgent.config_path} selects golden-engineer. This is checked-in config evidence only; company OpenCode loading and compatibility are not tested.`
+    : `${projectAgent.config_path} does not establish a usable Golden primary. Runtime selection remains untested.`;
 
   $("updateValue").textContent = "Feed not configured";
   $("updateDetail").textContent = updates.available_from_checkout === null
@@ -228,8 +240,10 @@ function render(data) {
   $("assetSyncState").textContent = installation.state.replaceAll("_"," ");
   $("checkoutUpdateCount").textContent = updates.available_from_checkout === null ? "Unknown" : display(updates.available_from_checkout,0);
 
-  $("runtimeValue").textContent = runtime.company_agent_skill_mcp_inventory === "NOT_RUN" ? "Not inspected" : runtime.company_agent_skill_mcp_inventory;
-  $("runtimeDetail").textContent = runtime.opencode_binary_detected ? "OpenCode executable detected; agent, skill, and MCP discovery still needs a company-machine run." : "OpenCode executable not found on this process PATH; company runtime is unverified.";
+  $("runtimeValue").textContent = runtime.opencode_binary_detected ? "Executable found" : "Not found on PATH";
+  $("runtimeDetail").textContent = runtime.opencode_binary_detected
+    ? "An executable path is present, but its build version and company compatibility are unknown. Agent, skill, and MCP discovery has not run."
+    : "No OpenCode executable is found on this process PATH; company runtime remains unverified.";
   $("integrityHeading").textContent = integrity.state === "VERIFIED" ? "Source checksums match" : "Source checksum mismatch";
   $("integrityDetail").textContent = `${integrity.checked} file(s) checked · ${integrity.missing} missing · ${integrity.altered} altered · ${integrity.unlisted || 0} unlisted.`;
   $("repoMeta").textContent = repository.status === "AVAILABLE"

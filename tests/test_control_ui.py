@@ -11,6 +11,14 @@ SPEC.loader.exec_module(control)
 
 
 class GoldenControlUITests(unittest.TestCase):
+    def test_project_agent_status_is_config_evidence_not_runtime_proof(self):
+        status = control.project_agent_configuration()
+        self.assertEqual(status, {
+            'status': 'CONFIGURED', 'agent': 'golden-engineer',
+            'config_path': '.opencode/opencode.json', 'runtime_selection': 'NOT_TESTED',
+            'evidence_scope': 'CHECKED_IN_CONFIG_ONLY',
+        })
+
     def test_local_page_and_task_route_api_are_served(self):
         class Request:
             def __init__(self, path):
@@ -41,11 +49,15 @@ class GoldenControlUITests(unittest.TestCase):
         self.assertEqual(page.response, 200)
         self.assertIn('TASK ROUTING', page.wfile.getvalue().decode('utf-8'))
         self.assertIn('COMPANY_START_HERE.md', page.wfile.getvalue().decode('utf-8'))
+        self.assertIn('PROJECT CONFIGURATION', page.wfile.getvalue().decode('utf-8'))
+        self.assertIn('projectAgentStatus', page.wfile.getvalue().decode('utf-8'))
         app = (ROOT / 'control' / 'app.js').read_text(encoding='utf-8')
         self.assertIn('Capability candidates require separate review', app)
         self.assertIn('Full route details', app)
         self.assertIn('No-AI fallback', app)
         self.assertIn('Conditional specialists', app)
+        self.assertIn('build version and company compatibility are unknown', app)
+        self.assertIn('OPENCODE PATH', page.wfile.getvalue().decode('utf-8'))
         self.assertIn('capability-selection.json', page.wfile.getvalue().decode('utf-8'))
 
         workflows = Request('/api/workflows')
