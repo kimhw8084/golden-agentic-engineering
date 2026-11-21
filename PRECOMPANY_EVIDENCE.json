@@ -12,21 +12,21 @@
     "python_unit_suite": {
       "command": "python -m unittest discover -s tests -q",
       "status": "PASS",
-      "tests_run": 161,
-      "tests_passed": 160,
+      "tests_run": 168,
+      "tests_passed": 167,
       "tests_skipped": 1,
       "tests_failed": 0,
-      "note": "Latest default-interpreter run: 161 tests, 160 passed and one optional SDK test skipped. The same 161 tests passed with zero skips under the offline MCP SDK virtual environment. Includes sampling-method lab, React lock and Vitest 5 candidate evidence checks."
+      "note": "Latest one-command readiness run: 168 tests, 167 passed, one optional SDK test skipped, and zero failures. The dedicated offline MCP SDK fixture is separately recorded below."
     },
     "manifest_validation": {
       "command": "python scripts/validate_manifests.py",
       "status": "PASS",
-      "summary": "19 rules; 64 source candidates; 12 workflows; 5 agents; 12 skills; 7 commands; 34 typed capability candidates; 17 task decisions; 3 supplemental React notices; 1 unresolved license gap."
+      "summary": "19 rules; 64 source candidates; 12 workflows; 5 agents; 12 skills; 7 commands; 35 typed capability candidates; 18 task decisions; 3 supplemental React notices; 1 unresolved license gap."
     },
     "tracked_content_hashes": {
       "command": "python scripts/verify_contents.py",
       "status": "PASS",
-      "checked": 224,
+      "checked": 235,
       "missing": 0,
       "altered": 0,
       "unlisted": 0
@@ -89,10 +89,10 @@
     "secret_pattern_scan": {
       "command": "python scripts/security_scan.py --repo . --history",
       "status": "PASS",
-      "current_files_scanned": 227,
-      "reachable_git_blobs_scanned": 815,
+      "current_files_scanned": 238,
+      "reachable_git_blobs_scanned": 857,
       "limitation": "High-confidence pattern scan only; it does not establish absence of all proprietary information.",
-      "scan_worktree_head": "c1e13579c1c9c51c888d4047fa16ffab430d95d3"
+      "scan_worktree_head": "39ee6ddbaafa86fe91cad3c227fb2c2388960894"
     },
     "golden_full_release_checks": [
       {
@@ -172,11 +172,11 @@
     },
     "github_hosted_ci": {
       "source_qualification": {
-        "run": 63,
+        "run": 68,
         "status": "PASS",
-        "commit": "c1e13579c1c9c51c888d4047fa16ffab430d95d3",
+        "commit": "39ee6ddbaafa86fe91cad3c227fb2c2388960894",
         "jobs": "6/6 Ubuntu/Windows × Python 3.10/3.11/3.14",
-        "url": "https://github.com/kimhw8084/golden-agentic-engineering/actions/runs/44935668774"
+        "url": "https://github.com/kimhw8084/golden-agentic-engineering/actions/runs/44940583531"
       },
       "react_dependency_matrix": {
         "run": 1,
@@ -185,9 +185,49 @@
         "jobs": "4/4 Ubuntu/Windows × active Node 20.19.0 and candidate Node 22.12.0",
         "url": "https://github.com/kimhw8084/golden-agentic-engineering/actions/runs/44930658112"
       },
-      "limitation": "GitHub-hosted runners validate the recorded OS/runtime combinations only; no company-managed host, internal network, license approval, or air-gap qualification is implied."
+      "limitation": "GitHub-hosted runners validate the recorded OS/runtime combinations only; no company-managed host, internal network, license approval, or air-gap qualification is implied.",
+      "previous_source_qualification": {
+        "run": 63,
+        "status": "PASS",
+        "commit": "c1e13579c1c9c51c888d4047fa16ffab430d95d3",
+        "jobs": "6/6 Ubuntu/Windows × Python 3.10/3.11/3.14",
+        "url": "https://github.com/kimhw8084/golden-agentic-engineering/actions/runs/44935668774"
+      }
     },
     "precompany_readiness": {
+      "command": "python scripts/precompany_readiness.py --out <external-json> --report <external-markdown>",
+      "status": "PASS_LOCAL_CHECKS; PRE_QUALIFICATION",
+      "source_commit": "39ee6ddbaafa86fe91cad3c227fb2c2388960894",
+      "generated_at_utc": "2026-11-21T19:24:04.339831+00:00",
+      "local_checks_passed": "9/9",
+      "python_tests": {
+        "run": 168,
+        "passed": 167,
+        "skipped": 1,
+        "failed": 0
+      },
+      "bootstrap_rollback_tests": 36,
+      "manifest_validation": "PASS",
+      "tracked_content_hashes": "PASS",
+      "secret_scan": {
+        "status": "PASS",
+        "scanned_files": 236,
+        "reachable_git_blobs": 857
+      },
+      "offline_fixture_summary": {
+        "status": "PASS",
+        "cases": 8,
+        "python_tests": 76,
+        "react_tests": 6,
+        "nicegui_ui_tests": 1
+      },
+      "json": "verification/2026-11-21/precompany-readiness-39ee6dd.json",
+      "json_sha256": "fd37143ec707fb34cb1e19ca197cbb0ebe983912721e5f460e1458af4db5a845",
+      "report": "verification/2026-11-21/precompany-readiness-39ee6dd.md",
+      "report_sha256": "13ad88ab908bd9dda1a8b895665ebe5a03206b5faa1a91fc868030509d45a5e9",
+      "limitations": "All three Golden FULL checks remain NOT_QUALIFIED; this does not qualify a company host, internal runtime, air-gap, OSS approval, or productivity uplift."
+    },
+    "previous_precompany_readiness": {
       "command": "python scripts/precompany_readiness.py --out <external-json> --report <external-markdown>",
       "status": "PASS_LOCAL_CHECKS; PRE_QUALIFICATION",
       "source_commit": "3d122d495e3c27e846fb32b944973d82649e81c6",

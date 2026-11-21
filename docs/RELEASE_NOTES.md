@@ -68,7 +68,8 @@ See [`../BUILD_VERIFICATION.md`](../BUILD_VERIFICATION.md) for current commands,
 - Added an exact-hash SimPy 4.1.2 evaluation record and a synthetic capacity contract. The wheel passed the fixed contract locally and in all six hosted Ubuntu/Windows × Python 3.10/3.11/3.14 jobs ([run 44939637549](https://github.com/kimhw8084/golden-agentic-engineering/actions/runs/44939637549)). This is not a fab accuracy, task-value, or company approval result. The upstream package test suite's timing-sensitive documentation doctest failure remains documented.
 - Added a tag-triggered full Golden qualification workflow. It fails when mandatory evidence is missing; the current full check remains `PRE_QUALIFICATION` with ten blocking rule IDs.
 - Updated the machine-readable capability registry to 35 candidates and 18 task decisions. No candidate is claimed as a measured performance winner or company-approved tool.
-- The latest main source qualification passed all six Ubuntu/Windows × Python 3.10/3.11/3.14 jobs ([run 44939637487](https://github.com/kimhw8084/golden-agentic-engineering/actions/runs/44939637487)).
+- The one-command pre-company readiness assessment passed all nine local checks on clean source commit `39ee6dd`, with overall status `PRE_QUALIFICATION`; its JSON and Markdown outputs are preserved under [`verification/2026-11-21/`](../verification/2026-11-21/).
+- Implementation commit `39ee6dd` passed all six Ubuntu/Windows × Python 3.10/3.11/3.14 source qualification jobs ([run 44940583531](https://github.com/kimhw8084/golden-agentic-engineering/actions/runs/44940583531)). Hosted source tests do not establish company qualification.
 
 ## Release limits
 
