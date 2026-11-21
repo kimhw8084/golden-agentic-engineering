@@ -1,6 +1,6 @@
 {
   "schema": "golden-evidence/v0.1",
-  "generated_at_utc": "2026-11-21T14:41:58.706484+00:00",
+  "generated_at_utc": "2026-11-21T19:17:17.157097+00:00",
   "golden_version": "0.1.0-dev",
   "rules_sha256": "ce47462f54550bc60b9d30989bd56825257bd21f6b8721d1b28855dd58e61449",
   "project_manifest_sha256": "fa86ac5bb9058ce4b741abd68f1771e441d7692bee0a3da563852e1252495d1c",
@@ -46,7 +46,7 @@
       "mandatory": true,
       "stage": "full",
       "evidence": "Git worktree detected.",
-      "duration_ms": 13.4
+      "duration_ms": 11.39
     },
     {
       "rule_id": "PY-001",
@@ -55,7 +55,7 @@
       "mandatory": true,
       "stage": "fast",
       "evidence": "AST-parsed 2 Python source files.",
-      "duration_ms": 0.39
+      "duration_ms": 0.29
     },
     {
       "rule_id": "PY-002",
@@ -64,7 +64,7 @@
       "mandatory": true,
       "stage": "full",
       "evidence": "Exit=0; python test runner allowlist; argv_sha256=d268bb2f6a9981218caa602a101cea3c8842dd41f4ad768ac0fd16575ce068a9; executable_sha256=8fe8443218a147c3d426ab700346cc390331b815355ee9bdc8e3da2b2c0b22b0; output_bytes=127; output_sha256=2fb489183e070a6cc4fb0065ec52f01f73af4112fa853772b58ffe81ee7f53e2; runner_sha256=50a6be283e579114ac629808ba6a2f73f8f9f590ac84c25a4bbdaf4a838dc0bd; tests_run=1; tests_passed=1; tests_skipped=0; test_result_sha256=9d66033a08f33f3a7a537db8da49ae46776a1dc9a533f64626ec2ae02093120f",
-      "duration_ms": 35.74
+      "duration_ms": 28.12
     },
     {
       "rule_id": "PY-003",
