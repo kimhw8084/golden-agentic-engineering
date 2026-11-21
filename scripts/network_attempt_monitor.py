@@ -15,12 +15,17 @@ def audit(event, args):
         raise PermissionError("blocked by test audit hook")
 sys.addaudithook(audit)
 try:
-    socket.create_connection(("203.0.113.1", 443), timeout=0.1)
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock.settimeout(0.1)
+    sock.connect(("203.0.113.1", 443))
     outcome = "unexpectedly_connected"
 except PermissionError:
     outcome = "blocked"
 except OSError as exc:
     outcome = "blocked_by_local_environment"
+finally:
+    if "sock" in locals():
+        sock.close()
 print(json.dumps({"attempts": attempts, "outcome": outcome}))
 '''
 
@@ -34,7 +39,7 @@ def run_probe() -> dict:
     attempt_count = len(result.get('attempts', []))
     if attempt_count < 1 or result.get('outcome') != 'blocked':
         raise RuntimeError(
-            'Expected at least one audit-hook-observed attempt blocked before connect; '
+            'Expected at least one direct socket attempt observed and blocked by the audit hook; '
             f'observed={attempt_count} outcome={result.get("outcome", "missing")!r}.'
         )
     return result
