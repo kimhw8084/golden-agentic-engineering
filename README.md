@@ -24,7 +24,7 @@ python scripts/golden.py check --fast --project examples/python-app
 python scripts/golden.py check --full --project examples/python-app --out out/evidence.json
 python scripts/golden.py report --input out/evidence.json --project . --out out/evidence.html
 python scripts/validate_manifests.py
-python scripts/security_scan.py
+python scripts/security_scan.py --history  # current files and complete reachable Git history
 python scripts/network_attempt_monitor.py
 python benchmarks/run_local_fixtures.py --out verification/local-fixtures.json
 python scripts/package_offline.py create --out /approved/transfer/golden.tar.gz

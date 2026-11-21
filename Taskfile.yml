@@ -28,7 +28,7 @@ tasks:
       - python scripts/validate_manifests.py
   security:
     cmds:
-      - python scripts/security_scan.py
+      - python scripts/security_scan.py --history
   network-attempt-probe:
     cmds:
       - python scripts/network_attempt_monitor.py

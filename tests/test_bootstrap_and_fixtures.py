@@ -539,6 +539,71 @@ class CompanyBootstrapTests(unittest.TestCase):
 
 
 class SyntheticExampleTests(unittest.TestCase):
+    def test_secret_scanner_recognizes_common_token_families_and_ignores_placeholders(self):
+        samples = [
+            ('github_token', 'ghp_' + 'A' * 36),
+            ('github_fine_grained_token', 'github_pat_' + 'b' * 32),
+            ('slack_token', 'xoxb-' + 'c' * 25),
+            ('google_api_key', 'AIza' + 'D' * 35),
+            ('openai_api_key', 'sk-proj-' + 'e' * 35),
+            ('anthropic_api_key', 'sk-ant-' + 'f' * 25),
+            ('npm_token', 'npm_' + 'G' * 35),
+            ('stripe_secret_key', 'sk_live_' + 'H' * 25),
+            ('sendgrid_api_key', 'SG.' + 'I' * 25 + '.' + 'j' * 25),
+            ('twilio_api_key', 'SK' + 'a' * 32),
+            ('aws_access_key_id', 'AKIA' + '1' * 16),
+            ('private_key', '-----BEGIN RSA ' + 'PRIVATE KEY-----'),
+        ]
+        findings = security_scan.scan_text('\n'.join(token for _, token in samples), 'synthetic.txt')
+        self.assertEqual([item['kind'] for item in findings], [kind for kind, _ in samples])
+        for _, token in samples:
+            self.assertNotIn(token, json.dumps(findings))
+        placeholder_token = 'github_pat_' + 'placeholder' + 'Q' * 24
+        self.assertEqual(security_scan.scan_text(placeholder_token, 'docs.txt'), [])
+        self.assertEqual([item['line'] for item in findings], list(range(1, len(samples) + 1)))
+
+    def test_secret_scanner_finds_deleted_secret_in_reachable_history_without_emitting_value(self):
+        with tempfile.TemporaryDirectory() as d:
+            repo = Path(d)
+            subprocess.run(['git', '-C', d, 'init', '-q'], check=True)
+            subprocess.run(['git', '-C', d, 'config', 'user.email', 'test@example.invalid'], check=True)
+            subprocess.run(['git', '-C', d, 'config', 'user.name', 'History Scan Test'], check=True)
+            hidden_value = 'ghp_' + 'R' * 40
+            secret_file = repo / 'leaked.txt'
+            secret_file.write_text(hidden_value + '\n')
+            subprocess.run(['git', '-C', d, 'add', 'leaked.txt'], check=True)
+            subprocess.run(['git', '-C', d, 'commit', '-qm', 'synthetic secret fixture'], check=True)
+            secret_file.unlink()
+            subprocess.run(['git', '-C', d, 'add', '-A'], check=True)
+            subprocess.run(['git', '-C', d, 'commit', '-qm', 'remove synthetic fixture'], check=True)
+
+            result = subprocess.run(
+                [sys.executable, '-S', str(ROOT / 'scripts' / 'security_scan.py'), '--history', '--repo', d],
+                capture_output=True, text=True, check=False)
+            self.assertEqual(result.returncode, 2, result.stderr)
+            self.assertIn('history:leaked.txt@blob:', result.stdout)
+            self.assertIn('github_token', result.stdout)
+            self.assertNotIn(hidden_value, result.stdout + result.stderr)
+
+    def test_secret_history_scan_rejects_shallow_checkout(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            source = root / 'source'
+            source.mkdir()
+            subprocess.run(['git', '-C', str(source), 'init', '-q'], check=True)
+            subprocess.run(['git', '-C', str(source), 'config', 'user.email', 'test@example.invalid'], check=True)
+            subprocess.run(['git', '-C', str(source), 'config', 'user.name', 'History Scan Test'], check=True)
+            (source / 'first.txt').write_text('first\n')
+            subprocess.run(['git', '-C', str(source), 'add', 'first.txt'], check=True)
+            subprocess.run(['git', '-C', str(source), 'commit', '-qm', 'first'], check=True)
+            (source / 'second.txt').write_text('second\n')
+            subprocess.run(['git', '-C', str(source), 'add', 'second.txt'], check=True)
+            subprocess.run(['git', '-C', str(source), 'commit', '-qm', 'second'], check=True)
+            shallow = root / 'shallow'
+            subprocess.run(['git', 'clone', '-q', '--depth=1', source.as_uri(), str(shallow)], check=True)
+            with self.assertRaisesRegex(ValueError, 'complete Git history is unavailable'):
+                security_scan.scan_history(shallow)
+
     def test_secret_scanner_reports_location_without_value(self):
         with tempfile.TemporaryDirectory() as d:
             path = Path(d) / 'sample.py'
