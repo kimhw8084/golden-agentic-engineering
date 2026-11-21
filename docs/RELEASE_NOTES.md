@@ -8,6 +8,9 @@
 
 ## Implemented
 
+- Added a deterministic standard-library sampling lab with exact known-WIP checks, empirical arrival-lead estimates, a ridge-regression tabular baseline, seasonal-naive forecasting, seeded Poisson simulation, and empirical conformal intervals on a fixed 84/28 synthetic split. Its error and coverage metrics are examples only, not fab accuracy claims.
+- Fixed the disabled project MCP fixture's too-short timeout and selected automatic protocol negotiation. A public OpenCode v2.2.7 localhost-only probe now records both SDK modern discovery/call and standard-fixture legacy fallback. The initial failure was a test configuration error: timeout values are milliseconds. Company runtime and native Windows/Linux behavior are still unqualified.
+
 - Removed three specialist self-handoffs to the configured primary. React and NiceGUI routes now call the architect or verifier only on specific triggers; upstream Golden changes use the verifier for bounded independent review. Route validation rejects future self-handoffs, and both the route resolver and Golden Control workflow cards name the resolved primary agent.
 - Selected `golden-engineer` as the project default OpenCode primary and made clear small fixes direct, without a mandatory route command or skill.
 - Made the nontrivial task route actionable: OpenCode should invoke the route's named skill before choosing implementation tools, then check only relevant visible specialists/MCP and permissions. The route order is machine-readable and tested; small clear fixes remain direct. Company runtime skill invocation is still unverified.
@@ -49,7 +52,7 @@
 
 ## Verification
 
-See [`../BUILD_VERIFICATION.md`](../BUILD_VERIFICATION.md) for current commands, test counts, generated evidence, and blockers. The full Python suite and offline React fixture pass locally. The full synthetic-project Golden check intentionally remains non-qualified. Windows/Linux, automated browser checks, internal OpenCode/model, authentic MCP trace, company network controls, third-party dependency approval, and performance comparisons remain `NOT_RUN` or blocked.
+See [`../BUILD_VERIFICATION.md`](../BUILD_VERIFICATION.md) for current commands, test counts, generated evidence, and blockers. The full Python suite and offline React fixture pass locally. The full synthetic-project Golden check intentionally remains non-qualified. Windows/Linux, automated browser checks, internal OpenCode/model, company MCP trace, company network controls, third-party dependency approval, and performance comparisons remain `NOT_RUN` or blocked.
 
 ## 2026-11-21 pre-company replay
 

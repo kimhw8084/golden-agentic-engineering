@@ -56,7 +56,7 @@
     "os_build": "UNKNOWN",
     "python_patch_and_abi": "UNKNOWN",
     "windows_linux_native_install_tests": "NOT_RUN",
-    "required_action": "Company OSS/package owner must confirm exact Windows/Linux targets, approve licenses and vulnerabilities, then run offline installation and the OpenCode MCP handshake on those hosts."
+    "required_action": "Company OSS/package owner must confirm exact Windows/Linux targets, approve licenses and vulnerabilities, then run offline installation and the synthetic OpenCode MCP discovery/call on those hosts using the company build."
   },
   "archive_location_note": "The binary candidate archives and sidecar checksums are staged outside this repository on the local prequalification workspace; this repository contains only their names and hashes."
 }

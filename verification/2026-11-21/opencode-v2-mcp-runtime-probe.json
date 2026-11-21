@@ -1,5 +1,5 @@
 {
-  "schema": "golden-opencode-v2-local-probe/v1",
+  "schema": "golden-opencode-v2-local-probe/v2",
   "date": "2026-11-21",
   "qualification": "LOCAL_SYNTHETIC_ONLY_NOT_COMPANY_RUNTIME",
   "runtime": {
@@ -46,19 +46,39 @@
       "model_reasoning_or_skill_quality": "NOT_EVALUATED"
     },
     "official_sdk_mcp_pinned_protocol": {
-      "status": "FAILED_PROTOCOL_DISCOVERY",
+      "status": "PASS_LOCAL_SYNTHETIC_CALL",
       "sdk": "mcp==2.3.0",
       "opencode_protocol": "2026-07-28",
-      "observation": "OpenCode reported the server did not offer the pinned server/discover protocol"
+      "timeout_ms": 20000,
+      "trace": ["server/discover", "tools/list", "tools/call"],
+      "tool": "read_synthetic_sample",
+      "result": {"fixture_id": "fixture-001", "value": 12.5, "unit": "synthetic-unit"},
+      "injection_shaped_note": "Returned as fixture data; model resistance was not evaluated because the provider was scripted."
     },
-    "official_sdk_mcp_legacy_protocol": {
-      "status": "FAILED_CONNECTION_TIMEOUT",
+    "official_sdk_mcp_auto_protocol": {
+      "status": "PASS_LOCAL_SYNTHETIC_CALL",
       "sdk": "mcp==2.3.0",
-      "observation": "The SDK fixture process started and exited when OpenCode closed stdio; no MCP tool appeared in the model request"
+      "opencode_protocol": "auto",
+      "timeout_ms": 20000,
+      "trace": ["server/discover", "tools/list", "tools/call"],
+      "tool": "read_synthetic_sample"
     },
-    "existing_synthetic_mcp_legacy_control": {
-      "status": "FAILED_CONNECTION_TIMEOUT",
-      "observation": "The same temporary project shape also timed out with the repository's original synthetic JSON-RPC fixture"
+    "existing_synthetic_mcp_auto_fallback": {
+      "status": "PASS_LOCAL_SYNTHETIC_CALL",
+      "opencode_protocol": "auto",
+      "timeout_ms": 20000,
+      "trace": ["server/discover -> Method not found", "initialize (2025-11-25)", "notifications/initialized", "tools/list", "tools/call"],
+      "tool": "read_synthetic_sample"
+    },
+    "initial_probe_timeout": {
+      "status": "TEST_CONFIGURATION_ERROR_CORRECTED",
+      "value_ms": 20,
+      "observation": "An earlier test-only config set 20 ms, not 20 seconds. OpenCode documents MCP timeouts in milliseconds. The corrected 20000 ms runs above completed successfully."
+    },
+    "mcp_list_cold_start_diagnostic": {
+      "status": "FALSE_EMPTY_RESULT_OBSERVED",
+      "observation": "opencode mcp list printed No MCP servers configured while debug config showed the server and a live run logged mcp connected with tools=1. This command output was not used as connection evidence.",
+      "reference": "OpenCode issue #62902 describes the cold-start registration race in v2.2.6."
     },
     "direct_official_sdk_stdio_test": {
       "status": "PASS_MACOS_ARM64",
@@ -66,14 +86,15 @@
     }
   },
   "attempts_and_performance": {
-    "agent_calls": "one native skill call observed; no MCP call observed",
-    "scripted_provider_requests": "synthetic protocol requests only; not a trusted company runtime counter",
+    "agent_calls": "one native skill call and one actual MCP tool call observed; both were selected by a scripted provider",
+    "scripted_provider_requests": "Synthetic requests only; not a trusted company runtime counter",
+    "untrusted_tool_output": "The injected instruction-shaped note was included in the tool response; the scripted provider returned the preconfigured summary. Model injection resistance was not evaluated.",
     "tokens_latency_uplift_or_quality": "NOT_MEASURED"
   },
   "company_actions": [
     "Return the exact internal OpenCode build and sanitized config format.",
     "Set OPENCODE_DISABLE_MODELS_FETCH=1 on the actual managed OpenCode server process and verify its inherited environment.",
     "Enforce and monitor Windows/Linux default-deny public egress for OpenCode and every child process.",
-    "Resolve the internal OpenCode MCP protocol/transport against an approved synthetic server before enabling any MCP."
+    "Repeat the actual skill and MCP fixture calls on the approved company build and native Windows/Linux targets, then record attributable traces."
   ]
 }

@@ -29,6 +29,7 @@ python scripts/validate_manifests.py
 python scripts/security_scan.py --history  # current files and complete reachable Git history
 python scripts/network_attempt_monitor.py
 python scripts/precompany_readiness.py    # JSON + Markdown; exit 2 while company gates remain open
+python examples/scenarios/manufacturing/sampling_accuracy_lab.py  # deterministic synthetic baselines; not a fab claim
 python benchmarks/run_local_fixtures.py --out verification/local-fixtures.json
 python scripts/package_offline.py create --out /approved/transfer/golden.tar.gz
 python scripts/package_offline.py verify /approved/transfer/golden.tar.gz
@@ -76,6 +77,7 @@ Golden Control is the team-facing operating cockpit for Golden installation, app
 | [`fab_sampling_offline_port_kit/README.md`](fab_sampling_offline_port_kit/README.md) | Offline source-transfer guide and hardened scripts; the exact original ZIP is preserved under `offline/source-archives/`; no fab data or downloaded source repositories bundled |
 | `scripts/fetch_sources.py` | Public-network opt-in snapshot downloader/pinner; **source only** |
 | `scripts/mcp_candidate_bundle.py` | Offline-only validator, hash-lock, license inventory and CycloneDX SBOM packager for staged MCP SDK wheels |
+| `examples/scenarios/manufacturing/sampling_accuracy_lab.py` | Standard-library comparison of synthetic exact-rule, arrival, regression, forecast, simulation, and uncertainty methods |
 | [`offline/mcp-sdk-candidate/`](offline/mcp-sdk-candidate/README.md) | Hash-pinned external candidate archive manifest and exact platform/clearance limitations; archives remain outside Git |
 | `scripts/bootstrap_project.py` | Non-overwriting application manifest scaffold |
 | `scripts/install_opencode.py` | Non-overwriting install of agent/skill/command files into chosen OpenCode config folder |

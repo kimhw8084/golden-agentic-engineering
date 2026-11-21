@@ -7,7 +7,7 @@
   },
   "source_manifest": {
     "path": "offline/assets-manifest.json",
-    "sha256": "53ce6fa954045ff8e4e4f50ec5b68bc313652086d748bd3dd4c674a7d71a3ee6"
+    "sha256": "945a830c896ed851ada9e9486a5e64824c52c57e7ad3d9427dcfc55a034de15e"
   },
   "staged_asset_groups": 0,
   "assets": [
@@ -34,15 +34,15 @@
       "name": "MCP Python SDK and transitive dependencies",
       "status": "NOT_STAGED",
       "owner": "Company OSS/package owner",
-      "partial_evidence": "Official modelcontextprotocol/python-sdk v2.3.0 is pinned to commit 2118f14f8a19bc158d8a1cf90af58d85d187f849. Hash-verified CPython 3.11 wheel candidate bundles exist for macOS arm64, Windows AMD64, and Linux x86-64/glibc 2.17; macOS offline install and pip check pass, while Windows/Linux native installs are untested. OpenCode v2.2.7 loaded the Golden skill but its MCP SDK handshake failed. Candidate archive hashes and limitations are in offline/mcp-sdk-candidate/candidate-manifest.json.",
-      "required_action": "Confirm exact Windows/Linux OS, architecture, Python patch/ABI and glibc; independently review candidate licenses and vulnerabilities; import matching hash-locked archives through the approved process; run native offline install and pip check; and resolve OpenCode MCP discovery compatibility. Company approval is not obtained."
+      "partial_evidence": "Official modelcontextprotocol/python-sdk v2.3.0 is pinned to commit 2118f14f8a19bc158d8a1cf90af58d85d187f849. Hash-verified CPython 3.11 wheel candidate bundles exist for macOS arm64, Windows AMD64, and Linux x86-64/glibc 2.17; macOS offline install and pip check pass, while Windows/Linux native installs are untested. Public OpenCode v2.2.7 completed synthetic SDK discovery and a read-only call under localhost-only isolation with 20,000 ms timeouts. Candidate archive hashes and limitations are in offline/mcp-sdk-candidate/candidate-manifest.json.",
+      "required_action": "Confirm exact Windows/Linux OS, architecture, Python patch/ABI and glibc; independently review candidate licenses and vulnerabilities; import matching hash-locked archives through the approved process; run native offline install and pip check. Repeat MCP discovery/calls with the company OpenCode build. Company approval is not obtained."
     },
     {
       "name": "Company OpenCode and internal model evidence",
       "status": "NOT_STAGED",
       "owner": "Company OpenCode owner",
-      "partial_evidence": "Public OpenCode v2.2.7 candidate tested in an isolated loopback-only environment. The Golden routing skill loaded through the native skill tool using a scripted provider; webfetch/websearch were denied by project config; OPENCODE_DISABLE_MODELS_FETCH=1 suppressed the catalog-fetch log event. The probe set OPENCODE_DISABLE_AUTOUPDATE=1 but did not separately capture updater traffic. The SDK and original synthetic MCP fixtures failed the local OpenCode handshake. Internal build and company network-monitor evidence are unknown. See RUNTIME_COMPATIBILITY_MATRIX.md.",
-      "required_action": "Supply the installed internal build/config summary; set OPENCODE_DISABLE_AUTOUPDATE=1 and OPENCODE_DISABLE_MODELS_FETCH=1 on the actual CLI/server process; disable or network-block the separate desktop updater if used; verify the project web tool denies; resolve MCP protocol compatibility; and run an approved internal model trial only after the Windows/Linux egress gate and attempt monitor are active."
+      "partial_evidence": "Public OpenCode v2.2.7 candidate tested in an isolated loopback-only environment. The Golden routing skill loaded through the native skill tool and the official SDK plus standard-library MCP fixtures completed synthetic calls through a scripted provider; webfetch/websearch were denied by project config; OPENCODE_DISABLE_MODELS_FETCH=1 suppressed the catalog-fetch log event. The probe set OPENCODE_DISABLE_AUTOUPDATE=1 but did not separately capture updater traffic. Internal build and company network-monitor evidence are unknown. See RUNTIME_COMPATIBILITY_MATRIX.md.",
+      "required_action": "Supply the installed internal build/config summary; set OPENCODE_DISABLE_AUTOUPDATE=1 and OPENCODE_DISABLE_MODELS_FETCH=1 on the actual CLI/server process; disable or network-block the separate desktop updater if used; verify the project web tool denies; repeat synthetic skill/MCP calls on the company build; and run an approved internal model trial only after the Windows/Linux egress gate and attempt monitor are active."
     },
     {
       "name": "OS-enforced no-public-egress policy and attempt monitor",

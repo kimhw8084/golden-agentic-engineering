@@ -87,11 +87,11 @@
         "Linux"
       ],
       "owner": "Company OSS/package owner",
-      "partial_progress": "OFFICIAL_MCP_SDK_V2_3_0_HASHED_WHEEL_CANDIDATES_FOR_MACOS_WINDOWS_LINUX; MACOS_ARM64_OFFLINE_INSTALL_AND_SDK_STDIO_FIXTURE_PASS; WINDOWS_LINUX_NATIVE_INSTALL_NOT_RUN; OPENCODE_MCP_DISCOVERY_FAILED; COMPANY_CLEARANCE_MISSING",
+      "partial_progress": "OFFICIAL_MCP_SDK_V2_3_0_HASHED_WHEEL_CANDIDATES_FOR_MACOS_WINDOWS_LINUX; MACOS_ARM64_OFFLINE_INSTALL_AND_SDK_STDIO_FIXTURE_PASS; PUBLIC_OPENCODE_V2_2_7_SDK_DISCOVERY_AND_CALL_PASS; WINDOWS_LINUX_NATIVE_INSTALL_NOT_RUN; COMPANY_CLEARANCE_MISSING",
       "partial_evidence": [
         {
           "path": "offline/mcp-sdk-candidate/candidate-manifest.json",
-          "sha256": "460c10b1a029d3b0440e8831af9ddb4aeeb827e029f1fe53b22172b23677ec56"
+          "sha256": "43808874ade3c592fdb3f1d2b6d3e9bdc1f5b198201b58fb7951f59e240c287d"
         },
         {
           "path": "scripts/mcp_candidate_bundle.py",
@@ -102,7 +102,7 @@
           "sha256": "9decadac566375214ae9f3054485ff5a54ccc6efa079444e733662658109dee9"
         }
       ],
-      "required_action": "Confirm the company's exact Windows/Linux OS, architecture, CPython patch/ABI, and glibc; independently review every candidate license and vulnerability; import the matching hash-locked archive through the approved process; run native offline install/pip-check and resolve the OpenCode MCP discovery failure before qualification. Candidate archives and their .sha256 sidecars are outside Git; only their filenames and hashes are recorded in offline/mcp-sdk-candidate/candidate-manifest.json."
+      "required_action": "Confirm the company's exact Windows/Linux OS, architecture, CPython patch/ABI, and glibc; independently review every candidate license and vulnerability; import the matching hash-locked archive through the approved process; run native offline install and pip check; then repeat OpenCode MCP discovery/calls with the company build. Candidate archives and their .sha256 sidecars are outside Git; only their filenames and hashes are recorded in offline/mcp-sdk-candidate/candidate-manifest.json."
     },
     {
       "name": "Company OpenCode and internal model evidence",
@@ -112,26 +112,30 @@
         "Linux"
       ],
       "owner": "Company OpenCode owner",
-      "partial_progress": "PUBLIC_OPENCODE_V2_2_7_CANDIDATE_CHECKED; GOLDEN_ROUTING_SKILL_CALL_PASS_WITH_SCRIPTED_MODEL; WEBFETCH_WEBSEARCH_DENIED_BY_PROJECT_CONFIG; MODELS_FETCH_SUPPRESSION_TESTED; UPDATE_DISABLE_ENV_REQUIRED_NOT_INDEPENDENTLY_MONITORED; MCP_HANDSHAKE_FAILED; COMPANY_BUILD_AND_MONITOR_UNKNOWN",
+      "partial_progress": "PUBLIC_OPENCODE_V2_2_7_CANDIDATE_CHECKED; GOLDEN_ROUTING_SKILL_CALL_PASS_WITH_SCRIPTED_MODEL; SDK_AND_STANDARD_MCP_CALL_PASS_WITH_SCRIPTED_PROVIDER; WEBFETCH_WEBSEARCH_DENIED_BY_PROJECT_CONFIG; MODELS_FETCH_SUPPRESSION_TESTED; UPDATE_DISABLE_ENV_REQUIRED_NOT_INDEPENDENTLY_MONITORED; COMPANY_BUILD_AND_MONITOR_UNKNOWN",
       "partial_evidence": [
         {
           "path": "RUNTIME_COMPATIBILITY_MATRIX.md",
-          "sha256": "42488452164be14b012777ea6c49bf6656eefb33292a31ee71fda04748d54767"
+          "sha256": "0cc5d1e610a4300427a728c425a38d40a7b5cfd2d6a79222ee4789a0ff9a32ef"
         },
         {
           "path": "opencode.json",
-          "sha256": "8c4884a4b7a51bf1825bb8732fa786ccfbdbabd3ebcce52d841315ca1170d1c2"
+          "sha256": "036e313d7e495d7370d2bdc98ae88fd6714a1d626aa6d6b235729fe583a642c1"
         },
         {
           "path": ".opencode/opencode.json",
-          "sha256": "072b6540b0babd7bbd1ec860b91e19191c07a2d11bf6053c13e3b84acaaa52d6"
+          "sha256": "f96d02147d193af3831c2ea2863856a4cc6e8bd9767760375c720bfdbf2ca3cf"
+        },
+        {
+          "path": "verification/2026-11-21/opencode-v2-mcp-runtime-probe.json",
+          "sha256": "5b196c48c69dbe8517a89f2c1dd2ac1d723900882f6df976106d7318d4ad1b68"
         },
         {
           "path": "offline/egress-policy.template.json",
           "sha256": "f8ed2baff589ddf19d3caf80dff39d40c90d1ec9c48345b08ee94e1f407fa8fa"
         }
       ],
-      "required_action": "Provide the installed internal OpenCode build and sanitized config format; set OPENCODE_DISABLE_AUTOUPDATE=1 and OPENCODE_DISABLE_MODELS_FETCH=1 on the actual OpenCode CLI/server process; confirm webfetch/websearch remain denied; disable or network-block the separate desktop updater if used; resolve MCP protocol compatibility; then run a synthetic skill/MCP trial only after Windows/Linux default-deny public egress and its attempt monitor are active."
+      "required_action": "Provide the installed internal OpenCode build and sanitized config format; set OPENCODE_DISABLE_AUTOUPDATE=1 and OPENCODE_DISABLE_MODELS_FETCH=1 on the actual OpenCode CLI/server process; confirm webfetch/websearch remain denied; disable or network-block the separate desktop updater if used; repeat the proven synthetic skill/MCP calls on the company build only after Windows/Linux default-deny public egress and its attempt monitor are active."
     },
     {
       "name": "OS-enforced no-public-egress policy and attempt monitor",

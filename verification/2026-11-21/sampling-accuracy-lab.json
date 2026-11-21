@@ -1,0 +1,497 @@
+{
+  "arrival_time_empirical_lead": {
+    "actual": [
+      3,
+      1,
+      2,
+      3,
+      4,
+      2,
+      3,
+      4,
+      2,
+      3,
+      4,
+      1,
+      3,
+      4,
+      1,
+      3,
+      4,
+      1,
+      2,
+      4,
+      1,
+      2,
+      4,
+      1,
+      2,
+      3,
+      1,
+      2
+    ],
+    "metrics": {
+      "mae": 1.0,
+      "observations": 28,
+      "rmse": 1.118336
+    },
+    "predicted": [
+      2.475,
+      2.473864,
+      2.473864,
+      2.475,
+      2.475,
+      2.472727,
+      2.472727,
+      2.475,
+      2.473864,
+      2.473864,
+      2.475,
+      2.475,
+      2.472727,
+      2.472727,
+      2.475,
+      2.473864,
+      2.473864,
+      2.475,
+      2.475,
+      2.472727,
+      2.472727,
+      2.475,
+      2.473864,
+      2.473864,
+      2.475,
+      2.475,
+      2.472727,
+      2.472727
+    ],
+    "training_orders": 80
+  },
+  "conformal_uncertainty": {
+    "calibration_rows": 77,
+    "coverage_target": 0.9,
+    "daily": [
+      {
+        "lower": 7.0,
+        "upper": 13.0
+      },
+      {
+        "lower": 10.0,
+        "upper": 16.0
+      },
+      {
+        "lower": 10.0,
+        "upper": 16.0
+      },
+      {
+        "lower": 8.0,
+        "upper": 14.0
+      },
+      {
+        "lower": 6.0,
+        "upper": 12.0
+      },
+      {
+        "lower": 6.0,
+        "upper": 12.0
+      },
+      {
+        "lower": 6.0,
+        "upper": 12.0
+      },
+      {
+        "lower": 7.0,
+        "upper": 13.0
+      },
+      {
+        "lower": 10.0,
+        "upper": 16.0
+      },
+      {
+        "lower": 10.0,
+        "upper": 16.0
+      },
+      {
+        "lower": 8.0,
+        "upper": 14.0
+      },
+      {
+        "lower": 6.0,
+        "upper": 12.0
+      },
+      {
+        "lower": 6.0,
+        "upper": 12.0
+      },
+      {
+        "lower": 6.0,
+        "upper": 12.0
+      },
+      {
+        "lower": 7.0,
+        "upper": 13.0
+      },
+      {
+        "lower": 10.0,
+        "upper": 16.0
+      },
+      {
+        "lower": 10.0,
+        "upper": 16.0
+      },
+      {
+        "lower": 8.0,
+        "upper": 14.0
+      },
+      {
+        "lower": 6.0,
+        "upper": 12.0
+      },
+      {
+        "lower": 6.0,
+        "upper": 12.0
+      },
+      {
+        "lower": 6.0,
+        "upper": 12.0
+      },
+      {
+        "lower": 7.0,
+        "upper": 13.0
+      },
+      {
+        "lower": 10.0,
+        "upper": 16.0
+      },
+      {
+        "lower": 10.0,
+        "upper": 16.0
+      },
+      {
+        "lower": 8.0,
+        "upper": 14.0
+      },
+      {
+        "lower": 6.0,
+        "upper": 12.0
+      },
+      {
+        "lower": 6.0,
+        "upper": 12.0
+      },
+      {
+        "lower": 6.0,
+        "upper": 12.0
+      }
+    ],
+    "description": "Absolute seasonal-naive residual radius calibrated on the training rows",
+    "empirical_heldout_coverage": 0.892857,
+    "intervals_are_empirical_only": true
+  },
+  "dependencies": "Python standard library only; no AI or network required",
+  "deterministic_sampling_rule": {
+    "expected_fixture_count": 8,
+    "known_wip_sample_count": 8,
+    "matches_expected": true,
+    "source": "SYNTHETIC_FIXED_RULES_ONLY",
+    "status": "PASS"
+  },
+  "discrete_poisson_simulation": {
+    "daily": [
+      {
+        "lower_90": 4.0,
+        "mean": 8.833,
+        "upper_90": 14.0
+      },
+      {
+        "lower_90": 6.0,
+        "mean": 10.923,
+        "upper_90": 16.0
+      },
+      {
+        "lower_90": 5.0,
+        "mean": 10.117,
+        "upper_90": 15.0
+      },
+      {
+        "lower_90": 7.0,
+        "mean": 11.949,
+        "upper_90": 17.0
+      },
+      {
+        "lower_90": 4.0,
+        "mean": 9.194,
+        "upper_90": 14.0
+      },
+      {
+        "lower_90": 4.0,
+        "mean": 7.756,
+        "upper_90": 13.0
+      },
+      {
+        "lower_90": 3.0,
+        "mean": 7.049,
+        "upper_90": 12.0
+      },
+      {
+        "lower_90": 4.0,
+        "mean": 8.687,
+        "upper_90": 13.0
+      },
+      {
+        "lower_90": 6.0,
+        "mean": 11.034,
+        "upper_90": 16.0
+      },
+      {
+        "lower_90": 5.0,
+        "mean": 10.074,
+        "upper_90": 16.0
+      },
+      {
+        "lower_90": 6.0,
+        "mean": 11.905,
+        "upper_90": 18.0
+      },
+      {
+        "lower_90": 4.0,
+        "mean": 9.039,
+        "upper_90": 14.0
+      },
+      {
+        "lower_90": 4.0,
+        "mean": 7.723,
+        "upper_90": 13.0
+      },
+      {
+        "lower_90": 3.0,
+        "mean": 6.949,
+        "upper_90": 11.0
+      },
+      {
+        "lower_90": 4.0,
+        "mean": 8.848,
+        "upper_90": 14.0
+      },
+      {
+        "lower_90": 6.0,
+        "mean": 11.047,
+        "upper_90": 17.0
+      },
+      {
+        "lower_90": 6.0,
+        "mean": 10.322,
+        "upper_90": 16.0
+      },
+      {
+        "lower_90": 7.0,
+        "mean": 11.876,
+        "upper_90": 17.0
+      },
+      {
+        "lower_90": 4.0,
+        "mean": 8.996,
+        "upper_90": 14.0
+      },
+      {
+        "lower_90": 4.0,
+        "mean": 7.799,
+        "upper_90": 12.0
+      },
+      {
+        "lower_90": 3.0,
+        "mean": 6.816,
+        "upper_90": 11.0
+      },
+      {
+        "lower_90": 4.0,
+        "mean": 8.795,
+        "upper_90": 14.0
+      },
+      {
+        "lower_90": 6.0,
+        "mean": 10.921,
+        "upper_90": 16.0
+      },
+      {
+        "lower_90": 5.0,
+        "mean": 10.018,
+        "upper_90": 15.0
+      },
+      {
+        "lower_90": 7.0,
+        "mean": 11.912,
+        "upper_90": 18.0
+      },
+      {
+        "lower_90": 5.0,
+        "mean": 9.043,
+        "upper_90": 14.0
+      },
+      {
+        "lower_90": 4.0,
+        "mean": 7.882,
+        "upper_90": 13.0
+      },
+      {
+        "lower_90": 3.0,
+        "mean": 6.979,
+        "upper_90": 12.0
+      }
+    ],
+    "description": "Seeded weekday-specific Poisson draws; intervals are not calibrated confidence guarantees",
+    "interval_coverage_90": 1.0,
+    "intervals_are_empirical_only": true,
+    "metrics": {
+      "mae": 2.047643,
+      "observations": 28,
+      "rmse": 2.500595
+    },
+    "seed": 20261121,
+    "simulations_per_day": 1000
+  },
+  "forecast_seasonal_naive": {
+    "actual": [
+      13,
+      11,
+      11,
+      14,
+      12,
+      12,
+      7,
+      10,
+      13,
+      13,
+      16,
+      9,
+      9,
+      9,
+      12,
+      15,
+      10,
+      13,
+      11,
+      11,
+      11,
+      9,
+      12,
+      12,
+      15,
+      13,
+      8,
+      8
+    ],
+    "description": "Repeat the last observed seven-day profile",
+    "metrics": {
+      "mae": 1.821429,
+      "observations": 28,
+      "rmse": 2.259899
+    },
+    "predicted": [
+      10.0,
+      13.0,
+      13.0,
+      11.0,
+      9.0,
+      9.0,
+      9.0,
+      10.0,
+      13.0,
+      13.0,
+      11.0,
+      9.0,
+      9.0,
+      9.0,
+      10.0,
+      13.0,
+      13.0,
+      11.0,
+      9.0,
+      9.0,
+      9.0,
+      10.0,
+      13.0,
+      13.0,
+      11.0,
+      9.0,
+      9.0,
+      9.0
+    ]
+  },
+  "qualification": "SYNTHETIC_METHOD_COMPARISON_ONLY",
+  "real_world_accuracy_claim": false,
+  "schema": "golden-synthetic-sampling-lab/v1",
+  "split": {
+    "future_rows_used_for_fit": 0,
+    "held_out_days": 28,
+    "training_days": 84
+  },
+  "tabular_ml_ridge": {
+    "actual": [
+      13,
+      11,
+      11,
+      14,
+      12,
+      12,
+      7,
+      10,
+      13,
+      13,
+      16,
+      9,
+      9,
+      9,
+      12,
+      15,
+      10,
+      13,
+      11,
+      11,
+      11,
+      9,
+      12,
+      12,
+      15,
+      13,
+      8,
+      8
+    ],
+    "description": "Standard-library ridge regression using trend and weekday features",
+    "metrics": {
+      "mae": 1.318378,
+      "observations": 28,
+      "rmse": 1.507526
+    },
+    "predicted": [
+      10.365801,
+      12.532467,
+      11.699134,
+      13.449134,
+      10.615801,
+      9.365801,
+      8.532467,
+      10.601565,
+      12.768231,
+      11.934898,
+      13.684898,
+      10.851565,
+      9.601565,
+      8.768232,
+      10.837329,
+      13.003996,
+      12.170662,
+      13.920662,
+      11.087329,
+      9.837329,
+      9.003996,
+      11.073094,
+      13.23976,
+      12.406426,
+      14.156426,
+      11.323093,
+      10.073093,
+      9.23976
+    ]
+  }
+}

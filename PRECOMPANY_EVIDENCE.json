@@ -12,11 +12,11 @@
     "python_unit_suite": {
       "command": "python -m unittest discover -s tests -q",
       "status": "PASS",
-      "tests_run": 158,
-      "tests_passed": 157,
+      "tests_run": 161,
+      "tests_passed": 160,
       "tests_skipped": 1,
       "tests_failed": 0,
-      "note": "Latest run: 158 tests, 157 passed and one optional test skipped. Includes active React lock and Vitest 5 candidate evidence checks."
+      "note": "Latest default-interpreter run: 161 tests, 160 passed and one optional SDK test skipped. The same 161 tests passed with zero skips under the offline MCP SDK virtual environment. Includes sampling-method lab, React lock and Vitest 5 candidate evidence checks."
     },
     "manifest_validation": {
       "command": "python scripts/validate_manifests.py",
@@ -26,7 +26,7 @@
     "tracked_content_hashes": {
       "command": "python scripts/verify_contents.py",
       "status": "PASS",
-      "checked": 220,
+      "checked": 224,
       "missing": 0,
       "altered": 0,
       "unlisted": 0
@@ -40,6 +40,22 @@
       "python_api_incident_manufacturing_mcp_proof_routing": "PASS",
       "browser": "NOT_RUN_PLAYWRIGHT_ASSETS_NOT_STAGED",
       "scope": "Deterministic synthetic fixtures only; not an OpenCode agent benchmark."
+    },
+    "sampling_accuracy_lab": {
+      "command": "python examples/scenarios/manufacturing/sampling_accuracy_lab.py",
+      "status": "PASS_SYNTHETIC_METHOD_COMPARISON_ONLY",
+      "evidence": "verification/2026-11-21/sampling-accuracy-lab.json",
+      "training_days": 84,
+      "held_out_days": 28,
+      "methods": [
+        "exact known-WIP sampling rule",
+        "empirical arrival-lead baseline",
+        "ridge regression tabular baseline",
+        "seasonal-naive forecast",
+        "seeded Poisson simulation",
+        "training-residual conformal interval"
+      ],
+      "real_fab_accuracy_claim": false
     },
     "network_attempt_monitor": {
       "command": "python scripts/network_attempt_monitor.py",
@@ -156,11 +172,11 @@
     },
     "github_hosted_ci": {
       "source_qualification": {
-        "run": 61,
+        "run": 62,
         "status": "PASS",
-        "commit": "e9668c49436ec2d9eecc61ab2e72f2c44dde989b",
+        "commit": "2711574d87fe7ee33240a6b9b020a60c741f6d2b",
         "jobs": "6/6 Ubuntu/Windows \u00d7 Python 3.10/3.11/3.14",
-        "url": "https://github.com/kimhw8084/golden-agentic-engineering/actions/runs/44931884795"
+        "url": "https://github.com/kimhw8084/golden-agentic-engineering/actions/runs/44932120889"
       },
       "react_dependency_matrix": {
         "run": 1,
@@ -196,7 +212,9 @@
       "public_web_tools": "DENIED_BY_PROJECT_CONFIG",
       "models_fetch_disable_setting": "NO_CATALOG_FETCH_LOG_EVENT_OBSERVED; no packet capture",
       "autoupdate_disable_setting": "SET_IN_PROBE_ENVIRONMENT_NOT_INDEPENDENTLY_MONITORED",
-      "official_sdk_and_existing_fixture_mcp": "FAILED_LOCAL_MCP_HANDSHAKE_OR_TIMEOUT",
+      "official_sdk_mcp": "PASS_LOCAL_SYNTHETIC_CALL; SDK discovery and read-only call with pinned 2026-07-28 and auto modes, 20000 ms timeout",
+      "standard_fixture_mcp": "PASS_LOCAL_SYNTHETIC_CALL; auto discovery fell back to legacy 2025-11-25 and completed read-only call",
+      "provider_and_injection_scope": "SCRIPTED_PROVIDER; tool and skill calls observed, but model reasoning and injection resistance NOT_EVALUATED",
       "authentic_model_quality_tokens_latency": "NOT_MEASURED"
     },
     "authentic_company_model_or_mcp_calls": "NOT_RUN",
@@ -204,7 +222,7 @@
   },
   "privacy_review": {
     "high_confidence_secret_scan": "PASS: zero detected patterns; no match values were emitted.",
-    "reachable_git_history": "728 blobs scanned.",
+    "reachable_git_history": "786 blobs scanned; source worktree had 227 files scanned.",
     "absolute_user_paths": 0,
     "private_ipv4_addresses": 0,
     "machine_user_path_scan": "PASS: zero hits in current files or reachable Git blobs; ignored local demo evidence was changed to a repository-relative path before release.",

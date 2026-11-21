@@ -9,8 +9,12 @@
         "type": "local",
         "command": ["python", "integrations/mcp/synthetic_fixture.py"],
         "disabled": true,
-        "protocol": "legacy",
-        "timeout": 5
+        "protocol": "auto",
+        "timeout": {
+          "startup": 20000,
+          "catalog": 20000,
+          "execution": 30000
+        }
       }
     }
   }
