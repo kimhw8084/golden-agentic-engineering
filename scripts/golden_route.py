@@ -24,10 +24,25 @@ def validation_errors(root: Path = ROOT) -> list[str]:
         routing = read_json(root / 'workflows' / 'task-routing.json')
         capabilities = read_json(root / 'research' / 'capability-selection.json')
         config = read_json(root / 'opencode.json')
+        project_config = read_json(root / '.opencode' / 'opencode.json')
     except (OSError, ValueError) as exc:
         return [f'Cannot read route inputs ({type(exc).__name__}).']
-    if not isinstance(routing, dict) or not isinstance(capabilities, dict) or not isinstance(config, dict):
+    if (not isinstance(routing, dict) or not isinstance(capabilities, dict)
+            or not isinstance(config, dict) or not isinstance(project_config, dict)):
         return ['Routing, capability, and OpenCode config roots must be JSON objects.']
+    default_agent = project_config.get('default_agent')
+    if not isinstance(default_agent, str) or not re.fullmatch(r'[a-z0-9-]+', default_agent):
+        errors.append('Project OpenCode config must select a local Golden primary agent.')
+    else:
+        agent_path = root / '.opencode' / 'agents' / f'{default_agent}.md'
+        try:
+            agent_source = agent_path.read_text(encoding='utf-8')
+        except OSError:
+            errors.append('Project OpenCode default agent is missing locally.')
+        else:
+            frontmatter = re.match(r'\A---\s*\n(.*?)\n---\s*(?:\n|$)', agent_source, re.DOTALL)
+            if not frontmatter or not re.search(r'^mode:\s*primary\s*$', frontmatter[1], re.MULTILINE):
+                errors.append('Project OpenCode default agent must declare mode: primary.')
     workflows = routing.get('workflows')
     if routing.get('schema') != 'golden-task-routing/v2' or not isinstance(workflows, list):
         return ['Unsupported or malformed task-routing manifest.']
@@ -82,8 +97,10 @@ def validation_errors(root: Path = ROOT) -> list[str]:
         if not isinstance(primary_agent, str) or (primary_agent != 'primary' and not (root / '.opencode' / 'agents' / f'{primary_agent}.md').is_file()):
             errors.append(f'{route_id}: primary agent is not a local OpenCode agent.')
         skills = row.get('skills')
-        if not isinstance(skills, list) or not skills or any(not isinstance(skill, str) for skill in skills) or len(set(skills)) != len(skills):
-            errors.append(f'{route_id}: skills must be a nonempty unique string array.')
+        if (not isinstance(skills, list) or (not skills and route_id != 'small-fix')
+                or (skills and route_id == 'small-fix')
+                or any(not isinstance(skill, str) for skill in skills) or len(set(skills)) != len(skills)):
+            errors.append(f'{route_id}: only small-fix may omit a skill; other routes need unique skills.')
         else:
             for skill in skills:
                 if not isinstance(skill, str) or not (root / '.opencode' / 'skills' / skill / 'SKILL.md').is_file():

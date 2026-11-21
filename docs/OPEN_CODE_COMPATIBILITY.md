@@ -3,13 +3,14 @@
 This starter authors files using the currently published **OpenCode V2** conventions documented at:
 
 - https://opencode.ai/docs/instructions/ — project/global `AGENTS.md`
+- https://opencode.ai/docs/config/ — project config `default_agent` for new sessions
 - https://opencode.ai/docs/agents/ — `.opencode/agents/*.md`, subagent and primary modes, frontmatter permissions
 - https://opencode.ai/docs/skills/ — `.opencode/skills/<name>/SKILL.md`, lazily discovered and loaded
 - https://opencode.ai/docs/commands/ — `.opencode/commands/*.md` Markdown slash commands
 - https://opencode.ai/docs/mcp-servers/ — optional `mcp.servers` objects and local stdio
 - https://opencode.ai/docs/permissions/ — permissions/policies differ between V1/V2
 
-The actual company's internal OpenCode version, provider and model must be inspected. **Do not replace company opencode.json**, do not assume V1 permission keys are supported, and do not enable an MCP or an internet provider based on a public example.
+The project config sets `default_agent` to `golden-engineer`, as documented for public OpenCode. The actual company's internal OpenCode must be checked before relying on that field or its agent/skill/MCP discovery. **Do not replace company opencode.json**, do not assume V1 permission keys are supported, and do not enable an MCP or an internet provider based on a public example.
 
 ## Offline-first qualification exercise
 
@@ -23,6 +24,6 @@ The actual company's internal OpenCode version, provider and model must be inspe
 ## Avoid common agentic anti-patterns
 
 - Never stuff full standards, every tool manual and all source into initial system prompt.
-- No compulsory multi-agent workflow for a one-file fix; discover relevant capabilities, then use only what helps.
+- No compulsory route command, skill load, or multi-agent workflow for a clear one-file fix; use only capabilities that help.
 - Do not pre-rank CLI above agents, skills, or MCP. Do not assume any category wins; compare actual task outcomes and choose per capability.
 - Do not have the agent grade its own outputs as evidence. Real executable tests and human task success are authoritative.

@@ -3,7 +3,7 @@
   "default": {
     "agent": "primary",
     "specialists": "Only when measurable value exceeds handoff cost",
-    "skill_loading": "Load only the named relevant skill; skills are lazy context",
+    "skill_loading": "Load a task skill only when it changes the method or reduces risk; small fixes use the primary agent directly",
     "selection_registry": "research/capability-selection.json",
     "agentic_first_policy": "Use the relevant skill and authorized specialist/MCP when they materially help; use CLI tools for deterministic proof or when matched evidence shows they fit better.",
     "patterns": [
@@ -40,9 +40,7 @@
         "test evidence"
       ],
       "acceptance": "Requested behavior verified; no unrelated edits.",
-      "skills": [
-        "golden-routing"
-      ],
+      "skills": [],
       "specialists": [],
       "mcp_candidates": [],
       "mcp_policy": "Use only if already connected and explicitly company-approved; otherwise do not connect or invoke."

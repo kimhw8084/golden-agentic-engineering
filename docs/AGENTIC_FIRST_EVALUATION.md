@@ -10,7 +10,7 @@ The primary OpenCode agent is the default reasoning and routing layer. Tool sele
 4. Use deterministic checks for reproducible proof. Add a specialist agent only when expected quality or time savings justify coordination.
 5. Skip tool benchmarking, broad capability inventories, and per-task invocation ledgers. State any material limitation briefly.
 
-This is agentic-first because the primary agent handles reasoning and routing by default. For each routed job, select its relevant local skill and any approved specialist/MCP that materially improves the result before choosing deterministic tools. The repo-wide candidate comparison is in `research/capability-selection.json`; consult it for explicit selection work or when a task touches one of its capabilities, then inspect only the relevant live connection and candidate. This does not require extra calls just to demonstrate activity.
+This is agentic-first because the primary agent handles reasoning and task selection by default. The repository config selects `golden-engineer` as the project's default primary agent in OpenCode builds that support `default_agent`. It reads the matching route only when task shape warrants it, then checks the relevant skill, specialist, or already-connected MCP before choosing implementation tools. A clear small fix stays direct. The repo-wide candidate comparison is in `research/capability-selection.json`; consult it for explicit selection work or when a task touches one of its capabilities, then inspect only the relevant live connection and candidate. This does not require extra calls just to demonstrate activity.
 
 ## Named skill candidate: diagram design
 

@@ -12,7 +12,7 @@ For the design baseline, read `README.md`, `AGENTS.md`, `docs/ARCHITECTURE.md`, 
 
 When an engineer gives an objective:
 
-1. Select one route from `workflows/task-routing.json` (use `/golden-route` when available). Begin with the primary agent and the route's one relevant skill.
+1. Give the project-default `golden-engineer` agent the objective directly. A clear small fix stays direct with no route command or extra skill; for nontrivial work it matches one route and loads only a task skill that changes the method or reduces risk. Use `/golden-route` when you want to inspect a route explicitly.
 2. Check whether the route's specialist or MCP is already installed, connected, approved, and materially useful. Add it only when its expected contribution exceeds handoff/setup cost. Do not connect or install a candidate as part of routine routing.
 3. Use deterministic tools for reproducible acceptance checks. Do not default to CLI-only problem solving or force an irrelevant agent/MCP call. Compare a CLI or another agentic option only when both can perform the same task and the comparison can use identical acceptance criteria.
 4. Keep the task small: read its code, relevant tests, and local instructions; implement directly; run the focused checks; report the result and missing evidence. No full capability inventory, benchmark, swarm, or approval ritual per task.

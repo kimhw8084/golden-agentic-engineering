@@ -37,7 +37,7 @@ Run the fuller comparison when the user asks which tool is fastest/best, an unfa
 
 The primary agentic layer is the default; additional capability discovery and measurement are triggered by actual uncertainty or a decision need. The winner is task-specific. Do not invoke every capability or create a swarm just to satisfy an order.
 
-**Direct primary agent + relevant skill** is the lightest pattern for typical feature, fix and test tasks. A specialist subagent is useful only when its distinct expertise improves the result enough to justify coordination.
+**Direct primary agent** is the lightest pattern for clear routine fixes; no skill or route command is required when neither adds value. For a nontrivial task, load the route's skill when its procedure changes the method or reduces a concrete risk. A specialist subagent is useful only when its distinct expertise improves the result enough to justify coordination.
 
 **Sequential chain** for requirements → implementation → tests → documentation when later steps genuinely depend on completed earlier outputs. Pass only artifacts/paths and acceptance criteria, not entire conversation histories.
 

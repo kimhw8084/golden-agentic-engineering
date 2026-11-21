@@ -87,7 +87,7 @@ Golden Control is the team-facing operating cockpit for Golden installation, app
 
 ## Tool selection
 
-Begin each task with its matching route. Load the named skill, use the primary agent, and add a listed specialist or approved MCP when it improves the task enough to justify its cost. The research registry ranks leading plausible candidates by task and separates public repositories from Golden-native/company capabilities. It is an evaluation baseline, not an installation list or performance result. Deterministic commands remain the proof layer; they do not replace an applicable agentic capability.
+The project OpenCode config selects `golden-engineer` as the default primary agent on builds that support `default_agent`. Give it the objective directly: clear small fixes stay on the primary agent with no route command or extra skill; nontrivial work is matched to one route and only its useful skill, specialist, or already-connected approved MCP. The research registry ranks plausible candidates by task and separates public repositories from Golden-native/company capabilities. It is an evaluation baseline, not an installation list or performance result. Deterministic checks provide reproducible proof without replacing a useful agentic capability.
 
 ## Non-negotiable product behavior
 

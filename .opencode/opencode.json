@@ -1,4 +1,5 @@
 {
+  "default_agent": "golden-engineer",
   "mcp": {
     "servers": {
       "golden-synthetic-readonly": {
