@@ -9,10 +9,10 @@ SPEC.loader.exec_module(monitor)
 
 
 class NetworkAttemptMonitorTests(unittest.TestCase):
-    def test_synthetic_socket_connect_audit_event_is_observed_and_blocked(self):
+    def test_loopback_socket_connect_call_is_observed_and_blocked_before_socket_operation(self):
         result = monitor.run_probe()
-        self.assertGreaterEqual(len(result['attempts']), 1)
-        self.assertEqual(result['outcome'], 'blocked')
+        self.assertEqual(result['attempts'], [['127.0.0.1', 9]])
+        self.assertEqual(result['outcome'], 'blocked_before_socket_operation')
 
 
 if __name__ == '__main__':

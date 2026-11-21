@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Verify the Python socket.connect audit hook rejects a synthetic event."""
+"""Verify a loopback socket.connect attempt is rejected by a Python audit hook."""
 from __future__ import annotations
 
 import json
@@ -8,18 +8,23 @@ import subprocess
 import sys
 
 PROBE = r'''
-import json, sys
+import json, socket, sys
 attempts = []
 def audit(event, args):
     if event == "socket.connect":
         attempts.append(args[1])
         raise PermissionError("blocked by test audit hook")
 sys.addaudithook(audit)
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 try:
-    sys.audit("socket.connect", object(), ("203.0.113.1", 443))
+    sock.connect(("127.0.0.1", 9))
     outcome = "unexpectedly_allowed"
 except PermissionError:
-    outcome = "blocked"
+    outcome = "blocked_before_socket_operation"
+except OSError as exc:
+    outcome = "socket_operation_reached_" + type(exc).__name__
+finally:
+    sock.close()
 print(json.dumps({"attempts": attempts, "outcome": outcome}))
 '''
 
@@ -37,11 +42,12 @@ def run_probe() -> dict:
         raise RuntimeError('Probe subprocess failed; output omitted.')
     result = json.loads(child.stdout)
     attempt_count = len(result.get('attempts', []))
-    if attempt_count < 1 or result.get('outcome') != 'blocked':
+    if (attempt_count != 1 or result.get('attempts') != [['127.0.0.1', 9]]
+            or result.get('outcome') != 'blocked_before_socket_operation'):
         raise RuntimeError(
-            'Expected a synthetic socket.connect audit event to be observed and blocked; '
+            'Expected one real loopback socket.connect call to be observed and blocked before the socket operation; '
             f'observed={attempt_count} outcome={result.get("outcome", "missing")!r} '
-            'no socket operation is performed by this probe.'
+            'the probe never targets a public address.'
         )
     return result
 
@@ -52,7 +58,7 @@ def main() -> int:
     except (OSError, ValueError, RuntimeError, subprocess.SubprocessError):
         print('NETWORK_ATTEMPT_MONITOR_FAIL')
         return 2
-    print(f"NETWORK_AUDIT_HOOK_PASS observed={len(result['attempts'])} blocked=true synthetic_event=true no_socket_operation=true")
+    print(f"NETWORK_LOOPBACK_AUDIT_INTERCEPT_PASS observed={len(result['attempts'])} blocked=true before_socket_operation=true public_network=false")
     return 0
 
 
