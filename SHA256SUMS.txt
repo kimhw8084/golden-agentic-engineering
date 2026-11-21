@@ -1,5 +1,5 @@
 # SHA256 for all source files; excludes this manifest, this writer, Git metadata and ignored runtime output.
-2df03393e134927a46a0600790ef9f04ea18b3c47a5c0ecf6cc6f868e033df63  .gitattributes
+5f1a7585b48924b221849cb58b1eb6564fd475aab81f086889ecddc44ac9070b  .gitattributes
 0509440349c01dd691d475b6e8514afde76d0914ba4f381cfe347c264e634f2f  .github/workflows/qualification-tests.yml
 ba4184f50319d6ef3fc9d77bb8b3a140f5d5bbb5728e680fa8c6600b0251612a  .github/workflows/react-vitest-candidate.yml
 ad653aaee68f321e7e84f2a40c82658290b0d519c896e803f6d4795a7ff96ab1  .gitignore

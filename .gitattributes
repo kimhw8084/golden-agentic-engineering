@@ -2,3 +2,5 @@
 /research/react-macos-arm64-dependency-audit.json text eol=lf
 /research/react-macos-arm64.cdx.json text eol=lf
 /research/react-license-supplements.json text eol=lf
+# JSON evidence contains byte-level hashes; keep it stable across Windows and Linux/macOS.
+*.json text eol=lf
