@@ -7,7 +7,7 @@
   },
   "source_manifest": {
     "path": "offline/assets-manifest.json",
-    "sha256": "3036d1826b0a82cb9a58035f8a091391d2e62d7e71984daac06f071794a9e20b"
+    "sha256": "ab5124b93994e3181269f6a5bb2294d14188685734296e4bb62755336eaf16f0"
   },
   "staged_asset_groups": 0,
   "assets": [
@@ -20,9 +20,9 @@
     {
       "name": "React npm lock and offline store",
       "status": "NOT_STAGED",
-      "partial_evidence": "Locked macOS arm64 fixture passes offline install/typecheck/tests/build; Windows/Linux caches are absent and stackback@0.0.2 license text remains unresolved.",
+      "partial_evidence": "Locked macOS arm64 fixture passes offline install/typecheck/tests/build; Windows/Linux caches are absent. stackback@0.0.2's MIT declaration and source are pinned, but a standalone MIT notice is missing; its source also preserves an embedded V8 BSD-3-Clause notice.",
       "owner": "Company OSS/package owner",
-      "required_action": "Resolve license review, stage per-target npm caches, and obtain company OSS clearance."
+      "required_action": "Have the company OSS reviewer decide whether stackback@0.0.2's verified MIT declaration is sufficient without a bundled MIT notice while preserving its embedded V8 BSD-3-Clause notice, or require a tested replacement/removal; stage per-target npm caches and obtain company OSS clearance."
     },
     {
       "name": "Playwright browser binaries",

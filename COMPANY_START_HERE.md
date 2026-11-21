@@ -2,6 +2,22 @@
 
 **Current state: PRE_QUALIFICATION.** This public repository contains no company data. Transfer it through the approved import path. Golden does not install packages, download models, enable an MCP server, edit provider settings, create a repository, or change company Git state.
 
+## Source-side pre-company assessment
+
+Run the local deterministic assessment from a clean, full Git checkout to record the checked-out commit, source checksums, tests, offline React install, synthetic fixtures, network-hook probe, asset/license gaps, Golden full-check blockers, and required company-owner actions. It writes JSON and Markdown reports. A complete local run exits `2` with `PRE_QUALIFICATION`; exit `3` means a local check failed, the worktree is dirty, or evidence is incomplete. Package managers run in offline mode. The assessment does not start OpenCode or a model and does not replace company egress controls.
+
+### Windows PowerShell
+
+```powershell
+py -3 scripts\precompany_readiness.py --out "$env:TEMP\golden-readiness.json" --report "$env:TEMP\golden-readiness.md"
+```
+
+### Linux shell
+
+```sh
+python3 scripts/precompany_readiness.py --out /tmp/golden-readiness.json --report /tmp/golden-readiness.md
+```
+
 ## Local runtime evidence (2026-11-21)
 
 The local OpenCode binary reports V1 `1.3.9`; it is not the company's runtime. A non-sandboxed version check logged a failed `models.dev` fetch. Follow-up CLI and synthetic-provider probes ran under macOS Seatbelt with all non-loopback networking denied; the provider probe allowed only a local stub. The V1 binary rejected this repo's V2 `mcp.servers` config. With a temporary V1-compatible config it exposed the native `skill` tool, but the skill call could not complete because the hosted sandbox blocked OpenCode's `rg` child process. This is partial runtime evidence, not a successful skill/MCP/model test. See [`RUNTIME_COMPATIBILITY_MATRIX.md`](RUNTIME_COMPATIBILITY_MATRIX.md).

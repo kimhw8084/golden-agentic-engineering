@@ -11,12 +11,13 @@
 - Ran Golden full checks against each Python, React, and NiceGUI example. Their statuses are preserved in the evidence files; all three remain non-qualified because required checks and independent applicability evidence are missing.
 - Ran the local doctor without changing settings. On this non-company host it returned `UNKNOWN`, with six offline asset groups missing. This is not company readiness evidence.
 - Audited the fab sampling transfer kit: all 38 repositories remain candidates; no repository source, wheelhouse, model, or dataset was staged.
+- Added `scripts/precompany_readiness.py`, a one-command offline assessment that reruns the local test, manifest, checksum, secret-pattern, network-hook, rollback, React/NiceGUI fixture, and Golden full-check paths. It emits JSON and Markdown outside the source tree by default and remains fail-closed at `PRE_QUALIFICATION` until company-owned evidence is supplied.
 
 ## Findings that block qualification
 
 - The installed local OpenCode V1 binary is not the V2-shaped target used by this repo. It rejects the repo's `mcp.servers` configuration. A temporary V1-compatible test configuration reached a local-only synthetic provider and exposed the `skill` tool, but the skill call failed when the host sandbox blocked the `rg` subprocess. No authentic company model, skill completion, specialist handoff, or MCP call was observed.
 - OpenCode logged a `models.dev` lookup attempt. The follow-up probe ran under a macOS Seatbelt profile that denied non-loopback connections; the local provider was allowed only over loopback. This does not replace the company's Windows/Linux firewall policy or endpoint attempt monitoring.
-- The React lock has an unresolved `stackback@0.0.2` license-text gap. Three other package notice gaps have pinned upstream supplements, but the npm tarballs still lack bundled notice files and company OSS review remains outstanding.
+- The React lock has one remaining `stackback@0.0.2` MIT notice-text gap. Its exact upstream declaration and source hashes are now recorded, along with its embedded V8 BSD notice. A Vitest 5 update may remove this dependency but raises the Node minimum to 22.12 and has not been tested. Company OSS review remains outstanding.
 - The repository is a source bundle, not an offline executable distribution. Target-specific Python wheels, Windows/Linux npm caches, Playwright browsers, official MCP SDK dependencies, company runtime compatibility evidence, and OS-enforced egress evidence are all unstaged.
 - The local benchmark harness measures deterministic fixture checks, not accepted agent task results. Plain OpenCode versus Golden quality, time, rework, latency, and trusted token/request comparisons are `BLOCKED_COMPANY_RUNTIME`.
 

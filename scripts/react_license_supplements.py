@@ -30,6 +30,14 @@ EXPECTED_SOURCE_PINS = {
         "b036d330b93f58b1bc87f1097fdc822da58e090f", "LICENSE-MIT.txt",
     ),
 }
+EXPECTED_STACKBACK_SOURCE_COMMIT = "24d55717e16f1bb2109e848ea2b3a90ea900ddb5"
+EXPECTED_STACKBACK_SOURCE_BLOBS = {
+    "package.json": "3e8b7b2c023d3535e0869b0959616cda4d654fc8",
+    "index.js": "8b87042343d7e6fc238075138f72f4ff3fa58d5e",
+    "formatstack.js": "d64307d210dd134dff936607480695b86f3b6776",
+    "README.md": "fb6bde7486827b31d96cd2bfc1f96fd945bbf011",
+    "test.js": "212b414ab496cf76d2a6977bd935ce714508482f",
+}
 SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
 COMMIT_RE = re.compile(r"^[0-9a-f]{40}$")
 SHA256_NORMALIZATION = "Hash UTF-8 notice bytes after converting CRLF to LF; reject other carriage returns."
@@ -163,9 +171,19 @@ def validate(root: Path) -> list[str]:
         name = row.get("package")
         package_audit = audit_by_name.get(name)
         lock_entry = lock_rows.get(f"node_modules/{name}")
-        if (name != "stackback" or row.get("status") != "UNRESOLVED"
+        embedded_notice = row.get("embedded_notice")
+        if (name != "stackback" or row.get("status") != "NOTICE_TEXT_UNRESOLVED"
                 or row.get("repository_archived") is not True
                 or row.get("declared_license") != "MIT"
+                or row.get("license_declaration_verified") is not True
+                or row.get("source_commit") != EXPECTED_STACKBACK_SOURCE_COMMIT
+                or row.get("source_file_blobs") != EXPECTED_STACKBACK_SOURCE_BLOBS
+                or row.get("local_installed_source_matches_pinned_blobs") is not True
+                or row.get("root_license_file") != "NOT_FOUND_AT_PINNED_REVISION"
+                or not isinstance(embedded_notice, dict)
+                or embedded_notice.get("path") != "formatstack.js"
+                or embedded_notice.get("license") != "BSD-3-Clause"
+                or embedded_notice.get("status") != "FULL_NOTICE_PRESENT_IN_SOURCE_FILE"
                 or row.get("file") is not None or row.get("sha256") is not None
                 or not row.get("evidence_note") or not row.get("required_action")
                 or not isinstance(package_audit, dict) or not isinstance(lock_entry, dict)

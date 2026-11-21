@@ -63,12 +63,30 @@
       "version": "0.0.2",
       "npm_integrity": "sha512-1XMJE5fQo1jGH6Y/7ebnwPOBEkIEnT4QF32d5R1+VXdXveM0IBMJt8zfaxX1P3QhVwrYe+576+jkANtSS2mBbw==",
       "declared_license": "MIT",
-      "status": "UNRESOLVED",
+      "status": "NOTICE_TEXT_UNRESOLVED",
+      "license_declaration_verified": true,
       "source_repository": "https://github.com/defunctzombie/node-stackback",
+      "original_repository_url": "https://github.com/shtylman/node-stackback",
+      "source_commit": "24d55717e16f1bb2109e848ea2b3a90ea900ddb5",
       "repository_archived": true,
-      "evidence_url": "https://github.com/defunctzombie/node-stackback",
-      "evidence_note": "The archived upstream repository root listing has no license text. The npm package metadata declares MIT, but that declaration does not provide the missing notice text.",
-      "required_action": "Company OSS/legal reviewer or package maintainer must provide authoritative license text or reject this dependency before company import."
+      "npm_metadata_url": "https://www.npmjs.com/package/stackback/v/0.0.2",
+      "source_file_blobs": {
+        "package.json": "3e8b7b2c023d3535e0869b0959616cda4d654fc8",
+        "index.js": "8b87042343d7e6fc238075138f72f4ff3fa58d5e",
+        "formatstack.js": "d64307d210dd134dff936607480695b86f3b6776",
+        "README.md": "fb6bde7486827b31d96cd2bfc1f96fd945bbf011",
+        "test.js": "212b414ab496cf76d2a6977bd935ce714508482f"
+      },
+      "local_installed_source_matches_pinned_blobs": true,
+      "root_license_file": "NOT_FOUND_AT_PINNED_REVISION",
+      "embedded_notice": {
+        "path": "formatstack.js",
+        "license": "BSD-3-Clause",
+        "copyright": "2012 V8 project authors",
+        "status": "FULL_NOTICE_PRESENT_IN_SOURCE_FILE"
+      },
+      "evidence_note": "The pinned archived upstream package.json declares version 0.0.2 and MIT; its Git blob hashes for package.json, index.js, formatstack.js, README.md, and test.js match the installed package files. The official npm record also identifies MIT. The source has no root LICENSE file. formatstack.js contains a separate full BSD-3-Clause notice for V8-derived code. The MIT declaration is verified, but a standalone MIT notice/copyright text is not supplied in the package.",
+      "required_action": "Company OSS reviewer must decide whether the package's pinned MIT metadata is sufficient without a bundled MIT notice, confirm the embedded V8 BSD notice remains preserved, or require a tested dependency replacement/removal. Do not treat this evidence as company clearance."
     }
   ],
   "counts": {

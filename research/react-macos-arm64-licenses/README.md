@@ -4,6 +4,6 @@ This directory holds three root license files from the exact upstream commits co
 
 These are **supplemental upstream notices**, not files recovered from the npm tarballs. The package tarballs still lack their own license files: the audit count remains four. The Rollup source notice also includes notices for bundled dependencies; it is preserved in full.
 
-The fourth package is `stackback@0.0.2`. Its package metadata declares MIT, but the archived upstream repository root listing has no license text. No text was invented or copied for it. The manifest records the evidence and the exact company action needed.
+The fourth package is `stackback@0.0.2`. Its pinned archived upstream `package.json` and the official npm record declare MIT; the exact upstream source-file blob hashes match the installed package files. The package has no root `LICENSE` file. Its `formatstack.js` also preserves a full BSD-3-Clause notice for V8-derived code. No MIT text was invented or copied. The standalone MIT notice gap remains open; see [`stackback source audit`](../stackback-0.0.2-source-audit.md) and the manifest for the exact pins and company action.
 
 This evidence does not complete transitive/platform dependency review, prove an offline Windows/Linux package, or grant company OSS/legal approval. Company clearance remains pending.

@@ -30,6 +30,16 @@ class ReactLicenseSupplementTests(unittest.TestCase):
     def test_pinned_upstream_notices_match_lock_and_audit(self):
         self.assertEqual([], validate(ROOT))
 
+    def test_stackback_license_declaration_is_pinned_but_notice_gap_stays_open(self):
+        manifest = json.loads((ROOT / "research/react-license-supplements.json").read_text(encoding="utf-8"))
+        stackback = manifest["unresolved"][0]
+        self.assertEqual(stackback["status"], "NOTICE_TEXT_UNRESOLVED")
+        self.assertTrue(stackback["license_declaration_verified"])
+        self.assertEqual(stackback["root_license_file"], "NOT_FOUND_AT_PINNED_REVISION")
+        self.assertEqual(stackback["embedded_notice"]["license"], "BSD-3-Clause")
+        self.assertEqual(stackback["embedded_notice"]["status"], "FULL_NOTICE_PRESENT_IN_SOURCE_FILE")
+        self.assertEqual(stackback["source_commit"], "24d55717e16f1bb2109e848ea2b3a90ea900ddb5")
+
     def test_notice_whitespace_normalization_is_recorded(self):
         manifest = json.loads((ROOT / "research/react-license-supplements.json").read_text(encoding="utf-8"))
         for row in manifest["notices"]:

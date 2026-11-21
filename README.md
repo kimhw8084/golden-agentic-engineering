@@ -26,6 +26,7 @@ python scripts/golden.py report --input out/evidence.json --project . --out out/
 python scripts/validate_manifests.py
 python scripts/security_scan.py --history  # current files and complete reachable Git history
 python scripts/network_attempt_monitor.py
+python scripts/precompany_readiness.py    # JSON + Markdown; exit 2 while company gates remain open
 python benchmarks/run_local_fixtures.py --out verification/local-fixtures.json
 python scripts/package_offline.py create --out /approved/transfer/golden.tar.gz
 python scripts/package_offline.py verify /approved/transfer/golden.tar.gz
