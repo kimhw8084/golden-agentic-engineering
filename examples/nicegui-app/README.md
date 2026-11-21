@@ -6,7 +6,7 @@ With NiceGUI staged locally:
 
 ```sh
 python -m unittest discover -s tests -v
-python app/main.py
+python -m app.main
 ```
 
-Open `http://127.0.0.1:8080`. Browser-based UI testing is not yet configured because a per-platform Playwright browser bundle has not been staged. The pure acceptance logic is covered by standard-library tests.
+Run `python -m unittest discover -s tests -v` for the standard-library logic tests. With NiceGUI and pytest installed, run `pytest -q tests/test_ui.py` for an in-process `user_simulation` UI test; no browser is needed. Start the app with `python -m app.main` from this directory and open `http://127.0.0.1:8080`. A formal accessibility audit remains unrun because no per-platform browser bundle is staged.

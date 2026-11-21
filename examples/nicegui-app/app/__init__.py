@@ -1,0 +1,1 @@
+"""Synthetic NiceGUI example package."""

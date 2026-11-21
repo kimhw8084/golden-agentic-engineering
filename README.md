@@ -80,7 +80,7 @@ Golden Control is the team-facing operating cockpit for Golden installation, app
 | `workflows/task-routing.json` | 12 task routes with pattern, context, relevant skill/MCP, trust, fallback and acceptance |
 | `research/capability-selection.json` | Candidate commits, observed license evidence, per-task decisions, and explicit unknowns |
 | `offline/` | Fail-closed policy template, Python attempt-monitor test scope, and missing staged assets |
-| `examples/react-app/`, `examples/nicegui-app/` | Synthetic UI fixtures; React lock and partial macOS arm64 dependency audit are present, but no transferable npm cache or Playwright browser binaries are staged |
+| `examples/react-app/`, `examples/nicegui-app/` | Synthetic UI fixtures; React lock and partial macOS arm64 dependency audit are present; NiceGUI browserless UI simulation and local manual smoke are recorded. No transferable npm cache or Playwright browser binaries are staged |
 | `docs/` | Architecture, phased company build plan, qualification criteria and draft requirements |
 | `integrations/` | Vendor-neutral existing-CI and optional MCP configuration guidance |
 | `tests/` and `examples/` | Real unit tests and minimal working sample |

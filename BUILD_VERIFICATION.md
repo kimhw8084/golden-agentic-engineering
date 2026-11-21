@@ -2,24 +2,27 @@
 
 **Repository state:** `PRE_QUALIFICATION`; no company approval or qualification is asserted.
 
-**Environment:** macOS 25.6.0 arm64; Python 3.11.7 for the latest repository and fixture runs; Node 26.13.0, npm 11.20.0. The local OpenCode path/version metadata is incomplete, so compatibility is `UNKNOWN`. Six required company/offline assets remain unstaged.
+**Environment:** macOS 25.6.0 arm64; Python 3.11.7 for the latest repository and fixture runs; local NiceGUI 3.15.0; Node 26.13.0, npm 11.20.0. The local OpenCode path/version metadata is incomplete, so compatibility is `UNKNOWN`. Six required company/offline assets remain unstaged.
 
-**Runtime boundary:** Results cover this checkout and synthetic fixtures. GitHub-hosted source CI passed on Ubuntu and Windows Server 2025 with Python 3.10, 3.11, and 3.14 (run [#7](https://github.com/kimhw8084/golden-agentic-engineering/actions/runs/44846261444), commit `c650284`). That matrix does not qualify company-managed hosts, company OpenCode, the internal model, firewall policy, or company network behavior.
+**Runtime boundary:** Results cover this checkout and synthetic fixtures. GitHub-hosted source CI passed on Ubuntu and Windows Server 2025 with Python 3.10, 3.11, and 3.14 (run [#9](https://github.com/kimhw8084/golden-agentic-engineering/actions/runs/44846962050), commit `8e179ce`). That matrix does not qualify company-managed hosts, company OpenCode, the internal model, firewall policy, or company network behavior.
 
 ## Tests and checks run
 
 | Check | Result |
 |---|---|
-| [GitHub Actions source qualification matrix](https://github.com/kimhw8084/golden-agentic-engineering/actions/runs/44846261444) | PASS — six jobs on Ubuntu/Windows Server 2025 × Python 3.10/3.11/3.14. Each ran the repository unit suite, route/manifest validation, credential-pattern scan, and Golden fast checks. Hosted runners are not company or air-gap evidence. |
+| [GitHub Actions source qualification matrix](https://github.com/kimhw8084/golden-agentic-engineering/actions/runs/44846962050) | PASS — run #9 at `8e179ce`; six jobs on Ubuntu/Windows Server 2025 × Python 3.10/3.11/3.14. Each ran the repository unit suite, route/manifest validation, credential-pattern scan, and Golden fast checks. Hosted runners are not company or air-gap evidence. |
 | `python -m unittest discover -s tests -v` | PASS — 69 repository tests. Covers bootstrap doctor/apply/repeat/rollback, default config-root selection and safe fresh-root creation, staged asset evidence, npm audit safeguards, benchmark case/status validation, transfer-kit path/origin/symlink/overwrite checks, Golden Proof, routing, MCP fixture, security scanner, synthetic Python audit-hook dispatch, and synthetic scenarios. |
+| `examples/nicegui-app`: `python -m unittest discover -s tests -v` | PASS — 3 standard-library logic tests; the NiceGUI UI simulation is skipped outside pytest. |
+| `examples/nicegui-app`: `pytest -q tests/test_ui.py` | PASS — NiceGUI `user_simulation` exercised required-field validation, ACCEPT and REVIEW states, duplicate-ID rejection, summary counts, and clearing. No browser process is required. |
 | `python benchmarks/run_local_fixtures.py --include-react --out verification/2026-11-20/local-fixtures.json` | PASS — 47 Python fixture tests plus six React logic/component tests; React `npm ci` ran with `--offline --ignore-scripts --no-audit --no-fund`, then typecheck, Vitest, and Vite build. Browser automation remains unrun. This is not an agent or productivity comparison. |
 | React `npm ci --offline --ignore-scripts --no-audit --no-fund` | PASS — 82 packages installed from the local npm cache on macOS arm64; no lifecycle scripts. |
 | React `npm run typecheck`, `npm run test`, `npm run build` | PASS — TypeScript clean; six tests across two files; Vite transformed 30 modules. |
 | `python3 scripts/npm_dependency_audit.py --report research/react-macos-arm64-dependency-audit.json --sbom research/react-macos-arm64.cdx.json` | PASS — lock has 132 entries; 82 installed and included in CycloneDX; 50 platform variants are not staged. License metadata: zero missing and zero unknown/non-OSI IDs in the installed set; four installed packages have no bundled license text. Company clearance is pending. |
 | Local browser smoke on `http://127.0.0.1:5173/` | PASS — in-app browser rendered labeled controls, keyboard Tab/Enter submission produced an ACCEPT result, and clearing the numeric field showed “Measured value is required.” The app served on loopback. This is manual UI evidence, not Playwright automation or a formal accessibility audit. See [the observation](verification/2026-11-20/react-browser-smoke.md). |
+| Local browser smoke on `http://127.0.0.1:8080/` | PASS — in-app browser checked required-field validation, ACCEPT and REVIEW results, duplicate-ID rejection without changing counts, and clear/reset behavior. This manual smoke is separate from the pytest simulation; it is not Playwright automation or a formal accessibility audit. See [the observation](verification/2026-11-20/nicegui-browser-smoke.md). |
 | Bootstrap transaction tests (included above) | PASS — synthetic CLI doctor → reviewed apply → repeat apply → rollback preserved provider/model settings; fresh config-root creation, invalid-archive no-write behavior, JSONC shape-only reading, and symlink/path rejection passed. |
 | `python scripts/validate_manifests.py` | PASS — 19 rule descriptors, 64 preserved public-source leads, 12 workflows, 5 agents, 12 skills, 7 commands, 27 capability candidates, 17 task decisions, and six benchmark cases with repository evidence references. Hash-checked partial React evidence does not upgrade its asset status from `NOT_STAGED`. |
-| `python scripts/security_scan.py` | PASS — 157 files scanned; no high-confidence credential patterns found and no values emitted. This is not a complete secret or proprietary-code review. |
+| `python scripts/security_scan.py` | PASS — 162 files scanned; no high-confidence credential patterns found and no values emitted. This is not a complete secret or proprietary-code review. |
 | `python3 scripts/network_attempt_monitor.py` | PASS — a synthetic `socket.connect` audit event was observed and rejected; no socket or network operation was performed. This verifies only Python hook dispatch, not real socket interception or OS firewall behavior. |
 | `node --check control/app.js` | PASS — JavaScript syntax. |
 | `python3 scripts/golden_route.py --task-id technical-docs-sop-diagrams` | PASS — resolves the docs skill, lists `cathrynlavery/diagram-design` as evaluation-only, and names local Markdown/SVG/Mermaid fallback. No third-party tool was installed or invoked. |
@@ -42,8 +45,8 @@ JSON evidence is unsigned and cannot authenticate who ran a check or prove that 
 
 ## Not tested / remaining limits
 
-- Company-managed Windows/Linux hosts; platform-specific Node/npm caches, NiceGUI/browser workflows, and apply/rollback qualification against actual company OpenCode installations.
-- Playwright browser automation, NiceGUI browser/UI checks, and a formal accessibility audit.
+- Company-managed Windows/Linux hosts; platform-specific Node/npm caches, and apply/rollback qualification against actual company OpenCode installations.
+- Playwright browser automation and a formal accessibility audit. NiceGUI UI simulation and local manual browser smoke were run on this workstation only.
 - Company OpenCode discovery, agent/skill use, internal model, connected MCPs, or invocation-event provenance.
 - OS-enforced no-public-egress policy and attempt monitoring across OpenCode and all child processes.
 - Full dependency/source license closure, the four missing npm license texts, company OSS clearance, and staged Windows/Linux executable assets.
