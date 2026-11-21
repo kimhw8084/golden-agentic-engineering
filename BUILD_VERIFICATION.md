@@ -2,7 +2,7 @@
 
 **Repository state:** `PRE_QUALIFICATION`; no company approval or qualification is asserted.
 
-**Environment:** macOS 25.6.0 arm64, Python 3.14.5, Node 26.13.0, npm 11.20.0. The local OpenCode path/version metadata is incomplete, so compatibility is `UNKNOWN`. Six required company/offline assets remain unstaged.
+**Environment:** macOS 25.6.0 arm64; Python 3.11.7 for the latest repository and fixture runs; Node 26.13.0, npm 11.20.0. The local OpenCode path/version metadata is incomplete, so compatibility is `UNKNOWN`. Six required company/offline assets remain unstaged.
 
 **Runtime boundary:** Results cover this checkout and synthetic fixtures only. They are not Windows, managed Linux, company OpenCode, internal model, firewall, hosted CI, or company network evidence.
 
@@ -10,15 +10,15 @@
 
 | Check | Result |
 |---|---|
-| `python3 -m unittest discover -s tests -v` | PASS — 66 repository tests. Covers bootstrap doctor/apply/repeat/rollback and path abuse cases, staged asset evidence, npm audit safeguards, benchmark offline-mode policy, transfer-kit path/origin/symlink/overwrite checks, Golden Proof, routing, MCP fixture, security scanner, network monitor, and synthetic scenarios. |
-| `python3 benchmarks/run_local_fixtures.py --include-react --out verification/2026-11-20/local-fixtures.json` | PASS — 47 Python fixture tests plus six React logic/component tests; React `npm ci` ran with `--offline --ignore-scripts --no-audit --no-fund`, then typecheck, Vitest, and Vite build. Browser automation remains unrun. This is not an agent or productivity comparison. |
+| `python -m unittest discover -s tests -v` | PASS — 68 repository tests. Covers bootstrap doctor/apply/repeat/rollback and fresh config-root/path abuse cases, staged asset evidence, npm audit safeguards, benchmark case/status validation, transfer-kit path/origin/symlink/overwrite checks, Golden Proof, routing, MCP fixture, security scanner, network monitor, and synthetic scenarios. |
+| `python benchmarks/run_local_fixtures.py --include-react --out verification/2026-11-20/local-fixtures.json` | PASS — 47 Python fixture tests plus six React logic/component tests; React `npm ci` ran with `--offline --ignore-scripts --no-audit --no-fund`, then typecheck, Vitest, and Vite build. Browser automation remains unrun. This is not an agent or productivity comparison. |
 | React `npm ci --offline --ignore-scripts --no-audit --no-fund` | PASS — 82 packages installed from the local npm cache on macOS arm64; no lifecycle scripts. |
 | React `npm run typecheck`, `npm run test`, `npm run build` | PASS — TypeScript clean; six tests across two files; Vite transformed 30 modules. |
 | `python3 scripts/npm_dependency_audit.py --report research/react-macos-arm64-dependency-audit.json --sbom research/react-macos-arm64.cdx.json` | PASS — lock has 132 entries; 82 installed and included in CycloneDX; 50 platform variants are not staged. License metadata: zero missing and zero unknown/non-OSI IDs in the installed set; four installed packages have no bundled license text. Company clearance is pending. |
-| Local browser smoke on `http://127.0.0.1:5173/` | PASS — in-app browser rendered labeled controls, keyboard Tab/Enter submission produced an ACCEPT result, and clearing the numeric field showed “Measured value is required.” The app served on loopback. This is manual UI evidence, not Playwright automation or an accessibility audit. |
-| Bootstrap transaction tests (included above) | PASS — synthetic CLI doctor → reviewed apply → repeat apply → rollback preserved provider/model settings; JSONC shape-only reading and symlink/path rejection passed. |
-| `python3 scripts/validate_manifests.py` | PASS — 19 rule descriptors, 64 preserved public-source leads, 12 workflows, 5 agents, 12 skills, 7 commands, 27 capability candidates and 17 task decisions. Hash-checked partial React evidence does not upgrade its asset status from `NOT_STAGED`. |
-| `python3 scripts/security_scan.py` | PASS — pattern scan found no high-confidence credential patterns and emitted no values. This is not a complete secret or proprietary-code review. |
+| Local browser smoke on `http://127.0.0.1:5173/` | PASS — in-app browser rendered labeled controls, keyboard Tab/Enter submission produced an ACCEPT result, and clearing the numeric field showed “Measured value is required.” The app served on loopback. This is manual UI evidence, not Playwright automation or a formal accessibility audit. See [the observation](verification/2026-11-20/react-browser-smoke.md). |
+| Bootstrap transaction tests (included above) | PASS — synthetic CLI doctor → reviewed apply → repeat apply → rollback preserved provider/model settings; fresh config-root creation, invalid-archive no-write behavior, JSONC shape-only reading, and symlink/path rejection passed. |
+| `python scripts/validate_manifests.py` | PASS — 19 rule descriptors, 64 preserved public-source leads, 12 workflows, 5 agents, 12 skills, 7 commands, 27 capability candidates, 17 task decisions, and six benchmark cases with repository evidence references. Hash-checked partial React evidence does not upgrade its asset status from `NOT_STAGED`. |
+| `python scripts/security_scan.py` | PASS — 157 files scanned; no high-confidence credential patterns found and no values emitted. This is not a complete secret or proprietary-code review. |
 | `python3 scripts/network_attempt_monitor.py` | PASS — one synthetic reserved-documentation-IP Python socket attempt was observed and blocked before OS connect. It does not monitor Node, browsers, OpenCode, child processes, or OS firewall behavior. |
 | `node --check control/app.js` | PASS — JavaScript syntax. |
 | `python3 scripts/golden_route.py --task-id technical-docs-sop-diagrams` | PASS — resolves the docs skill, lists `cathrynlavery/diagram-design` as evaluation-only, and names local Markdown/SVG/Mermaid fallback. No third-party tool was installed or invoked. |

@@ -465,10 +465,9 @@ def bundle_assets(archive: Path) -> tuple[dict, dict[str, bytes]]:
 
 def apply_bundle(archive: Path, target: Path, report: dict, transaction_path: Path) -> dict:
     target = target.expanduser()
-    if target.is_symlink() or not target.is_dir():
-        raise ValueError('Target must be an existing real directory.')
-    target = target.resolve(strict=True)
-    ensure_real_directory(target)
+    if target.is_symlink() or (target.exists() and not target.is_dir()):
+        raise ValueError('Target must be a real directory path.')
+    target = target.resolve(strict=False)
     transaction_path = Path(os.path.abspath(transaction_path.expanduser()))
     if transaction_path.parent.is_symlink() or not transaction_path.parent.is_dir():
         raise ValueError('Transaction parent must be an existing real directory.')
@@ -486,6 +485,10 @@ def apply_bundle(archive: Path, target: Path, report: dict, transaction_path: Pa
     if current['machine']['opencode_compatibility'] != 'PUBLIC_V2_CANDIDATE':
         raise ValueError('Installed OpenCode compatibility is unknown or unsupported; do not apply.')
     manifest, assets = bundle_assets(archive)
+    # Create a fresh OpenCode config root only after the reviewed doctor snapshot
+    # matches and the caller supplied the explicit Step B authorization flag.
+    ensure_real_directory(target)
+    target = target.resolve(strict=True)
     additions = []
     conflicts = []
     for rel, data in assets.items():

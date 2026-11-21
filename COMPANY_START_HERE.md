@@ -4,6 +4,8 @@
 
 ## Step A — offline doctor / dry run
 
+The supported handoff is one command here and one reviewed apply command in Step B. Apply rechecks the approved source archive's checksum and file hashes.
+
 Run this with Python 3.10+ from the extracted Golden folder. It reads platform/runtime presence, the current OpenCode config format and safe structure counts, file permissions, and the source bundle manifest. It accepts JSON and JSONC (comments and trailing commas) and flags simultaneous `opencode.json` and `opencode.jsonc` files for review. It does **not** run `opencode`, `node`, `git`, package managers, or any network request. It reads OpenCode/Node versions only from matching local package metadata or a managed-install version path; if it cannot identify a version, the result stays `UNKNOWN` and Step B is blocked.
 
 The default user config lookup follows [OpenCode's documented global config location](https://opencode.ai/docs/config/): `~/.config/opencode/opencode.json` or `.jsonc`, with `XDG_CONFIG_HOME` honored when set.
@@ -12,17 +14,15 @@ The default user config lookup follows [OpenCode's documented global config loca
 
 ```powershell
 py -3 scripts\company_bootstrap.py doctor --out "$env:TEMP\golden-doctor.json"
-py -3 scripts\package_offline.py verify "D:\approved-transfer\golden.tar.gz"
 ```
 
 ### Linux shell
 
 ```sh
 python3 scripts/company_bootstrap.py doctor --out /tmp/golden-doctor.json
-python3 scripts/package_offline.py verify /approved-transfer/golden.tar.gz
 ```
 
-Replace example paths with your approved transfer/config paths. Do not execute OpenCode just to fill in its version. Do not start OpenCode until its package/update behavior and all child tools have been checked for zero public-network attempts; the company network owner must provide default-deny egress and an attempt monitor first.
+Replace example paths with your approved transfer/config paths. Step B verifies the archive checksum and contents before applying. Do not execute OpenCode just to fill in its version. Do not start OpenCode until its package/update behavior and all child tools have been checked for zero public-network attempts; the company network owner must provide default-deny egress and an attempt monitor first.
 
 Example dry-run summary (from a unit-tested synthetic runtime fixture; it does not qualify a company host):
 
@@ -36,7 +36,7 @@ The JSON result contains no provider values, tokens, or raw command output. Revi
 
 ## Step B — reviewed apply
 
-Only after a person has reviewed Step A and the archive checksum/content, and the company OpenCode owner confirms the installed build is compatible, run the add-only apply command below. The doctor reads local package metadata or managed-install paths and does not execute OpenCode or Node. If it cannot identify a version, it returns `UNKNOWN`; use an approved company inventory or compatible packaged runtime before applying. This applies `.opencode/agents`, `.opencode/skills`, and `.opencode/commands`; it never copies `.opencode/opencode.json`, provider/model/auth settings, or MCP config. Existing changed files are conflicts; no file is overwritten. The transaction record allows rollback of only the unchanged files created by this transaction.
+Only after a person has reviewed Step A and the archive checksum/content, and the company OpenCode owner confirms the installed build is compatible, run the add-only apply command below. Apply rechecks the archive checksum, paths and file hashes. The doctor reads local package metadata or managed-install paths and does not execute OpenCode or Node. If it cannot identify a version, it returns `UNKNOWN`; use an approved company inventory or compatible packaged runtime before applying. This applies `.opencode/agents`, `.opencode/skills`, and `.opencode/commands`; it never copies `.opencode/opencode.json`, provider/model/auth settings, or MCP config. Existing changed files are conflicts; no file is overwritten. Apply safely creates a missing OpenCode config directory after the reviewed doctor result and explicit authorization pass. The transaction record allows rollback of only the unchanged files created by this transaction.
 
 ### Windows PowerShell
 

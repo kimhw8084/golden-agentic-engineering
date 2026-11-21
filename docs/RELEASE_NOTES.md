@@ -15,18 +15,21 @@
 - Strengthened Golden Proof applicability, command provenance/allowlisting, evidence output minimization, manifest validation, and release blockers. Missing mandatory checks remain `NOT_RUN` or `DEFERRED`; report structure does not authenticate a producer.
 - Added source-only offline packaging with hidden files, per-file digests, deterministic archive metadata, path checks, and an external archive checksum. It refuses a dirty checkout and does not claim to contain executable offline dependencies.
 - Added the non-destructive company doctor and reviewed add-only apply/rollback path. It does not execute version commands, change OpenCode provider/model/auth settings, or make network calls. Compatibility, Windows/Linux behavior, company asset approval, and OS egress enforcement remain unqualified.
+- Kept the company handoff to one doctor command and one reviewed apply command on Windows and Linux. Apply revalidates the archive and can create a missing config root after the doctor snapshot and explicit authorization pass; added a fresh-root rollback test.
 - Exercised the real synthetic CLI doctor/apply path end to end, including missing-review refusal, config preservation, a fresh-doctor idempotent repeat, and rollback. Normalized config identity across filesystem path aliases after the test exposed a macOS `/var` versus `/private/var` false conflict.
 - Updated doctor config discovery to the documented XDG user location on all platforms, added JSONC parsing and safe shape counts, and made simultaneous `.json`/`.jsonc` config files a review blocker.
 - Hardened the semiconductor transfer kit: lock paths remain relative to the kit, source verification checks recorded paths and Git origins, and archive creation rejects symlinks and existing outputs. No repositories or wheels were downloaded.
 - Expanded capability research with a pinned ECC OpenCode plugin/hooks candidate. Its repo-level MIT license does not equal component approval; its beta hooks/build, dependency closure, permissions, prompt surface, offline behavior, and performance remain unqualified. The local task-scoped skills remain the current choice.
+- Completed a targeted pinned-source review of `cathrynlavery/diagram-design`: verified the root MIT license and inspected privacy, onboarding, font-mode and export details. Default Google Fonts and optional web onboarding need no-egress testing; the 5.86 MB skill tree, full dependency/security closure, Windows/Linux behavior, and matched task value remain unqualified. It remains evaluation-only, with Mermaid/SVG as the offline fallback.
 - Added a disabled synthetic stdio MCP fixture and contract cases; its direct-handler cancellation/timeout cases do not establish SDK or internal OpenCode conformance.
-- Added synthetic React, NiceGUI logic, API/SQLite, and incident fixtures. React dependencies and browsers are not staged; NiceGUI UI runtime is not launched.
+- Added synthetic React, NiceGUI logic, API/SQLite, and incident fixtures. The locked React tree was installed from a local npm cache in offline mode and passed typecheck, six component/logic tests, and a Vite build on macOS arm64. Windows/Linux npm caches and browser binaries remain unstaged; NiceGUI UI runtime is not launched.
+- Corrected the stale React benchmark status and linked local fixture/browser-smoke evidence. Automated browser journeys and accessibility audits remain unrun.
 - Expanded the read-only Golden Control prototype with local task-routing status and honest installation/update/evidence limitations. It does not collect usage or invocation traces.
 - Kept the semiconductor sampling transfer kit generic and source-only. It contains no private dataset or company-specific schema.
 
 ## Verification
 
-See [`../BUILD_VERIFICATION.md`](../BUILD_VERIFICATION.md) for commands, test counts, generated evidence, and blockers. The available Python suite passes. The full synthetic-project Golden check intentionally remains non-qualified. React scripts could not run because their local dependencies are absent. Windows/Linux, internal OpenCode/model, MCP trace, company network controls, third-party dependency approval, and performance comparisons remain `NOT_RUN` or blocked.
+See [`../BUILD_VERIFICATION.md`](../BUILD_VERIFICATION.md) for current commands, test counts, generated evidence, and blockers. The full Python suite and offline React fixture pass locally. The full synthetic-project Golden check intentionally remains non-qualified. Windows/Linux, automated browser checks, internal OpenCode/model, authentic MCP trace, company network controls, third-party dependency approval, and performance comparisons remain `NOT_RUN` or blocked.
 
 ## Release limits
 

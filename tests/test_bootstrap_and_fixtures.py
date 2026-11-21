@@ -155,6 +155,29 @@ class CompanyBootstrapTests(unittest.TestCase):
             self.assertEqual(bootstrap.rollback(transaction), 1)
             self.assertFalse(installed.exists())
 
+    def test_reviewed_apply_creates_missing_config_root_safely(self):
+        with tempfile.TemporaryDirectory() as d:
+            folder = Path(d)
+            target = folder / 'fresh' / 'opencode'
+            bundle = self._make_bundle(folder)
+            config = target / 'opencode.json'
+            transaction = folder / 'transaction.json'
+            invalid_bundle = folder / 'invalid.tar.gz'
+            invalid_bundle.write_text('not an archive')
+            invalid_bundle.with_suffix(invalid_bundle.suffix + '.sha256').write_text('0' * 64 + '  invalid.tar.gz\n')
+            with patch.object(bootstrap, 'local_executable', side_effect=lambda name: self._runtime()[name]):
+                report = bootstrap.doctor(config=config)
+                with self.assertRaisesRegex(ValueError, 'checksum'):
+                    bootstrap.apply_bundle(invalid_bundle, target, report, transaction)
+                self.assertFalse(target.exists())
+                result = bootstrap.apply_bundle(bundle, target, report, transaction)
+            installed = target / 'agents' / 'golden-example.md'
+            self.assertTrue(installed.is_file())
+            self.assertFalse(config.exists())
+            self.assertEqual(result['added'], 1)
+            self.assertEqual(bootstrap.rollback(transaction), 1)
+            self.assertFalse(installed.exists())
+
     def test_cli_doctor_apply_repeat_apply_and_rollback_end_to_end(self):
         with tempfile.TemporaryDirectory() as d:
             folder = Path(d)

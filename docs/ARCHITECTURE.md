@@ -109,7 +109,7 @@ Full check output uses `PASS`, `FAIL`, `NOT_APPLICABLE`, `NOT_RUN`. Fast-only ru
 
 ### Applicability caveat
 
-The pilot **trusts the project-declared capabilities**. That does not satisfy the intended production requirement to independently prove non-applicability. During company implementation, cross-check the actual code/framework/dependencies/endpoints, and attach evidence. If capability detection is uncertain, use `NOT_RUN`, not `NOT_APPLICABLE`.
+The pilot reads project-declared capabilities as scope hints, but a declared `false` no longer proves non-applicability: missing independent basis returns `NOT_RUN`. It does not independently inspect the entire project to validate positive declarations or prove that an omitted capability is absent. During company implementation, cross-check the actual code/framework/dependencies/endpoints and attach evidence before treating a rule as out of scope. If capability detection is uncertain, use `NOT_RUN`, not `NOT_APPLICABLE`.
 
 ### Fast vs full
 
