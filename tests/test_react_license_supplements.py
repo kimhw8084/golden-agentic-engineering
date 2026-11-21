@@ -45,7 +45,7 @@ class ReactLicenseSupplementTests(unittest.TestCase):
             crlf = bytes((13, 10))
             for row in manifest["notices"]:
                 path = root / row["file"]
-                path.write_bytes(path.read_bytes().replace(lf, crlf))
+                path.write_bytes(path.read_bytes().replace(crlf, lf).replace(lf, crlf))
             self.assertEqual([], validate(root))
 
     def test_modified_notice_fails_hash_validation(self):
