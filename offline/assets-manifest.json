@@ -67,7 +67,7 @@
           "sha256": "d49b490797280c4ce097d7fa313ad06c74879cc58f91a9f8ccd3a2e95a4f979e"
         }
       ],
-      "required_action": "Confirm the company Node range and target OS/architecture. The active Vitest 4.1.12/Vite 7.3.8 lock and separately tested Vitest 5.1.1/Vite 7.3.8 candidate each returned zero findings in public npm audit snapshots on 2026-11-21; choose only after company runtime compatibility and OSS review. Review the active stackback notice gap or the candidate\u2019s three exact-version notice supplements. The hosted Ubuntu/Windows matrix passed for both tested Node versions; company-native OS qualification remains outstanding. Stage per-target npm caches through the approved process, verify hashes, and complete native offline fixture tests plus company OSS clearance. No transferable npm cache is included."
+      "required_action": "Confirm the company Node range and target OS/architecture. The active Vitest 4.1.12/Vite 7.3.8 lock and separately tested Vitest 5.1.1/Vite 7.3.8 candidate each returned zero findings in public npm audit snapshots on 2026-11-21; choose only after company runtime compatibility and OSS review. Review the active stackback notice gap or the candidate’s three exact-version notice supplements. The hosted Ubuntu/Windows matrix passed for both tested Node versions; company-native OS qualification remains outstanding. Stage per-target npm caches through the approved process, verify hashes, and complete native offline fixture tests plus company OSS clearance. No transferable npm cache is included."
     },
     {
       "name": "Playwright browser binaries",
@@ -91,7 +91,7 @@
       "partial_evidence": [
         {
           "path": "offline/mcp-sdk-candidate/candidate-manifest.json",
-          "sha256": "43808874ade3c592fdb3f1d2b6d3e9bdc1f5b198201b58fb7951f59e240c287d"
+          "sha256": "fb480e6acada5ef4eaad00874dcf4db90495376ee45b170a0c628a1d77590cd7"
         },
         {
           "path": "scripts/mcp_candidate_bundle.py",

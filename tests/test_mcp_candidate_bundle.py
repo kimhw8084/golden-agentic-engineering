@@ -44,7 +44,15 @@ class MCPCandidateBundleTests(unittest.TestCase):
         for archive in archives:
             self.assertRegex(archive["sha256"], r"^[0-9a-f]{64}$")
             self.assertGreater(archive["bytes"], 0)
-        self.assertEqual(manifest["runtime_evidence"]["company_opencode"], "NOT_RUN")
+        runtime = manifest["runtime_evidence"]
+        self.assertEqual(runtime["sdk_stdio_discovery_and_tool_call"], "PASS_ON_MACOS_ARM64_SYNTHETIC_FIXTURE")
+        self.assertEqual(runtime["opencode_v2_2_7_mcp_2026_07_28_protocol"], "PASS_LOCAL_SYNTHETIC_CALL")
+        self.assertEqual(runtime["opencode_v2_2_7_mcp_auto_protocol"], "PASS_LOCAL_SYNTHETIC_CALL")
+        self.assertEqual(runtime["opencode_v2_2_7_standard_library_auto_fallback"], "PASS_LOCAL_SYNTHETIC_CALL")
+        self.assertEqual(runtime["company_opencode"], "NOT_RUN")
+        self.assertEqual(runtime["provider_reasoning_and_injection_resistance"], "NOT_EVALUATED_SCRIPTED_PROVIDER")
+        self.assertTrue((ROOT / runtime["probe_evidence"]).is_file())
+        self.assertNotIn("FAILED", json.dumps(runtime))
 
     def test_create_verifies_candidate_and_records_complete_evidence(self):
         with tempfile.TemporaryDirectory() as temp:

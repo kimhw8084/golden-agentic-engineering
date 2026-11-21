@@ -27,7 +27,9 @@
       "wheel_count": 29,
       "dependency_edges": 49,
       "wheel_bytes": 18171495,
-      "includes": ["pywin32==311"],
+      "includes": [
+        "pywin32==311"
+      ],
       "status": "VERIFIED_CANDIDATE_ONLY; NOT_INSTALLED_ON_WINDOWS"
     },
     {
@@ -48,9 +50,13 @@
   },
   "runtime_evidence": {
     "sdk_stdio_discovery_and_tool_call": "PASS_ON_MACOS_ARM64_SYNTHETIC_FIXTURE",
-    "opencode_v2_2_7_mcp_2026_07_28_protocol": "FAILED_SERVER_DISCOVERY_PIN_NOT_OFFERED",
-    "opencode_v2_2_7_mcp_legacy_protocol": "FAILED_CONNECTION_TIMEOUT",
-    "company_opencode": "NOT_RUN"
+    "opencode_v2_2_7_mcp_2026_07_28_protocol": "PASS_LOCAL_SYNTHETIC_CALL",
+    "company_opencode": "NOT_RUN",
+    "opencode_v2_2_7_mcp_auto_protocol": "PASS_LOCAL_SYNTHETIC_CALL",
+    "opencode_v2_2_7_standard_library_auto_fallback": "PASS_LOCAL_SYNTHETIC_CALL",
+    "provider_reasoning_and_injection_resistance": "NOT_EVALUATED_SCRIPTED_PROVIDER",
+    "probe_evidence": "verification/2026-11-21/opencode-v2-mcp-runtime-probe.json",
+    "initial_timeout": "20 ms test setting corrected to 20000 ms; OpenCode MCP timeout values are milliseconds"
   },
   "company_target": {
     "os_build": "UNKNOWN",
