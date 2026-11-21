@@ -74,9 +74,9 @@
       "command": "python scripts/security_scan.py --repo . --history",
       "status": "PASS",
       "current_files_scanned": 223,
-      "reachable_git_blobs_scanned": 778,
+      "reachable_git_blobs_scanned": 783,
       "limitation": "High-confidence pattern scan only; it does not establish absence of all proprietary information.",
-      "scan_worktree_head": "aacd322ce71ae86823649793c4999263164d98aa"
+      "scan_worktree_head": "e9668c49436ec2d9eecc61ab2e72f2c44dde989b"
     },
     "golden_full_release_checks": [
       {
@@ -156,11 +156,11 @@
     },
     "github_hosted_ci": {
       "source_qualification": {
-        "run": 59,
+        "run": 61,
         "status": "PASS",
-        "commit": "91446530698af5d5c6fd9203b65dd47e5c231881",
+        "commit": "e9668c49436ec2d9eecc61ab2e72f2c44dde989b",
         "jobs": "6/6 Ubuntu/Windows \u00d7 Python 3.10/3.11/3.14",
-        "url": "https://github.com/kimhw8084/golden-agentic-engineering/actions/runs/44931185833"
+        "url": "https://github.com/kimhw8084/golden-agentic-engineering/actions/runs/44931884795"
       },
       "react_dependency_matrix": {
         "run": 1,
