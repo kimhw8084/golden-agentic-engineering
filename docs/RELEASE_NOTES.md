@@ -8,6 +8,7 @@
 
 ## Implemented
 
+- Removed three specialist self-handoffs to the configured primary. React and NiceGUI routes now call the architect or verifier only on specific triggers; upstream Golden changes use the verifier for bounded independent review. Route validation rejects future self-handoffs, and both the route resolver and Golden Control workflow cards name the resolved primary agent.
 - Selected `golden-engineer` as the project default OpenCode primary and made clear small fixes direct, without a mandatory route command or skill.
 - Made the nontrivial task route actionable: OpenCode should invoke the route's named skill before choosing implementation tools, then check only relevant visible specialists/MCP and permissions. The route order is machine-readable and tested; small clear fixes remain direct. Company runtime skill invocation is still unverified.
 - Added a truthful Golden Control status for the checked-in project default agent, separated from untested company runtime discovery and build compatibility.

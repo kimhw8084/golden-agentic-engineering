@@ -135,6 +135,8 @@ def validation_errors(root: Path = ROOT) -> list[str]:
                         or not isinstance(specialist.get('when'), str) or len(specialist['when']) < 8
                         or not (root / '.opencode' / 'agents' / f'{agent}.md').is_file()):
                     errors.append(f'{route_id}: specialist is not a local OpenCode agent.')
+                elif isinstance(default_agent, str) and agent == default_agent:
+                    errors.append(f'{route_id}: specialist duplicates the configured primary agent; remove the self-handoff.')
         for field in ('context', 'deterministic_tools', 'outputs'):
             values = row.get(field)
             if not isinstance(values, list) or not values or any(not isinstance(value, str) or not value.strip() for value in values):
@@ -169,12 +171,15 @@ def route_for(task_id: str, root: Path = ROOT) -> dict:
         raise ValueError('Unknown task ID; use --list to inspect supported workflow IDs.')
     row = matches[0]
     selection = next(item for item in capability_registry['task_decisions'] if item['task'] == row['selection_task'])
+    project_config = read_json(root / '.opencode' / 'opencode.json')
+    resolved_primary = project_config['default_agent'] if row['primary_agent'] == 'primary' else row['primary_agent']
     return {
         'schema': 'golden-task-route/v1',
         'id': row['id'],
         'entry': row['entry'],
         'complexity': row['complexity'],
         'primary_agent': row['primary_agent'],
+        'resolved_primary_agent': resolved_primary,
         'skills': [{'id': name, 'path': f'.opencode/skills/{name}/SKILL.md'} for name in row['skills']],
         'specialists': row['specialists'],
         'mcp': {'configured_for_route': row['mcp'], 'evaluation_candidates_only': row.get('mcp_candidates', []),
@@ -227,7 +232,7 @@ def main() -> int:
             print(json.dumps(route, indent=2, ensure_ascii=False))
         else:
             print(f"ROUTE {route['id']} ({route['complexity']})")
-            print(f"Primary: OpenCode {route['primary_agent']}")
+            print(f"Primary: OpenCode {route['resolved_primary_agent']} ({route['primary_agent']})")
             print('Load skills: ' + ', '.join(skill['path'] for skill in route['skills']))
             print('Capability order (nontrivial tasks): ' + ' → '.join(route['nontrivial_capability_order']))
             print('Conditional specialists: ' + (', '.join(item['agent'] for item in route['specialists']) or 'none'))

@@ -56,6 +56,7 @@ class GoldenControlUITests(unittest.TestCase):
         self.assertIn('Full route details', app)
         self.assertIn('No-AI fallback', app)
         self.assertIn('Conditional specialists', app)
+        self.assertIn('item.resolved_primary_agent', app)
         self.assertIn('build version and company compatibility are unknown', app)
         self.assertIn('OPENCODE PATH', page.wfile.getvalue().decode('utf-8'))
         self.assertIn('capability-selection.json', page.wfile.getvalue().decode('utf-8'))
@@ -78,6 +79,8 @@ class GoldenControlUITests(unittest.TestCase):
         self.assertEqual(payload['schema'], 'golden-task-routing/v2')
         self.assertEqual(len(payload['workflows']), 12)
         docs_route = next(row for row in payload['workflows'] if row['id'] == 'technical-docs-sop-diagrams')
+        self.assertEqual(docs_route['primary_agent'], 'primary')
+        self.assertEqual(docs_route['resolved_primary_agent'], 'golden-engineer')
         self.assertEqual(docs_route['capability_candidates'], [
             'cathrynlavery-diagram-design', 'existing-markdown-svg-mermaid'])
         for field in ('context', 'deterministic_tools', 'specialists', 'trust', 'no_ai', 'outputs', 'mcp_policy'):

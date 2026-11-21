@@ -77,6 +77,7 @@ class TaskRoutingTests(unittest.TestCase):
         self.assertEqual(config['default_agent'], 'golden-engineer')
         self.assertIn('mode: primary', agent.split('---', 2)[1])
         self.assertEqual(route['primary_agent'], 'primary')
+        self.assertEqual(route['resolved_primary_agent'], 'golden-engineer')
         self.assertEqual(route['skills'], [])
 
     def test_nontrivial_route_surfaces_skill_before_execution_tool_selection(self):
@@ -138,6 +139,25 @@ class TaskRoutingTests(unittest.TestCase):
         rows = json.loads((ROOT / 'workflows' / 'task-routing.json').read_text())['workflows']
         self.assertEqual(len(rows), 12)
         self.assertTrue(all(row['mcp'] == [] for row in rows))
+        self.assertTrue(all(specialist['agent'] != 'golden-engineer'
+                            for row in rows for specialist in row['specialists']))
+
+    def test_specialist_cannot_repeat_configured_primary_agent(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            for relative in ('workflows/task-routing.json', 'research/capability-selection.json', 'opencode.json'):
+                destination = root / relative
+                destination.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copyfile(ROOT / relative, destination)
+            shutil.copytree(ROOT / '.opencode', root / '.opencode')
+            path = root / 'workflows' / 'task-routing.json'
+            data = json.loads(path.read_text())
+            data['workflows'][0]['specialists'] = [{
+                'agent': 'golden-engineer', 'when': 'A duplicated-primary regression fixture.'
+            }]
+            path.write_text(json.dumps(data))
+            errors = golden_route.validation_errors(root)
+        self.assertTrue(any('duplicates the configured primary agent' in error for error in errors))
 
     def test_missing_skill_reference_fails_manifest_validation(self):
         with tempfile.TemporaryDirectory() as directory:

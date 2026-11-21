@@ -86,8 +86,12 @@
       ],
       "specialists": [
         {
-          "agent": "golden-engineer",
-          "when": "UI complexity or a disjoint independent slice justifies coordination."
+          "agent": "golden-architect",
+          "when": "Use only when a multi-component feature changes shared data, navigation, or state boundaries and needs an independent design review."
+        },
+        {
+          "agent": "golden-verifier",
+          "when": "Use after implementation when accessibility or acceptance review can be performed independently without editing application files."
         }
       ],
       "mcp_candidates": [
@@ -135,8 +139,12 @@
       ],
       "specialists": [
         {
-          "agent": "golden-engineer",
-          "when": "The task spans multiple modules or has a concurrency problem."
+          "agent": "golden-architect",
+          "when": "Use only when the utility crosses module, service, or persistence boundaries that need a separate design decision."
+        },
+        {
+          "agent": "golden-verifier",
+          "when": "Use after implementation when workflow state, validation, or error behavior needs an independent acceptance review."
         }
       ],
       "mcp_candidates": [],
@@ -521,8 +529,8 @@
       ],
       "specialists": [
         {
-          "agent": "golden-engineer",
-          "when": "A bounded implementation slice can be separated from primary integration."
+          "agent": "golden-verifier",
+          "when": "Use for an independent read-only review when a change affects proof, routing, permissions, security, or release status."
         }
       ],
       "mcp_candidates": [

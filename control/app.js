@@ -160,7 +160,10 @@ function populateWorkflows(rows) {
     const heading = document.createElement('h3'); heading.textContent = display(item.id).replaceAll('-', ' ');
     const summary = document.createElement('p'); summary.textContent = display(item.entry);
     const skills = Array.isArray(item.skills) ? item.skills.join(' / ') : 'skill unavailable';
-    const route = document.createElement('p'); route.className = 'workflow-route'; route.textContent = `${display(item.primary_agent)} · ${skills} · ${display(item.pattern)} · ${display(item.complexity)} complexity`;
+    const primary = item.resolved_primary_agent
+      ? `${item.resolved_primary_agent} (${display(item.primary_agent)})`
+      : display(item.primary_agent);
+    const route = document.createElement('p'); route.className = 'workflow-route'; route.textContent = `${primary} · ${skills} · ${display(item.pattern)} · ${display(item.complexity)} complexity`;
     const mcp = document.createElement('p'); mcp.className = 'workflow-route';
     const candidates = Array.isArray(item.mcp_candidates) ? item.mcp_candidates : [];
     mcp.textContent = candidates.length ? `MCP evaluation candidates only: ${candidates.join(', ')}; no connection is enabled by this route.` : 'No MCP candidate selected for this route.';

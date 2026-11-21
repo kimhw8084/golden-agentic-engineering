@@ -31,6 +31,7 @@ DOCS = {
     '/docs/OFFLINE.md': 'offline/README.md',
 }
 WORKFLOWS = ROOT / 'workflows' / 'task-routing.json'
+PROJECT_OPENCODE_CONFIG = ROOT / '.opencode' / 'opencode.json'
 
 
 def digest(path: Path) -> str:
@@ -177,6 +178,26 @@ def project_agent_configuration() -> dict:
             'runtime_selection': 'NOT_TESTED', 'evidence_scope': 'CHECKED_IN_CONFIG_ONLY'}
 
 
+def workflow_payload() -> dict:
+    """Add the configured primary's name without exposing OpenCode configuration values."""
+    routing = json.loads(WORKFLOWS.read_text(encoding='utf-8'))
+    config = json.loads(PROJECT_OPENCODE_CONFIG.read_text(encoding='utf-8'))
+    if not isinstance(routing, dict) or not isinstance(config, dict):
+        raise ValueError('Routing and project config roots must be objects.')
+    default_agent = config.get('default_agent')
+    if not isinstance(default_agent, str) or not default_agent:
+        raise ValueError('Configured primary agent is unavailable.')
+    workflows = routing.get('workflows')
+    if not isinstance(workflows, list):
+        raise ValueError('Workflow list is unavailable.')
+    for row in workflows:
+        if not isinstance(row, dict):
+            raise ValueError('Workflow row is invalid.')
+        declared = row.get('primary_agent')
+        row['resolved_primary_agent'] = default_agent if declared == 'primary' else declared
+    return routing
+
+
 def git_status() -> dict:
     def run(*args: str) -> str | None:
         try:
@@ -285,8 +306,8 @@ class ControlHandler(BaseHTTPRequestHandler):
             return
         if path == '/api/workflows':
             try:
-                payload = WORKFLOWS.read_bytes()
-            except OSError:
+                payload = json.dumps(workflow_payload()).encode('utf-8')
+            except (OSError, ValueError, TypeError):
                 self.send_error(503)
                 return
             self.send_response(200)
