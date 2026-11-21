@@ -4,3 +4,6 @@
 /research/react-license-supplements.json text eol=lf
 # JSON evidence contains byte-level hashes; keep it stable across Windows and Linux/macOS.
 *.json text eol=lf
+*.jsonc text eol=lf
+*.md text eol=lf
+*.py text eol=lf
