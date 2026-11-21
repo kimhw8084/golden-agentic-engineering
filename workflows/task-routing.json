@@ -51,7 +51,8 @@
       "skills": [],
       "specialists": [],
       "mcp_candidates": [],
-      "mcp_policy": "Use only if already connected and explicitly company-approved; otherwise do not connect or invoke."
+      "mcp_policy": "Use only if already connected and explicitly company-approved; otherwise do not connect or invoke.",
+      "selection_task": "routine code change"
     },
     {
       "id": "react-app-feature",
@@ -90,7 +91,8 @@
         }
       ],
       "mcp_candidates": [],
-      "mcp_policy": "Use only if already connected and explicitly company-approved; otherwise do not connect or invoke."
+      "mcp_policy": "Use only if already connected and explicitly company-approved; otherwise do not connect or invoke.",
+      "selection_task": "React product UI and design system"
     },
     {
       "id": "nicegui-python-app",
@@ -128,7 +130,8 @@
         }
       ],
       "mcp_candidates": [],
-      "mcp_policy": "Use only if already connected and explicitly company-approved; otherwise do not connect or invoke."
+      "mcp_policy": "Use only if already connected and explicitly company-approved; otherwise do not connect or invoke.",
+      "selection_task": "NiceGUI/Python internal utility"
     },
     {
       "id": "api-database-integration",
@@ -172,7 +175,8 @@
       "mcp_candidates": [
         "approved-company-api-or-git-mcp-for-live-service-interaction"
       ],
-      "mcp_policy": "Use only if already connected and explicitly company-approved; otherwise do not connect or invoke."
+      "mcp_policy": "Use only if already connected and explicitly company-approved; otherwise do not connect or invoke.",
+      "selection_task": "API/database/company integration"
     },
     {
       "id": "manufacturing-analytics",
@@ -212,7 +216,8 @@
       "mcp_candidates": [
         "approved-read-only-manufacturing-data-mcp"
       ],
-      "mcp_policy": "Use only if already connected and explicitly company-approved; otherwise do not connect or invoke."
+      "mcp_policy": "Use only if already connected and explicitly company-approved; otherwise do not connect or invoke.",
+      "selection_task": "Semiconductor manufacturing analytics"
     },
     {
       "id": "architecture-security-audit",
@@ -255,7 +260,8 @@
         }
       ],
       "mcp_candidates": [],
-      "mcp_policy": "Use only if already connected and explicitly company-approved; otherwise do not connect or invoke."
+      "mcp_policy": "Use only if already connected and explicitly company-approved; otherwise do not connect or invoke.",
+      "selection_task": "Architecture/security/codebase audit"
     },
     {
       "id": "incident-log-rca",
@@ -296,7 +302,8 @@
         "grafana-mcp-grafana",
         "approved-existing-grafana-api"
       ],
-      "mcp_policy": "Use only if already connected and explicitly company-approved; otherwise do not connect or invoke."
+      "mcp_policy": "Use only if already connected and explicitly company-approved; otherwise do not connect or invoke.",
+      "selection_task": "Grafana log/metrics investigation"
     },
     {
       "id": "performance-investigation",
@@ -338,7 +345,8 @@
         }
       ],
       "mcp_candidates": [],
-      "mcp_policy": "Use only if already connected and explicitly company-approved; otherwise do not connect or invoke."
+      "mcp_policy": "Use only if already connected and explicitly company-approved; otherwise do not connect or invoke.",
+      "selection_task": "Performance investigation and bounded optimization"
     },
     {
       "id": "browser-ui-verification",
@@ -376,9 +384,19 @@
         }
       ],
       "mcp_candidates": [
-        "microsoft-playwright-mcp"
+        "microsoft-playwright-mcp",
+        "chrome-devtools-mcp"
       ],
-      "mcp_policy": "Use only if already connected and explicitly company-approved; otherwise do not connect or invoke."
+      "capability_candidates": [
+        "vercel-agent-browser",
+        "microsoft-playwright-mcp",
+        "chrome-devtools-mcp",
+        "browser-use",
+        "microsoft-playwright-python",
+        "microsoft-playwright-cli"
+      ],
+      "mcp_policy": "Use only if already connected and explicitly company-approved; otherwise do not connect or invoke.",
+      "selection_task": "local browser verification"
     },
     {
       "id": "technical-docs-sop-diagrams",
@@ -418,7 +436,8 @@
         }
       ],
       "mcp_candidates": [],
-      "mcp_policy": "Use only if already connected and explicitly company-approved; otherwise do not connect or invoke."
+      "mcp_policy": "Use only if already connected and explicitly company-approved; otherwise do not connect or invoke.",
+      "selection_task": "repository diagrams and SOP visuals"
     },
     {
       "id": "release-qualification",
@@ -457,7 +476,8 @@
         }
       ],
       "mcp_candidates": [],
-      "mcp_policy": "Use only if already connected and explicitly company-approved; otherwise do not connect or invoke."
+      "mcp_policy": "Use only if already connected and explicitly company-approved; otherwise do not connect or invoke.",
+      "selection_task": "Golden release and independent project qualification"
     },
     {
       "id": "golden-upstream-improvement",
@@ -496,7 +516,8 @@
         }
       ],
       "mcp_candidates": [],
-      "mcp_policy": "Use only if already connected and explicitly company-approved; otherwise do not connect or invoke."
+      "mcp_policy": "Use only if already connected and explicitly company-approved; otherwise do not connect or invoke.",
+      "selection_task": "Golden upstream improvement"
     }
   ]
 }

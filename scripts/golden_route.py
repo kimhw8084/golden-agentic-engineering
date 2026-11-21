@@ -65,17 +65,26 @@ def validation_errors(root: Path = ROOT) -> list[str]:
                 'choose_execution_tools', 'verify_deterministically']):
         errors.append('Default routing policy is incomplete.')
     candidate_records = capabilities.get('candidates', [])
+    selection_records = capabilities.get('task_decisions', [])
     non_public = capabilities.get('non_public_capability_ids', [])
-    if not isinstance(candidate_records, list) or not isinstance(non_public, list) or any(not isinstance(item, str) for item in non_public):
-        errors.append('Capability registry IDs must be arrays of records and strings.')
-        candidate_records, non_public = [], []
+    if (not isinstance(candidate_records, list) or not isinstance(selection_records, list)
+            or not isinstance(non_public, list) or any(not isinstance(item, str) for item in non_public)):
+        errors.append('Capability registry candidates, task decisions, and non-public IDs must be arrays.')
+        candidate_records, selection_records, non_public = [], [], []
     candidate_ids = {item.get('id') for item in candidate_records if isinstance(item, dict) and isinstance(item.get('id'), str)}
     candidate_ids |= set(non_public)
+    selection_by_task = {
+        item.get('task'): item for item in selection_records
+        if isinstance(item, dict) and isinstance(item.get('task'), str)
+    }
+    if len(selection_by_task) != len(selection_records):
+        errors.append('Capability task decision names must be valid and unique.')
     configured = config.get('mcp', {}).get('servers', {}) if isinstance(config.get('mcp'), dict) else {}
     if not isinstance(configured, dict):
         configured = {}
     required = {'id', 'entry', 'complexity', 'primary_agent', 'skills', 'specialists', 'pattern', 'context',
-                'mcp', 'mcp_candidates', 'mcp_policy', 'deterministic_tools', 'trust', 'no_ai', 'outputs', 'acceptance'}
+                'mcp', 'mcp_candidates', 'mcp_policy', 'deterministic_tools', 'trust', 'no_ai', 'outputs', 'acceptance',
+                'selection_task'}
     allowed = required | {'capability_candidates'}
     allowed_complexity = {'small', 'small-to-medium', 'medium', 'medium-to-large', 'high-risk'}
     route_ids: set[str] = set()
@@ -97,6 +106,12 @@ def validation_errors(root: Path = ROOT) -> list[str]:
                 errors.append(f'{route_id}: {field} must be a nonempty descriptive string.')
         if not isinstance(row.get('pattern'), str) or len(row['pattern']) < 4:
             errors.append(f'{route_id}: pattern must be a nonempty string.')
+        selection_task = row.get('selection_task')
+        selection = selection_by_task.get(selection_task) if isinstance(selection_task, str) else None
+        if (not isinstance(selection_task, str) or selection is None
+                or any(not isinstance(selection.get(field), str) or not selection[field].strip()
+                       for field in ('current_choice', 'reason', 'measurement'))):
+            errors.append(f'{route_id}: selection_task must resolve a complete capability decision.')
         primary_agent = row.get('primary_agent')
         if not isinstance(primary_agent, str) or (primary_agent != 'primary' and not (root / '.opencode' / 'agents' / f'{primary_agent}.md').is_file()):
             errors.append(f'{route_id}: primary agent is not a local OpenCode agent.')
@@ -153,6 +168,7 @@ def route_for(task_id: str, root: Path = ROOT) -> dict:
     if len(matches) != 1:
         raise ValueError('Unknown task ID; use --list to inspect supported workflow IDs.')
     row = matches[0]
+    selection = next(item for item in capability_registry['task_decisions'] if item['task'] == row['selection_task'])
     return {
         'schema': 'golden-task-route/v1',
         'id': row['id'],
@@ -171,6 +187,12 @@ def route_for(task_id: str, root: Path = ROOT) -> dict:
              if capability_id in capabilities else {'id': capability_id, 'decision': 'LOCAL_FALLBACK'})
             for capability_id in row.get('capability_candidates', [])
         ],
+        'capability_selection': {
+            'task': selection['task'],
+            'current_choice': selection['current_choice'],
+            'reason': selection['reason'],
+            'measurement': selection['measurement'],
+        },
         'pattern': row['pattern'],
         'context': row['context'],
         'deterministic_tools': row['deterministic_tools'],
@@ -212,6 +234,9 @@ def main() -> int:
             print('Configured MCP for route: ' + (', '.join(route['mcp']['configured_for_route']) or 'none'))
             print('MCP candidates are evaluation-only; ' + route['mcp']['policy'])
             print('Capability candidates: ' + (', '.join(f"{item['id']} [{item['decision']}]" for item in route['capability_candidates']) or 'none'))
+            print('Current capability choice: ' + route['capability_selection']['current_choice'])
+            print('Selection basis: ' + route['capability_selection']['reason'])
+            print('Measurement status: ' + route['capability_selection']['measurement'])
             print('Context: ' + '; '.join(route['context']))
             print('Trust: ' + route['trust'])
             print('No-AI fallback: ' + route['no_ai'])

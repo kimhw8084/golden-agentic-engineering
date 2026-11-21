@@ -18,7 +18,25 @@ class TaskRoutingTests(unittest.TestCase):
         self.assertEqual({item['id'] for item in route['skills']}, {'golden-react', 'golden-nicegui'})
         self.assertEqual(route['mcp']['configured_for_route'], [])
         self.assertTrue(all((ROOT / item['path']).is_file() for item in route['skills']))
-        self.assertEqual(route['mcp']['evaluation_candidates_only'], ['microsoft-playwright-mcp'])
+        self.assertEqual(route['mcp']['evaluation_candidates_only'], ['microsoft-playwright-mcp', 'chrome-devtools-mcp'])
+        self.assertEqual(
+            [item['id'] for item in route['capability_candidates']],
+            ['vercel-agent-browser', 'microsoft-playwright-mcp', 'chrome-devtools-mcp',
+             'browser-use', 'microsoft-playwright-python', 'microsoft-playwright-cli'],
+        )
+        self.assertTrue(route['capability_candidates'][0]['decision'].startswith(
+            'EVALUATION_ONLY_POSSIBLE_AGENTIC_BROWSER_CANDIDATE'))
+        self.assertEqual(route['capability_selection']['task'], 'local browser verification')
+        self.assertIn('company-approved browser agent/MCP first', route['capability_selection']['current_choice'])
+        self.assertIn('BLOCKED_COMPANY_RUNTIME_AND_BROWSER_ASSETS', route['capability_selection']['measurement'])
+
+    def test_every_route_resolves_one_task_specific_capability_decision(self):
+        data = json.loads((ROOT / 'workflows' / 'task-routing.json').read_text())
+        decisions = {row['task'] for row in json.loads(
+            (ROOT / 'research' / 'capability-selection.json').read_text())['task_decisions']}
+        for row in data['workflows']:
+            self.assertIn(row['selection_task'], decisions, row['id'])
+            self.assertEqual(golden_route.route_for(row['id'])['capability_selection']['task'], row['selection_task'])
 
     def test_project_uses_golden_primary_and_small_fixes_skip_skill_loading(self):
         config = json.loads((ROOT / '.opencode' / 'opencode.json').read_text())
@@ -135,6 +153,21 @@ class TaskRoutingTests(unittest.TestCase):
             errors = golden_route.validation_errors(root)
             self.assertTrue(any('required route fields missing' in error for error in errors))
             self.assertTrue(any('capability_candidates' in error for error in errors))
+
+    def test_unknown_task_selection_fails_closed(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            for relative in ('workflows/task-routing.json', 'research/capability-selection.json', 'opencode.json'):
+                destination = root / relative
+                destination.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copyfile(ROOT / relative, destination)
+            shutil.copytree(ROOT / '.opencode', root / '.opencode')
+            path = root / 'workflows' / 'task-routing.json'
+            data = json.loads(path.read_text())
+            data['workflows'][0]['selection_task'] = 'missing decision'
+            path.write_text(json.dumps(data))
+            errors = golden_route.validation_errors(root)
+            self.assertTrue(any('selection_task must resolve a complete capability decision' in error for error in errors))
 
     def test_non_object_manifest_roots_fail_closed(self):
         with tempfile.TemporaryDirectory() as directory:

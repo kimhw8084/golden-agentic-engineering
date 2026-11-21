@@ -5,7 +5,7 @@ description: Route tasks through the primary agent and relevant skills; evaluate
 
 # Agentic-first capability selection
 
-Machine-readable task routes live in [`workflows/task-routing.json`](../../../workflows/task-routing.json). When the Golden checkout is available, `scripts/golden_route.py` validates route references against local skills, agents, MCP configuration, and the public capability registry, then emits only the requested route. When this skill is installed globally and the checkout is not present, use the task table below. Do not load the full registry into routine prompts.
+Machine-readable task routes live in [`workflows/task-routing.json`](../../../workflows/task-routing.json). When the Golden checkout is available, `scripts/golden_route.py` validates route references against local skills, agents, MCP configuration, and the public capability registry, then emits the requested route plus that task's capability choice, reason, and measured-or-unknown state. Check the decision before selecting execution tools. When this skill is installed globally and the checkout is not present, use the task table below. Do not load the full registry into routine prompts.
 
 | Workflow | Load skill(s) | Conditional capability |
 |---|---|---|
