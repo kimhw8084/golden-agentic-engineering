@@ -41,15 +41,16 @@ Only after a person has reviewed Step A and the archive checksum/content, and th
 ### Windows PowerShell
 
 ```powershell
-$configHome = if ($env:XDG_CONFIG_HOME) { $env:XDG_CONFIG_HOME } else { Join-Path $env:USERPROFILE ".config" }
-py -3 scripts\company_bootstrap.py apply --doctor-result "$env:TEMP\golden-doctor.json" --bundle "D:\approved-transfer\golden.tar.gz" --target (Join-Path $configHome "opencode") --transaction "$env:TEMP\golden-transaction.json" --authorize-reviewed-apply
+py -3 scripts\company_bootstrap.py apply --doctor-result "$env:TEMP\golden-doctor.json" --bundle "D:\approved-transfer\golden.tar.gz" --transaction "$env:TEMP\golden-transaction.json" --authorize-reviewed-apply
 ```
 
 ### Linux shell
 
 ```sh
-python3 scripts/company_bootstrap.py apply --doctor-result /tmp/golden-doctor.json --bundle /approved-transfer/golden.tar.gz --target "${XDG_CONFIG_HOME:-$HOME/.config}/opencode" --transaction /tmp/golden-transaction.json --authorize-reviewed-apply
+python3 scripts/company_bootstrap.py apply --doctor-result /tmp/golden-doctor.json --bundle /approved-transfer/golden.tar.gz --transaction /tmp/golden-transaction.json --authorize-reviewed-apply
 ```
+
+The apply command defaults to the same OpenCode config root used by doctor. If Step A used a custom `--config` path, pass the matching `--target` directory explicitly.
 
 The `--authorize-reviewed-apply` flag is the explicit Step B action. Run `rollback` only if you want to remove files added by that transaction. Rollback refuses files that changed after apply. The apply path smoke-tests a synthetic manifest in a temporary directory; it does not start OpenCode or deploy an application.
 

@@ -10,7 +10,7 @@
 
 | Check | Result |
 |---|---|
-| `python -m unittest discover -s tests -v` | PASS — 68 repository tests. Covers bootstrap doctor/apply/repeat/rollback and fresh config-root/path abuse cases, staged asset evidence, npm audit safeguards, benchmark case/status validation, transfer-kit path/origin/symlink/overwrite checks, Golden Proof, routing, MCP fixture, security scanner, network monitor, and synthetic scenarios. |
+| `python -m unittest discover -s tests -v` | PASS — 69 repository tests. Covers bootstrap doctor/apply/repeat/rollback, default config-root selection and safe fresh-root creation, staged asset evidence, npm audit safeguards, benchmark case/status validation, transfer-kit path/origin/symlink/overwrite checks, Golden Proof, routing, MCP fixture, security scanner, network monitor, and synthetic scenarios. |
 | `python benchmarks/run_local_fixtures.py --include-react --out verification/2026-11-20/local-fixtures.json` | PASS — 47 Python fixture tests plus six React logic/component tests; React `npm ci` ran with `--offline --ignore-scripts --no-audit --no-fund`, then typecheck, Vitest, and Vite build. Browser automation remains unrun. This is not an agent or productivity comparison. |
 | React `npm ci --offline --ignore-scripts --no-audit --no-fund` | PASS — 82 packages installed from the local npm cache on macOS arm64; no lifecycle scripts. |
 | React `npm run typecheck`, `npm run test`, `npm run build` | PASS — TypeScript clean; six tests across two files; Vite transformed 30 modules. |

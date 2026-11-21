@@ -241,6 +241,35 @@ class CompanyBootstrapTests(unittest.TestCase):
                 self.assertEqual(bootstrap.rollback(first_transaction), 1)
                 self.assertFalse(installed.exists())
 
+    def test_cli_apply_defaults_to_config_root_from_xdg(self):
+        with tempfile.TemporaryDirectory() as d:
+            folder = Path(d)
+            config_home = folder / 'config'
+            target = config_home / 'opencode'
+            report_path = folder / 'doctor.json'
+            bundle = self._make_bundle(folder)
+            transaction = folder / 'transaction.json'
+            runtime = self._runtime()
+
+            def run_main(*argv: str) -> tuple[int, str, str]:
+                stdout, stderr = io.StringIO(), io.StringIO()
+                with patch.object(sys, 'argv', ['company_bootstrap.py', *argv]):
+                    with contextlib.redirect_stdout(stdout), contextlib.redirect_stderr(stderr):
+                        code = bootstrap.main()
+                return code, stdout.getvalue(), stderr.getvalue()
+
+            with patch.dict('os.environ', {'XDG_CONFIG_HOME': str(config_home)}):
+                with patch.object(bootstrap, 'local_executable', side_effect=lambda name: runtime[name]):
+                    code, output, _ = run_main('doctor', '--out', str(report_path))
+                    self.assertEqual(code, 0, output)
+                    code, output, error = run_main(
+                        'apply', '--doctor-result', str(report_path), '--bundle', str(bundle),
+                        '--transaction', str(transaction), '--authorize-reviewed-apply',
+                    )
+            self.assertEqual(code, 0, error)
+            self.assertTrue((target / 'agents' / 'golden-example.md').is_file())
+            self.assertEqual(bootstrap.rollback(transaction), 1)
+
     def test_apply_refuses_changed_file_conflict_before_writing(self):
         with tempfile.TemporaryDirectory() as d:
             folder = Path(d); target = folder / 'opencode'; target.mkdir()

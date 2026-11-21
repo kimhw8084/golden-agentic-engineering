@@ -603,7 +603,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description='Offline OpenCode doctor/apply/rollback. No provider settings are modified.')
     sub = parser.add_subparsers(dest='action', required=True)
     p = sub.add_parser('doctor'); p.add_argument('--repo', type=Path, default=ROOT); p.add_argument('--out', type=Path, required=True); p.add_argument('--config', type=Path); p.add_argument('--assets-manifest', type=Path, help='Optional company-local staged-asset manifest.'); p.add_argument('--assets-root', type=Path, help='Root for verifying staged asset hashes.')
-    p = sub.add_parser('apply'); p.add_argument('--doctor-result', type=Path, required=True); p.add_argument('--bundle', type=Path, required=True); p.add_argument('--target', type=Path, required=True); p.add_argument('--transaction', type=Path, required=True); p.add_argument('--authorize-reviewed-apply', action='store_true')
+    p = sub.add_parser('apply'); p.add_argument('--doctor-result', type=Path, required=True); p.add_argument('--bundle', type=Path, required=True); p.add_argument('--target', type=Path, help='Defaults to the same OpenCode config root inspected by doctor.'); p.add_argument('--transaction', type=Path, required=True); p.add_argument('--authorize-reviewed-apply', action='store_true')
     p = sub.add_parser('rollback'); p.add_argument('--transaction', type=Path, required=True)
     args = parser.parse_args()
     try:
@@ -618,7 +618,8 @@ def main() -> int:
             if not args.authorize_reviewed_apply:
                 raise ValueError('Step B requires --authorize-reviewed-apply after reviewing the doctor result and bundle.')
             report = json.loads(args.doctor_result.read_text(encoding='utf-8'))
-            print(json.dumps(apply_bundle(args.bundle, args.target, report, args.transaction), indent=2))
+            target = args.target or config_path().parent
+            print(json.dumps(apply_bundle(args.bundle, target, report, args.transaction), indent=2))
         else:
             print(f"Removed unchanged files: {rollback(args.transaction)}")
         return 0
