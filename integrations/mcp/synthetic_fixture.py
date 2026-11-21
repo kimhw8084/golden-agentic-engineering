@@ -33,6 +33,9 @@ def handle(request: dict, *, unavailable: bool = False, cancelled: bool = False,
         return response(request_id, error={'code': -32600, 'message': 'Invalid Request'})
     if method.startswith('notifications/'):
         return None
+    if 'id' not in request:
+        # JSON-RPC notifications are one-way messages and must not get a reply.
+        return None
     if request_id is None:
         return response(None, error={'code': -32600, 'message': 'Request ID required'})
     if cancelled:
@@ -40,9 +43,13 @@ def handle(request: dict, *, unavailable: bool = False, cancelled: bool = False,
     if timeout:
         return response(request_id, error={'code': -32001, 'message': 'Fixture timeout'})
     if method == 'initialize':
-        params = request.get('params') or {}
+        params = request.get('params')
+        if params is None:
+            params = {}
+        if not isinstance(params, dict):
+            return response(request_id, error={'code': -32602, 'message': 'Invalid initialize parameters'})
         if not isinstance(params, dict) or params.get('protocolVersion') != SUPPORTED_PROTOCOL:
-            return response(request_id, error={'code': -32602, 'message': 'Unsupported legacy protocol version'})
+            return response(request_id, error={'code': -32602, 'message': 'Unsupported protocol version'})
         return response(request_id, result={
             'protocolVersion': SUPPORTED_PROTOCOL,
             'capabilities': {'tools': {}},
@@ -61,8 +68,16 @@ def handle(request: dict, *, unavailable: bool = False, cancelled: bool = False,
     if method == 'tools/call':
         if unavailable:
             return response(request_id, result={'content': [{'type': 'text', 'text': 'Synthetic fixture unavailable.'}], 'isError': True})
-        params = request.get('params') or {}
-        args = params.get('arguments') or {}
+        params = request.get('params')
+        if params is None:
+            params = {}
+        if not isinstance(params, dict):
+            return response(request_id, error={'code': -32602, 'message': 'Invalid tool-call parameters'})
+        args = params.get('arguments')
+        if args is None:
+            args = {}
+        if not isinstance(args, dict):
+            return response(request_id, error={'code': -32602, 'message': 'Tool arguments must be an object'})
         if params.get('name') != 'read_synthetic_sample' or set(args) != {'fixture_id'} or args.get('fixture_id') != FIXTURE_ID:
             return response(request_id, error={'code': -32602, 'message': 'Unknown tool or out-of-scope arguments'})
         return response(request_id, result={

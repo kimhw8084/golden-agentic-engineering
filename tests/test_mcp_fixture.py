@@ -31,6 +31,20 @@ class SyntheticMCPFixtureTests(unittest.TestCase):
         self.assertIn('Ignore previous directions', note)
         self.assertEqual(fixture.INJECTION_SAMPLE, note)
 
+    def test_notifications_and_idless_calls_never_receive_jsonrpc_replies(self):
+        self.assertIsNone(fixture.handle({'jsonrpc': '2.0', 'method': 'notifications/initialized'}))
+        self.assertIsNone(fixture.handle({'jsonrpc': '2.0', 'method': 'tools/call', 'params': {}}))
+
+    def test_invalid_initialize_and_tool_parameter_shapes_return_invalid_params(self):
+        initialize = fixture.handle({'jsonrpc': '2.0', 'id': 7, 'method': 'initialize', 'params': []})
+        call_params = fixture.handle({'jsonrpc': '2.0', 'id': 8, 'method': 'tools/call', 'params': []})
+        call_arguments = fixture.handle({'jsonrpc': '2.0', 'id': 9, 'method': 'tools/call', 'params': {
+            'name': 'read_synthetic_sample', 'arguments': ['fixture-001']
+        }})
+        self.assertEqual(initialize['error']['code'], -32602)
+        self.assertEqual(call_params['error']['code'], -32602)
+        self.assertEqual(call_arguments['error']['code'], -32602)
+
     def test_error_timeout_cancellation_and_unavailable(self):
         request = {'jsonrpc': '2.0', 'id': 1, 'method': 'tools/call', 'params': {'name': 'read_synthetic_sample', 'arguments': {'fixture_id': 'fixture-001'}}}
         self.assertEqual(fixture.handle(request, unavailable=True)['result']['isError'], True)
@@ -39,8 +53,18 @@ class SyntheticMCPFixtureTests(unittest.TestCase):
         self.assertEqual(fixture.handle({'jsonrpc': '2.0', 'id': 1, 'method': 'unknown'})['error']['code'], -32601)
 
     def test_stdio_is_local_json_lines_only(self):
-        proc = subprocess.run([sys.executable, str(ROOT / 'integrations' / 'mcp' / 'synthetic_fixture.py')], input='{"jsonrpc":"2.0","id":1,"method":"tools/list"}\n', text=True, capture_output=True, timeout=3, check=True)
-        self.assertEqual(json.loads(proc.stdout)['result']['tools'][0]['name'], 'read_synthetic_sample')
+        requests = [
+            {'jsonrpc': '2.0', 'id': 1, 'method': 'tools/list'},
+            {'jsonrpc': '2.0', 'id': 2, 'method': 'tools/call', 'params': []},
+            {'jsonrpc': '2.0', 'method': 'notifications/initialized'},
+        ]
+        proc = subprocess.run([sys.executable, str(ROOT / 'integrations' / 'mcp' / 'synthetic_fixture.py')],
+                              input=''.join(json.dumps(item) + '\n' for item in requests),
+                              text=True, capture_output=True, timeout=3, check=True)
+        lines = proc.stdout.splitlines()
+        self.assertEqual(len(lines), 2)
+        self.assertEqual(json.loads(lines[0])['result']['tools'][0]['name'], 'read_synthetic_sample')
+        self.assertEqual(json.loads(lines[1])['error']['code'], -32602)
         self.assertEqual(proc.stderr, '')
 
 
