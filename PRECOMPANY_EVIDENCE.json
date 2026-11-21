@@ -12,8 +12,8 @@
     "python_unit_suite": {
       "command": "python -m unittest discover -s tests -q",
       "status": "PASS",
-      "tests_run": 155,
-      "tests_passed": 154,
+      "tests_run": 156,
+      "tests_passed": 155,
       "tests_skipped": 1,
       "tests_failed": 0,
       "note": "One optional-SDK test is skipped under the default interpreter. The SDK-backed fixture was run separately under the offline MCP SDK candidate virtual environment."
@@ -26,7 +26,7 @@
     "tracked_content_hashes": {
       "command": "python scripts/verify_contents.py",
       "status": "PASS",
-      "checked": 206,
+      "checked": 207,
       "missing": 0,
       "altered": 0,
       "unlisted": 0
@@ -69,8 +69,8 @@
     "secret_pattern_scan": {
       "command": "python scripts/security_scan.py --repo . --history",
       "status": "PASS",
-      "current_files_scanned": 209,
-      "reachable_git_blobs_scanned": 697,
+      "current_files_scanned": 210,
+      "reachable_git_blobs_scanned": 728,
       "limitation": "High-confidence pattern scan only; it does not establish absence of all proprietary information."
     },
     "golden_full_release_checks": [
@@ -115,10 +115,11 @@
   },
   "privacy_review": {
     "high_confidence_secret_scan": "PASS: zero detected patterns; no match values were emitted.",
-    "reachable_git_history": "697 blobs scanned.",
+    "reachable_git_history": "728 blobs scanned.",
     "absolute_user_paths": 0,
     "private_ipv4_addresses": 0,
     "machine_user_path_scan": "PASS: zero hits in current files or reachable Git blobs; ignored local demo evidence was changed to a repository-relative path before release.",
+    "attached_fab_archive_scan": "PASS: all 14 archive files checked for high-confidence secret patterns, absolute user paths, RFC1918 addresses and email patterns; zero findings.",
     "email_address_matches": "4 files: three invalid-domain test fixtures and one public upstream license attribution; no company email was identified in the earlier scan. New changes contain no company identity or runtime detail.",
     "limitation": "Pattern-based scan only; this does not prove the absence of all proprietary information."
   },

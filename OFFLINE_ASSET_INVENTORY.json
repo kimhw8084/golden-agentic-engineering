@@ -54,6 +54,13 @@
   "fab_sampling_transfer_kit": {
     "manifest": "fab_sampling_offline_port_kit/repos.json",
     "manifest_sha256": "387832580abb2737d23a70d22f54b68a0ea3427dce773b5dbbca993899b90f76",
+    "source_archive": {
+      "path": "offline/source-archives/fab_sampling_offline_port_kit_2026-11-20.zip",
+      "sha256": "0d8e88391f4a885897e4c498730cb36972f07d20f3678a3950e89d106d32272d",
+      "bytes": 20292,
+      "source_files": 14,
+      "original_preserved_byte_for_byte": true
+    },
     "candidate_repository_count": 38,
     "source_repositories_staged": 0,
     "wheels_or_models_or_datasets_staged": 0,

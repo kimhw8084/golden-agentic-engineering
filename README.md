@@ -73,7 +73,7 @@ Golden Control is the team-facing operating cockpit for Golden installation, app
 | `standards/` | Version pin, 19 initial executable rule definitions (not the entire 151-requirement standard) |
 | `tools/candidates.json` | Preserved 64 public GitHub source leads; not license approval |
 | `research/capability-selection.json` | Pinned public capability candidates, observed license evidence, per-task rankings, and known gaps |
-| [`fab_sampling_offline_port_kit/README.md`](fab_sampling_offline_port_kit/README.md) | Offline source-transfer guide and scripts; no fab data or downloaded source repositories bundled |
+| [`fab_sampling_offline_port_kit/README.md`](fab_sampling_offline_port_kit/README.md) | Offline source-transfer guide and hardened scripts; the exact original ZIP is preserved under `offline/source-archives/`; no fab data or downloaded source repositories bundled |
 | `scripts/fetch_sources.py` | Public-network opt-in snapshot downloader/pinner; **source only** |
 | `scripts/mcp_candidate_bundle.py` | Offline-only validator, hash-lock, license inventory and CycloneDX SBOM packager for staged MCP SDK wheels |
 | [`offline/mcp-sdk-candidate/`](offline/mcp-sdk-candidate/README.md) | Hash-pinned external candidate archive manifest and exact platform/clearance limitations; archives remain outside Git |

@@ -1,6 +1,7 @@
 import hashlib
 import json
 import unittest
+import zipfile
 from pathlib import Path
 
 
@@ -48,6 +49,16 @@ class PrecompanyEvidenceTests(unittest.TestCase):
         )
         self.assertEqual(inventory['source_repositories_staged'], 0)
         self.assertEqual(inventory['status'], 'CANDIDATE_LIST_ONLY')
+
+    def test_original_fab_archive_is_hash_pinned_and_complete(self):
+        archive = load('OFFLINE_ASSET_INVENTORY.json')['fab_sampling_transfer_kit']['source_archive']
+        path = ROOT / archive['path']
+        self.assertEqual(path.stat().st_size, archive['bytes'])
+        self.assertEqual(hashlib.sha256(path.read_bytes()).hexdigest(), archive['sha256'])
+        self.assertTrue(archive['original_preserved_byte_for_byte'])
+        with zipfile.ZipFile(path) as bundle:
+            files = [name for name in bundle.namelist() if not name.endswith('/')]
+        self.assertEqual(len(files), archive['source_files'])
 
 
 if __name__ == '__main__':
