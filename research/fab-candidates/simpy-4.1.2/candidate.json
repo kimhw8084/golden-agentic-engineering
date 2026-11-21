@@ -39,7 +39,8 @@
     "golden_synthetic_contract": "PASS; 4 synthetic jobs; capacity 1 and 2 match fixed schedule oracle",
     "upstream_tests_directory": "PASS; 141 passed; 10 benchmark tests deselected; pytest-benchmark unavailable and emitted unknown-marker warnings",
     "upstream_full_pytest": "PARTIAL; 159 passed; 10 benchmark tests deselected; one real-time documentation doctest failed at 0.11s versus expected 0.10s; repeated with the same timing-sensitive failure",
-    "native_windows_linux": "NOT_RUN",
+    "github_hosted_windows_linux_matrix": "PASS; all 6 Ubuntu/Windows x Python 3.10, 3.11, 3.14 jobs in https://github.com/kimhw8084/golden-agentic-engineering/actions/runs/44939338094",
+    "company_native_windows_linux": "NOT_RUN",
     "company_runtime_or_clearance": "NOT_RUN"
   },
   "selection": "Candidate for a local discrete-event capacity experiment only. No comparison against alternatives, fab workload validation, accuracy, speed, or company approval is established.",

@@ -154,7 +154,8 @@ def validate() -> list[str]:
             or simpy.get('license') != 'MIT'
             or actual_simpy_artifacts != expected_simpy_artifacts
             or simpy.get('external_artifact_staged_in_repository') is not False
-            or simpy.get('test_results', {}).get('native_windows_linux') != 'NOT_RUN'
+            or simpy.get('test_results', {}).get('company_native_windows_linux') != 'NOT_RUN'
+            or not simpy.get('test_results', {}).get('github_hosted_windows_linux_matrix', '').startswith('PASS; all 6 ')
             or simpy.get('test_results', {}).get('company_runtime_or_clearance') != 'NOT_RUN'):
         errors.append('SimPy candidate evidence must preserve exact release hashes and candidate-only limitations')
     if not (ROOT / 'verification/2026-11-21/simpy-capacity-candidate.json').is_file():
